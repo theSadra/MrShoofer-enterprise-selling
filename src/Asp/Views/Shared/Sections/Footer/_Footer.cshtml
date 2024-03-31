@@ -1,0 +1,19 @@
+@{
+  TempData.Keep();
+  ViewData["containerNav"] ??= "container-fluid";
+}
+
+<footer class="content-footer footer bg-footer-theme">
+  <div class='@ViewData["containerNav"] d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column'>
+    <div class="mb-2 mb-md-0">
+        ©
+        1403 - 
+        تمامی حقوق برای
+        <a href='@TempData.Peek("authorUrl")' class="text-warning byte-hover">@TempData.Peek("authorName")</a>
+        محفوظ می‌باشد.
+    </div>
+    @* <div>
+      <a href='@TempData.Peek("documentation")' target="_blank" class="footer-link me-4">تماس با ما</a>
+    </div> *@
+  </div>
+</footer>
