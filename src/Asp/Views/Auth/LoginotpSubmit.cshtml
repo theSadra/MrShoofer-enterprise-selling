@@ -1,0 +1,135 @@
+@{
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "ورود با رمز یک‌بار مصرف";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+
+@section PageScripts {
+    <script src="~/js/pages-auth.js"></script>
+    <script src="~/js/pages-auth-two-steps.js"></script>
+}
+@* ************** Content ************** *@
+
+<div class="authentication-wrapper authentication-basic px-4">
+    <div class="authentication-inner py-4">
+        <!--  Two Steps Verification -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Logo -->
+                <div class="app-brand justify-content-between mb-3 mt-2">
+                    <a href="/" class="app-brand-link gap-2">
+                        <img src="~/logo_full_b.png" style="width:200px;" />
+                    </a>
+                </div>
+
+                <!-- /Logo -->
+                <h4 class="mb-1 pt-2">ورود با شماره تلفن</h4>
+                <p class="text-start mb-1">
+                    ما یک کد تأیید به تلفن همراه شما ارسال کردیم. کد تایید ارسال شده را در فیلد زیر تایپ کنید.
+                    <span class="fw-medium d-block mt-2">
+                        <bdi>@ViewBag.numberphone</bdi>
+                        <a asp-action="Loginotp" class="link">تغییر شماره</a>
+                    </span>
+                </p>
+
+
+
+
+                <p class="mb-0 fw-medium">کد امنیتی 5 رقمی</p>
+                <form id="twoStepsForm" asp-action="LoginotpSubmit" method="post">
+                    <div class="mb-3">
+                        <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper ltr">
+                            <input autocomplete="off" name="numberphone" type="hidden" value="@ViewBag.numberphone" />
+                            <input autocomplete="off" name="code1" type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" autofocus>
+                            <input autocomplete="off" name="code2" type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1">
+                            <input autocomplete="off" name="code3" type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1">
+                            <input autocomplete="off" name="code4" type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1">
+                            <input autocomplete="off" name="code5" type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1">
+                        </div>
+                        @if (!string.IsNullOrEmpty(ViewBag.errormessage))
+                        {
+                            <div class="mt-1 mb-1 text-danger">@ViewBag.errormessage</div>
+                        }
+                    </div>
+                    <button class="btn btn-primary d-grid w-100 mb-3">ورود</button>
+
+                    <div class="text-center">
+                        <span id="countdown" class="countdown me-1"></span>
+                        کد را دریافت نکردید؟
+                        <a href="javascript:void(0);" class="resend-link"> ارسال مجدد</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- / Two Steps Verification -->
+    </div>
+</div>
+
+@* Auto form submit script *@
+<script src="~/js/pages-auth.js"></script>
+<script src="~/js/pages-auth-two-steps.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("twoStepsForm");
+        const inputs = form.querySelectorAll("input[type='tel']");
+        const resendLink = document.querySelector(".text-center a");
+
+        inputs.forEach(input => {
+            input.addEventListener("input", function () {
+                if (allInputsFilled(inputs)) {
+                    form.submit();
+                }
+            });
+        });
+
+        function allInputsFilled(inputs) {
+            for (let input of inputs) {
+                if (input.value.trim() === "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+        let timer;
+        const resendTimer = () => {
+            let timeLeft = 70;
+            timer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    resendLink.textContent = "ارسال مجدد";
+                    resendLink.classList.remove("disabled");
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    resendLink.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    resendLink.classList.add("disabled");
+                }
+            }, 1050);
+        };
+        resendTimer();
+        resendLink.addEventListener("click", function () {
+            if (!resendLink.classList.contains("disabled")) {
+                // Resend logic here
+                // For example: resendCode();
+                // Reset timer
+                clearInterval(timer);
+                resendTimer();
+            }
+        });
+    });
+</script>

@@ -1,12 +1,13 @@
 @* ! Brand demo (display only for navbar-full and hide on below xl) *@
 @if (ViewData["navbarFull"] != null)
 {
-  <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+  <div class="navbar-brand app-brand demo d-none d-xl-flex py-1 me-4 px-3 my-3">
     <a asp-controller="Home" asp-action="Index" class="app-brand-link gap-2">
-      <span class="app-brand-logo demo">
-        @await Html.PartialAsync("../_Partials/_Macros")
+      <span class="app-brand-logo mt-1 mb-1">
+                <div class="app-brand justify-content-between">
+                    <img src="~/logo_full_b.png" style="width:160px;" />
+                </div>
       </span>
-      <span class="app-brand-text demo menu-text fw-bold">@TempData.Peek("appName")</span>
     </a>
 
     @* ! Display menu close icon only for horizontal-menu with navbar-full *@
@@ -77,8 +78,8 @@
                 </div>
               </div>
               <div class="flex-grow-1">
-                <span class="fw-medium d-block">نوید محمدزاده</span>
-                <small class="text-muted">ادمین</small>
+                <span class="fw-medium d-block">آژانس</span>
+                <small class="text-muted">اپراتور</small>
               </div>
             </div>
           </a>
@@ -89,7 +90,7 @@
         <li>
           <a class="dropdown-item" href="javascript:void(0);">
             <i class="ti ti-user-check me-2 ti-sm"></i>
-            <span class="align-middle">پروفایل من</span>
+            <span class="align-middle">پروفایل آژانس</span>
           </a>
         </li>
         <li>
@@ -102,7 +103,7 @@
           <a class="dropdown-item" href="javascript:void(0);">
             <span class="d-flex align-items-center align-middle">
               <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-              <span class="flex-grow-1 align-middle ms-1">پرداخت</span>
+              <span class="flex-grow-1 align-middle ms-1">مالی</span>
               <span class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
             </span>
           </a>
@@ -111,9 +112,9 @@
           <div class="dropdown-divider"></div>
         </li>
         <li>
-          <a class="dropdown-item" href="javascript:void(0)">
+          <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">
             <i class="ti ti-logout me-2 ti-sm"></i>
-            <span class="align-middle">خروج از حساب</span>
+            <span class="align-middle text-danger">خروج از حساب</span>
           </a>
         </li>
       </ul>

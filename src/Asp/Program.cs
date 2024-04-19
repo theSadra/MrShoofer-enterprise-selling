@@ -1,9 +1,43 @@
+using Application.Data;
+using Application.Services;
+using Application.Services.Auth;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
+
+
+builder.Services.AddDbContext<AppDbContext>();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+  options.Cookie.Name = "YourAppCookieName";
+  options.Cookie.HttpOnly = true;
+  options.ExpireTimeSpan = TimeSpan.FromDays(2);
+  options.LoginPath = "/Auth/Login";
+  
+  options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+  options.SlidingExpiration = true;
+});
+
 
 var app = builder.Build();
 
@@ -20,7 +54,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
+
+app.UseAuthorization(); 
+
 
 app.MapControllerRoute(
     name: "default",

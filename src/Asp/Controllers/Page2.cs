@@ -6,5 +6,5 @@ namespace AspnetCoreMvcStarter.Controllers;
 
 public class Page2 : Controller
 {
-  public IActionResult Index() => View();
+  public IActionResult Index() => RedirectToAction("Login","Auth");
 }

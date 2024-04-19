@@ -1,0 +1,62 @@
+@{
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "ورود";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+
+@section PageScripts {
+    <script src="~/js/pages-auth.js"></script>
+}
+@* ************** Content ************** *@
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner py-4">
+            <!-- Login -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- Logo -->
+                    <div class="app-brand justify-content-between mb-3 mt-2">
+                        <a href="/" class="app-brand-link gap-2">
+                            <img src="~/logo_full_b.png" style="width:200px;" />
+                        </a>
+                    </div>
+                    <!-- /Logo -->
+                    <h4 class="mb-2 pt-1">به پنل سازمانی خوش آمدید</h4>
+                    <p class="mb-2">ورود با رمز یک‌بار مصرف</p>
+
+                    <form id="formAuthentication" class="mb-3" method="POST" asp-action="Loginotp">
+                        <div class="mb-3">
+                            <label class="form-label" for="NumberPhone">شماره تلفن</label>
+                            <input autofocus value="" class="form-control" id="NumberPhone" name="NumberPhone" placeholder="شماره تلفن خود را وارد کنید" type="text" />
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.errormessage))
+                        {
+                            <div class="mt-1 mb-2 text-danger">@ViewBag.errormessage</div>
+                        }
+
+                        <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="submit">ارسال کد</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /Register -->
+        </div>
+    </div>
+</div>
+

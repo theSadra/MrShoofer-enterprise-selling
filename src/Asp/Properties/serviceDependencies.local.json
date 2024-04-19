@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:AspnetCoreMvcStarterContext"
+    },
+    "sqlite1": {
+      "secretStore": null,
+      "type": "sqlite.local",
+      "connectionId": "ConnectionStrings:test",
+      "dynamicId": null
+    }
+  }
+}
