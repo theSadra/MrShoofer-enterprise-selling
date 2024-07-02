@@ -1,0 +1,100 @@
+<!-- Footer: Start -->
+<footer class="landing-footer bg-body footer-text">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gx-0 gy-4 g-md-5">
+        <div class="col-lg-5">
+          <a asp-controller="Dashboards" asp-action="Index" class="app-brand-link mb-4">
+            <span class="app-brand-logo demo">
+              @await Html.PartialAsync("../_Partials/_Macros")
+            </span>
+            <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">@TempData.Peek("appName")</span>
+          </a>
+                 <p class="footer-text footer-logo-description mb-4"> برنامه‌نویس ‌پسند ، حرفه‌ای و سفارشی ترین قالب مدیریت از نظر کاربران.</p>
+
+          <form class="footer-form">
+            <label class="small" for="footer-email">مشترک شدن در خبرنامه</label>
+            <div class="d-flex mt-1">
+              <input type="email" class="form-control rounded-0 rounded-start-bottom rounded-start-top" id="footer-email" placeholder="ایمیل شما" />
+              <button type="submit" class="btn btn-primary shadow-none rounded-0 rounded-end-bottom rounded-end-top">
+                عضویت
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <h6 class="footer-title mb-4">دموها</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3">
+              <a href="javascript:void(0);" class="footer-link">طرح منو عمودی</a>
+            </li>
+            <li class="mb-3">
+              <a href="javascript:void(0);" class="footer-link">چیدمان افقی</a>
+            </li>
+            <li class="mb-3">
+              <a href="javascript:void(0);" class="footer-link">طرح کادر حاشیه دار</a>
+            </li>
+            <li class="mb-3">
+              <a href="javascript:void(0);" class="footer-link">طرح نیمه تاریک</a>
+            </li>
+            <li class="mb-3">
+              <a href="javascript:void(0);" class="footer-link">طرح تاریک</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <h6 class="footer-title mb-4">صفحات</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3">
+              <a asp-controller="FrontPages" asp-action="PricingPage" class="footer-link">قیمت گذاری</a>
+            </li>
+            <li class="mb-3">
+              <a asp-controller="FrontPages" asp-action="PaymentPage" class="footer-link">پرداخت<span class="badge rounded bg-primary ms-2">جدید</span></a>
+            </li>
+            <li class="mb-3">
+              <a asp-controller="FrontPages" asp-action="CheckoutPage" class="footer-link">ثبت سفارش</a>
+            </li>
+            <li class="mb-3">
+              <a asp-controller="FrontPages" asp-action="HelpCenterLanding" class="footer-link">مرکز پشتیبانی</a>
+            </li>
+            <li class="mb-3">
+              <a asp-controller="Auth" asp-action="LoginCover" target="_blank" class="footer-link">ورود / ثبت نام</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h6 class="footer-title mb-4">دانلود اپلیکیشن ها</h6>
+          <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img src="~/img/front-pages/landing-page/apple-icon.png" alt="apple icon" /></a>
+          <a href="javascript:void(0);" class="d-block footer-link"><img src="~/img/front-pages/landing-page/google-play-icon.png" alt="google play icon" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="footer-bottom py-3">
+      <div class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start">
+        <div class="mb-2 mb-md-0">
+          <span class="footer-text">
+            ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            , ارائه شده توسط
+            <a href='@TempData.Peek("authorUrl")' class="text-danger byte-hover">@TempData.Peek("authorName")</a>
+            در سایت
+            <a class="fw-medium" href="#support" target="_blank">راستچین</a>
+          </span>
+        </div>
+        <div>
+          <a href='@TempData.Peek("githubFreeUrl")' class="footer-link me-3" target="_blank"><img src="~/img/front-pages/icons/github-light.png" alt="github icon" data-app-light-img="front-pages/icons/github-light.png" data-app-dark-img="front-pages/icons/github-dark.png" /></a>
+
+            <a href='@TempData.Peek("facebookUrl")' class="footer-link me-3" target="_blank"><img src="~/img/front-pages/icons/facebook-light.png" alt="facebook icon" data-app-light-img="front-pages/icons/facebook-light.png" data-app-dark-img="front-pages/icons/facebook-dark.png" /></a>
+
+          <a href='@TempData.Peek("twitterUrl")' class="footer-link me-3" target="_blank"><img src="~/img/front-pages/icons/twitter-light.png" alt="twitter icon" data-app-light-img="front-pages/icons/twitter-light.png" data-app-dark-img="front-pages/icons/twitter-dark.png" /></a>
+
+           <a href='@TempData.Peek("instagramUrl")' class="footer-link" target="_blank"><img src="~/img/front-pages/icons/instagram-light.png" alt="google icon" data-app-light-img="front-pages/icons/instagram-light.png" data-app-dark-img="front-pages/icons/instagram-dark.png" /></a>
+
+        </div>
+      </div>
+    </div>
+</footer>
+<!-- Footer: End -->

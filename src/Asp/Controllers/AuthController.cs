@@ -135,7 +135,6 @@ namespace AspnetCoreMvcStarter.Controllers
       return View();
     }
 
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> LoginotpSubmit(string code1, string code2, string code3, string code4, string code5, string numberphone)
@@ -200,7 +199,6 @@ namespace AspnetCoreMvcStarter.Controllers
       return RedirectToAction("Index", "Home");
 
     }
-
 
 
     public async Task<IActionResult> Logout()

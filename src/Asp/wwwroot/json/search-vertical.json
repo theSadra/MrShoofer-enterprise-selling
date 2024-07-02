@@ -3,752 +3,742 @@
     {
       "name": "داشبورد تجزیه و تحلیل",
       "icon": "ti-smart-home",
-      "url": "index.html"
+      "url": "/"
     },
     {
       "name": "ارتباط با مشتری (CRM)",
       "icon": "ti-smart-home",
-      "url": "dashboards-crm.html"
-    },
-    {
-      "name": "طرح بندی منوی جمع شده",
-      "icon": "ti-layout-sidebar",
-      "url": "layouts-collapsed-menu.html"
-    },
-    {
-      "name": "نوار پیمایش محتوا چیدمان",
-      "icon": "ti-layout-sidebar",
-      "url": "layouts-content-navbar.html"
-    },
-    {
-      "name": "طرح محتوا ناو+نوار کناری",
-      "icon": "ti-layout-sidebar",
-      "url": "layouts-content-navbar-with-sidebar.html"
+      "url": "/Dashboards/CRM"
     },
     {
       "name": "طرح بندی بدون منو",
       "icon": "ti-layout-sidebar",
-      "url": "layouts-without-menu.html"
-    },
-    {
-      "name": "طرح بندی بدون نوار ناوبری",
-      "icon": "ti-layout-sidebar",
-      "url": "layouts-without-navbar.html"
+      "url": "/LayoutExamples/WithoutMenu"
     },
     {
       "name": "چیدمان شناور",
       "icon": "ti-layout-sidebar",
-      "url": "layouts-fluid.html"
+      "url": "/LayoutExamples/Fluid"
     },
     {
       "name": "طرح دربرگیرنده",
       "icon": "ti-layout-sidebar",
-      "url": "layouts-container.html"
+      "url": "/LayoutExamples/Container"
     },
     {
       "name": "چیدمان خالی",
       "icon": "ti-layout-sidebar",
-      "url": "layouts-blank.html"
+      "url": "/LayoutExamples/Blank"
+    },
+    {
+      "name": "عملیات‌های (CRUD)",
+      "icon": "ti-database",
+      "url": "/Transactions/Index"
     },
     {
       "name": "ایمیل",
       "icon": "ti-mail",
-      "url": "app-email.html"
+      "url": "/Apps/Email"
     },
     {
       "name": "چت",
       "icon": "ti-messages",
-      "url": "app-chat.html"
+      "url": "/Apps/Chat"
     },
     {
-      "name": "تقویم",
+      "name": "تقویم میلادی",
       "icon": "ti-calendar",
-      "url": "app-calendar.html"
+      "url": "/Apps/Calendar"
+    },
+    {
+      "name": "تقویم شمسی",
+      "icon": "ti-calendar",
+      "url": "/Apps/CalendarJalali"
     },
     {
       "name": "کانبان",
       "icon": "ti-layout-kanban",
-      "url": "app-kanban.html"
+      "url": "/Apps/kanban"
     },
     {
       "name": "داشبورد تجارت الکترونیک",
       "icon": "ti-smart-home",
-      "url": "app-ecommerce-dashboard.html"
-    },
-    {
-      "name": "تجارت الکترونیک - محصولات",
-      "icon": "ti-building-factory-2",
-      "url": "app-ecommerce-product-list.html"
+      "url": "/Ecommerce/Dashboard"
     },
     {
       "name": "تجارت الکترونیک - لیست محصولات",
       "icon": "ti-list-details",
-      "url": "app-ecommerce-product-list.html"
+      "url": "/Ecommerce/ProductList"
     },
     {
       "name": "تجارت الکترونیک - افزودن محصول",
       "icon": "ti-plus",
-      "url": "app-ecommerce-product-add.html"
+      "url": "/Ecommerce/ProductAdd"
     },
     {
       "name": "تجارت الکترونیک - لیست دسته بندی ها",
       "icon": "ti-list",
-      "url": "app-ecommerce-category-list.html"
+      "url": "/Ecommerce/ProductCategoryList"
     },
     {
       "name": "تجارت الکترونیک - لیست سفارشات",
       "icon": "ti-list",
-      "url": "app-ecommerce-order-list.html"
+      "url": "/Ecommerce/OrderList"
     },
     {
       "name": "تجارت الکترونیک - جزئیات سفارشات",
       "icon": "ti-list-check",
-      "url": "app-ecommerce-order-details.html"
+      "url": "/Ecommerce/OrderDetails"
     },
     {
       "name": "تجارت الکترونیک - مشتریان",
       "icon": "ti-user",
-      "url": "app-ecommerce-customer-all.html"
+      "url": "/Ecommerce/CustomerAll"
     },
     {
       "name": "تجارت الکترونیک - بررسی اجمالی مشتریان",
       "icon": "ti-list-details",
-      "url": "app-ecommerce-customer-details-overview.html"
+      "url": "/Ecommerce/CustomerDetailsOverview"
     },
     {
       "name": "تجارت الکترونیک - امنیت مشتریان",
       "icon": "ti-home-shield",
-      "url": "app-ecommerce-customer-details-security.html"
+      "url": "/Ecommerce/CustomerDetailsSecurity"
     },
     {
       "name": "تجارت الکترونیک - آدرس مشتریان و صورتحساب",
       "icon": "ti-map-pin",
-      "url": "app-ecommerce-customer-details-billing.html"
+      "url": "/Ecommerce/CustomerDetailsBilling"
     },
     {
       "name": "تجارت الکترونیک - اطلاعیه های مشتریان",
       "icon": "ti-bell",
-      "url": "app-ecommerce-customer-details-notifications.html"
+      "url": "/Ecommerce/CustomerDetailsNotifications"
     },
     {
       "name": "تجارت الکترونیکی - مدیریت نظرات",
       "icon": "ti-quote",
-      "url": "app-ecommerce-manage-reviews.html"
+      "url": "/Ecommerce/Reviews"
     },
     {
       "name": "تجارت الکترونیک - باشگاه مشتریان",
       "icon": "ti-building-factory-2",
-      "url": "app-ecommerce-referral.html"
+      "url": "/Ecommerce/Referrals"
     },
     {
       "name": "تجارت الکترونیک - تنظیمات جزئیات فروشگاه",
       "icon": "ti-building-store",
-      "url": "app-ecommerce-settings-detail.html"
+      "url": "/Ecommerce/SettingsStoreDetails"
     },
     {
       "name": "تجارت الکترونیک - تنظیمات پرداخت فروشگاه",
       "icon": "ti-currency-dollar",
-      "url": "app-ecommerce-settings-payments.html"
+      "url": "/Ecommerce/SettingsPayments"
     },
     {
       "name": "تجارت الکترونیک - تنظیمات فروشگاه پرداخت",
       "icon": "ti-shopping-cart",
-      "url": "app-ecommerce-settings-checkout.html"
+      "url": "/Ecommerce/SettingsCheckout"
     },
     {
       "name": "تجارت الکترونیک - تنظیمات حمل و نقل و تحویل",
       "icon": "ti-truck",
-      "url": "app-ecommerce-settings-shipping.html"
+      "url": "/Ecommerce/SettingsShipping"
     },
     {
       "name": "تجارت الکترونیک - تنظیمات مکان",
       "icon": "ti-map-pin",
-      "url": "app-ecommerce-settings-locations.html"
+      "url": "/Ecommerce/SettingsLocations"
     },
     {
       "name": "تجارت الکترونیکی - اعلان تنظیمات",
       "icon": "ti-bell-ringing",
-      "url": "app-ecommerce-settings-notifications.html"
+      "url": "/Ecommerce/SettingsNotifications"
     },
     {
       "name": "داشبورد آکادمی",
       "icon": "ti-book",
-      "url": "app-academy-dashboard.html"
+      "url": "/Academy/Dashboard"
     },
     {
       "name": "آکادمی - دوره من",
       "icon": "ti-list",
-      "url": "app-academy-course.html"
+      "url": "/Academy/MyCourse"
     },
     {
       "name": "آکادمی - جزئیات دوره",
       "icon": "ti-list",
-      "url": "app-academy-course-details.html"
+      "url": "/Academy/CourseDetails"
     },
     {
       "name": "لیست کاربر",
       "icon": "ti-list-numbers",
-      "url": "app-user-list.html"
+      "url": "/Users/List"
     },
     {
       "name": "نمایش کاربر - حساب کاربری",
       "icon": "ti-user",
-      "url": "app-user-view-account.html"
+      "url": "/Users/ViewAccount"
     },
     {
       "name": "نمایش کاربر - امنیت",
       "icon": "ti-shield-chevron",
-      "url": "app-user-view-security.html"
+      "url": "/Users/ViewSecurity"
     },
     {
       "name": "نمایش کاربر - صورتحساب و برنامه ها",
       "icon": "ti-file-text",
-      "url": "app-user-view-billing.html"
+      "url": "/Users/ViewBilling"
     },
     {
       "name": "نمایش کاربر - اعلان ها",
       "icon": "ti-notification",
-      "url": "app-user-view-notifications.html"
+      "url": "/Users/ViewNotifications"
     },
     {
       "name": "نمای کاربر - اتصالات",
       "icon": "ti-brand-google",
-      "url": "app-user-view-connections.html"
+      "url": "/Users/ViewConnections"
     },
     {
       "name": "نقش ها",
       "icon": "ti-shield-checkered",
-      "url": "app-access-roles.html"
+      "url": "/Access/Roles"
     },
     {
       "name": "مجوز",
       "icon": "ti-ban",
-      "url": "app-access-permission.html"
+      "url": "/Access/Permission"
     },
     {
       "name": "داشبورد تدارکات",
       "icon": "ti-truck",
-      "url": "app-logistics-dashboard.html"
+      "url": "/Logistics/Dashboard"
     },
     {
       "name": "ناوگان لجستیک",
       "icon": "ti-car",
-      "url": "app-logistics-fleet.html"
+      "url": "/Logistics/Fleet"
     },
     {
       "name": "لیست فاکتور",
       "icon": "ti-list-numbers",
-      "url": "app-invoice-list.html"
+      "url": "/Invoice/List"
     },
     {
       "name": "پیش نمایش فاکتور",
       "icon": "ti-file-text",
-      "url": "app-invoice-preview.html"
+      "url": "/Invoice/Preview"
     },
     {
       "name": "ویرایش فاکتور",
       "icon": "ti-pencil",
-      "url": "app-invoice-edit.html"
+      "url": "/Invoice/Edit"
     },
     {
       "name": "افزودن فاکتور",
       "icon": "ti-user-plus",
-      "url": "app-invoice-add.html"
+      "url": "/Invoice/Add"
     },
     {
       "name": "مشخصات کاربر",
       "icon": "ti-user-circle",
-      "url": "pages-profile-user.html"
+      "url": "/Pages/ProfileUser"
     },
     {
       "name": "مشخصات کاربر - تیم ها",
       "icon": "ti-users",
-      "url": "pages-profile-teams.html"
+      "url": "/Pages/ProfileTeams"
     },
     {
       "name": "مشخصات کاربر - پروژه ها",
       "icon": "ti-layout-grid",
-      "url": "pages-profile-projects.html"
+      "url": "/Pages/ProfileProjects"
     },
     {
       "name": "مشخصات کاربر - اتصالات",
       "icon": "ti-link",
-      "url": "pages-profile-connections.html"
+      "url": "/Pages/ProfileConnections"
     },
     {
       "name": "تنظیمات حساب - حساب",
       "icon": "ti-user",
-      "url": "pages-account-settings-account.html"
+      "url": "/Pages/AccountSettings"
     },
     {
       "name": "تنظیمات حساب - امنیت",
       "icon": "ti-shield-chevron",
-      "url": "pages-account-settings-security.html"
+      "url": "/Pages/AccountSettingsSecurity"
     },
     {
       "name": "تنظیمات حساب - صورتحساب و برنامه ها",
       "icon": "ti-file-text",
-      "url": "pages-account-settings-billing.html"
+      "url": "/Pages/AccountSettingsBilling"
     },
     {
       "name": "تنظیمات حساب - اعلان ها",
       "icon": "ti-notification",
-      "url": "pages-account-settings-notifications.html"
+      "url": "/Pages/AccountSettingsNotifications"
     },
     {
       "name": "تنظیمات حساب - اتصالات",
       "icon": "ti-link",
-      "url": "pages-account-settings-connections.html"
+      "url": "/Pages/AccountSettingsConnections"
     },
     {
       "name": "سؤالات متداول",
       "icon": "ti-help",
-      "url": "pages-faq.html"
+      "url": "/Pages/FAQ"
     },
     {
       "name": "قیمت‌گذاری",
       "icon": "ti-diamond",
-      "url": "pages-pricing.html"
+      "url": "/Pages/Pricing"
     },
     {
       "name": "خطا",
       "icon": "ti-alert-circle",
-      "url": "pages-misc-error.html"
+      "url": "/Pages/MiscError"
     },
     {
       "name": "در حال تعمیر و نگهداری",
       "icon": "ti-barrier-block",
-      "url": "pages-misc-under-maintenance.html"
+      "url": "/Pages/MiscUnderMaintenance"
     },
     {
       "name": "به زودی",
       "icon": "ti-clock",
-      "url": "pages-misc-comingsoon.html"
+      "url": "/Pages/MiscComingSoon"
     },
     {
       "name": "مجاز نیست",
       "icon": "ti-user-x",
-      "url": "pages-misc-not-authorized.html"
+      "url": "/Pages/MiscNotAuthorized"
     },
     {
       "name": "ورود - پایه",
       "icon": "ti-login",
-      "url": "auth-login-basic.html"
+      "url": "/Auth/LoginBasic"
     },
     {
       "name": "ورود - کاور",
       "icon": "ti-login",
-      "url": "auth-login-cover.html"
+      "url": "/Auth/LoginCover"
     },
     {
       "name": "ثبت نام - پایه",
       "icon": "ti-user-plus",
-      "url": "auth-register-basic.html"
+      "url": "/Auth/RegisterBasic"
     },
     {
       "name": "ثبت نام - کاور",
       "icon": "ti-user-plus",
-      "url": "auth-register-cover.html"
+      "url": "/Auth/RegisterCover"
     },
     {
       "name": "ثبت نام چند مرحله",
       "icon": "ti-user-plus",
-      "url": "auth-register-multisteps.html"
+      "url": "/Auth/RegisterMultisteps"
     },
     {
       "name": "تأیید ایمیل - پایه",
       "icon": "ti-mail",
-      "url": "auth-verify-email-basic.html"
+      "url": "/Auth/VerifyEmailBasic"
     },
     {
       "name": "تأیید ایمیل - کاور",
       "icon": "ti-mail",
-      "url": "auth-verify-email-cover.html"
+      "url": "/Auth/VerifyEmailCover"
     },
     {
       "name": "بازنشانی رمز عبور - پایه",
       "icon": "ti-help",
-      "url": "auth-reset-password-basic.html"
+      "url": "/Auth/ResetPasswordBasic"
     },
     {
       "name": "تنظیم مجدد رمز عبور - کاور",
       "icon": "ti-help",
-      "url": "auth-reset-password-cover.html"
+      "url": "/Auth/ResetPasswordCover"
     },
     {
       "name": "فراموش کردن رمز عبور - پایه",
       "icon": "ti-question-mark",
-      "url": "auth-forgot-password-basic.html"
+      "url": "/Auth/ForgotPasswordBasic"
     },
     {
       "name": "فراموش کردن رمز عبور - کاور",
       "icon": "ti-question-mark",
-      "url": "auth-forgot-password-cover.html"
+      "url": "/Auth/ForgotPasswordCover"
     },
     {
       "name": "تأیید دو مرحله - پایه",
       "icon": "ti-question-mark",
-      "url": "auth-two-steps-basic.html"
+      "url": "/Auth/TwoStepsBasic"
     },
     {
       "name": "تأیید دو مرحله ای - کاور",
       "icon": "ti-question-mark",
-      "url": "auth-two-steps-cover.html"
+      "url": "/Auth/TwoStepsCover"
     },
     {
       "name": "صفحات سایت - مرکز راهنما",
       "icon": "ti-progress-help",
-      "url": "../front-pages/help-center-landing.html"
+      "url": "/FrontPages/HelpCenterLanding"
     },
     {
       "name": "صفحات سایت - لندینگ",
       "icon": "ti-files",
-      "url": "../front-pages/landing-page.html"
+      "url": "/FrontPages/LandingPage"
     },
     {
       "name": "صفحات سایت - قیمت گذاری",
       "icon": "ti-currency-dollar",
-      "url": "../front-pages/pricing-page.html"
+      "url": "/FrontPages/PricingPage"
     },
     {
       "name": "صفحات سایت - ثبت سفارش",
       "icon": "ti-check",
-      "url": "../front-pages/checkout-page.html"
+      "url": "/FrontPages/CheckoutPage"
     },
     {
       "name": "صفحات سایت - پرداخت",
       "icon": "ti-credit-card",
-      "url": "../front-pages/payment-page.html"
+      "url": "/FrontPages/PaymentPage"
     },
     {
       "name": "نمونه های مودال",
       "icon": "ti-square",
-      "url": "modal-examples.html"
+      "url": "/Modals/Examples"
     },
     {
       "name": "پرداخت - چند مرحله ای",
       "icon": "ti-shopping-cart",
-      "url": "wizard-ex-checkout.html"
+      "url": "/Wizards/Checkout"
     },
     {
       "name": "درخواست ملک - چند مرحله ای",
       "icon": "ti-building-cottage",
-      "url": "wizard-ex-property-listing.html"
+      "url": "/Wizards/PropertyListing"
     },
     {
       "name": "ایجاد معامله - چند مرحله ای",
       "icon": "ti-gift",
-      "url": "wizard-ex-create-deal.html"
+      "url": "/Wizards/CreateDeal"
     },
     {
       "name": "آیکن‌های Tabler",
       "icon": "ti-pencil",
-      "url": "icons-tabler.html"
+      "url": "/Icons/Tabler"
     },
     {
       "name": "آیکن‌های Fontawesome",
       "icon": "ti-typography",
-      "url": "icons-font-awesome.html"
+      "url": "/Icons/FontAwesome"
     },
     {
       "name": "کارت های پایه",
       "icon": "ti-credit-card",
-      "url": "cards-basic.html"
+      "url": "/Cards/Basic"
     },
     {
       "name": "کارت های پیشرفته",
       "icon": "ti-id",
-      "url": "cards-advance.html"
+      "url": "/Cards/Advance"
     },
     {
       "name": "کارت های آمار",
       "icon": "ti-chart-bar",
-      "url": "cards-statistics.html"
+      "url": "/Cards/Statistics"
     },
     {
       "name": "کارت های آنالیز",
       "icon": "ti-chart-bar",
-      "url": "cards-analytics.html"
+      "url": "/Cards/Analytics"
     },
     {
       "name": "عملیات های کارت",
       "icon": "ti-mouse-2",
-      "url": "cards-actions.html"
+      "url": "/Cards/Actions"
     },
     {
       "name": "آکاردئون",
       "icon": "ti-arrows-maximize",
-      "url": "ui-accordion.html"
+      "url": "/Ui/Accordion"
     },
     {
       "name": "هشدارها",
       "icon": "ti-alert-triangle",
-      "url": "ui-alerts.html"
+      "url": "/Ui/Alerts"
     },
     {
       "name": "نشان‌ها",
       "icon": "ti-badge",
-      "url": "ui-badges.html"
+      "url": "/Ui/Badges"
     },
     {
       "name": "دکمه ها",
       "icon": "ti-circle-plus",
-      "url": "ui-buttons.html"
+      "url": "/Ui/Buttons"
     },
     {
       "name": "اسلایدر",
       "icon": "ti-photo",
-      "url": "ui-carousel.html"
+      "url": "/Ui/Carousel"
     },
     {
       "name": "بازشونده",
       "icon": "ti-arrows-minimize",
-      "url": "ui-collapse.html"
+      "url": "/Ui/Collapse"
     },
     {
       "name": "پاپ آپ منو",
       "icon": "ti-arrow-autofit-height",
-      "url": "ui-dropdowns.html"
+      "url": "/Ui/Dropdowns"
     },
     {
       "name": "فـوتر",
       "icon": "ti-layout-bottombar",
-      "url": "ui-footer.html"
+      "url": "/Ui/Footer"
     },
     {
       "name": "لیست گروه ها",
       "icon": "ti-list-numbers",
-      "url": "ui-list-groups.html"
+      "url": "/Ui/ListGroups"
     },
     {
       "name": "مُدال ها",
       "icon": "ti-layout",
-      "url": "ui-modals.html"
+      "url": "/Ui/Modals"
     },
     {
       "name": "تولبار",
       "icon": "ti-layout-navbar",
-      "url": "ui-navbar.html"
+      "url": "/Ui/Navbar"
     },
     {
       "name": "کشوی کناری",
       "icon": "ti-layout",
-      "url": "ui-offcanvas.html"
+      "url": "/Ui/Offcanvas"
     },
     {
       "name": "صفحه‌بندی و مسیر",
       "icon": "ti-chevrons-right",
-      "url": "ui-pagination-breadcrumbs.html"
+      "url": "/Ui/PaginationBreadcrumbs"
     },
     {
       "name": "نوار پیشرفت",
       "icon": "ti-adjustments-horizontal",
-      "url": "ui-progress.html"
+      "url": "/Ui/Progress"
     },
     {
       "name": "لودینگ‌ها",
       "icon": "ti-loader-2",
-      "url": "ui-spinners.html"
+      "url": "/Ui/Spinners"
     },
     {
       "name": "تب‌ها و برگ‌ها",
       "icon": "ti-server-2",
-      "url": "ui-tabs-pills.html"
+      "url": "/Ui/TabsPills"
     },
     {
       "name": "توئستر",
       "icon": "ti-box-model",
-      "url": "ui-toasts.html"
+      "url": "/Ui/Toasts"
     },
     {
       "name": "پاپ‌آپ راهنما",
       "icon": "ti-message-2",
-      "url": "ui-tooltips-popovers.html"
+      "url": "/Ui/TooltipsPopovers"
     },
     {
       "name": "تایپوگرافی",
       "icon": "ti-typography",
-      "url": "ui-typography.html"
+      "url": "/Ui/Typography"
     },
     {
       "name": "آواتار",
       "icon": "ti-user-circle",
-      "url": "extended-ui-avatar.html"
+      "url": "/ExtendedUi/Avatar"
     },
     {
       "name": "قفل صفحه",
       "icon": "ti-window-maximize",
-      "url": "extended-ui-blockui.html"
+      "url": "/ExtendedUi/BlockUi"
     },
     {
       "name": "کشیدن و رهاکردن",
       "icon": "ti-drag-drop",
-      "url": "extended-ui-drag-and-drop.html"
+      "url": "/ExtendedUi/DragDrop"
     },
     {
       "name": "مدیاپلیر",
       "icon": "ti-music",
-      "url": "extended-ui-media-player.html"
+      "url": "/ExtendedUi/MediaPlayer"
     },
     {
       "name": "نوار اسکرول",
       "icon": "ti-arrows-move-vertical",
-      "url": "extended-ui-perfect-scrollbar.html"
+      "url": "/ExtendedUi/PerfectScrollbar"
     },
     {
       "name": "امتیاز ستاره‌ای",
       "icon": "ti-star",
-      "url": "extended-ui-star-ratings.html"
+      "url": "/ExtendedUi/StarRatings"
     },
     {
       "name": "پاپ‌آپ SweetAlert2",
       "icon": "ti-alert-triangle",
-      "url": "extended-ui-sweetalert2.html"
+      "url": "/ExtendedUi/SweetAlert2"
     },
     {
       "name": "جداکننده",
       "icon": "ti-separator-horizontal",
-      "url": "extended-ui-text-divider.html"
+      "url": "/ExtendedUi/TextDivider"
     },
     {
       "name": "خط زمانی",
       "icon": "ti-arrows-horizontal",
-      "url": "extended-ui-timeline-basic.html"
+      "url": "/ExtendedUi/TimelineBasic"
     },
     {
       "name": "خط زمانی - تمام صفحه",
       "icon": "ti-arrows-horizontal",
-      "url": "extended-ui-timeline-fullscreen.html"
+      "url": "/ExtendedUi/TimelineFullScreen"
     },
     {
       "name": "تور راهنما",
       "icon": "ti-brand-telegram",
-      "url": "extended-ui-tour.html"
+      "url": "/ExtendedUi/Tour"
     },
     {
       "name": "نمای درختی",
       "icon": "ti-git-fork rotate-180",
-      "url": "extended-ui-treeview.html"
+      "url": "/ExtendedUi/Treeview"
     },
     {
       "name": "سایرموارد",
       "icon": "ti-sitemap",
-      "url": "extended-ui-misc.html"
+      "url": "/ExtendedUi/Misc"
     },
     {
       "name": "اینپوت‌های پایه",
       "icon": "ti-cursor-text",
-      "url": "forms-basic-inputs.html"
+      "url": "/Forms/BasicInputs"
     },
     {
       "name": "اینپوت گروپ",
       "icon": "ti-arrow-autofit-content",
-      "url": "forms-input-groups.html"
+      "url": "/Forms/InputGroups"
     },
     {
       "name": "گزینه‌های خاص",
       "icon": "ti-circle",
-      "url": "forms-custom-options.html"
+      "url": "/Forms/CustomOptions"
     },
     {
       "name": "ویرایشگر متن",
       "icon": "ti-text-resize",
-      "url": "forms-editors.html"
+      "url": "/Forms/Editors"
     },
     {
       "name": "آپلود فایل",
       "icon": "ti-file-upload",
-      "url": "forms-file-upload.html"
+      "url": "/Forms/FileUpload"
     },
     {
       "name": "انتخابگر تاریخ و رنگ",
       "icon": "ti-edit-circle",
-      "url": "forms-pickers.html"
+      "url": "/Forms/Pickers"
+    },
+    {
+      "name": "انتخابگر تاریخ شمسی",
+      "icon": "ti-edit-circle",
+      "url": "/Forms/PickersJalali"
     },
     {
       "name": "انتخابگر گزینه",
       "icon": "ti-select",
-      "url": "forms-selects.html"
+      "url": "/Forms/Selects"
     },
     {
       "name": "انتخابگر بازه",
       "icon": "ti-adjustments-alt rotate-90",
-      "url": "forms-sliders.html"
+      "url": "/Forms/Sliders"
     },
     {
       "name": "سوئیچ‌ها",
       "icon": "ti-toggle-right",
-      "url": "forms-switches.html"
+      "url": "/Forms/Switches"
     },
     {
       "name": "سایر موارد",
       "icon": "ti-circle-plus",
-      "url": "forms-extras.html"
+      "url": "/Forms/Extras"
     },
     {
       "name": "فرم افقی",
       "icon": "ti-file-text",
-      "url": "form-layouts-vertical.html"
+      "url": "/FormLayouts/Vertical"
     },
     {
       "name": "فرم عمودی",
       "icon": "ti-file-text",
-      "url": "form-layouts-horizontal.html"
+      "url": "/FormLayouts/Horizontal"
     },
     {
       "name": "سربرگ چسبنده",
       "icon": "ti-file-text",
-      "url": "form-layouts-sticky.html"
+      "url": "/FormLayouts/Sticky"
     },
     {
       "name": "فرم مرحله‌ای - شماره‌دار",
       "icon": "ti-text-wrap-disabled",
-      "url": "form-wizard-numbered.html"
+      "url": "/FormWizard/Numbered"
     },
     {
       "name": "فرم مرحله‌ای - آیکن",
       "icon": "ti-text-wrap-disabled",
-      "url": "form-wizard-icons.html"
+      "url": "/FormWizard/Icons"
     },
     {
       "name": "اعتبارسنجی فرم",
       "icon": "ti-checkbox",
-      "url": "form-validation.html"
+      "url": "/FormValidation/Validation"
     },
     {
       "name": "جداول",
       "icon": "ti-table",
-      "url": "tables-basic.html"
+      "url": "/Tables/Basic"
     },
     {
       "name": "جداول داده‌ای - پایه",
       "icon": "ti-layout-grid",
-      "url": "tables-datatables-basic.html"
+      "url": "/Tables/DataTablesBasic"
     },
     {
       "name": "جداول داده‌ای - پیشرفته",
       "icon": "ti-layout-grid",
-      "url": "tables-datatables-advanced.html"
+      "url": "/Tables/DataTablesAdvanced"
     },
     {
       "name": "جداول داده‌ای - افزونه‌ها",
       "icon": "ti-layout-grid",
-      "url": "tables-datatables-extensions.html"
+      "url": "/Tables/DataTablesExtensions"
     },
     {
       "name": "نمودارهای Apex",
       "icon": "ti-chart-line",
-      "url": "charts-apex.html"
+      "url": "/Charts/Apex"
     },
     {
       "name": "نمودارهای JS",
       "icon": "ti-chart-bar",
-      "url": "charts-chartjs.html"
+      "url": "/Charts/Chartjs"
     },
     {
       "name": "نقشه‌های Leaflet",
       "icon": "ti-map-pin",
-      "url": "maps-leaflet.html"
+      "url": "/Maps/Leaflet"
     }
   ],
   "files": [
@@ -757,70 +747,70 @@
       "subtitle": "توسط سهیل نصیری",
       "src": "img/icons/misc/search-xls.png",
       "meta": "17kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "تصویر گذرنامه",
       "subtitle": "توسط سارا زمانی",
       "src": "img/icons/misc/search-jpg.png",
       "meta": "35kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "یادداشت های کلاس",
       "subtitle": "توسط آلکس نوری",
       "src": "img/icons/misc/search-doc.png",
       "meta": "153kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "رسید",
       "subtitle": "توسط رضا کامران فرد",
       "src": "img/icons/misc/search-jpg.png",
       "meta": "25kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "راهنمای اجتماعی",
       "subtitle": "توسط اشکان دژاگه",
       "src": "img/icons/misc/search-doc.png",
       "meta": "39kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "هزینه ها",
       "subtitle": "توسط علیرضا جهانبخش",
       "src": "img/icons/misc/search-xls.png",
       "meta": "15kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "مستندات",
       "subtitle": "توسط فرهاد مجیدی",
       "src": "img/icons/misc/search-doc.png",
       "meta": "200kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "آواتار",
       "subtitle": "توسط ندا همایونی",
       "src": "img/icons/misc/search-jpg.png",
       "meta": "100kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "داده‌ها",
       "subtitle": "توسط سید ناصر حسینی",
       "src": "img/icons/misc/search-xls.png",
       "meta": "5kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "راهنمای باغبانی",
       "subtitle": "توسط ایمان شریفی",
       "src": "img/icons/misc/search-doc.png",
       "meta": "25kb",
-      "url": "app-file-manager.html"
+      "url": "javascript:void(0);"
     }
   ],
   "members": [
@@ -828,43 +818,43 @@
       "name": "نوید محمدزاده",
       "subtitle": "مدیر",
       "src": "img/avatars/1.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "الهه شریفیان",
       "subtitle": "مشتری",
       "src": "img/avatars/2.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "سروش لشکری",
       "subtitle": "پرسنل",
       "src": "img/avatars/5.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "مهدیار آقاجانی",
       "subtitle": "پرسنل",
       "src": "img/avatars/7.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "حسین رحمتی",
       "subtitle": "مشتری",
       "src": "img/avatars/3.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "رعنا آزادی‌ور",
       "subtitle": "مدیر",
       "src": "img/avatars/10.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     },
     {
       "name": "مینا علیزاده",
       "subtitle": "مدیر",
       "src": "img/avatars/12.png",
-      "url": "app-user-view-account.html"
+      "url": "javascript:void(0);"
     }
   ]
 }

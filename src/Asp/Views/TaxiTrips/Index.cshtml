@@ -1,0 +1,345 @@
+@model List<Application.Services.MrShooferORS.SearchedTrip>
+
+@{
+    Layout = "_HorizontalLayout";
+}
+
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
+    <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
+    <link href="~/css/taxitripsindex.css" rel="stylesheet" />
+}
+@section VendorScripts {
+    <script src="~/libs/jquery.js"></script>
+    <script src="~/vendor/libs/jdate/jdate.min.js"></script>
+    <script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+    <script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+    <script src="~/vendor/js/dropdown-hover.js"></script>
+    <script src="~/vendor/js/dropdown-hover.js"></script>
+
+}
+@section PageScripts {
+    <script src="~/js/cards-actions.js"></script>
+
+    <script src="~/js/front-page-landing.js"></script>
+    <script src="~/js/forms-pickers-jalali.js"></script>
+    <script src="~/js/searchpage.js"></script>
+}
+
+<style>
+
+
+    @@media only screen and (min-width: 960px) {
+        .px-lg-6 {
+            padding-right: 2.6rem !important;
+            padding-left: 2.6rem !important;
+        }
+    }
+
+    @@media only screen and (min-width: 1200px) {
+        .px-lg-6 {
+            padding-right: 8rem !important;
+            padding-left: 8rem !important;
+        }
+    }
+</style>
+
+<div class="px-lg-6 px-0">
+
+    <div class="searchbar card shadow" style="background-color:;">
+
+        <div class="row">
+            <div class="col-lg-2 "></div>
+            <div class="row col-12 col-lg-8">
+                <div class="">
+                    <form asp-controller="TaxiTrips" method="get" asp-action="Index">
+                        <div class="card-body row p-3">
+                            <div class="col-3 inputcel">
+                                <div class="input-container">
+                                    <input name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
+                                    <i class="ti ti-location mb-2 icon"></i>
+                                    <span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px; !important">
+
+                                        @*  <div class="city">
+                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        تهران
+                                        <small class="" >
+                                        (همه پایانه‌ها)
+                                        </small>
+
+                                        </a>
+
+                                        <div class="terminals ms-3">
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
+
+                                        </div>
+                                        </div> *@
+                                    </span>
+                                </div>
+                                @* <div class="form-text" id="defaultFormControlHelp">شهر مبدا سفر</div> *@
+                            </div>
+
+                            <div class="col-3 inputcel">
+                                <div class="input-container">
+                                    <input name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
+                                    <i class="ti ti-map-pin mb-2 icon"></i>
+                                    <span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;" style="min-width:230px;">
+
+                                        @*  <div class="city">
+                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        تهران
+                                        <small class="" >
+                                        (همه پایانه‌ها)
+                                        </small>
+
+                                        </a>
+
+                                        <div class="terminals ms-3">
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
+
+                                        </div>
+                                        </div> *@
+                                    </span>
+
+                                </div>
+                                @* <div class="form-text" id="defaultFormControlHelp">شهر مقصد سفر</div> *@
+                            </div>
+
+                            <div class="col-3 inputcel">
+                                <!-- /Human Friendly Date Picker-->
+                                <!-- Disabled Range-->
+
+                                <div class="input-container">
+                                    <input name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="flatpickr-date" placeholder="تاریخ سفر" type="text" />
+                                    <i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
+                                </div>
+                                @* <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div> *@
+
+
+                            </div>
+
+
+
+                            <div class="col-3 inputcel">
+                                <div class="ps-0">
+                                    <button style="width:100%;" class="btn btn-primary waves-effect waves-light" type="submit">
+                                        پیدا کن
+                                        <i class="ti ti-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3" style="padding-left:0.5rem !important;">
+            <div class="card">
+                <div class="card-header py-4 pe-4 ps-3" style="">
+                    <h1 class="mb-0 direction-text">
+                        سفرهای تاکسی
+                        @ViewBag.origin_city_text
+                        به
+                        @ViewBag.dest_city_text
+
+
+                        @(2+ 2)
+                    </h1>
+                </div>
+            </div>
+            <div class="card card-action mt-2">
+                <div class="card-header">
+                    <div class="card-action-title oredring-title">ترتیب بر اساس</div>
+                    <div class="card-action-element">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="card-collapsible" href="javascript:void(0);">
+                                    <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="collapse show" style="">
+                    <div class="card-body pt-0">
+                        <div class="form-check ">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
+                            <label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+                            <label class="form-check-label" for="defaultRadio1"> زود ترین</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+                            <label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card card-action mt-2">
+                <div class="card-header">
+                    <div class="card-action-title oredring-title">خودرو</div>
+                    <div class="card-action-element">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="card-collapsible" href="javascript:void(0);">
+                                    <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="collapse show" style="">
+                    <div class="card-body pt-0">
+                        <div class="form-check ">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
+                            <label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+                            <label class="form-check-label" for="defaultRadio1"> زود ترین</label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+                            <label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-9 ps-0">
+            @await Html.PartialAsync("TimelinePartial", DateTime.Now)
+
+            <div class="trips-container">
+
+                @foreach (var trip in Model)
+                {
+                    @await Html.PartialAsync("Partials/PrivateTripCardPartial", trip)
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .submitation {
+        max-width: 160px;
+        flex: 1;
+    }
+
+    .direction-container {
+    }
+
+    .transport {
+        flex-grow: 3;
+        max-width: 300px;
+    }
+
+    .trip-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .fa-taxiSide {
+        height: 1.2em;
+    }
+
+    .price {
+        color: #0b5fb3;
+        font-size: 20px;
+        font-style: normal;
+        font-variation-settings: "wght" 700;
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .orgprice {
+        color: #8d99a6;
+        font-size: 15px;
+        font-style: normal;
+        font-variation-settings: "wght" 500;
+        font-weight: 500;
+        text-align: right;
+        text-decoration: line-through;
+    }
+
+    .logo-image {
+        height: 40px;
+        -o-object-fit: contain;
+        object-fit: contain;
+        width: 40px;
+    }
+
+
+    .leftside {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .directionval {
+        font-weight: 400;
+        font-size: 14px;
+        font-style: normal;
+        font-variation-settings: "wght" 400;
+        font-weight: 400;
+        line-height: 28px;
+    }
+
+
+    .mainbody {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .provider {
+        text-align: center;
+    }
+
+    .starttime, .endtime {
+        font-size: 1.7rem;
+    }
+
+    .tripcardheader {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+
+    .carmodel {
+        color: black !important;
+    }
+
+    .direction-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+</style>

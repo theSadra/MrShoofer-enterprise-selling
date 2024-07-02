@@ -1,5 +1,6 @@
 @{
   TempData.Keep();
+  @* ViewData["navbarDetached"] = (ViewData["navbarDetached"] ?? "navbar-detached"); *@
   ViewData["navbarDetached"] = (ViewData["navbarDetached"] ??= null);
   ViewData["containerNav"] = (ViewData["containerNav"] ??= "container-fluid");
 }
@@ -18,6 +19,7 @@ else
   id="layout-navbar">
   <div class='@((@ViewData["navbarDetached"] == null) ? @ViewData["containerNav"] : "")'>
     @await Html.PartialAsync("Sections/Navbar/_NavbarPartial")
-  </div>
-</nav>
+    </div>
+  </nav>
+
 }

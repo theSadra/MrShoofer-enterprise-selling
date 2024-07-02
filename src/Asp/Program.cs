@@ -1,6 +1,7 @@
 using Application.Data;
 using Application.Services;
 using Application.Services.Auth;
+using Application.Services.MrShooferORS;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,9 +11,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+
+
+
+ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,7 +33,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-  options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+  options.AccessDeniedPath = "/Auth/AccessDenied";
   options.Cookie.Name = "YourAppCookieName";
   options.Cookie.HttpOnly = true;
   options.ExpireTimeSpan = TimeSpan.FromDays(2);
@@ -48,6 +53,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

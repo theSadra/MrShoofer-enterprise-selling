@@ -1,0 +1,40 @@
+@model Application.Services.MrShooferORS.SearchedTrip
+
+
+@if (Model.tripTypeID == Application.Services.MrShooferORS.TripType.OnlyPrivate)
+{
+    <div class="card p-3 mt-4" style="width: 100%;">
+      
+        <div class="">
+            <i class="ti ti-armchair-2 d-inline"></i>
+            |
+            <small class="text-danger ms-1 d-inline">دربستی</small>
+        </div>
+        <div>
+            @Model.originCityName (@Model.oringinLocationName)
+            ...........
+            @Model.destinationCityName (@Model.destinationLocationName)
+
+
+
+
+            <p class="text-underlined">
+              @Model.originalTicketprice
+            </p>
+            <p>
+            @Model.afterdiscticketprice
+
+            </p>
+
+            <p>
+              @Model.startingDateTimeShamsi.Split("T")[1]
+            </p>
+
+
+            <small>
+              @Model.carModelName.Replace(" ","")
+            </small>
+        </div>
+        <h2>Trips</h2>
+    </div>
+}
