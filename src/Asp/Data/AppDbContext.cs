@@ -11,7 +11,9 @@ namespace Application.Data
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseSqlite("Data Source = C:\\Users\\doros\\Desktop\\Mrshoofer_org.db;");
+
+      string desktop_address = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+      optionsBuilder.UseSqlite($"Data Source = {desktop_address}\\Mrshoofer_org.db;");
 
     }
   }
