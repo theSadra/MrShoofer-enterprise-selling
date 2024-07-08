@@ -18,9 +18,13 @@ namespace Application.Controllers
       return View();
     }
 
-    public IActionResult Reservetrip(string tripcode)
+    public async Task<IActionResult> Reservetrip(string tripcode)
     {
       ViewData["ReservationId"] = tripcode;
+
+
+      var result = await apiclient.GetTripInfo(tripcode);
+
 
       return View();
     }
