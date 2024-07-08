@@ -8,7 +8,6 @@ namespace Application.Data
   {
 
 
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
