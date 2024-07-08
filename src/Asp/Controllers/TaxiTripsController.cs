@@ -25,7 +25,6 @@ namespace Application.Controllers
       var apikey = await MrShooferAPIClient.GetSellerApiKey_LoginAsync("09132269102", "mrbilitATG9996");
 
 
-
       // Getting origin and destination ID 
       int origin_id = directionsRepository.GetDirections()[originstring];
       int destination_id = directionsRepository.GetDirections()[destinationstring];
