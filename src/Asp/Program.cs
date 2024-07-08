@@ -22,6 +22,11 @@ builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
 builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>();
 
 
+<<<<<<< HEAD
+
+// Add services to the container.
+=======
+>>>>>>> 05d944ed11b7ec0c186c14ef91fa04ead5f01006
 builder.Services.AddControllersWithViews();
 
 builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
