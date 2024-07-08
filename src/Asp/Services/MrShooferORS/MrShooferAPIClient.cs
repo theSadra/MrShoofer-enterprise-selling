@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using NuGet.Protocol;
 using System.Security.Policy;
 using System.Text.Json;
@@ -69,6 +70,21 @@ namespace Application.Services.MrShooferORS
       return searchedtrips;
     }
 
+    public async Task<SearchedTrip> GetTripInfo(string tripcode)
+    {
+
+      string searchurl = $"https://mrbilit.mrshoofer.ir/Trips/getTripinfo?tripcode={tripcode}";
+      var result = await _client.GetFromJsonAsync<SearchedTrip>(searchurl);
+
+      if (result == null)
+      {
+        throw new Exception("Trip not found");
+      }
+
+
+      return result;
+    }
+
 
     /// <summary>
     /// Reserves temporarirly the ticket for trip
@@ -94,14 +110,14 @@ namespace Application.Services.MrShooferORS
 
     public async Task<TicketConfirmationResponse> ConfirmReserve(ConfirmReserveRequestModel confirmreservemodel)
     {
-        var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("https://mrbilit.mrshoofer.ir/Tickets/confirmReserve", confirmreservemodel);
+      var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("https://mrbilit.mrshoofer.ir/Tickets/confirmReserve", confirmreservemodel);
 
-        // When error happend
-        if ((int)response.StatusCode != 200)
-        {
-          var jsonresult = JsonNode.Parse(await response.Content.ReadAsStringAsync());
-          throw new Exception(jsonresult["error"].ToString());
-        }
+      // When error happend
+      if ((int)response.StatusCode != 200)
+      {
+        var jsonresult = JsonNode.Parse(await response.Content.ReadAsStringAsync());
+        throw new Exception(jsonresult["error"].ToString());
+      }
 
 
       var jsonresponse = JsonNode.Parse(await response.Content.ReadAsStringAsync());
