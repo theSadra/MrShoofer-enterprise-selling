@@ -1,0 +1,181 @@
+
+
+@media only screen and (min-width: 960px) {
+  .px-lg-6 {
+    padding-right: 2.6rem !important;
+    padding-left: 2.6rem !important;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .px-lg-6 {
+    padding-right: 8rem !important;
+    padding-left: 8rem !important;
+  }
+}
+
+
+
+
+
+
+.direction-text {
+  font-size: 15px;
+  font-style: normal;
+  font-variation-settings: "wght" 700;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 0;
+  text-align: right;
+}
+
+.px-lg-6 {
+  padding-right: 8rem;
+  padding-left: 8rem;
+}
+
+.timeline_container {
+  align-items: center;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.timelineday {
+  align-items: stretch;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  margin: 0 6px;
+  padding: 0 4px;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  width: 88px;
+}
+
+.daytext {
+  display: block;
+  text-align: right;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+  font-size: 12px;
+}
+
+.daypriceconainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: -6px;
+  position: relative;
+  width: 100%;
+}
+
+.dayprice {
+  align-items: center;
+  color: #333;
+  display: flex;
+  font-size: 15px;
+  font-style: normal;
+  font-variation-settings: "wght" 700;
+  font-weight: 700;
+  height: 32px;
+  line-height: 32px;
+  opacity: 1;
+  text-align: right;
+  transition: all .4s;
+  white-space: nowrap;
+}
+
+.oredring-title {
+  font-weight: bold;
+}
+
+
+.dropdown-item {
+  font-size: 1rem !important;
+  line-height: unset !important;
+  cursor: pointer;
+}
+
+.origin, .destination, .starttimeselector {
+  font-size: 1rem !important;
+}
+
+.selected-dayspan {
+  background: #7367f0;
+  border-radius: 4px 4px 0 0;
+  bottom: -8px;
+  height: 4px;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  transition: opacity .2s linear;
+}
+
+
+.dropdown-menu {
+  inset: unset !important;
+  min-width: 250px !important;
+  transition: ease-out 300ms all;
+}
+
+.locationicon {
+  position: unset !important;
+  display: unset !important;
+}
+
+.inputcel {
+  padding: 0;
+  padding: 0 0.25rem !important;
+}
+
+:root, [data-bs-theme=light] {
+  --bs-border-radius: 1.0rem !important;
+}
+
+.card-header {
+  border-radius: var(--bs-border-radius);
+}
+
+
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+}
+
+.input-container i {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%); /* Center icon vertically */
+}
+
+.input-container input {
+    width: 100%;
+    border: 1px solid #ccc;
+}

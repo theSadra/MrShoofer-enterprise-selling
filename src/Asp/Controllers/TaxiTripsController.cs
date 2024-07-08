@@ -39,6 +39,7 @@ namespace Application.Controllers
       DateTime searchedDatetime = pd.ToDateTime();
 
 
+
       // Fetching trips based on search parameters from ORS
       var response = (await client.SearchTrips(searchedDatetime, searchedDatetime.AddDays(1), origin_id,destination_id))
         ;
@@ -47,8 +48,8 @@ namespace Application.Controllers
 
       ViewBag.origin_city_text = originstring;
       ViewBag.dest_city_text = destinationstring;
-      ViewBag.searchdate = searchdate;  
-
+      ViewBag.searchdate = searchdate;
+      ViewBag.selecteddate = searchedDatetime;
 
       return View(response
         .OrderBy(t => t.startingDateTime).ToList()

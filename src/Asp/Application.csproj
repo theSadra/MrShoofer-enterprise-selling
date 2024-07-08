@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\js\app-academy-course-details - Copy (2).js" />
+    <Content Remove="wwwroot\js\app-academy-course-details - Copy - Copy.js" />
+    <Content Remove="wwwroot\js\app-academy-course-details - Copy.js" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Views\Shared\Sections\Footer\_Footer.cshtml" />
     <None Include="Views\Shared\Sections\Footer\_FooterFront.cshtml" />
     <None Include="Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
@@ -19,6 +24,9 @@
     <None Include="Views\Shared\Sections\_Styles.cshtml" />
     <None Include="Views\Shared\Sections\_StylesFront.cshtml" />
     <None Include="Views\Shared\Sections\_Variables.cshtml" />
+    <None Include="wwwroot\js\app-academy-course-details - Copy (2).js" />
+    <None Include="wwwroot\js\app-academy-course-details - Copy - Copy.js" />
+    <None Include="wwwroot\js\app-academy-course-details - Copy.js" />
     <None Include="wwwroot\js\app-academy-course-details.js" />
     <None Include="wwwroot\js\app-academy-course.js" />
     <None Include="wwwroot\js\app-academy-dashboard.js" />
