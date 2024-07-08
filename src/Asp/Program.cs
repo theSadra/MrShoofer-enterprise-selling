@@ -16,10 +16,12 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
  var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
+builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>();
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
