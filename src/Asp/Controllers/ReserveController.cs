@@ -23,7 +23,10 @@ namespace Application.Controllers
       ViewData["ReservationId"] = tripcode;
 
 
-      var result = await apiclient.GetTripInfo(tripcode);
+      var trip = await apiclient.GetTripInfo(tripcode);
+
+      ViewBag.trip = trip;
+
 
 
       return View();

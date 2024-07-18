@@ -52,7 +52,7 @@
           @await Html.PartialAsync("Sections/Menu/_HorizontalMenu")
         }
         <!-- Content -->
-        <div class='@ViewData["container"] @((Convert.ToBoolean(@ViewData["isFlex"])) ? "d-flex align-items-stretch flex-grow-1 p-0" : "flex-grow-1 container-p-y")'>
+        <div class='@ViewData["container"] @((Convert.ToBoolean(@ViewData["isFlex"])) ? "d-flex align-items-stretch flex-grow-1" : "flex-grow-1 container-p-y")'>
           @RenderBody()
         </div>
         <!-- / Content -->
