@@ -1,6 +1,4 @@
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model Application.ViewModels.Reserve.ReserveInfoViewModel
 @{
     Layout = "_HorizontalLayout";
 
@@ -23,6 +21,13 @@
     <script src="~/vendor/libs/select2/i18n/fa.js"></script>
     <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
     <script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+
+    <script src="/libs/validation/jquery.validate.min.js"></script>
+    <script src="/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/libs/jquery.js"></script>
+
+
 }
 
 @section PageScripts {
@@ -30,6 +35,7 @@
     <script src="~/js/forms-tagify.js"></script>
     <script src="~/js/forms-typeahead.js"></script>
 }
+
 
 
 
@@ -79,9 +85,10 @@
 
     </div>
 
-
     <div class="downside-contaner mt-5 row">
         <article class="col-8">
+
+            <input type="hidden" value="@trip.tripPlanCode"/>
             <h1 class=mb-4 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">
                 اطلاعات خریدار را وارد کنید
             </h1>
@@ -100,8 +107,7 @@
                     </div>
                 </div>
 
-                <form class="input-forms row mt-2 pe-4">
-
+                <form class="input-forms row mt-2 pe-4" method="post">
 
                     <div class="col-md-6 pe-2">
                         <div class="mt-2 mb-3">
@@ -109,7 +115,8 @@
                                 نام
                                 <span class="text-danger">*</span>
                             </label>
-                            <input autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام مسافر" type="text">
+                            <input asp-for="Firstname" autocomplete="off" class="form-control form-control" placeholder="نام مسافر" type="text">
+                            <span asp-validation-for="Firstname" class="text-danger validation-message"></span>
                         </div>
                     </div>
 
@@ -120,7 +127,8 @@
                                 نام خانوادگی
                                 <span class="text-danger">*</span>
                             </label>
-                            <input autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
+                            <input asp-for="Lastname" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
+                            <span asp-validation-for="Lastname" class="text-danger validation-message"></span>
                         </div>
 
                     </div>
@@ -132,27 +140,32 @@
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <div class="col-md mb-md-0 mb-2">
+                            <div class="row mb-md-0 mb-2">
+
+                              <div class="col-md-6">
+
                                 <div class="form-check custom-option custom-option-basic">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp1">
-                                        <input checked class="form-check-input" id="customRadioTemp1" name="customRadioTemp" type="radio" value="" />
+                                        <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" name="customRadioTemp" type="radio" value="female" />
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">زن</span>
                                         </span>
 
                                     </label>
                                 </div>
-                            </div>
-                            <div class="col-md">
-                                <div class="form-check custom-option custom-option-basic">
+                              </div>
+                                <div class="col-md-6">
+                                <div class="form-check custom-option custom-option-basic me-0">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp2">
-                                        <input class="form-check-input" id="customRadioTemp2" name="customRadioTemp" type="radio" value="" />
+                                        <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" name="customRadioTemp" type="radio" value="male" />
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">مرد</span>
                                         </span>
                                     </label>
                                 </div>
                             </div>
+                            </div>
+                                <span asp-validation-for="Gender" class="text-danger validation-message"></span>
                         </div>
                     </div>
 
@@ -165,7 +178,9 @@
                                     کدملی
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text">
+                                <input asp-for="NaCode" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text" data-val-regex-pattern="^\d{10}$ ">
+                                <span asp-validation-for="NaCode" class="text-danger validation-message"></span>
+
                             </div>
 
                         </div>
@@ -181,7 +196,6 @@
 
 
                         <div class="ms-2 mt-1 " style="color: rgb(41 38 61 / var(--tw-text-opacity)) !important;">
-
                             <h5 class="ms-1 mb-0 text-blck">اطلاعات تماس</h5>
                             <p class="mt-0 mb-0">اطلاعات تماس به منظور ارسال فایل بلیط و هماهنگی با مسافر برای شروع سفر استفاده می‌شود</p>
                         </div>
@@ -196,7 +210,8 @@
                                     تلفن مسافر
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text">
+                                <input asp-for="NumebrPhone" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text" data-val-regex-pattern="((0?9)|(\+?989))\d{9}">
+                                <span asp-validation-for="NumebrPhone" class="text-danger validation-message"></span>
                             </div>
                         </div>
 
@@ -204,7 +219,7 @@
                         <div class="col-md-6 ps-2">
                             <div class="mt-2 mb-3">
                                 <label class="form-label" for="largeInput">ایمیل</label>
-                                <input autocomplete="off" class="form-control form-control" id="largeInput" placeholder="(اختیاری)" type="text">
+                                <input asp-for="Email" autocomplete="off" class="form-control form-control" placeholder="(اختیاری)" type="text" data-val="fasle" >
                             </div>
 
                         </div>
@@ -233,7 +248,7 @@
             </div>
         </article>
 
-        <aside class="col-4">
+        <aside class="col-md-4 col-12">
 
             <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 ">
                 <div class="headline d-flex justify-between">
@@ -263,8 +278,13 @@
                     </span>
 
                     <span style="align-self: end;" class="mb-1">
+                      <span>
                         ....
-                        <img src="/taxi.png" height="20px" /> ....
+                      </span>
+                        <img src="/taxi.png" height="20px" />
+                        <span>
+                        ....
+                        </span>
                     </span>
 
                     <span>
@@ -403,8 +423,11 @@
 
 
                         <div class="ms-2 mt-0 p-0" style="text-align: right;">
-                          <h6 class="mb-0 mt-0 p-0">پرداخت از حساب</h6>
-                          <small class=" text-muted pb-1">قابل پرداخت از شارژ حساب آژانس</small>
+                          <h6 class="mb-0 mt-0 p-0">پرداخت از حساب
+                                <i class="ti ti-credit-card"></i>
+                          </h6>
+                            
+                            <small class=" text-muted pb-1">قابل پرداخت از شارژ حساب آژانس</small>
                         </div>
 
 
@@ -476,6 +499,10 @@
 
 <style>
 
+    .validation-message{
+      margin-top: .45rem;
+      font-size: .8rem;
+    }
     .success-payment{
         background-color: RGBA(var(--bs-success-rgb), .25) !important;
     }
