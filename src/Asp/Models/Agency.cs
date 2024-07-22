@@ -9,6 +9,6 @@ public class Agency
   public string Address { get; set; }
   public string AdminMobile { get; set; }
   public DateTime DateJoined { get; set; }
-  public List<Ticket> SoldTickets { get; set; } = new List<Ticket>();
+  public List<Ticket> SoldTickets { get; set; }
   public int Balance { get; set; }
 }

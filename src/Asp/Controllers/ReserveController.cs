@@ -1,9 +1,11 @@
 using Application.Services.MrShooferORS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Application.Controllers
 {
+  [Authorize]
   public class ReserveController : Controller
   {
     private readonly MrShooferAPIClient apiclient;
@@ -26,7 +28,6 @@ namespace Application.Controllers
       var trip = await apiclient.GetTripInfo(tripcode);
 
       ViewBag.trip = trip;
-
 
 
       return View();
