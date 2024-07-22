@@ -8,6 +8,7 @@ public class Ticket
   public string Firstname { get; set; }
   public string Lastname { get; set; }
   public string PhoneNumber { get; set; }
+  public string Email { get; set; }
   public string NaCode { get; set; }
   public DateTime DOB { get; set; }
   public int TicketOriginalPrice { get; set; }
@@ -15,5 +16,5 @@ public class Ticket
   public string TripOrigin { get; set; }
   public string TripDestination { get; set; }
   public DateTime RegisteredAt { get; set; }
-
+  public bool IsCancelled { get; set; }
 }
