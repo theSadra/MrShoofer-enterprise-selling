@@ -7,7 +7,6 @@ namespace Application.Data
   public class AppDbContext : IdentityDbContext<IdentityUser>
   {
 
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 

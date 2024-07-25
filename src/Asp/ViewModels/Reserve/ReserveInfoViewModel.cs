@@ -23,7 +23,8 @@ namespace Application.ViewModels.Reserve
     [RegularExpression(@"((0?9)|(\+?989))\d{9}", ErrorMessage = "شماره تلفن را صحیح وارد کنید")]
     public string NumebrPhone { get; set; }
 
-    public string Email { get; set; }
+
+    public string? Email { get; set; }
 
     [Required]
     public string TripCode { get; set; }

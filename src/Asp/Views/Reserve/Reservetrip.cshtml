@@ -2,7 +2,7 @@
 @{
     Layout = "_HorizontalLayout";
 
-
+    ViewData["title"] = "رزور سفر";
     var trip = (Application.Services.MrShooferORS.SearchedTrip)ViewBag.trip;
 }
 
@@ -120,7 +120,6 @@
                         </div>
                     </div>
 
-
                     <div class="col-md-6 ps-2">
                         <div class="mt-2 mb-3">
                             <label class="form-label" for="largeInput">
@@ -146,7 +145,7 @@
 
                                 <div class="form-check custom-option custom-option-basic">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp1">
-                                        <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" name="customRadioTemp" type="radio" value="female" />
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" type="radio" value="female" />
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">زن</span>
                                         </span>
@@ -157,7 +156,7 @@
                                 <div class="col-md-6">
                                 <div class="form-check custom-option custom-option-basic me-0">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp2">
-                                        <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" name="customRadioTemp" type="radio" value="male" />
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" type="radio" value="male" />
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">مرد</span>
                                         </span>
@@ -168,7 +167,6 @@
                                 <span asp-validation-for="Gender" class="text-danger validation-message"></span>
                         </div>
                     </div>
-
 
 
                     <div class="col-md-6">
@@ -493,8 +491,6 @@
                 </div>
         </aside>
     </div>
-
-
 </div>
 
 <style>
