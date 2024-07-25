@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
@@ -11,4 +12,7 @@ public class Agency
   public DateTime DateJoined { get; set; }
   public List<Ticket> SoldTickets { get; set; }
   public int Balance { get; set; }
+
+
+  public IdentityUser IdentityUser { get; set; }
 }
