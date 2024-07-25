@@ -371,7 +371,6 @@
                                 </a>
                             </small>
 
-                            <input name="numberphone" id="numberphone" type="hidden" value="@reserve_viemodel.NumebrPhone"/>
 
                             <h5 class="d-inline text-center" id="numberphone_display">
                                 @reserve_viemodel.NumebrPhone
@@ -429,7 +428,14 @@
                     </p>
                 </div>
             <div class="col-md-6 ps-0 mt-1 mt-md-3 col-12 pt-2 pt-md-0">
-                <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;">تایید و ادامه</button>
+              <form method="post">
+                        <input name="Tripcode" id="tripcode" type="hidden" value="@reserve_viemodel.TripCode" />
+                        <input name="Firstname" id="firstname" type="hidden" value="@reserve_viemodel.Firstname />
+                        <input name="Lastname" id="lastname" type="hidden" value="@reserve_viemodel.Lastname />
+                        <input name="Numberphone" id="numberphone" type="hidden" value="@reserve_viemodel.NumebrPhone" />
+                        <input name="Nacode" id="nacode" type="hidden" value="@reserve_viemodel.NaCode" />
+                <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;" type="submit">تایید و ادامه</button>
+              </form>
             </div>
             </div>
         </div>
