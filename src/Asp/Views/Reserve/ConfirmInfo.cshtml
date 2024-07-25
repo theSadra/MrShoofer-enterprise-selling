@@ -202,22 +202,22 @@
                             @{
                                 if (trip.startingDateTime.Hour >= 0 && trip.startingDateTime.Hour <= 11)
                                 {
-                                    <small>(صبح)</small>
+                                            <small>(صبح)</small>
                                 }
 
                                 else if (trip.startingDateTime.Hour >= 12 && trip.startingDateTime.Hour < 15)
                                 {
-                                    <small>(ظهر)</small>
+                                            <small>(ظهر)</small>
                                 }
 
                                 else if (trip.startingDateTime.Hour >= 15 && trip.startingDateTime.Hour <= 19)
                                 {
-                                    <small>(بعداز ظهر)</small>
+                                            <small>(بعداز ظهر)</small>
                                 }
 
                                 else
                                 {
-                                    <small>(شب)</small>
+                                            <small>(شب)</small>
 
                                 }
 
@@ -315,11 +315,11 @@
                         @{
                             if (reserve_viemodel.Gender == "male")
                             {
-                                <img src="/male.png" height="60px" />
+                                        <img src="/male.png" height="60px" />
                             }
                             else
                             {
-                                <img src="/female.png" height="60px" />
+                                        <img src="/female.png" height="60px" />
                             }
                         }
                     </div>
@@ -330,11 +330,11 @@
                                 @{
                                     if (reserve_viemodel.Gender == "male")
                                     {
-                                        @:آقای
+                                                @:آقای
                                     }
                                     else
                                     {
-                                        @:خانم
+                                                @:خانم
                                     }
                                 }
                             </label>
@@ -370,7 +370,10 @@
                                     ویرایش<i class="ti ti-pencil m-0 p-0"></i>
                                 </a>
                             </small>
-                            <h5 class="d-inline text-center">
+
+                            <input name="numberphone" id="numberphone" type="hidden" value="@reserve_viemodel.NumebrPhone"/>
+
+                            <h5 class="d-inline text-center" id="numberphone_display">
                                 @reserve_viemodel.NumebrPhone
                             </h5>
                         </div>
@@ -459,7 +462,7 @@
                         <div class="row">
                             <div class="col mb-2">
                                 <small class="form-label" for="nameWithTitle">شماره تلفن</small>
-                                <input class="form-control form-control-lg" id="emailWithTitle" value="@reserve_viemodel.NumebrPhone" />
+                                <input class="form-control form-control-lg" id="newnumberphone" value="@reserve_viemodel.NumebrPhone" />
                                 
                             </div>
                         </div>
@@ -467,13 +470,22 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button class="btn btn-label-secondary" data-bs-dismiss="modal" type="button"> بستن</button>
-                        <button class="btn btn-primary" type="button">ذخیره</button>
+                        <button class="btn btn-primary" type="button" onclick="ChangeNumber()">ذخیره</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function ChangeNumber() {
+
+        alert("خیلی هم عالی")
+    }
+</script>
+
+
+
 <style>
     .validation-message {
         margin-top: .45rem;
