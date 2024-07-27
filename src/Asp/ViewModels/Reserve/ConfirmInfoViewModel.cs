@@ -11,5 +11,6 @@ namespace Application.ViewModels.Reserve
     public string Lastname { get; set; }
     public string Numberphone { get; set; }
     public string Nacode { get; set; }
+    public string Gender { set; get; }
   }
 }
