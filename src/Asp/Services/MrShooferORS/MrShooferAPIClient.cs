@@ -33,7 +33,6 @@ namespace Application.Services.MrShooferORS
       var node = JsonNode.Parse(await result.Content.ReadAsStringAsync());
 
       return node["token"].ToString();
-
     }
 
 

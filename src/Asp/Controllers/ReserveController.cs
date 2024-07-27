@@ -4,6 +4,7 @@ using Application.ViewModels.Reserve;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System.Data.Entity;
 using System.Diagnostics;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
@@ -47,10 +48,15 @@ namespace Application.Controllers
 
       ViewData["ReservationId"] = tripcode;
 
-        var trip = await apiclient.GetTripInfo(tripcode);
+      var trip = await apiclient.GetTripInfo(tripcode);
+
+      // Getting agancy account balance from ORS
+      var agancy_balance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
+
+      ViewBag.agancy_balance = agancy_balance;
 
 
-      if(agancy_user.Balance >= trip.afterdiscticketprice)
+      if(agancy_balance >= trip.afterdiscticketprice)
       {
         ViewBag.canbuy = true;
       }
@@ -78,6 +84,10 @@ namespace Application.Controllers
       var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
       var identity_user = await _userManager.GetUserAsync(User);
 
+      // Getting agancy account balance from ORS
+      var agancy_balance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
+
+      ViewBag.agancy_balance = agancy_balance;
 
       ViewBag.agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
       ViewBag.trip = trip;
@@ -89,6 +99,7 @@ namespace Application.Controllers
     [HttpPost]
     public IActionResult ConfirmInfo(ConfirmInfoViewModel viewModel)
     {
+      // Registering the ticket
       return View();
     }
   }

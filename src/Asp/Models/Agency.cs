@@ -11,7 +11,6 @@ public class Agency
   public string AdminMobile { get; set; }
   public DateTime DateJoined { get; set; }
   public List<Ticket> SoldTickets { get; set; }
-  public int Balance { get; set; }
 
 
   public IdentityUser IdentityUser { get; set; }
