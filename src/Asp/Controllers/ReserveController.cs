@@ -89,7 +89,7 @@ namespace Application.Controllers
 
       ViewBag.agancy_balance = agancy_balance;
 
-      ViewBag.agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
+      ViewBag.agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).AsNoTracking().FirstOrDefault();
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
         
@@ -97,9 +97,72 @@ namespace Application.Controllers
     }
 
     [HttpPost]
-    public IActionResult ConfirmInfo(ConfirmInfoViewModel viewModel)
+    public async Task<IActionResult> ConfirmInfo(ConfirmInfoViewModel viewModel)
     {
       // Registering the ticket
+
+
+      // Issuing ticket in ORS
+      // TempReserve
+
+      TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
+      {
+        isPrivate = true,
+        tripCode = viewModel.TripCode
+      };
+
+     var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
+
+
+      // final reserve
+
+
+      ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
+      {
+        passengerFirstName = viewModel.Firstname,
+        passengerLastName = viewModel.Lastname,
+        reservationCode = reservecode,
+        passengerNationalCode = viewModel.Nacode,
+        passengerNumberPhone = viewModel.Numberphone
+      };
+
+       var reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
+
+      // Getting trip_info
+
+      var trip = await apiclient.GetTripInfo(viewModel.TripCode);
+
+      //Creating ticket object
+      Ticket newticket = new Ticket()
+      {
+        Firstname = viewModel.Firstname,
+        Lastname = viewModel.Lastname,
+        PhoneNumber = viewModel.Numberphone,
+        NaCode = viewModel.Nacode,
+        TicketFinalPrice = reserve_response.paid_total_fee_tomans,
+        Gender = viewModel.Gender,
+        TicketOriginalPrice = trip.originalTicketprice,
+        TripOrigin = trip.originCityName,
+        TripDestination = trip.destinationCityName,
+        RegisteredAt = DateTime.Now,
+        TicketCode = reserve_response.ticketCode,
+        Tripcode = trip.tripPlanCode
+      };
+
+      // Registering to database
+
+
+      var identity_user = await _userManager.GetUserAsync(User);
+
+      var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
+      newticket.Agency = agancy;
+
+
+      context.Tickets.Add(newticket);
+
+      await context.SaveChangesAsync();
+
+
       return View();
     }
   }

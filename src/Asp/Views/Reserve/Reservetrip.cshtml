@@ -1,4 +1,4 @@
-@model Application.ViewModels.Reserve.ConfirmInfoViewModel
+@model Application.ViewModels.Reserve.ReserveInfoViewModel
 @{
     Layout = "_HorizontalLayout";
 
@@ -7,497 +7,9 @@
 }
 
 
-<script src="/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-<script src="/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
 
-
-@section VendorStyles {
-    <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
-}
-
-@section VendorScripts {
-    <script src="~/vendor/libs/select2/select2.js"></script>
-
-    <script src="~/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
-
-    <script src="/libs/validation/jquery.validate.min.js"></script>
-    <script src="/libs/validation/jquery.validate.unobtrusive.min.js"></script>
-
-    <script src="~/libs/jquery.js"></script>
-
-
-}
-
-@section PageScripts {
-    <script src="~/js/forms-selects.js"></script>
-    <script src="~/js/forms-tagify.js"></script>
-    <script src="~/js/forms-typeahead.js"></script>
-}
-
-
-
-
-<div class="main_container px-lg-6 px-0">
-    <div class="bg-white rounded-5 border-1 border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 ">
-
-        <div class="d-flex steps">
-            <div class="step-container">
-                <div class="step selected">
-                    <i class="ti ti-user ti-lg px-4 d:pb-4"></i>
-                    <span class="pt-1 step-title">
-                        اطلاعات مسافر
-                    </span>
-                </div>
-                <div class="h-[0.063rem] flex-1  bg-divider"></div>
-            </div>
-
-            <div class="step-container">
-                <div class="step">
-                    <i class="ti ti-certificate ti-lg px-4 d:pb-4"></i>
-                    <span class="pt-1 step-title">
-                        رزور و تایید
-                    </span>
-                </div>
-                <div class="h-[0.063rem] flex-1  bg-divider"></div>
-            </div>
-
-            <div class="step-container">
-                <div class="step">
-                    <i class="ti ti-credit-card ti-lg px-4 d:pb-4 "></i>
-                    <span class="pt-1 step-title">
-                        پرداخت
-                    </span>
-                </div>
-                <div class="h-[0.063rem] flex-1  bg-divider"></div>
-            </div>
-
-            <div class="step-container" style="flex: none;">
-                <div class="step">
-                    <i class="ti ti-ticket ti-lg px-4 d:pb-4"></i>
-                    <span class="pt-1 step-title">
-                        صدور
-                    </span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="downside-contaner mt-5 row">
-        <article class="col-8">
-
-            <input type="hidden" value="@trip.tripPlanCode" />
-            <h1 class=mb-4 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">
-                اطلاعات خریدار را وارد کنید
-            </h1>
-            <div class="info-container mt-4">
-                <div class="uppnav d-flex" style="align-items: baseline;">
-                    <div class="d-flex justify-between" style="align-items: center;">
-                        <div class="d-flex justify-between text-blck">
-                            <i class="ti ti-user"></i>
-                            <span class="fs-5">
-                                سرپسرت مسافرین
-                            </span>
-                        </div>
-                        <span style="font-size: 12px; align-self: end;" class="ms-2">
-                            خریدار سفر
-                        </span>
-                    </div>
-                </div>
-
-                <form class="input-forms row mt-2 pe-4" method="post">
-
-                    <div class="col-md-6 pe-2">
-                        <div class="mt-2 mb-3">
-                            <label class="form-label" for="largeInput">
-                                نام
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input asp-for="Firstname" autocomplete="off" class="form-control form-control" placeholder="نام مسافر" type="text">
-                            <span asp-validation-for="Firstname" class="text-danger validation-message"></span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 ps-2">
-                        <div class="mt-2 mb-3">
-                            <label class="form-label" for="largeInput">
-                                نام خانوادگی
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input asp-for="Lastname" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
-                            <span asp-validation-for="Lastname" class="text-danger validation-message"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6 pe-2">
-                        <div class="row">
-                            <label class="form-label" for="largeInput">
-                                جنسیت
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="row mb-md-0 mb-2">
-                                <div class="col-md-6">
-                                    <div class="form-check custom-option custom-option-basic">
-                                        <label class="form-check-label custom-option-content" for="customRadioTemp1">
-                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" type="radio" value="female" />
-                                            <span class="custom-option-header">
-                                                <span class="h6 mb-0">زن</span>
-                                            </span>
-
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check custom-option custom-option-basic me-0">
-                                        <label class="form-check-label custom-option-content" for="customRadioTemp2">
-                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" type="radio" value="male" />
-                                            <span class="custom-option-header">
-                                                <span class="h6 mb-0">مرد</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <span asp-validation-for="Gender" class="text-danger validation-message"></span>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <div class="ps-2">
-                            <div class=" mb-3">
-                                <label class="form-label" for="largeInput">
-                                    کدملی
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input asp-for="NaCode" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text" data-val-regex-pattern="^\d{10}$ ">
-                                <span asp-validation-for="NaCode" class="text-danger validation-message"></span>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <hr class="mt-4 mb-4" />
-
-                    <div class="call-info-header d-flex justify-start">
-                        <svg class="text-blck" style="align-self:center;" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-                        </svg>
-
-
-                        <div class="ms-2 mt-1 " style="color: rgb(41 38 61 / var(--tw-text-opacity)) !important;">
-                            <h5 class="ms-1 mb-0 text-blck">اطلاعات تماس</h5>
-                            <p class="mt-0 mb-0">اطلاعات تماس به منظور ارسال فایل بلیط و هماهنگی با مسافر برای شروع سفر استفاده می‌شود</p>
-                        </div>
-                    </div>
-
-
-                    <div class="mt-3 row pe-0">
-
-                        <div class="col-md-6 pe-2">
-                            <div class="mt-2 mb-3">
-                                <label class="form-label" for="largeInput">
-                                    تلفن مسافر
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input asp-for="NumebrPhone" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text" data-val-regex-pattern="((0?9)|(\+?989))\d{9}">
-                                <span asp-validation-for="NumebrPhone" class="text-danger validation-message"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 ps-2">
-                            <div class="mt-2 mb-3">
-                                <label class="form-label" for="largeInput">ایمیل</label>
-                                <input asp-for="Email" autocomplete="off" class="form-control form-control" placeholder="(اختیاری)" type="text" data-val="fasle">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="mt-3 row mx-0 px-0">
-
-                        <div class="col-6 ps-0">
-                            <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;"
-                            @if (!ViewBag.canbuy)
-                            {
-                                @:disabled
-                            }>
-                                ادامه و رزور
-                            </button>
-                        </div>
-
-                        <div class="col-6">
-                            <p class="text-muted" style="line-height: 1.42rem !important;">
-                                بعد از ثبت بلیط برای مسافر، هماهنگی با راننده، پشتیبانی و خدمات مورد نیاز مسافر توسط مسترشوفر با
-                                <strong class="text-blck">
-                                    شماره فوق
-                                </strong>
-                                انجام می‌شود.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-        </article>
-
-        <aside class="col-md-4 col-12">
-
-            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 ">
-                <div class="headline d-flex justify-between">
-                    <span class="badge bg-dark rounded-pill py-2" style="font-size: .875rem!important">
-                        اطلاعات سفر
-                    </span>
-                    <div class="capacity badge bg-label-secondary rounded-pill">
-                        <i class="ti ti-armchair-2 d-inline"></i>
-                        |
-                        @* <span class="badge bg-label-danger">دربتسی</span> *@
-                        <small class="text-danger ms-1 d-inline t-bold">دربستی</small>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-1 col-12 mx-1 d-flex px-2" style="justify-content :space-between;">
-                    <span>
-                        <small class="d-block ms-1 ">
-                            @* <img src="/redpin.png" height="18px;" /> *@
-                            مبدا
-                        </small>
-                        <span class="fs-5 text-blck">
-                            @trip.originCityName
-                        </span>
-                        <small>
-                            @trip.oringinLocationName
-                        </small>
-                    </span>
-
-                    <span style="align-self: end;" class="mb-1">
-                        <span>
-                            ....
-                        </span>
-                        <img src="/taxi.png" height="20px" />
-                        <span>
-                            ....
-                        </span>
-                    </span>
-
-                    <span>
-                        <small class="d-block ms-1 ">
-                            @* <img src="/redpin.png" height="18px;" /> *@
-                            مقصد
-                        </small>
-                        <span class="fs-5 text-blck">
-                            @trip.destinationCityName
-                        </span>
-                        <small>
-                            @trip.destinationLocationName
-                        </small>
-                    </span>
-                </div>
-
-                <hr />
-
-                <div class="mt-3 col-12 mx-1 d-flex px-2" style="flex-direction: column;">
-                    <div class="d-flex" style="justify-content: space-between">
-                        <small>
-                            تاریخ حرکت
-                        </small>
-                        <small>
-                            ساعت
-                        </small>
-                    </div>
-
-                    <div class="d-flex mt-1" style="justify-content: space-between;">
-                        @{
-                            var pdate = new Application.Services.PersianDate(trip.startingDateTime);
-                        }
-
-                        <div>
-                            <span class="text-blck fs-5">
-                                @pdate.Day /  @pdate.Month
-                            </span>
-                            <span class="text-blck fs-5 ms-0">
-                                @pdate.DayOfWeek
-                            </span>
-
-                        </div>
-
-                        <span class="text-blck fs-5">
-                            @trip.startingDateTime.ToString("HH:mm")
-                        </span>
-
-                    </div>
-                </div>
-
-                <div class="mt-2 col-12 mx-1 d-flex px-2" style="flex-direction: column;">
-                    <div class="d-flex" style="justify-content: space-between">
-                        <small>
-                            خودرو
-                        </small>
-
-                    </div>
-
-
-                    <div class="d-flex mt-1" style="justify-content: space-between; font-size: 1rem;">
-                        <span>
-                            <span class="text-blck badge bg-label-primary rounded-pill carmodel">
-                                @trip.carModelName
-                            </span>
-                            @if (trip.taxiSupervisorID == 7)
-                            {
-                                <img src="/vip_badge.png" style="height:27px;" class="ms-1">
-                            }
-                            <smal class="text-muted ms-1 mt-1  d-block" style="font-size: x-small;">ظرفیت تا 3 مسافر</smal>
-                        </span>
-
-                    </div>
-
-                    <div class="mt-2 d-flex" style="justify-content: space-between;">
-                        <h5 style="align-self:end;">قـیمت</h5>
-                        <div>
-
-                            @if (trip.afterdiscticketprice != trip.originalTicketprice)
-                            {
-                                <div class="text-end mb-0">
-                                    <h5 class="text-black mb-0">
-                                        <s>
-                                            <bdi>
-                                                <svg class="toman">
-                                                    <use xlink:href="#toman">
-                                                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                                        </symbol>
-                                                    </use>
-                                                </svg>@trip.originalTicketprice.ToString("N0")
-                                            </bdi>
-                                        </s>
-                                    </h5>
-                                </div>
-                            }
-
-
-                            <h4 class="text-primary mb-1 text-end">
-                                <bdi>
-                                    <svg class="toman">
-                                        <use xlink:href="#toman">
-                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                            </symbol>
-                                        </use>
-                                    </svg>@trip.afterdiscticketprice.ToString("N0")
-                                </bdi>
-                            </h4>
-                        </div>
-                    </div>
-
-                    @{
-
-                        if (ViewBag.canbuy)
-                        {
-
-
-                            <div class="d-flex badge btn-lg text-bg-success w-100 waves-effect waves-light mt-2 success-payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;">
-                                <span class="text-blck bg-success rounded-pill p-1 bg-opacity-75" style="align-self: center;">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
-                                        <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
-                                        <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
-                                        <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
-                                        <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
-                                        <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
-                                        <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
-                                        <path d="M9 12l2 2l4 -4" />
-                                    </svg>
-                                </span>
-
-
-                                <div class="ms-2 mt-0 p-0" style="text-align: right;">
-                                    <h6 class="mb-0 mt-0 p-0">
-                                        پرداخت از حساب
-                                        <i class="ti ti-credit-card"></i>
-                                    </h6>
-
-                                    <small class=" text-muted pb-1">قابل پرداخت از شارژ حساب آژانس</small>
-                                </div>
-
-
-                            </div>
-
-                        }
-
-                        else
-                        {
-
-                            <div class="d-flex badge btn-lg text-bg-warning w-100 waves-effect waves-light mt-1 not_enough_payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;">
-                                <span class="text-blck bg-warning rounded-pill p-1 bg-opacity-75" style="align-self: center;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" />
-                                        <path d="M12 8v4" />
-                                        <path d="M12 16h.01" />
-                                    </svg>
-                                </span>
-
-
-                                <div class="ms-2 mt-0 p-0" style="text-align: right;">
-                                    <h6 class="mb-0 p-0">کمبود شارژ حساب</h6>
-
-                                    <small class="text-muted pb-1">موجودی حساب آژانس کافی نمی‌باشد</small>
-                                </div>
-
-                            </div>
-                            <a class="link mt-1 ms-1 text-end me-2" href="#">
-                                <small>
-                                    افزایش موجودی
-                                </small>
-                            </a>
-                        }
-                    }
-
-                </div>
-            </div>
-            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 mt-3 ">
-                @*  <div class="headline d-flex justify-between">
-                <span class="badge bg-primary rounded-pill py-2" style="font-size: .875rem!important">
-                قوانین سفر
-                </span>
-
-                </div> *@
-
-                <div class="mt-2 col-12 mx-1 px-2" style="">
-                    <span>
-                        <h6 class="text-blck">قوانین کنسلی</h6>
-                    </span>
-                    <p style="line-height:1.2rem !important; ">
-                        در صورت خرید سفر، و کنسل کردن سفر از طرف مسافر، تا 1 ساعت بعد از
-                        ثبت سفر کنسلی
-                        بدون جریمه
-                        انجام می‌شود در غیر این صورت.
-                    </p>
-
-                    <div class="ms-1 text-muted">
-
-                        <small class="d-flex">تا 24 ساعت مانده به سفر  15 درصد  </small>
-                        <small class="d-flex">تا 4 ساعت قبل سفر 30 درصد  </small>
-                        <small class="d-flex">3 ساعت قبل سفر 70 درصد</small>
-
-                    </div>
-                </div>
-            </div>
-        </aside>
-    </div>
-</div>
 
 <style>
-
     .validation-message {
         margin-top: .45rem;
         font-size: .8rem;
@@ -1335,4 +847,498 @@
         .dark-style .bootstrap-select .dropdown-menu .popover-header button {
             color: #b6bee3;
         }
+
 </style>
+
+<script src="/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+
+    <link rel="stylesheet" href="~/css/Reservetrip.css/">
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/select2/select2.js"></script>
+
+    <script src="~/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+
+    <script src="/libs/validation/jquery.validate.min.js"></script>
+    <script src="/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/libs/jquery.js"></script>
+
+
+}
+
+@section PageScripts {
+    <script src="~/js/forms-selects.js"></script>
+    <script src="~/js/forms-tagify.js"></script>
+    <script src="~/js/forms-typeahead.js"></script>
+}
+
+
+
+
+<div class="main_container px-lg-6 px-0">
+    <div class="bg-white rounded-5 border-1 border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 ">
+
+        <div class="d-flex steps">
+            <div class="step-container">
+                <div class="step selected">
+                    <i class="ti ti-user ti-lg px-4 d:pb-4"></i>
+                    <span class="pt-1 step-title">
+                        اطلاعات مسافر
+                    </span>
+                </div>
+                <div class="h-[0.063rem] flex-1  bg-divider"></div>
+            </div>
+
+            <div class="step-container">
+                <div class="step">
+                    <i class="ti ti-certificate ti-lg px-4 d:pb-4"></i>
+                    <span class="pt-1 step-title">
+                        رزور و تایید
+                    </span>
+                </div>
+                <div class="h-[0.063rem] flex-1  bg-divider"></div>
+            </div>
+
+            <div class="step-container">
+                <div class="step">
+                    <i class="ti ti-credit-card ti-lg px-4 d:pb-4 "></i>
+                    <span class="pt-1 step-title">
+                        پرداخت
+                    </span>
+                </div>
+                <div class="h-[0.063rem] flex-1  bg-divider"></div>
+            </div>
+
+            <div class="step-container" style="flex: none;">
+                <div class="step">
+                    <i class="ti ti-ticket ti-lg px-4 d:pb-4"></i>
+                    <span class="pt-1 step-title">
+                        صدور
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="downside-contaner mt-5 row">
+        <article class="col-8">
+
+            <input type="hidden" value="@trip.tripPlanCode" />
+            <h1 class=mb-4 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">
+                اطلاعات خریدار را وارد کنید
+            </h1>
+            <div class="info-container mt-4">
+                <div class="uppnav d-flex" style="align-items: baseline;">
+                    <div class="d-flex justify-between" style="align-items: center;">
+                        <div class="d-flex justify-between text-blck">
+                            <i class="ti ti-user"></i>
+                            <span class="fs-5">
+                                سرپسرت مسافرین
+                            </span>
+                        </div>
+                        <span style="font-size: 12px; align-self: end;" class="ms-2">
+                            خریدار سفر
+                        </span>
+                    </div>
+                </div>
+
+                <form class="input-forms row mt-2 pe-4" method="post">
+
+                    <div class="col-md-6 pe-2">
+                        <div class="mt-2 mb-3">
+                            <label class="form-label" for="largeInput">
+                                نام
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Firstname" autocomplete="off" class="form-control form-control" placeholder="نام مسافر" type="text">
+                            <span asp-validation-for="Firstname" class="text-danger validation-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 ps-2">
+                        <div class="mt-2 mb-3">
+                            <label class="form-label" for="largeInput">
+                                نام خانوادگی
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Lastname" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
+                            <span asp-validation-for="Lastname" class="text-danger validation-message"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 pe-2">
+                        <div class="row">
+                            <label class="form-label" for="largeInput">
+                                جنسیت
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="row mb-md-0 mb-2">
+                                <div class="col-md-6">
+                                    <div class="form-check custom-option custom-option-basic">
+                                        <label class="form-check-label custom-option-content" for="customRadioTemp1">
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" type="radio" value="female" />
+                                            <span class="custom-option-header">
+                                                <span class="h6 mb-0">زن</span>
+                                            </span>
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check custom-option custom-option-basic me-0">
+                                        <label class="form-check-label custom-option-content" for="customRadioTemp2">
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" type="radio" value="male" />
+                                            <span class="custom-option-header">
+                                                <span class="h6 mb-0">مرد</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Gender" class="text-danger validation-message"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="ps-2">
+                            <div class=" mb-3">
+                                <label class="form-label" for="largeInput">
+                                    کدملی
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="NaCode" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text" data-val-regex-pattern="^\d{10}$ ">
+                                <span asp-validation-for="NaCode" class="text-danger validation-message"></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <hr class="mt-4 mb-4" />
+
+                    <div class="call-info-header d-flex justify-start">
+                        <svg class="text-blck" style="align-self:center;" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                        </svg>
+
+
+                        <div class="ms-2 mt-1 " style="color: rgb(41 38 61 / var(--tw-text-opacity)) !important;">
+                            <h5 class="ms-1 mb-0 text-blck">اطلاعات تماس</h5>
+                            <p class="mt-0 mb-0">اطلاعات تماس به منظور ارسال فایل بلیط و هماهنگی با مسافر برای شروع سفر استفاده می‌شود</p>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-3 row pe-0">
+
+                        <div class="col-md-6 pe-2">
+                            <div class="mt-2 mb-3">
+                                <label class="form-label" for="largeInput">
+                                    تلفن مسافر
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="NumebrPhone" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text" data-val-regex-pattern="((0?9)|(\+?989))\d{9}">
+                                <span asp-validation-for="NumebrPhone" class="text-danger validation-message"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 ps-2">
+                            <div class="mt-2 mb-3">
+                                <label class="form-label" for="largeInput">ایمیل</label>
+                                <input asp-for="Email" autocomplete="off" class="form-control form-control" placeholder="(اختیاری)" type="text" data-val="fasle">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mt-3 row mx-0 px-0">
+
+                        <div class="col-6 ps-0">
+                            <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;"
+                            @if (!ViewBag.canbuy)
+                            {
+                                @:disabled
+                            }>
+                                ادامه و رزور
+                            </button>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="text-muted" style="line-height: 1.42rem !important;">
+                                بعد از ثبت بلیط برای مسافر، هماهنگی با راننده، پشتیبانی و خدمات مورد نیاز مسافر توسط مسترشوفر با
+                                <strong class="text-blck">
+                                    شماره فوق
+                                </strong>
+                                انجام می‌شود.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </article>
+
+        <aside class="col-md-4 col-12">
+
+            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 ">
+                <div class="headline d-flex justify-between">
+                    <span class="badge bg-dark rounded-pill py-2" style="font-size: .875rem!important">
+                        اطلاعات سفر
+                    </span>
+                    <div class="capacity badge bg-label-secondary rounded-pill">
+                        <i class="ti ti-armchair-2 d-inline"></i>
+                        |
+                        @* <span class="badge bg-label-danger">دربتسی</span> *@
+                        <small class="text-danger ms-1 d-inline t-bold">دربستی</small>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-1 col-12 mx-1 d-flex px-2" style="justify-content :space-between;">
+                    <span>
+                        <small class="d-block ms-1 ">
+                            @* <img src="/redpin.png" height="18px;" /> *@
+                            مبدا
+                        </small>
+                        <span class="fs-5 text-blck">
+                            @trip.originCityName
+                        </span>
+                        <small>
+                            @trip.oringinLocationName
+                        </small>
+                    </span>
+
+                    <span style="align-self: end;" class="mb-1">
+                        <span>
+                            ....
+                        </span>
+                        <img src="/taxi.png" height="20px" />
+                        <span>
+                            ....
+                        </span>
+                    </span>
+
+                    <span>
+                        <small class="d-block ms-1 ">
+                            @* <img src="/redpin.png" height="18px;" /> *@
+                            مقصد
+                        </small>
+                        <span class="fs-5 text-blck">
+                            @trip.destinationCityName
+                        </span>
+                        <small>
+                            @trip.destinationLocationName
+                        </small>
+                    </span>
+                </div>
+
+                <hr />
+
+                <div class="mt-3 col-12 mx-1 d-flex px-2" style="flex-direction: column;">
+                    <div class="d-flex" style="justify-content: space-between">
+                        <small>
+                            تاریخ حرکت
+                        </small>
+                        <small>
+                            ساعت
+                        </small>
+                    </div>
+
+                    <div class="d-flex mt-1" style="justify-content: space-between;">
+                        @{
+                            var pdate = new Application.Services.PersianDate(trip.startingDateTime);
+                        }
+
+                        <div>
+                            <span class="text-blck fs-5">
+                                @pdate.Day /  @pdate.Month
+                            </span>
+                            <span class="text-blck fs-5 ms-0">
+                                @pdate.DayOfWeek
+                            </span>
+
+                        </div>
+
+                        <span class="text-blck fs-5">
+                            @trip.startingDateTime.ToString("HH:mm")
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="mt-2 col-12 mx-1 d-flex px-2" style="flex-direction: column;">
+                    <div class="d-flex" style="justify-content: space-between">
+                        <small>
+                            خودرو
+                        </small>
+
+                    </div>
+
+
+                    <div class="d-flex mt-1" style="justify-content: space-between; font-size: 1rem;">
+                        <span>
+                            <span class="text-blck badge bg-label-primary rounded-pill carmodel">
+                                @trip.carModelName
+                            </span>
+                            @if (trip.taxiSupervisorID == 7)
+                            {
+                                <img src="/vip_badge.png" style="height:27px;" class="ms-1">
+                            }
+                            <smal class="text-muted ms-1 mt-1  d-block" style="font-size: x-small;">ظرفیت تا 3 مسافر</smal>
+                        </span>
+
+                    </div>
+
+                    <div class="mt-2 d-flex" style="justify-content: space-between;">
+                        <h5 style="align-self:end;">قـیمت</h5>
+                        <div>
+
+                            @if (trip.afterdiscticketprice != trip.originalTicketprice)
+                            {
+                                <div class="text-end mb-0">
+                                    <h5 class="text-black mb-0">
+                                        <s>
+                                            <bdi>
+                                                <svg class="toman">
+                                                    <use xlink:href="#toman">
+                                                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                                                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                                                        </symbol>
+                                                    </use>
+                                                </svg>@trip.originalTicketprice.ToString("N0")
+                                            </bdi>
+                                        </s>
+                                    </h5>
+                                </div>
+                            }
+
+
+                            <h4 class="text-primary mb-1 text-end">
+                                <bdi>
+                                    <svg class="toman">
+                                        <use xlink:href="#toman">
+                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                                            </symbol>
+                                        </use>
+                                    </svg>@trip.afterdiscticketprice.ToString("N0")
+                                </bdi>
+                            </h4>
+                        </div>
+                    </div>
+
+                    @{
+
+                        if (ViewBag.canbuy)
+                        {
+
+
+                            <div class="d-flex badge btn-lg text-bg-success w-100 waves-effect waves-light mt-2 success-payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;">
+                                <span class="text-blck bg-success rounded-pill p-1 bg-opacity-75" style="align-self: center;">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+                                        <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+                                        <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+                                        <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+                                        <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+                                        <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+                                        <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+                                        <path d="M9 12l2 2l4 -4" />
+                                    </svg>
+                                </span>
+
+
+                                <div class="ms-2 mt-0 p-0" style="text-align: right;">
+                                    <h6 class="mb-0 mt-0 p-0">
+                                        پرداخت از حساب
+                                        <i class="ti ti-credit-card"></i>
+                                    </h6>
+
+                                    <small class=" text-muted pb-1">قابل پرداخت از شارژ حساب آژانس</small>
+                                </div>
+
+
+                            </div>
+
+                        }
+
+                        else
+                        {
+
+                            <div class="d-flex badge btn-lg text-bg-warning w-100 waves-effect waves-light mt-1 not_enough_payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;">
+                                <span class="text-blck bg-warning rounded-pill p-1 bg-opacity-75" style="align-self: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" />
+                                        <path d="M12 8v4" />
+                                        <path d="M12 16h.01" />
+                                    </svg>
+                                </span>
+
+
+                                <div class="ms-2 mt-0 p-0" style="text-align: right;">
+                                    <h6 class="mb-0 p-0">کمبود شارژ حساب</h6>
+
+                                    <small class="text-muted pb-1">موجودی حساب آژانس کافی نمی‌باشد</small>
+                                </div>
+
+                            </div>
+                            <a class="link mt-1 ms-1 text-end me-2" href="#">
+                                <small>
+                                    افزایش موجودی
+                                </small>
+                            </a>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 mt-3 ">
+                @*  <div class="headline d-flex justify-between">
+                <span class="badge bg-primary rounded-pill py-2" style="font-size: .875rem!important">
+                قوانین سفر
+                </span>
+
+                </div> *@
+
+                <div class="mt-2 col-12 mx-1 px-2" style="">
+                    <span>
+                        <h6 class="text-blck">قوانین کنسلی</h6>
+                    </span>
+                    <p style="line-height:1.2rem !important; ">
+                        در صورت خرید سفر، و کنسل کردن سفر از طرف مسافر، تا 1 ساعت بعد از
+                        ثبت سفر کنسلی
+                        بدون جریمه
+                        انجام می‌شود در غیر این صورت.
+                    </p>
+
+                    <div class="ms-1 text-muted">
+
+                        <small class="d-flex">تا 24 ساعت مانده به سفر  15 درصد  </small>
+                        <small class="d-flex">تا 4 ساعت قبل سفر 30 درصد  </small>
+                        <small class="d-flex">3 ساعت قبل سفر 70 درصد</small>
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+
