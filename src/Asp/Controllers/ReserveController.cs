@@ -76,8 +76,10 @@ namespace Application.Controllers
       }
 
       var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
+      var identity_user = await _userManager.GetUserAsync(User);
 
 
+      ViewBag.agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
         
