@@ -116,7 +116,6 @@ namespace Application.Controllers
 
       // final reserve
 
-
       ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
       {
         passengerFirstName = viewModel.Firstname,
