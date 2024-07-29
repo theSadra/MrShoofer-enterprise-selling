@@ -8,17 +8,24 @@ namespace Application.Services.MrShooferORS
 {
   public class MrShooferAPIClient
   {
-    readonly string _apikey;
+    string _apikey;
     readonly HttpClient _client;
     readonly string _sellerapikey;
 
-    public MrShooferAPIClient(HttpClient client, string baseurl, string sellerapikey)
+    public MrShooferAPIClient(HttpClient client, string baseurl)
     {
-      _sellerapikey = sellerapikey;
       _client = client;
 
       _client.BaseAddress = new Uri(baseurl);
-      _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", sellerapikey);
+    }
+
+
+
+    public void SetSellerApiKey(string apikey)
+    {
+      this._apikey = apikey;
+      _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", this._apikey);
+
     }
 
 

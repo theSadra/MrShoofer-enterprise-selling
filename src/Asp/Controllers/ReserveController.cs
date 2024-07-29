@@ -4,6 +4,7 @@ using Application.ViewModels.Reserve;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Data.Entity;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ namespace Application.Controllers
     private readonly UserManager<IdentityUser> _userManager;
     private readonly MrShooferAPIClient apiclient;
     private readonly AppDbContext context;
-
+    private Agency agency;
 
 
     public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context)
@@ -26,6 +27,9 @@ namespace Application.Controllers
       this.context = context;
       this._userManager = usermanager;
       this.apiclient = apiclient;
+
+
+
     }
 
     public IActionResult Index()
@@ -36,11 +40,6 @@ namespace Application.Controllers
 
     public async Task<IActionResult> Reservetrip(string tripcode)
     {
-      var identityUser = await _userManager.GetUserAsync(User);
-
-      var agancy_user = context.Agencies.Where(a => a.IdentityUser == identityUser).FirstOrDefault();
-
-
 
       if (string.IsNullOrEmpty(tripcode))
         return BadRequest();
@@ -56,7 +55,7 @@ namespace Application.Controllers
       ViewBag.agancy_balance = agancy_balance;
 
 
-      if(agancy_balance >= trip.afterdiscticketprice)
+      if (agancy_balance >= trip.afterdiscticketprice)
       {
         ViewBag.canbuy = true;
       }
@@ -81,18 +80,17 @@ namespace Application.Controllers
         return RedirectToAction("Reservetrip");
       }
 
-      var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
-      var identity_user = await _userManager.GetUserAsync(User);
 
-      // Getting agancy account balance from ORS
+      var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
+
       var agancy_balance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
 
       ViewBag.agancy_balance = agancy_balance;
 
-      ViewBag.agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).AsNoTracking().FirstOrDefault();
+      ViewBag.agancy = this.agency;
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
-        
+
       return View("ConfirmInfo");
     }
 
@@ -111,7 +109,7 @@ namespace Application.Controllers
         tripCode = viewModel.TripCode
       };
 
-     var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
+      var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
 
 
       // final reserve
@@ -125,7 +123,7 @@ namespace Application.Controllers
         passengerNumberPhone = viewModel.Numberphone
       };
 
-       var reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
+      var reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
 
       // Getting trip_info
 
@@ -163,6 +161,20 @@ namespace Application.Controllers
 
 
       return View();
+    }
+
+
+
+
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+      base.OnActionExecuting(context);
+
+      var identityUser = _userManager.GetUserAsync(User).Result;
+      this.agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+
+
+      this.apiclient.SetSellerApiKey(this.agency.ORSAPI_token);
     }
   }
 }
