@@ -28,8 +28,6 @@ namespace Application.Controllers
       this._userManager = usermanager;
       this.apiclient = apiclient;
 
-
-
     }
 
     public IActionResult Index()
@@ -160,11 +158,22 @@ namespace Application.Controllers
       await context.SaveChangesAsync();
 
 
-      return View();
+      return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
     }
 
 
 
+    public async Task<IActionResult> ReserveConfirmed(string ticketcode)
+    {
+      var ticket = context.Tickets.Where(t => t.TicketCode == ticketcode).FirstOrDefault();
+      ViewBag.trip = await apiclient.GetTripInfo(ticket.Tripcode);
+      ViewBag.ticket = ticket;
+
+
+      return View();
+    }
+
+  
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
