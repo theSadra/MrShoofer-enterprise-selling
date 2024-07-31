@@ -51,7 +51,7 @@ namespace Application.Controllers
 
     // Get the balance of the agency account
     [HttpGet("{id}/balance")]
-    public async Task<ActionResult<decimal>> GetAgencyBalance(int id)
+    public async Task<ActionResult<int>> GetAgencyBalance(int id)
     {
       var agency = await _context.Agencies.FindAsync(id);
 
