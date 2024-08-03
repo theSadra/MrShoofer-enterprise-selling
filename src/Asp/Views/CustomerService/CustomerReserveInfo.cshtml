@@ -254,6 +254,7 @@
 
 
 
+
 <div class="main_container px-lg-6 px-0 mt-5" style="flex-wrap : wrap;">
     <div class="bg-white rounded-5 border-1 border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 " style="display: flex; justify-content: center;">
 
@@ -324,9 +325,9 @@
                     <button class="btn rounded-pill btn-icon btn-label-secondary waves-effect" type="button">
                         <span class="ti ti-share-2"></span>
                     </button>
-                    <button class="btn rounded-pill btn-icon btn-label-primary " type="button">
+                    <a href="/TripReceiptPdf?reference=@ticket.TicketCode" class="btn rounded-pill btn-icon btn-label-primary " type="button">
                         <span class="ti ti-printer"></span>
-                    </button>
+                    </a>
 
                 </div>
             </div>
@@ -356,10 +357,9 @@
                         </strong>
                     </span>
 
-                    <span>
-
+                    @* <small>
                         کد سفر : @ticket.Tripcode
-                    </span>
+                    </small> *@
                 </div>
 
                 @* مبدا و مقصد *@
@@ -384,7 +384,7 @@
                             <span>
                                 ....
                             </span>
-                            <img src="/taxi.png" height="40px" />
+                            <img src="/taxi.png" height="30px" />
                             <span>
                                 ....
                             </span>
