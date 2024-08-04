@@ -182,18 +182,28 @@
             <div class="card rounded-5 col-12 mt-2  pt-2 px-4 border-1">
                 <div class="headline d-flex justify-between">
                     <span class="badge bg-dark rounded-pill py-2" style="font-size: .875rem!important">
+                      <strong>
                         @trip.taxiSupervisorName
+                    </strong>
                     </span>
 
                     <div>
                         <span class="fs5">
                             <strong>
-                                رفرنس : @ticket.TicketCode
+                                رفرنس :
+                                <span style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                                @ticket.TicketCode
+                                </span>
                             </strong>
                         </span>
 
                         <small class="fs5 ms-1">
-                            کد سفر : @ticket.Tripcode
+                            کد سفر :
+                            <span style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+
+                                @ticket.Tripcode
+                            </span>
+
                         </small>
                     </div>
 
@@ -413,17 +423,21 @@
 
                                 <small style="font-size: .7rem;" class="text-muted d-block">
                                     <i class="ti ti-info-circle ti-sm"></i>
+                                    پس از ثبت سفر، مکان دقیق مبدا و مقصد توسط
+
+                                    <strong>
+                                        مسترشوفر
+                                    </strong>
+
+                                    با شما هماهنگ خواهد شد
+                                </small>
+                                <small style="font-size: .7rem;" class="text-muted d-block">
+                                    <i class="ti ti-info-circle ti-sm"></i>
                                     هماهنگی به منظور شروع سفر، با شماره تلفن ثبت شده انجام خواهد گرفت
                                 </small>
                                 <small style="font-size: .7rem;" class="text-muted d-block">
                                     <i class="ti ti-info-circle ti-sm"></i>
                                     کیفیت انجام سفر و رضایت مشتری‌، توسط مسترشوفر بعد از هر سفر با نظر مسافر، ارزیابی خواهد شد
-                                </small>
-
-
-                                <small style="font-size: .7rem;" class="text-muted d-block">
-                                    <i class="ti ti-info-circle ti-sm"></i>
-                                    پس از ثبت بلیط، همکاران ما در مسترشوفر با شما تماس حاصل خواهند کرد
                                 </small>
 
                                 <small style="font-size: .7rem;" class="text-muted d-block">
@@ -432,12 +446,12 @@
                                 </small>
                                 <small style="font-size: .7rem;" class="text-muted d-block">
                                     <i class="ti ti-info-circle ti-sm"></i>
-                                    در صورت وجود مبدا یا مقصد اضافه، جزییات و هزینه‌ی کیلومتر ماضاف، توسط همکاران مسترشوفر با مسافر هماهنگ می‌شود
+                                    در صورت وجود مبدا یا مقصد اضافه، جزییات و هزینه‌ی کیلومتر اضافی، توسط همکاران مسترشوفر با مسافر هماهنگ می‌شود
                                 </small>
                             </div>
 
                             <span>
-                                <h6 class="text-blck mt-0">قوانین کنسلی</h6>
+                                <h6 class="text-blck mt-2 mb-0">قوانین کنسلی</h6>
                             </span>
                             <small style="line-height:1.2rem !important; ">
                                 در صورت خرید سفر، و کنسل کردن سفر از طرف مسافر، تا 1 ساعت بعد از
@@ -450,7 +464,8 @@
 
                                 <small class="d-flex">تا 24 ساعت مانده به سفر  15 درصد  </small>
                                 <small class="d-flex">تا 4 ساعت قبل سفر 30 درصد  </small>
-                                <small class="d-flex">3 ساعت قبل سفر به بعد 70 درصد</small>
+                                <small class="d-flex">4 ساعت قبل و پس از آن 70 درصد</small>
+
 
                             </div>
                         </div>
@@ -515,24 +530,9 @@
 
             <div class="row px-2">
 
-                <div class="col-12 mb-0">
-                    <p class="text-muted mb-0" style="line-height: 1.3rem !important; font-size: .8rem !important;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
-                        </svg>
-                        پس از ثبت سفر، مکان دقیق مبدا و مقصد توسط
+               
 
-                        <strong>
-                            مسترشوفر
-                        </strong>
-
-                        با شما هماهنگ خواهد شد
-                    </p>
-                </div>
-
-                <div class="col-12 mb-0 mt-0">
+                <div class="col-12 mb-0 mt-2">
                     در صورت نیاز، می‌توانید برای هماهنگی و پشتیبانی با شماره تلفن
                     <a class="d-inline" href="tel:+989338558294">09338558294</a>
                     تماس حاصل فرمایید
@@ -556,9 +556,7 @@
                     سفر خوشی را برای شما آرزومندیم
                 </p>
 
-
                     <img src="/logo_full_b.png" height="40px" />
-
                 </div>
             </div>
         </div>

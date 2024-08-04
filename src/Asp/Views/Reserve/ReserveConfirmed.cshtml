@@ -44,7 +44,7 @@
 <script>
     Swal.fire({
         title: 'سفر ثبت شد',
-        text: 'سفر سواری با موفقیت ثبت شد و پرداخت از طریق اعتبار آژانس پرداخت انجام گرفت همچنین پیام حاوی لینک بلیط به مسافر ارسال گردید',
+        text: 'سفر سواری با موفقیت ثبت شد و پرداخت از طریق اعتبار آژانس انجام گرفت همچنین پیام حاوی لینک بلیط به مسافر ارسال گردید',
         confirmButtonText: 'متوجه شدم',
         icon: 'success',
         customClass: {
@@ -297,7 +297,7 @@
                     <button class="btn rounded-pill btn-icon btn-label-secondary waves-effect" type="button">
                     <span class="ti ti-share-2"></span>
                 </button>
-                    <a href="/TripReceiptPdf?reference=@ticket.TicketCode" class="btn rounded-pill btn-icon btn-label-primary " type="button">
+                    <a target="_blank" href="/TripReceiptPdf?reference=@ticket.TicketCode" class="btn rounded-pill btn-icon btn-label-primary " type="button">
                         <span class="ti ti-printer"></span>
                     </a>
                 <button class="btn rounded-pill btn-icon btn-secondary " type="button">

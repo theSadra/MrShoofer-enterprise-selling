@@ -9,7 +9,6 @@ namespace Application.Services.Auth
   {
 
 
-
     public async Task<string> SendCode(string numberphone)
     {
         Kavenegar.KavenegarApi api = new Kavenegar.KavenegarApi("6D66344943355774613850422F6D795441455972666D705A70796D3759773869414D6462786D4C703371513D");

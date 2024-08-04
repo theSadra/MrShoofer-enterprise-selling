@@ -2,6 +2,7 @@ using Application.Data;
 using Application.Services;
 using Application.Services.Auth;
 using Application.Services.MrShooferORS;
+using Kavenegar;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,11 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 
 
+//await smssender.SendCustomerTicket_issued("محمد صدرا".Replace(' ', '\u200C'), "درستکار".Replace(' ', '\u200C'), "Z4EIU", "https://9qbnlgl9-5055.euw.devtunnels.ms/ReserveInfo?reference=Z4EIU", "09902063015");
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +26,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
 builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new MrShooferAPIClient(new HttpClient(), "https://mrbilit.mrshoofer.ir"));
 
+builder.Services.AddTransient<KavenegarApi>(k => new KavenegarApi(builder.Configuration["kavehnegar_key"]));
+builder.Services.AddTransient<CustomerServiceSmsSender>();
 
 
 builder.Services.AddControllersWithViews();

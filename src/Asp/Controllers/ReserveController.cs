@@ -1,4 +1,5 @@
 using Application.Data;
+using Application.Services;
 using Application.Services.MrShooferORS;
 using Application.ViewModels.Reserve;
 using Microsoft.AspNetCore.Authorization;
@@ -19,11 +20,15 @@ namespace Application.Controllers
     private readonly UserManager<IdentityUser> _userManager;
     private readonly MrShooferAPIClient apiclient;
     private readonly AppDbContext context;
+    private readonly CustomerServiceSmsSender customerSmsSender;
+    private readonly IConfiguration configuration;
     private Agency agency;
 
 
-    public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context)
+    public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context, CustomerServiceSmsSender smssender, IConfiguration configuration)
     {
+      this.configuration = configuration;
+      this.customerSmsSender = smssender;
       this.context = context;
       this._userManager = usermanager;
       this.apiclient = apiclient;
@@ -156,6 +161,17 @@ namespace Application.Controllers
       context.Tickets.Add(newticket);
 
       await context.SaveChangesAsync();
+
+
+
+      //Sending SMS for customer
+
+
+      var service_url = configuration["serivce_url"];
+      var trip_link = service_url + "/ReserveInfo" + "?reference=" + newticket.TicketCode;
+
+      await  customerSmsSender.SendCustomerTicket_issued(newticket.Firstname.Replace(' ', '\u200C'), newticket.Lastname.Replace(' ', '\u200C'), newticket.TicketCode, trip_link, newticket.PhoneNumber);
+
 
 
       return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
