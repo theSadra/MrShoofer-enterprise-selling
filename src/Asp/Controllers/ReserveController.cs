@@ -170,14 +170,12 @@ namespace Application.Controllers
       var service_url = configuration["serivce_url"];
       var trip_link = service_url + "/ReserveInfo" + "?reference=" + newticket.TicketCode;
 
-      await  customerSmsSender.SendCustomerTicket_issued(newticket.Firstname.Replace(' ', '\u200C'), newticket.Lastname.Replace(' ', '\u200C'), newticket.TicketCode, trip_link, newticket.PhoneNumber);
+      await customerSmsSender.SendCustomerTicket_issued(newticket.Firstname.Replace(' ', '\u200C'), newticket.Lastname.Replace(' ', '\u200C'), newticket.TicketCode, trip_link, newticket.PhoneNumber);
 
 
 
       return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
     }
-
-
 
     public async Task<IActionResult> ReserveConfirmed(string ticketcode)
     {
@@ -188,8 +186,6 @@ namespace Application.Controllers
 
       return View();
     }
-
-  
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {

@@ -1,0 +1,52 @@
+@{
+    Layout = "_FrontLayout";
+    ViewData["navbarType"] = (ViewData["navbarType"] ?? "layout-navbar-fixed");
+    ViewData["isFront"] = (ViewData["isFront"] ??= true);
+}
+
+
+
+
+
+
+<style>
+    .navbar {
+        background: #fff !important;
+        box-shadow: 0 0.2rem 0.25rem rgba(165, 163, 174, 0.3) !important;
+    }
+</style>
+
+
+
+@section VendorStyles {
+    @RenderSection("VendorStyles", required: false)
+}
+
+@section PageStyles {
+    @RenderSection("PageStyles", required: false)
+}
+
+
+
+<div data-bs-spy="scroll" class="scrollspy-example section-py">
+
+    <!-- Hero: Start -->
+    <section id="hero-animation">
+        <div id="landingHero" style="" class="section-py landing-hero position-relative">
+            <div class="px-lg-5 mx-lg-5">
+
+                <div class="container">
+                @RenderBody()
+            </div>
+          </div>
+        </div>
+
+    </section>
+</div>
+@section VendorScripts {
+    @RenderSection("VendorScripts", required: false)
+}
+
+@section PageScripts {
+    @RenderSection("PageScripts", required: false)
+}

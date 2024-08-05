@@ -36,10 +36,6 @@ namespace Application.Controllers
       _serviceProvider = serviceProvider;
     }
 
-
-
-
-
     [Route("/ReserveInfo")]
     public async Task<IActionResult> CustomerReserveInfo(string reference)
     {
@@ -61,8 +57,6 @@ namespace Application.Controllers
 
       return View();
     }
-
-
 
     [Route("/TripReceiptPdf")]
     public async Task<IActionResult> TripReceiptPDF(string reference)
@@ -87,7 +81,7 @@ namespace Application.Controllers
 
 
       return View("TripReciptionPdfView", viewmodel);
-      }
+    }
 
     private void SetAPIClientToken(string agancytoken)
     {

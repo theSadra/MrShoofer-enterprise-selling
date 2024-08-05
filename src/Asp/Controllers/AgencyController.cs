@@ -3,6 +3,7 @@ using Application.Services.MrShooferORS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,58 +13,64 @@ using System.Threading.Tasks;
 namespace Application.Controllers
 {
   [Authorize]
-  [Route("api/[controller]")]
-  [ApiController]
-  public class AgenciesController : ControllerBase
+  public class AgencyController : Controller
   {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly MrShooferAPIClient _apiClient;
     private readonly AppDbContext _context;
+    private Agency agency;
 
-    public AgenciesController(AppDbContext context, UserManager<IdentityUser> userManager, MrShooferAPIClient apiClient)
+    public AgencyController(AppDbContext context, UserManager<IdentityUser> userManager, MrShooferAPIClient apiClient)
     {
       _context = context;
       _userManager = userManager;
       _apiClient = apiClient;
     }
 
-    // GET: api/Agencies
+
+
+
+    // Main agency page, general info last tickets
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Agency>>> GetAgencies()
+    public async Task<IActionResult> Index()
     {
-      return await _context.Agencies.Include(a => a.SoldTickets).ToListAsync();
+      ViewBag.agency = agency;
+      ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
+
+      // loading and fetching TODAY sold group
+     await _context.Entry(agency)
+        .Collection(a => a.SoldTickets)
+        .LoadAsync();
+      ViewBag.today_soldTickets = agency.SoldTickets
+        .Where(t => t.RegisteredAt >= DateTime.Today && t.RegisteredAt < DateTime.Today.AddDays(1))
+        .ToList();
+
+
+      return View();
     }
 
 
-    // Get purchased trips for an agency
-    [HttpGet("{id}/trips")]
-    public async Task<ActionResult<IEnumerable<Ticket>>> GetPurchasedTrips(int id)
+
+
+
+
+
+
+
+
+
+
+
+
+    // For setting api key and getting agency entity related to current request from database
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-      var agency = await _context.Agencies.Include(a => a.SoldTickets).FirstOrDefaultAsync(a => a.Id == id);
+      base.OnActionExecuting(context);
 
-      if (agency == null)
-      {
-        return NotFound();
-      }
+      var identityUser = _userManager.GetUserAsync(User).Result;
+      this.agency = this._context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
-      return agency.SoldTickets;
-    }
-
-    // Get the balance of the agency account
-    [HttpGet("{id}/balance")]
-    public async Task<ActionResult<int>> GetAgencyBalance(int id)
-    {
-      var agency = await _context.Agencies.FindAsync(id);
-
-      if (agency == null)
-      {
-        return NotFound();
-      }
-
-      var agancyUser = await _userManager.FindByIdAsync(agency.IdentityUser.Id);
-      var balance = await _apiClient.GetAccountBalance();
-
-      return (int)Convert.ToDouble(balance);
+      this._apiClient.SetSellerApiKey(this.agency.ORSAPI_token);
     }
 
   }

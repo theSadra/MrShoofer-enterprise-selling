@@ -1,0 +1,183 @@
+@{
+    Layout = "_AgencySideLayout";
+
+    var agency = (Agency)ViewBag.agency;
+    var agancy_balance = (long)ViewBag.agancy_balance;
+    var today_soldTickets = (List<Ticket>)ViewBag.today_soldTickets;
+}
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+<link rel="stylesheet" href="~/vendor/libs/swiper/swiper.css" />
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="~/vendor/libs/swiper/swiper.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/cards-advance.css" />
+}
+
+@section PageScripts {
+<script src="~/js/dashboards-analytics.js"></script>
+}
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg"
+             id="swiper-with-pagination-cards">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="text-white mb-1 mt-2">@agency.Name</h4>
+                            <small>باهم تاکنون 125 بلیط فروختیم</small>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                                <h6 class="text-white mt-0 mt-md-3 mb-3">آمار کلی</h6>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="d-flex mb-4 align-items-center">
+                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">25</p>
+                                                <p class="mb-0">فروش امروز</p>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">50 </p>
+                                                <p class="mb-0">این هفته</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="d-flex mb-4 align-items-center">
+                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">54</p>
+                                                <p class="mb-0">ماه جاری</p>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">1024</p>
+                                                <p class="mb-0">مجموع</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                                <img src="~/img/illustrations/card-website-analytics-1.png"
+                                     alt="تجزیه و تحلیل وب سایت"
+                                     width="170"
+                                     class="card-website-analytics-img" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-white mb-1 mt-2">تجزیه و تحلیل وب سایت</h5>
+                            <small>مجموع 28.5% نرخ تبدیل</small>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                            <h6 class="text-white mt-0 mt-md-3 mb-3">خرج کردن</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex mb-4 align-items-center">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">۱۲ساعت</p>
+                                            <p class="mb-0">خرج کردن</p>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-2">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">127</p>
+                                            <p class="mb-0">سفارش</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex mb-4 align-items-center">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">18</p>
+                                            <p class="mb-0">اندازه سفارش</p>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-2">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">2.3K</p>
+                                            <p class="mb-0">اقلام</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                            <img src="~/img/illustrations/card-website-analytics-2.png"
+                                 alt="تجزیه و تحلیل وب سایت"
+                                 width="170"
+                                 class="card-website-analytics-img" />
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-white mb-1 mt-2">تجزیه و تحلیل وب سایت</h5>
+                            <small>مجموع 28.5% نرخ تبدیل</small>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                            <h6 class="text-white mt-0 mt-md-3 mb-3">منابع درآمد</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex mb-4 align-items-center">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">268</p>
+                                            <p class="mb-0">مستقیم</p>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-2">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">62</p>
+                                            <p class="mb-0">ارجاع</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex mb-4 align-items-center">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">890</p>
+                                            <p class="mb-0">ارگانیک</p>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-2">
+                                            <p class="mb-0 fw-medium me-2 website-analytics-text-bg">۱٫۲ </p>
+                                            <p class="mb-0">کمپین</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                            <img src="~/img/illustrations/card-website-analytics-3.png"
+                                 alt="تجزیه و تحلیل وب سایت"
+                                 width="170"
+                                 class="card-website-analytics-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="card-icon">
+                    <span class="badge bg-label-success rounded-pill p-2"> <i class="ti ti-credit-card ti-sm"></i> </span>
+                </div>
+                <h5 class="card-title mb-0 mt-2">97.5k</h5>
+                <small>درآمد حاصل شده</small>
+            </div>
+            <div id="revenueGenerated" class="my-2"></div>
+        </div>
+    </div>
+</div>
