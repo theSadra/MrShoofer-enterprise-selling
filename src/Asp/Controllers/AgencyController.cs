@@ -27,9 +27,6 @@ namespace Application.Controllers
       _apiClient = apiClient;
     }
 
-
-
-
     // Main agency page, general info last tickets
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -48,19 +45,6 @@ namespace Application.Controllers
 
       return View();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // For setting api key and getting agency entity related to current request from database
     public override void OnActionExecuting(ActionExecutingContext context)
