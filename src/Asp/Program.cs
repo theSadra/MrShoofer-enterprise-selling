@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 
 
+
+
 //await smssender.SendCustomerTicket_issued("محمد صدرا".Replace(' ', '\u200C'), "درستکار".Replace(' ', '\u200C'), "Z4EIU", "https://9qbnlgl9-5055.euw.devtunnels.ms/ReserveInfo?reference=Z4EIU", "09902063015");
 
 
