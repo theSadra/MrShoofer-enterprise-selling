@@ -28,30 +28,33 @@ namespace Application.Controllers
       _apiClient = apiClient;
     }
 
+
+
+
     // Main agency page, general info last tickets
     [HttpGet]
     public async Task<IActionResult> Index()
     {
       ViewBag.agency = agency;
 
-      _context.Entry(agency)
-        .Collection(a => a.SoldTickets)
-        .Load();
-
-      AgencyAnalyzerService ana = new AgencyAnalyzerService(agency);
-
-      var total = ana.GetThisMonthSoldTotalPrice();
-      var totalprofit = ana.GetThisMonthTotalProfit();
-
-
-
-
-      ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
-
       // loading and fetching TODAY sold group
      await _context.Entry(agency)
         .Collection(a => a.SoldTickets)
         .LoadAsync();
+
+      AgencyAnalyzerService analyzer = new AgencyAnalyzerService(agency);
+
+      ViewBag.totalsold = analyzer.GetTotalSold();
+      ViewBag.todaysold = analyzer.GetTodaySold();
+      ViewBag.thismonthsold = analyzer.GetThisMonthSold();
+      ViewBag._7dayssold = analyzer.GetLast7DaysSold();
+      ViewBag.thismonthtotalprice = analyzer.GetThisMonthSoldTotalPrice();
+      ViewBag.thismonthtotalprofit = analyzer.GetThisMonthTotalProfit();
+      ViewBag.last7days_chart = analyzer.GetLast7Days_SaleChartPercentage();
+
+
+      ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
+
       ViewBag.today_soldTickets = agency.SoldTickets
         .Where(t => t.RegisteredAt >= DateTime.Today && t.RegisteredAt < DateTime.Today.AddDays(1))
         .ToList();
@@ -59,15 +62,6 @@ namespace Application.Controllers
 
       return View();
     }
-
-
-
-
-
-
-
-
-
 
 
 
