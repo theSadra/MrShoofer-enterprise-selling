@@ -1,4 +1,5 @@
 using Application.Data;
+using Application.Services;
 using Application.Services.MrShooferORS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +33,19 @@ namespace Application.Controllers
     public async Task<IActionResult> Index()
     {
       ViewBag.agency = agency;
+
+      _context.Entry(agency)
+        .Collection(a => a.SoldTickets)
+        .Load();
+
+      AgencyAnalyzerService ana = new AgencyAnalyzerService(agency);
+
+      var total = ana.GetThisMonthSoldTotalPrice();
+      var totalprofit = ana.GetThisMonthTotalProfit();
+
+
+
+
       ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
 
       // loading and fetching TODAY sold group
@@ -45,6 +59,19 @@ namespace Application.Controllers
 
       return View();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // For setting api key and getting agency entity related to current request from database
     public override void OnActionExecuting(ActionExecutingContext context)
