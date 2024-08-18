@@ -45,11 +45,29 @@ namespace Application.Services
     }
 
 
+    public int GetLast7DaysProfit()
+    {
+      var sevenDaysAgo = DateTime.Today.AddDays(-7);
+      return agency.SoldTickets
+          .Where(t => t.RegisteredAt >= sevenDaysAgo && t.RegisteredAt < DateTime.Today.AddDays(1))
+          .Where(t => t.IsCancelled == false)
+          .Select(t => (t.TicketFinalPrice * agency.Commission) / 100)
+          .Sum();
+    }
+
+    public int GetTodayTotalPrifit()
+    {
+      var now = DateTime.Now;
+      return agency.SoldTickets
+          .Where(t => t.RegisteredAt.Date == now.Date && t.IsCancelled != true)
+          .Sum(t => t.TicketFinalPrice) * agency.Commission / 100;
+    }
+
     public long GetThisMonthSoldTotalPrice()
     {
       var now = DateTime.Now;
       return agency.SoldTickets
-          .Where(t => t.RegisteredAt.Year == now.Year && t.RegisteredAt.Month == now.Month)
+          .Where(t => t.RegisteredAt.Year == now.Year && t.RegisteredAt.Month == now.Month && t.IsCancelled != true)
           .Sum(t => t.TicketFinalPrice);
     }
 
@@ -58,16 +76,39 @@ namespace Application.Services
     {
       var now = DateTime.Now;
       return agency.SoldTickets
-          .Where(t => t.RegisteredAt.Year == now.Year && t.RegisteredAt.Month == now.Month)
+          .Where(t => t.RegisteredAt.Year == now.Year && t.RegisteredAt.Month == now.Month && t.IsCancelled != true)
           .Sum(t => t.TicketFinalPrice) * agency.Commission / 100;
     }
 
 
-    public Dictionary<int, double> GetLast7Days_SaleChartPercentage()
+    public Dictionary<DateTime, int> GetLast7Days_SaleChartNumbers()
     {
+      //var last7Days = Enumerable.Range(0, 7)
+      //       .Select(i => DateTime.Today.AddDays(-i))
+      //       .ToList();
+
+      //var result = agency.SoldTickets
+      //    .Where(t => !t.IsCancelled && t.RegisteredAt >= last7Days.Last())
+      //    .GroupBy(t => t.RegisteredAt.Date)
+      //    .Select(g => new { Date = g.Key, Count = g.Count() })
+      //    .ToList();
+
+      //var ticketSales = last7Days
+      //    .Select((date, index) => new { Index = 6 - index, Count = result.FirstOrDefault(r => r.Date == date)?.Count ?? 0 }).Reverse()
+      //    .ToDictionary(x => x.Index, x => x.Count);
+
+      //// Calculate the highest sales count
+      ////int maxSales = ticketSales.Values.Max();
+
+      ////// Convert counts to percentages with the highest sales being 80%
+      ////var salesWithPercentages = ticketSales.ToDictionary(
+      ////    x => x.Key,
+      ////    x => maxSales > 0 ? Math.Round((x.Value / (double)maxSales) * 80, 2) : 0
+      ////);
+
       var last7Days = Enumerable.Range(0, 7)
-             .Select(i => DateTime.Today.AddDays(-i))
-             .ToList();
+    .Select(i => DateTime.Today.AddDays(-i))
+    .ToList();
 
       var result = agency.SoldTickets
           .Where(t => !t.IsCancelled && t.RegisteredAt >= last7Days.Last())
@@ -76,20 +117,11 @@ namespace Application.Services
           .ToList();
 
       var ticketSales = last7Days
-          .Select((date, index) => new { Index = 6 - index, Count = result.FirstOrDefault(r => r.Date == date)?.Count ?? 0 })
-          .ToDictionary(x => x.Index, x => x.Count);
+          .Select(date => new { Date = date, Count = result.FirstOrDefault(r => r.Date == date)?.Count ?? 0 }).Reverse()
+          .ToDictionary(x => x.Date, x => x.Count);
 
-      // Calculate the highest sales count
-      int maxSales = ticketSales.Values.Max();
 
-      // Convert counts to percentages with the highest sales being 80%
-      var salesWithPercentages = ticketSales.ToDictionary(
-          x => x.Key,
-          x => maxSales > 0 ? Math.Round((x.Value / (double)maxSales) * 80, 2) : 0
-      );
-
-      return salesWithPercentages;
-
+      return ticketSales;
     }
   }
 }

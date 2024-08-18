@@ -50,7 +50,10 @@ namespace Application.Controllers
       ViewBag._7dayssold = analyzer.GetLast7DaysSold();
       ViewBag.thismonthtotalprice = analyzer.GetThisMonthSoldTotalPrice();
       ViewBag.thismonthtotalprofit = analyzer.GetThisMonthTotalProfit();
-      ViewBag.last7days_chart = analyzer.GetLast7Days_SaleChartPercentage();
+      ViewBag.todaytotalprofit = analyzer.GetTodayTotalPrifit();
+
+
+      ViewBag.Last7weekprofit = analyzer.GetLast7DaysProfit();
 
 
       ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
@@ -64,7 +67,35 @@ namespace Application.Controllers
     }
 
 
+    [HttpGet]
+    public JsonResult GetSalesChartValues()
+    {
+      AgencyAnalyzerService analyzer = new AgencyAnalyzerService(agency);
+      _context.Entry(agency)
+        .Collection(a => a.SoldTickets)
+        .Load();
 
+      var valuesdictionary = analyzer.GetLast7Days_SaleChartNumbers();
+      // Your data array
+      var newdictionary = valuesdictionary.ToDictionary(
+        kv => kv.Key.ToPersianDate().DayOfWeek,
+        kv => kv.Value);
+
+
+
+
+      var last = newdictionary.Last();
+      var oldkey = last.Key;
+      var value = last.Value;
+
+      newdictionary.Remove(oldkey);
+      newdictionary.Add("امروز", value);
+      //int[] values = newdictionary.Select(kv => kv.Value).ToArray();
+      //string[] daynames = newdictionary.Select(kv => kv.Value.ToString()).ToArray();
+
+      // Return the array as a JSON object
+      return Json(newdictionary);
+    }
 
 
     // For setting api key and getting agency entity related to current request from database
