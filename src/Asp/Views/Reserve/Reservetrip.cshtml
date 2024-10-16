@@ -1,6 +1,8 @@
 @model Application.ViewModels.Reserve.ReserveInfoViewModel
 @{
-    Layout = "_HorizontalLayout";
+    Layout = "_AgencySideLayout";
+
+
 
     ViewData["title"] = "رزور سفر";
     var trip = (Application.Services.MrShooferORS.SearchedTrip)ViewBag.trip;
@@ -882,9 +884,30 @@
 }
 
 
+<style>
+
+    @@media only screen and (max-width: 600px) {
+
+    .px-14 {
+        padding-left: .2rem !important;
+        padding-right: .2rem !important;
+    }
+
+    .step-title {
+        font-size: .75rem !important;
+    }
+}
+
+
+</style>
+
 
 
 <div class="main_container px-lg-6 px-0">
+
+
+
+
     <div class="bg-white rounded-5 border-1 border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 ">
 
         <div class="d-flex steps">
@@ -931,168 +954,17 @@
     </div>
 
     <div class="downside-contaner mt-5 row">
-        <article class="col-8">
-
-            <input type="hidden" value="@trip.tripPlanCode" />
-            <h1 class=mb-4 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">
-                اطلاعات خریدار را وارد کنید
-            </h1>
-            <div class="info-container mt-4">
-                <div class="uppnav d-flex" style="align-items: baseline;">
-                    <div class="d-flex justify-between" style="align-items: center;">
-                        <div class="d-flex justify-between text-blck">
-                            <i class="ti ti-user"></i>
-                            <span class="fs-5">
-                                سرپسرت مسافرین
-                            </span>
-                        </div>
-                        <span style="font-size: 12px; align-self: end;" class="ms-2">
-                            خریدار سفر
-                        </span>
-                    </div>
-                </div>
-
-                <form class="input-forms row mt-2 pe-4" method="post">
-
-                    <div class="col-md-6 pe-2">
-                        <div class="mt-2 mb-3">
-                            <label class="form-label" for="largeInput">
-                                نام
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input asp-for="Firstname" autocomplete="off" class="form-control form-control" placeholder="نام مسافر" type="text">
-                            <span asp-validation-for="Firstname" class="text-danger validation-message"></span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 ps-2">
-                        <div class="mt-2 mb-3">
-                            <label class="form-label" for="largeInput">
-                                نام خانوادگی
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input asp-for="Lastname" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
-                            <span asp-validation-for="Lastname" class="text-danger validation-message"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6 pe-2">
-                        <div class="row">
-                            <label class="form-label" for="largeInput">
-                                جنسیت
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="row mb-md-0 mb-2">
-                                <div class="col-md-6">
-                                    <div class="form-check custom-option custom-option-basic">
-                                        <label class="form-check-label custom-option-content" for="customRadioTemp1">
-                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" type="radio" value="female" />
-                                            <span class="custom-option-header">
-                                                <span class="h6 mb-0">زن</span>
-                                            </span>
-
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check custom-option custom-option-basic me-0">
-                                        <label class="form-check-label custom-option-content" for="customRadioTemp2">
-                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" type="radio" value="male" />
-                                            <span class="custom-option-header">
-                                                <span class="h6 mb-0">مرد</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <span asp-validation-for="Gender" class="text-danger validation-message"></span>
-                        </div>
-                    </div>
 
 
-                    <div class="col-md-6">
-                        <div class="ps-2">
-                            <div class=" mb-3">
-                                <label class="form-label" for="largeInput">
-                                    کدملی
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input asp-for="NaCode" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text" data-val-regex-pattern="^\d{10}$ ">
-                                <span asp-validation-for="NaCode" class="text-danger validation-message"></span>
+      <div class="d-flex justify-content-between align-items-baseline">
 
-                            </div>
+      <h3 class="text-blck">جزییات سفر</h3>
 
-                        </div>
-                    </div>
-
-                    <hr class="mt-4 mb-4" />
-
-                    <div class="call-info-header d-flex justify-start">
-                        <svg class="text-blck" style="align-self:center;" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-                        </svg>
-
-
-                        <div class="ms-2 mt-1 " style="color: rgb(41 38 61 / var(--tw-text-opacity)) !important;">
-                            <h5 class="ms-1 mb-0 text-blck">اطلاعات تماس</h5>
-                            <p class="mt-0 mb-0">اطلاعات تماس به منظور ارسال فایل بلیط و هماهنگی با مسافر برای شروع سفر استفاده می‌شود</p>
-                        </div>
-                    </div>
-
-
-                    <div class="mt-3 row pe-0">
-
-                        <div class="col-md-6 pe-2">
-                            <div class="mt-2 mb-3">
-                                <label class="form-label" for="largeInput">
-                                    تلفن مسافر
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input asp-for="NumebrPhone" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text" data-val-regex-pattern="((0?9)|(\+?989))\d{9}">
-                                <span asp-validation-for="NumebrPhone" class="text-danger validation-message"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 ps-2">
-                            <div class="mt-2 mb-3">
-                                <label class="form-label" for="largeInput">ایمیل</label>
-                                <input asp-for="Email" autocomplete="off" class="form-control form-control" placeholder="(اختیاری)" type="text" data-val="fasle">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="mt-3 row mx-0 px-0">
-
-                        <div class="col-6 ps-0">
-                            <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;"
-                            @if (!ViewBag.canbuy)
-                            {
-                                @:disabled
-                            }>
-                                ادامه و رزور
-                            </button>
-                        </div>
-
-                        <div class="col-6">
-                            <p class="text-muted" style="line-height: 1.42rem !important;">
-                                بعد از ثبت بلیط برای مسافر، هماهنگی با راننده، پشتیبانی و خدمات مورد نیاز مسافر توسط مسترشوفر با
-                                <strong class="text-blck">
-                                    شماره فوق
-                                </strong>
-                                انجام می‌شود.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-        </article>
-
+            <span onclick="window.history.back();">
+                بازگشت
+                <i class="ti ti-arrow-back-up"></i>
+      </span>
+      </div>
         <aside class="col-md-4 col-12">
 
             <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 ">
@@ -1317,27 +1189,194 @@
 
                 </div> *@
 
-                <div class="mt-2 col-12 mx-1 px-2" style="">
+                <div class="mt-1 col-12 mx-0 px-2" style="">
                     <span>
-                        <h6 class="text-blck">قوانین کنسلی</h6>
+                        <h6 class="text-blck">قوانین سفر</h6>
                     </span>
-                    <p style="line-height:1.2rem !important; ">
-                        در صورت خرید سفر، و کنسل کردن سفر از طرف مسافر، تا 1 ساعت بعد از
-                        ثبت سفر کنسلی
-                        بدون جریمه
-                        انجام می‌شود در غیر این صورت.
+                    <p style="line-height:1.2rem !important; font-size: .8rem; ">
+                        تغییرات مورد نظر شما مانند مبدا و مقصد اضافه یا اضافه مسیر خارج از شهر مبدا یا مقصد با هماهنگی راننده امکان پذیر می باشد و هزینه آن به صورت جداگانه محاسبه می شود. ظرفیت خودرو دربستی ۳ مسافر می باشد.
+                        قوانین کنسلی به صورت زیر اعمال می گردد:
+
                     </p>
 
                     <div class="ms-1 text-muted">
 
-                        <small class="d-flex">تا 24 ساعت مانده به سفر  15 درصد  </small>
-                        <small class="d-flex">تا 4 ساعت قبل سفر 30 درصد  </small>
-                        <small class="d-flex">3 ساعت قبل سفر 70 درصد</small>
+                        <small class="d-flex">تا 1 ساعت بعد از خرید بدون جریمه  </small>
+                        <small class="d-flex">تا 12 ساعت مانده به سفر  20 درصد</small>
+                        <small class="d-flex">تا 3 ساعت قبل سفر 50 درصد</small>
+                        <small class="d-flex">و بعد از آن امکان کنسلی وجود ندارد</small>
+
 
                     </div>
                 </div>
             </div>
         </aside>
+
+
+
+
+        <article class="col-12 col-md-8 mt-4 mt-md-0">
+
+            <input type="hidden" value="@trip.tripPlanCode" />
+            <h1 class=mb-4 font-bold ms-3 ms-md-0" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">
+                اطلاعات خریدار را وارد کنید
+            </h1>
+            <div class="info-container mt-4">
+                <div class="uppnav d-flex" style="align-items: baseline;">
+                    <div class="d-flex justify-between" style="align-items: center;">
+                        <div class="d-flex justify-between text-blck">
+                            <i class="ti ti-user"></i>
+                            <span class="fs-5">
+                                سرپسرت مسافرین
+                            </span>
+                        </div>
+                        <span style="font-size: 12px; align-self: end;" class="ms-2">
+                            خریدار سفر
+                        </span>
+                    </div>
+                </div>
+
+                <form class="input-forms row mt-2 pe-0 pe-md-4" method="post">
+
+                    <div class="col-md-6 pe-0 pe-md-2">
+                        <div class="mt-2 mb-3">
+                            <label class="form-label" for="largeInput">
+                                نام
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Firstname" autocomplete="off" class="form-control form-control" placeholder="نام مسافر" type="text">
+                            <span asp-validation-for="Firstname" class="text-danger validation-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 ps-0 ps-md-0">
+                        <div class="mt-2 mb-3">
+                            <label class="form-label" for="largeInput">
+                                نام خانوادگی
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Lastname" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="نام‌خانوادگی مسافر" type="text">
+                            <span asp-validation-for="Lastname" class="text-danger validation-message"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 pe-0 pe-md-2">
+                        <div class="row">
+                            <label class="form-label" for="largeInput">
+                                جنسیت
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="row mb-md-0 mb-2">
+                                <div class="col-md-6 col-6">
+                                    <div class="form-check custom-option custom-option-basic">
+                                        <label class="form-check-label custom-option-content" for="customRadioTemp1">
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp1" type="radio" value="female" />
+                                            <span class="custom-option-header">
+                                                <span class="h6 mb-0">زن</span>
+                                            </span>
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="form-check custom-option custom-option-basic me-0">
+                                        <label class="form-check-label custom-option-content" for="customRadioTemp2">
+                                            <input asp-for="Gender" class="form-check-input" id="customRadioTemp2" type="radio" value="male" />
+                                            <span class="custom-option-header">
+                                                <span class="h6 mb-0">مرد</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Gender" class="text-danger validation-message"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="ps-0 ps-md-3">
+                            <div class=" mb-3">
+                                <label class="form-label" for="largeInput">
+                                    کدملی
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="NaCode" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره ملی" type="text" data-val-regex-pattern="^\d{10}$ ">
+                                <span asp-validation-for="NaCode" class="text-danger validation-message"></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <hr class="mt-4 mb-4" />
+
+                    <div class="call-info-header d-flex justify-start">
+                        <svg class="text-blck" style="align-self:center;" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                        </svg>
+
+
+                        <div class="ms-2 mt-1 " style="color: rgb(41 38 61 / var(--tw-text-opacity)) !important;">
+                            <h5 class="ms-1 mb-0 text-blck">اطلاعات تماس</h5>
+                            <p class="mt-0 mb-0">اطلاعات تماس به منظور ارسال فایل بلیط و هماهنگی با مسافر برای شروع سفر استفاده می‌شود</p>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-3 row pe-0">
+
+                        <div class="col-md-6 pe-2">
+                            <div class="mt-2 mb-3">
+                                <label class="form-label" for="largeInput">
+                                    تلفن مسافر
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="NumebrPhone" autocomplete="off" class="form-control form-control" id="largeInput" placeholder="شماره موبایل" type="text" data-val-regex-pattern="((0?9)|(\+?989))\d{9}">
+                                <span asp-validation-for="NumebrPhone" class="text-danger validation-message"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 ps-2">
+                            <div class="mt-2 mb-3">
+                                <label class="form-label" for="largeInput">ایمیل</label>
+                                <input asp-for="Email" autocomplete="off" class="form-control form-control" placeholder="(اختیاری)" type="text" data-val="fasle">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mt-3 row mx-0 px-0">
+
+                        <div class="col-12 col-md-6 ps-0">
+                            <button class="btn btn-lg btn-primary w-100 " style="height: 3.5rem !important;border-radius: 1.6rem !important;"
+                            @if (!ViewBag.canbuy)
+                            {
+                                @:disabled
+                            }>
+                                ادامه و رزور
+                            </button>
+                        </div>
+
+                        <div class="col-12 col-md-6 mt-2 mt-md-0">
+                            <p class="text-muted" style="line-height: 1.42rem !important;">
+                                بعد از ثبت بلیط برای مسافر، هماهنگی با راننده، پشتیبانی و خدمات مورد نیاز مسافر توسط مسترشوفر با
+                                <strong class="text-blck">
+                                    شماره فوق
+                                </strong>
+                                انجام می‌شود.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </article>
+
     </div>
 </div>
 

@@ -3,7 +3,7 @@
 
 @if (Model.tripTypeID == Application.Services.MrShooferORS.TripType.OnlyPrivate)
 {
-    <div class="card p-3 mt-4" style="width: 100%;">
+    <div class="card px-0 px-md-3 mt-4" style="width: 100%;">
       
         <div class="">
             <i class="ti ti-armchair-2 d-inline"></i>
@@ -12,10 +12,8 @@
         </div>
         <div>
             @Model.originCityName (@Model.oringinLocationName)
-            ...........
+            .....
             @Model.destinationCityName (@Model.destinationLocationName)
-
-
 
 
             <p class="text-underlined">

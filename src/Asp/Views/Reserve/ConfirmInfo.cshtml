@@ -1,5 +1,5 @@
 @{
-    Layout = "_HorizontalLayout";
+        Layout = "_AgencySideLayout";
     ViewData["title"] = "تایید نهایی";
 
     var trip = (Application.Services.MrShooferORS.SearchedTrip)ViewBag.trip;
@@ -25,6 +25,22 @@
     };
 
 }
+
+<style>
+
+    @@media only screen and (max-width: 600px) {
+
+        .px-14 {
+            padding-left: .2rem !important;
+            padding-right: .2rem !important;
+        }
+
+        .step-title {
+            font-size: .75rem !important;
+        }
+    }
+
+</style>
 
 <style>
     .validation-message {
@@ -263,8 +279,20 @@
     <div class="downside-contaner mt-5 row">
         <div class="mb-4">
 
-            <h1 class="mb-2 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">تایید اطلاعات و رزرو</h1>
-            <small>اطلاعات مسافر و سفر را تایید نهایی کنید</small>
+            <div class="d-flex justify-content-between align-items-baseline">
+              <div>
+
+                <h2 class="mb-2 font-bold" style="font-size: 1.5rem; line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">تایید اطلاعات و رزرو</h2>
+                <small>اطلاعات مسافر و سفر را تایید نهایی کنید</small>
+              </div>
+
+                <span onclick="window.history.back();">
+                    بازگشت
+                    <i class="ti ti-arrow-back-up"></i>
+                </span>
+            </div>
+
+            
         </div>
 
 
@@ -584,14 +612,13 @@
                     <small style="font-size: .7rem;" class="text-muted d-block">
                         <i class="ti ti-message-2"></i>
                         بعد از ثبت خرید و صدور بلیط، لینک اطلاعات سفر و فایل بلیط برای مسافر ارسال می‌شود
-                    </small>
+                    </small> 
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-2  ">
 
                 <div class="col-0 col-md-6">
-                    .
                     <p class="text-muted" style="line-height: 1.3rem !important; font-size: .8rem !important;">
                         <img src="/location.png" height="22px;" />
                         پس از ثبت و تایید بلیط، مکان دقیق مقصد و مبدا توسط
@@ -662,7 +689,7 @@
                 <div class="modal-content">
                     <div class="modal-header ">
                         <div class="d-flex justify-content-start align-items-center mt-2">
-                            <img src="/cards.png" height="50px;" />
+                            <img src="/cards.png" height="50px" />
                             <div class="ms-3">
 
                                 <h3 class="modal-title" id="modalCenterTitle">تایید پرداخت</h3>
