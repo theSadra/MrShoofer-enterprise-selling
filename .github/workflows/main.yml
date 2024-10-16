@@ -1,4 +1,4 @@
-name: Build and Push DaraBotService Docker Image to Docker Hub
+name: Build and Push mrshoofer_org Docker Image to Docker Hub
 
 on:
   push:
@@ -22,11 +22,11 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest -f src/Asp/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
 
       - name: SSH into server and run Docker container
         uses: appleboy/ssh-action@v0.1.6
@@ -35,7 +35,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
-            sudo docker stop mrshoofer-org || true
-            sudo docker rm mrshoofer-org || true
-            sudo docker run -d --name mrshoofer-org -p 80:80 ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
+            sudo docker stop mrshoofer_org || true
+            sudo docker rm mrshoofer_org || true
+            sudo docker run -d --name mrshoofer_org -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
