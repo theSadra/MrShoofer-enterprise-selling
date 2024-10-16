@@ -1,41 +1,33 @@
-name: Build and Push DaraBotService Docker Image to Docker Hub
+# Use the official .NET SDK image for the build environment
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
-on:
-  push:
-    tags:
-      - 'v*'
+# Set the working directory
+WORKDIR /AspnetCoreMvcStarter
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# Copy the solution and project files into the container
+COPY src/Asp/*.sln ./
+COPY src/Asp/*.csproj ./
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+# Restore the project dependencies
+RUN dotnet restore
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+# Copy the rest of the application code
+COPY src/Asp/ ./
 
-      - name: Login to Docker Hub with API Token
-        run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+# Build the application
+RUN dotnet publish -c Release -o out
 
-      - name: Build the Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest -f src/Asp/Dockerfile .
+# Use the official ASP.NET runtime image for the production environment
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
+# Set the working directory
+WORKDIR /app
 
-      - name: SSH into server and run Docker container
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
-            sudo docker stop mrshoofer-org || true
-            sudo docker rm mrshoofer-org || true
-            sudo docker run -d --name mrshoofer-org -p 80:80 ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
+# Copy the built application from the previous stage
+COPY --from=build-env /AspnetCoreMvcStarter/out .
+
+# Expose the port the app runs on
+EXPOSE 80
+
+# Set the entry point for the application
+ENTRYPOINT ["dotnet", "YourProjectName.dll"]
