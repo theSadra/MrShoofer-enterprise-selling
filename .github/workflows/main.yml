@@ -22,6 +22,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
+          cd /src/Asp/
           docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest .
 
       - name: Push Docker image to Docker Hub
