@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /AspnetCoreMvcStarter
 
 # Copy the solution and project files
-COPY src/Asp/mrshoofer\ organizational.sln ./
-COPY src/Asp/Application.csproj ./
+COPY "src/Asp/mrshoofer organizational.sln" ./
+COPY "src/Asp/Application.csproj" ./
 
 # Restore the project dependencies
 RUN dotnet restore "mrshoofer organizational.sln"
