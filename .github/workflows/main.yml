@@ -22,7 +22,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest ./src/Asp
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest -f src/Asp/Dockerfile src/Asp
 
       - name: Push Docker image to Docker Hub
         run: |
@@ -38,4 +38,3 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
             sudo docker stop mrshoofer-org || true
             sudo docker rm mrshoofer-org || true
-            sudo docker run -d --name mrshoofer-org -p 5050:80 ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
