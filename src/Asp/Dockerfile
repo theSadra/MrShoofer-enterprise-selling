@@ -2,26 +2,28 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /AspnetCoreMvcStarter
 
-# Copy everything
+# Copy the .sln file and restore dependencies
+COPY *.sln ./
 COPY . ./
-# Restore as distinct layers
 RUN dotnet restore
 
-# Copy the entire project and build
+# Build the project
 RUN dotnet publish -c Release -o out
 
-# Build runtime image
+# Build the runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /AspnetCoreMvcStarter
+
+# Copy the build output from the build environment
 COPY --from=build-env /AspnetCoreMvcStarter/out .
 
-# Expose port 5050 for the application
-EXPOSE 80
+# Expose port 5050 (or whatever port your app listens on)
+EXPOSE 5050
 
 # Set the entry point for the container
 ENTRYPOINT ["dotnet", "AspnetCoreMvcStarter.dll"]
 
-# Display a message in the terminal during build
-RUN echo  -----------------------------------------------
-RUN echo  Application is running at http://localhost:5050
-RUN echo  -----------------------------------------------
+# Optional: Display a message when the container is built
+RUN echo "-----------------------------------------------"
+RUN echo " Application is running at http://localhost:5050"
+RUN echo "-----------------------------------------------"
