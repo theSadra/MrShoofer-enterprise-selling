@@ -1,27 +1,25 @@
-# Use the SDK image to build the application
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
-
-# Set the working directory
-WORKDIR /AspnetCoreMvcStarter
-
-# Copy the solution and project files
-COPY "src/Asp/mrshoofer organizational.sln" ./
-COPY "src/Asp/Application.csproj" ./
-
-# Restore the project dependencies
-RUN dotnet restore "mrshoofer organizational.sln"
-
-# Copy the rest of the application code
-COPY src/Asp/. ./
-
-# Build the application
-RUN dotnet publish -c Release -o out
-
-# Use the runtime image to run the application
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-
+# Base stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-COPY --from=build-env /AspnetCoreMvcStarter/out .
+EXPOSE 5000  # Expose port 5000
 
-# Start the application
-ENTRYPOINT ["dotnet", "Application.dll"]
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["Application.csproj", "."]  # Update project name here
+RUN dotnet restore "./Application.csproj"  # Update project name here
+COPY . . 
+WORKDIR "/src/."
+RUN dotnet build "./Application.csproj" -c $BUILD_CONFIGURATION -o /app/build  # Update project name here
+
+# Publish stage
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./Application.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false  # Update project name here
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish . 
+ENTRYPOINT ["dotnet", "Application.dll"]  # Update DLL name if necessary
