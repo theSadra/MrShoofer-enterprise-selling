@@ -34,8 +34,15 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 300  # Set timeout to 300 seconds (5 minutes)
           script: |
+            set -e  # Exit immediately if a command exits with a non-zero status
+            echo "Pulling latest Docker image..."
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
+            echo "Stopping existing container if running..."
             sudo docker stop mrshoofer_org || true
+            echo "Removing existing container if it exists..."
             sudo docker rm mrshoofer_org || true
-            sudo docker run -d --name mrshoofer_org -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
+            echo "Starting new Docker container..."
+            sudo docker run -d --name mrshoofer_org -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
+            echo "Deployment complete."
