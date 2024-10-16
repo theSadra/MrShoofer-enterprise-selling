@@ -34,9 +34,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 300  # Set timeout to 300 seconds (5 minutes)
           script: |
-            set -e  # Exit immediately if a command exits with a non-zero status
             echo "Pulling latest Docker image..."
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
             echo "Stopping existing container if running..."
