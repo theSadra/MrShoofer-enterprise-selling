@@ -2,10 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /AspnetCoreMvcStarter
 
-# Copy the .sln file and restore dependencies
-COPY *.sln ./
-COPY . ./
-RUN dotnet restore
+# Copy the solution file and project files into the container
+COPY src/Asp/*.sln ./
+COPY src/Asp/ ./
+
+# Specify the solution file for restoring dependencies
+RUN dotnet restore AspnetCoreMvcStarter.sln
 
 # Build the project
 RUN dotnet publish -c Release -o out
@@ -17,7 +19,7 @@ WORKDIR /AspnetCoreMvcStarter
 # Copy the build output from the build environment
 COPY --from=build-env /AspnetCoreMvcStarter/out .
 
-# Expose port 5050 (or whatever port your app listens on)
+# Expose the necessary port (adjust to your app's port if needed)
 EXPOSE 5050
 
 # Set the entry point for the container
