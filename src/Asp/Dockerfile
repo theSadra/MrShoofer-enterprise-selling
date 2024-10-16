@@ -1,31 +1,41 @@
-# Use the .NET 8 SDK image for building the application
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
-WORKDIR /AspnetCoreMvcStarter
+name: Build and Push DaraBotService Docker Image to Docker Hub
 
-# Copy the solution file and project files into the container
-COPY src/Asp/*.sln ./
-COPY src/Asp/ ./
+on:
+  push:
+    tags:
+      - 'v*'
 
-# Specify the solution file for restoring dependencies
-RUN dotnet restore AspnetCoreMvcStarter.sln
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-# Build the project
-RUN dotnet publish -c Release -o out
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-# Build the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /AspnetCoreMvcStarter
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-# Copy the build output from the build environment
-COPY --from=build-env /AspnetCoreMvcStarter/out .
+      - name: Login to Docker Hub with API Token
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-# Expose the necessary port (adjust to your app's port if needed)
-EXPOSE 5050
+      - name: Build the Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest -f src/Asp/Dockerfile .
 
-# Set the entry point for the container
-ENTRYPOINT ["dotnet", "AspnetCoreMvcStarter.dll"]
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
 
-# Optional: Display a message when the container is built
-RUN echo "-----------------------------------------------"
-RUN echo " Application is running at http://localhost:5050"
-RUN echo "-----------------------------------------------"
+      - name: SSH into server and run Docker container
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
+            sudo docker stop mrshoofer-org || true
+            sudo docker rm mrshoofer-org || true
+            sudo docker run -d --name mrshoofer-org -p 80:80 ${{ secrets.DOCKER_USERNAME }}/mrshoofer-org:latest
