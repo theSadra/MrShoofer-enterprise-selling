@@ -42,5 +42,5 @@ jobs:
             echo "Removing existing container if it exists..."
             sudo docker rm mrshoofer_org || true
             echo "Starting new Docker container..."
-            sudo docker run -d --name mrshoofer_org -p 127.0.0.1:5000:8080 ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
+            sudo docker run -d --name mrshoofer_org -p 127.0.0.1:5000:8080 -v /home/ubuntu/mrshoofer_org/Mrshoofer_org.db:/Mrshoofer_org.db ${{ secrets.DOCKER_USERNAME }}/mrshoofer_org:latest
             echo "Deployment complete."
