@@ -33,7 +33,18 @@ builder.Services.AddControllersWithViews();
 builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
 
 
-builder.Services.AddDbContext<AppDbContext>();
+
+
+var sqlite_connstring = builder.Configuration.GetConnectionString("production");
+if (builder.Environment.IsDevelopment())
+{
+  sqlite_connstring = builder.Configuration.GetConnectionString("development");
+}
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(sqlite_connstring));
+
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
