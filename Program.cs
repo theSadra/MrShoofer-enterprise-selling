@@ -41,6 +41,8 @@ if (builder.Environment.IsDevelopment())
   sqlite_connstring = builder.Configuration.GetConnectionString("development");
 }
 
+Console.WriteLine( sqlite_connstring);
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(sqlite_connstring));
 
