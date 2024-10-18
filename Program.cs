@@ -35,7 +35,7 @@ builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
 
 
 
-var sqlite_connstring = builder.Configuration.GetConnectionString("production");
+var sqlite_connstring = "Data Source=/home/ubuntu/mrshoofer_org/Mrshoofer_org.db";
 if (builder.Environment.IsDevelopment())
 {
   sqlite_connstring = builder.Configuration.GetConnectionString("development");
