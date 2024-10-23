@@ -12,7 +12,6 @@ namespace Application.Services
     }
 
 
-
     public int GetTotalSold()
     {
       return agency.SoldTickets.Count();

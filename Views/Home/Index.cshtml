@@ -110,19 +110,20 @@
 
                 <div class="row">
                     <div class="col-lg-2 col-0"></div>
-                    <div class="row col-lg-8 col-12">
-                        <div class="card mb-4">
-                            <div class="card-body row">
+                    <div class="row col-lg-8 col-12 m-0">
+                        <div class="card mb-3">
+                            <div class="card-body row pb-4">
                                 <div class="card-header p-0 mb-4" style="">
                                     <h4 class="mb-0 ">
-                                        <img class="ti ti-car mb icon pe-1 image" src="/caronraod.png" width="80px" />
+                                        <img class="ti ti-car mb icon pe-1 image" src="/caronraod.png" width="80px"/>
                                         جستجوی ‌سواری
                                     </h4>
                                 </div>
 
-                                <form asp-controller="TaxiTrips" asp-action="Index" method="get" class="row" id="tripForm">
+                                <form asp-controller="TaxiTrips" asp-action="Index" method="get" class="row m-0" id="tripForm">
+                                    <div class="col-12 col-md-3 inputcel">
+                                        <div class="form-text d-md-none d-block" id="defaultFormControlHelp">شهر مبدا سفر</div>
 
-                                    <div class="col-3 inputcel">
                                         <div class="input-container">
                                             <input autocomplete="off" aria-describedby="defaultFormControlHelp" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" name="originstring" />
                                             <i class="ti ti-location mb-2 icon"></i>
@@ -150,10 +151,12 @@
                                                 </div> *@
                                             </span>
                                         </div>
-                                        <div class="form-text" id="defaultFormControlHelp">شهر مبدا سفر</div>
+                                        <div class="form-text d-md-block d-none" id="defaultFormControlHelp">شهر مبدا سفر</div>
                                     </div>
 
-                                    <div class="col-3 inputcel">
+                                    <div class="col-12 col-md-3 inputcel">
+                                        <div class="form-text d-block d-md-none" id="defaultFormControlHelp">شهر مقصد سفر</div>
+
                                         <div class="input-container">
                                             <input data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
                                             <i class="ti ti-map-pin mb-2 icon"></i>
@@ -179,12 +182,14 @@
                                             </span>
 
                                         </div>
-                                        <div class="form-text" id="defaultFormControlHelp">شهر مقصد سفر</div>
+                                        <div class="form-text d-none d-md-block" id="defaultFormControlHelp">شهر مقصد سفر</div>
                                     </div>
 
 
 
-                                    <div class="col-3 inputcel">
+                                    <div class="col-12 col-md-3 inputcel">
+                                        <div class="form-text d-block d-md-none" id="defaultFormControlHelp">انتخاب تاریخ</div>
+
                                         <!-- /Human Friendly Date Picker-->
                                         <!-- Disabled Range-->
 
@@ -192,12 +197,12 @@
                                             <input autocomplete="off" class="form-control bdi starttimeselector" id="flatpickr-date" class="searchdate" placeholder="تاریخ سفر" type="text" name="searchdate" />
                                             <i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
                                         </div>
-                                        <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div>
+                                        <div class="form-text d-none d-md-block" id="defaultFormControlHelp">انتخاب تاریخ</div>
 
 
                                     </div>
 
-                                    <div class="col-1 inputcel ">
+                                   @*  <div class="col-1 inputcel ">
 
                                         <div class="input_con">
                                             <label class="switch switch-square switch-lg" onclick="JustPrivateSelected()">
@@ -217,12 +222,12 @@
                                         </div>
 
 
-                                    </div>
+                                    </div> *@
 
-                                    <div class="col-2 inputcel">
-                                        <div class="ps-0">
-                                            <button style="width:100%;" class="btn btn-primary waves-effect waves-light" type="submit">
-                                                پیدا کن
+                                    <div class="col-12 col-md-3 inputcel">
+                                        <div class="ps-0 mt-4 mt-md-0 ">
+                                            <button style="width:100%; border-radius: 1.2rem;" class="btn btn-primary waves-effect waves-light btn-lg" type="submit">
+                                               بزن بریم
                                                 <i class="ti ti-search"></i>
                                             </button>
                                         </div>

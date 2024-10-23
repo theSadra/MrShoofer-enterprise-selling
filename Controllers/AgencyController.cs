@@ -78,7 +78,7 @@ namespace Application.Controllers
       var valuesdictionary = analyzer.GetLast7Days_SaleChartNumbers();
       // Your data array
       var newdictionary = valuesdictionary.ToDictionary(
-        kv => kv.Key.ToPersianDate().DayOfWeek,
+        kv => kv.Key.ToPersianDate().Month + "/" + kv.Key.ToPersianDate().Day,
         kv => kv.Value);
 
 

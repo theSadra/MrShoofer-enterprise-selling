@@ -35,6 +35,61 @@
 }
 
 <style>
+    .daytext {
+        text-align: center;
+    }
+
+    .tripday {
+        align-items: stretch;
+        border-radius: 8px !important;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        justify-content: center;
+        margin: 0 6px;
+        padding: 0 4px;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        /* width: 88px; */
+    }
+
+    .switchbar-container {
+        display: flex;
+        align-items: center;
+        display: flex;
+        max-width: 100%;
+        flex-direction: row !important;
+    }
+
+    .scroll_button {
+        padding: 8px;
+        width: 48px;
+    }
+
+    .timelline-container {
+        align-items: center;
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+        display: flex;
+    }
+
+    .scroll_button {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        outline: none;
+        align-self: stretch;
+    }
+</style>
+
+<style>
 
 
     @@media only screen and (min-width: 960px) {
@@ -186,7 +241,6 @@
         justify-content: start;
     }
 </style>
-
 
 <div class="px-lg-6 px-0">
 
