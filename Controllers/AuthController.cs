@@ -41,29 +41,57 @@ namespace AspnetCoreMvcStarter.Controllers
       if (ModelState.IsValid)
       {
 
-        var result = await _signInManager.PasswordSignInAsync(viewmodel.NumberPhone, viewmodel.Password, viewmodel.RemmemberMe, lockoutOnFailure: false);
+        // Without password hash logic
 
-        if (!_signInManager.UserManager.Users.Any(u => u.UserName == viewmodel.NumberPhone) || result.IsNotAllowed)
+        var user = await _usermanager.FindByNameAsync(viewmodel.NumberPhone);
+        if (user != null && user.PasswordHash == viewmodel.Password)
+        {
+
+          await _signInManager.SignInAsync(user, viewmodel.RemmemberMe);
+          // Redirect or take further action
+          if (!string.IsNullOrEmpty(ReturnUrl))
+            return LocalRedirect(ReturnUrl);
+
+          // Else : redirect to IndexPage
+          return RedirectToAction("Index", "Home");
+
+        }
+        else
         {
           ViewBag.errormessage = "شماره تلفن یا رمز عبور اشتباه است";
           return View(viewmodel);
         }
 
-        if (result.IsLockedOut)
-        {
-          ViewBag.errormessage = "حساب کاربری شما مسدود شده است";
-          return View(viewmodel);
-        }
+        //  var result = await _signInManager.PasswordSignInAsync(viewmodel.NumberPhone, viewmodel.Password, viewmodel.RemmemberMe, lockoutOnFailure: false);
 
-        if (result.Succeeded)
-        {
-          return LocalRedirect(ReturnUrl);
-        }
-        else
-        {
+        //  if (!_signInManager.UserManager.Users.Any(u => u.UserName == viewmodel.NumberPhone) || result.IsNotAllowed)
+        //  {
+        //    ViewBag.errormessage = "شماره تلفن یا رمز عبور اشتباه است";
+        //    return View(viewmodel);
+        //  }
 
-          return View(viewmodel);
-        }
+        //  if (result.IsLockedOut)
+        //  {
+        //    ViewBag.errormessage = "حساب کاربری شما مسدود شده است";
+        //    return View(viewmodel);
+        //  }
+
+        //  if (result.Succeeded)
+        //  {
+        //    if (!string.IsNullOrEmpty(ReturnUrl))
+        //      return LocalRedirect(ReturnUrl);
+
+        //    // Else : redirect to IndexPage
+        //    return RedirectToAction("Index", "Home");
+
+        //  }
+        //  else
+        //  {
+
+        //    return View(viewmodel);
+        //  }
+        //}
+
       }
       return View(viewmodel);
     }
@@ -192,14 +220,11 @@ namespace AspnetCoreMvcStarter.Controllers
         return View("LoginotpSubmit");
       }
 
-
-
       // Logging in the user
       await _signInManager.SignInAsync(user, true, "OTP");
       return RedirectToAction("Index", "Home");
 
     }
-
 
     public async Task<IActionResult> Logout()
     {

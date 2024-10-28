@@ -1,6 +1,6 @@
 @{
-    /* Layout = "_FrontLayout" */
     Layout = "_FrontLayout";
+
     ViewData["Title"] = "سواری بین شهری";
 }
 
@@ -71,6 +71,252 @@
         border-radius: var(--bs-border-radius);
     }
 </style>
+
+<style>
+  @@keyframes hero-gradient-animation {
+    0% {
+        --c-0: hsla(175, 83%, 69%, 1);
+        --s-start-0: 3%;
+        --s-end-0: 75%;
+        --y-0: 78%;
+        --x-0: 31%;
+        --c-1: hsla(101, 68%, 100%, 1);
+        --x-1: 88%;
+        --y-1: 93%;
+        --s-start-1: 3%;
+        --s-end-1: 83%;
+        --x-2: 99%;
+        --y-2: 8%;
+        --c-2: hsla(84, 89%, 82%, 1);
+        --s-start-2: 5%;
+        --s-end-2: 67%;
+        --s-start-3: 8%;
+        --s-end-3: 61%;
+        --c-3: hsla(36, 68%, 82%, 1);
+        --y-3: 0%;
+        --x-3: 41%;
+        --c-4: hsla(189, 63%, 89%, 1);
+        --s-start-4: 16%;
+        --s-end-4: 88%;
+        --x-4: 19%;
+        --y-4: 59%;
+    }
+
+    100% {
+        --c-0: hsla(154, 53%, 78%, 1);
+        --s-start-0: 8%;
+        --s-end-0: 50%;
+        --y-0: 62%;
+        --x-0: 96%;
+        --c-1: hsla(25, 80%, 79%, 1);
+        --x-1: 11%;
+        --y-1: 14%;
+        --s-start-1: 14%;
+        --s-end-1: 78%;
+        --x-2: 34%;
+        --y-2: 84%;
+        --c-2: hsla(57, 72%, 56%, 1);
+        --s-start-2: 9%;
+        --s-end-2: 63%;
+        --s-start-3: 17%;
+        --s-end-3: 86%;
+        --c-3: hsla(40, 91%, 79%, 1);
+        --y-3: 21%;
+        --x-3: 32%;
+        --c-4: hsla(39, 72%, 66%, 1);
+        --s-start-4: 18%;
+        --s-end-4: 55%;
+        --x-4: 88%;
+        --y-4: 91%;
+    }
+}
+
+@@property --c-0 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(175, 83%, 69%, 1)
+}
+
+@@property --s-start-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 3%
+}
+
+@@property --s-end-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 75%
+}
+
+@@property --y-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 78%
+}
+
+@@property --x-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 31%
+}
+
+@@property --c-1 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(101, 68%, 100%, 1)
+}
+
+@@property --x-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 88%
+}
+
+@@property --y-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 93%
+}
+
+@@property --s-start-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 3%
+}
+
+@@property --s-end-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 83%
+}
+
+@@property --x-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 99%
+}
+
+@@property --y-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 8%
+}
+
+@@property --c-2 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(84, 89%, 82%, 1)
+}
+
+@@property --s-start-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 5%
+}
+
+@@property --s-end-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 67%
+}
+
+@@property --s-start-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 8%
+}
+
+@@property --s-end-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 61%
+}
+
+@@property --c-3 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(36, 68%, 82%, 1)
+}
+
+@@property --y-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%
+}
+
+@@property --x-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 41%
+}
+
+@@property --c-4 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(189, 63%, 89%, 1)
+}
+
+@@property --s-start-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 16%
+}
+
+@@property --s-end-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 88%
+}
+
+@@property --x-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 19%
+}
+
+@@property --y-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 59%
+}
+
+    .landing-hero1 {
+        --c-0: hsla(175, 83%, 69%, 1);
+    --y-0: 78%;
+    --x-0: 31%;
+    --c-1: hsla(101, 68%, 100%, 1);
+    --x-1: 88%;
+    --y-1: 93%;
+    --x-2: 99%;
+    --y-2: 8%;
+    --c-2: hsla(84, 89%, 82%, 1);
+    --c-3: hsla(36, 68%, 82%, 1);
+    --y-3: 0%;
+    --x-3: 41%;
+    --c-4: hsla(189, 63%, 89%, 1);
+    --x-4: 19%;
+    --y-4: 59%;
+    
+    background-color: hsla(52, 73%, 83%, 1) !important;
+        background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)), radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3)), radial-gradient(circle at var(--x-4) var(--y-4), var(--c-4) var(--s-start-4), transparent var(--s-end-4)) !important;
+        animation: hero-gradient-animation 10s linear infinite alternate !important;
+        background-blend-mode: normal, normal, normal, normal, normal !important;
+    }
+</style>
+
+
+<style>
+    .landing-hero {
+        background-color: hsla(213.08823529411762, 0%, 93%, 1) !important;
+        background-image: radial-gradient(circle at 83% 22%, hsla(35.735294117647136, 82%, 87%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 50%, hsla(194.5588235294118, 37%, 91%, 1) 0%, transparent 50%), radial-gradient(circle at 21% 21%, hsla(27.999999999999577, 0%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 54% 77%, hsla(193.2352941176474, 100%, 95%, 1) 0%, transparent 50%), radial-gradient(circle at 30% 75%, hsla(197.87234042553195, 25%, 35%, 1) 0%, transparent 20%) !important;
+        background-blend-mode: normal, normal, normal, normal, normal !important;
+    }
+
+
+</style>
+
+
 <div data-bs-spy="scroll" class="scrollspy-example">
 
     <!-- Hero: Start -->
@@ -115,7 +361,7 @@
                             <div class="card-body row pb-4">
                                 <div class="card-header p-0 mb-4" style="">
                                     <h4 class="mb-0 ">
-                                        <img class="ti ti-car mb icon pe-1 image" src="/caronraod.png" width="80px"/>
+                                        <img class="ti ti-car mb icon pe-1 image" src="/caronraod.png" width="80px" />
                                         جستجوی ‌سواری
                                     </h4>
                                 </div>
@@ -202,24 +448,24 @@
 
                                     </div>
 
-                                   @*  <div class="col-1 inputcel ">
+                                    @*  <div class="col-1 inputcel ">
 
-                                        <div class="input_con">
-                                            <label class="switch switch-square switch-lg" onclick="JustPrivateSelected()">
-                                                <input class="switch-input isprivate" type="checkbox">
-                                                <span class="switch-toggle-slider text-center">
-                                                    <span class="switch-on">
-                                                        <i class="ti ti-armchair-2"></i>
-                                                    </span>
-                                                    <span class="switch-off">
-                                                        <i class="ti ti-sofa"></i>
-                                                    </span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="form-text" id="defaultFormControlHelp">
-                                            <span class="justprivate_title">دربستی</span>
-                                        </div>
+                                    <div class="input_con">
+                                    <label class="switch switch-square switch-lg" onclick="JustPrivateSelected()">
+                                    <input class="switch-input isprivate" type="checkbox">
+                                    <span class="switch-toggle-slider text-center">
+                                    <span class="switch-on">
+                                    <i class="ti ti-armchair-2"></i>
+                                    </span>
+                                    <span class="switch-off">
+                                    <i class="ti ti-sofa"></i>
+                                    </span>
+                                    </span>
+                                    </label>
+                                    </div>
+                                    <div class="form-text" id="defaultFormControlHelp">
+                                    <span class="justprivate_title">دربستی</span>
+                                    </div>
 
 
                                     </div> *@
@@ -227,7 +473,7 @@
                                     <div class="col-12 col-md-3 inputcel">
                                         <div class="ps-0 mt-4 mt-md-0 ">
                                             <button style="width:100%; border-radius: 1.2rem;" class="btn btn-primary waves-effect waves-light btn-lg" type="submit">
-                                               بزن بریم
+                                                بزن بریم
                                                 <i class="ti ti-search"></i>
                                             </button>
                                         </div>

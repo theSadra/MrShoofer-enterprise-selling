@@ -5,6 +5,7 @@
     ViewData["isFront"] = (ViewData["isFront"] ??= true);
 }
 
+
 @section VendorStyles {
     @RenderSection("VendorStyles", required: false)
 }
@@ -20,6 +21,7 @@
 @section PageScripts {
     @RenderSection("PageScripts", required: false)
 }
+
 <style>
     .navbar {
         background: #fff !important;
@@ -318,8 +320,26 @@ nav.layout-navbar.navbar-active::after {
 }
 
 
-</style>
 
+    .landing-hero {
+        background: linear-gradient(to top right, #ff80b5, #9089fc) !important; /* gradient colors */
+        opacity: 0.3 !important;
+        position: relative !important;
+    }
+
+    .gradient-background {
+        position: relative;
+        left: calc(50% - 11rem);
+        width: 36.125rem;
+        aspect-ratio: 1155 / 678;
+        transform: translateX(-50%) rotate(30deg);
+        background: linear-gradient(to top right, #ff80b5, #9089fc);
+        opacity: 0.3;
+        clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+    }
+
+
+</style>
 
 
 
@@ -327,14 +347,14 @@ nav.layout-navbar.navbar-active::after {
 
     <!-- Hero: Start -->
     <section id="hero-animation" class="pt-5">
-        <div id="landingHero" style="padding-top: 2rem;" class="landing-hero position-relative">
+        <div id="landingHero" style="padding-top: 2rem; background-color: none !important;" class="landing-hero position-relative">
+            <div class="gradient-background"></div>
             <div class="px-lg-5 mx-lg-2">
-
                 <div class="container">
-                @RenderBody()
+                    @RenderBody()
+                </div>
             </div>
-          </div>
         </div>
-
     </section>
+
 </div>
