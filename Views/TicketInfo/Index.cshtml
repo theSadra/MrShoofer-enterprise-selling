@@ -1,15 +1,28 @@
 @{
     ViewData["Title"] = "بلیط‌ ها";
 
+    Layout = "_AgencySideLayout";
+
+    ViewData["title"] = "بلیط‌ های ثبت شده";
 }
 
+
 @section VendorStyles {
+    <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
+    <link href="~/css/taxitripsindex.css" rel="stylesheet" />
+
+
+
     <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
     <link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
     <link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
     <link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
     <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
+
 }
+@section PageScripts {
+    <script src="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.dist.js"></script>
+    <script src="~/js/ui-modals.js"></script>
 
 @section VendorScripts {
     <script src="~/vendor/libs/moment/moment.js"></script>
