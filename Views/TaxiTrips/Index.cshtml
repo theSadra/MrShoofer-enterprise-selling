@@ -2,7 +2,7 @@
 
 @{
 
-    Layout = "_AgencySideLayout";
+    Layout = "_FrontLayout";
 
     ViewData["title"] = "جستجوی سواری";
 }
@@ -240,207 +240,234 @@
         flex-direction: column;
         justify-content: start;
     }
+
+	.landing-hero {
+		background-color: hsla(213.08823529411762, 0%, 93%, 1) !important;
+		background-image: radial-gradient(circle at 83% 22%, hsla(35.735294117647136, 82%, 87%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 50%, hsla(194.5588235294118, 37%, 91%, 1) 0%, transparent 50%), radial-gradient(circle at 21% 21%, hsla(27.999999999999577, 0%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 54% 77%, hsla(193.2352941176474, 100%, 95%, 1) 0%, transparent 50%), radial-gradient(circle at 30% 75%, hsla(197.87234042553195, 25%, 35%, 1) 0%, transparent 20%) !important;
+		background-blend-mode: normal, normal, normal, normal, normal !important;
+	}
 </style>
 
-<div class="px-lg-6 px-0">
 
-    <div class="searchbar card shadow" style="">
+<div class="landing-hero px-lg-5 px-0 px-lg-5 mx-lg-4 pb-md-3" style="padding-top: 7.5rem !important;">
+	<div class="container px-lg-6 px-0">
 
-        <div class="row">
-            <div class="col-lg-2 col-0"></div>
-            <div class="row col-12 col-lg-8 p-0">
-                <div class="px-4 px-md-0 pe-0">
-                    <form asp-controller="TaxiTrips" method="get" asp-action="Index">
-                        <div class="card-body row p-4 pt-md-2">
-                            <div class="col-md-3 col-6 inputcel">
+	<div class="searchbar card shadow" style="">
 
-                              <small class="ms-3">مبدا</small>
-                                <div class="input-container">
-                                    <input name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
-                                    <i class="ti ti-location mb-2 icon"></i>
-                                    <span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
+		<div class="row">
+			<div class="col-lg-2 col-0"></div>
+			<div class="row col-12 col-lg-8 p-0">
+				<div class="px-4 px-md-0 pe-0">
+					<form asp-controller="TaxiTrips" method="get" asp-action="Index">
+						<div class="card-body row p-4 pt-md-2">
+							<div class="col-md-3 col-6 inputcel">
 
-                                        @*  <div class="city">
-                                        <a class="dropdown-item" href="javascript:void(0);">
-                                        تهران
-                                        <small class="" >
-                                        (همه پایانه‌ها)
-                                        </small>
+								<small class="ms-3">مبدا</small>
+								<div class="input-container">
+									<input name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
+									<i class="ti ti-location mb-2 icon"></i>
+									<span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
 
-                                        </a>
+										@*  <div class="city">
+										<a class="dropdown-item" href="javascript:void(0);">
+										تهران
+										<small class="" >
+										(همه پایانه‌ها)
+										</small>
 
-                                        <div class="terminals ms-3">
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
+										</a>
 
-                                        </div>
-                                        </div> *@
-                                    </span>
-                                </div>
-                                @* <div class="form-text" id="defaultFormControlHelp">شهر مبدا سفر</div> *@
-                            </div>
+										<div class="terminals ms-3">
+										<a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
 
-                            <div class="col-md-3 col-6 inputcel">
-                                <small class="ms-3">مقصد</small>
+										</div>
+										</div> *@
+									</span>
+								</div>
+								@* <div class="form-text" id="defaultFormControlHelp">شهر مبدا سفر</div> *@
+							</div>
 
-                                <div class="input-container">
-                                    <input name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
-                                    <i class="ti ti-map-pin mb-2 icon"></i>
-                                    <span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;" style="min-width:230px;">
+							<div class="col-md-3 col-6 inputcel">
+								<small class="ms-3">مقصد</small>
 
-                                        @*  <div class="city">
-                                        <a class="dropdown-item" href="javascript:void(0);">
-                                        تهران
-                                        <small class="" >
-                                        (همه پایانه‌ها)
-                                        </small>
+								<div class="input-container">
+									<input name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
+									<i class="ti ti-map-pin mb-2 icon"></i>
+									<span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;" style="min-width:230px;">
 
-                                        </a>
+										@*  <div class="city">
+										<a class="dropdown-item" href="javascript:void(0);">
+										تهران
+										<small class="" >
+										(همه پایانه‌ها)
+										</small>
 
-                                        <div class="terminals ms-3">
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
+										</a>
 
-                                        </div>
-                                        </div> *@
-                                    </span>
+										<div class="terminals ms-3">
+										<a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
+										<a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
 
-                                </div>
-                                @* <div class="form-text" id="defaultFormControlHelp">شهر مقصد سفر</div> *@
-                            </div>
+										</div>
+										</div> *@
+									</span>
 
-                            <div class="col-md-3 col-sm-12 inputcel mt-2 mt-md-0">
+								</div>
+								@* <div class="form-text" id="defaultFormControlHelp">شهر مقصد سفر</div> *@
+							</div>
 
-                                <small class="ms-3">تاریخ سفر</small>
+							<div class="col-md-3 col-sm-12 inputcel mt-2 mt-md-0">
 
-                                <!-- /Human Friendly Date Picker-->
-                                <!-- Disabled Range-->
+								<small class="ms-3">تاریخ سفر</small>
 
-                                <div class="input-container">
-                                    <input name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="flatpickr-date" placeholder="تاریخ سفر" type="text" />
-                                    <i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
-                                </div>
-                                @* <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div> *@
+								<!-- /Human Friendly Date Picker-->
+								<!-- Disabled Range-->
 
-
-                            </div>
-
+								<div class="input-container">
+									<input name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="flatpickr-date" placeholder="تاریخ سفر" type="text" />
+									<i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
+								</div>
+								@* <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div> *@
 
 
-                            <div class="col-md-3 col-12 inputcel pt-2 align-items-end mt-md-0 mt-2 d-flex justify-content-end">
-                                    <button style="width:100%;" class="btn btn-primary waves-effect waves-light" type="submit">
-                                        پیدا کن
-                                        <i class="ti ti-search"></i>
-                                    </button>
-                            </div>
+							</div>
 
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-2 col-0"></div>
 
-        </div>
 
-    </div>
+							<div class="col-md-3 col-12 inputcel pt-2 align-items-end mt-md-0 mt-2 d-flex justify-content-end">
+								<button style="width:100%;" class="btn btn-primary waves-effect waves-light" type="submit">
+									پیدا کن
+									<i class="ti ti-search"></i>
+								</button>
+							</div>
 
-    <div class="row mt-2">
-        <div class="col-3 d-none d-md-block" style="padding-left:0.5rem !important;">
-            <div class="card">
-                <div class="card-header py-3 pe-4 ps-3" style="">
-                    <h1 class="mb-0 direction-text">
-                        سفرهای سواری
-                        @ViewBag.origin_city_text
-                        به
-                        @ViewBag.dest_city_text
-                    </h1>
-                    <label>
-                      روز دوشنبه
-                    </label>
-                </div>
-            </div>
-            <div class="card card-action mt-2">
-                <div class="card-header">
-                    <div class="card-action-title oredring-title">ترتیب بر اساس</div>
-                    <div class="card-action-element">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <a class="card-collapsible" href="javascript:void(0);">
-                                    <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="collapse show" style="">
-                    <div class="card-body pt-0">
-                        <div class="form-check ">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
-                            <label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
-                        </div>
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-                            <label class="form-check-label" for="defaultRadio1"> زود ترین</label>
-                        </div>
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-                            <label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
-                        </div>
-                    </div>
-                </div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-lg-2 col-0"></div>
 
-            </div>
+		</div>
 
-            <div class="card card-action mt-2">
-                <div class="card-header">
-                    <div class="card-action-title oredring-title">خودرو</div>
-                    <div class="card-action-element">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <a class="card-collapsible" href="javascript:void(0);">
-                                    <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="collapse show" style="">
-                    <div class="card-body pt-0">
-                        <div class="form-check ">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
-                            <label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
-                        </div>
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-                            <label class="form-check-label" for="defaultRadio1"> زود ترین</label>
-                        </div>
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-                            <label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-12 col-md-9 px-1">
-            @await Html.PartialAsync("TimelinePartial", DateTime.Now)
-
-            <div class="trips-container">
-
-                @foreach (var trip in Model)
-                {
-                    @await Html.PartialAsync("Partials/PrivateTripCardPartial", trip)
-                }
-
-            </div>
-        </div>
-
-    </div>
+	</div>
+	</div>
 </div>
+
+
+
+
+
+
+<div id="" style="padding-top: 1.7rem; background-color: none !important;" class="position-relative">
+	<div class="px-lg-5 mx-lg-2">
+
+		<div class="container">
+			<div class="px-lg-6 px-0">
+			
+				<div class="row ">
+					<div class="col-3 d-none d-md-block" style="padding-left:0.5rem !important;">
+						<div class="card">
+							<div class="card-header py-3 pe-4 ps-3" style="">
+								<h1 class="mb-0 direction-text">
+									سفرهای سواری
+									@ViewBag.origin_city_text
+									به
+									@ViewBag.dest_city_text
+								</h1>
+								<label>
+									روز دوشنبه
+								</label>
+							</div>
+						</div>
+						<div class="card card-action mt-2">
+							<div class="card-header">
+								<div class="card-action-title oredring-title">ترتیب بر اساس</div>
+								<div class="card-action-element">
+									<ul class="list-inline mb-0">
+										<li class="list-inline-item">
+											<a class="card-collapsible" href="javascript:void(0);">
+												<i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="collapse show" style="">
+								<div class="card-body pt-0">
+									<div class="form-check ">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
+										<label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+									</div>
+									<div class="form-check mt-2">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+										<label class="form-check-label" for="defaultRadio1"> زود ترین</label>
+									</div>
+									<div class="form-check mt-2">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+										<label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="card card-action mt-2">
+							<div class="card-header">
+								<div class="card-action-title oredring-title">خودرو</div>
+								<div class="card-action-element">
+									<ul class="list-inline mb-0">
+										<li class="list-inline-item">
+											<a class="card-collapsible" href="javascript:void(0);">
+												<i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="collapse show" style="">
+								<div class="card-body pt-0">
+									<div class="form-check ">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
+										<label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+									</div>
+									<div class="form-check mt-2">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+										<label class="form-check-label" for="defaultRadio1"> زود ترین</label>
+									</div>
+									<div class="form-check mt-2">
+										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
+										<label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-md-9 px-1">
+						@await Html.PartialAsync("TimelinePartial", DateTime.Now)
+
+						<div class="trips-container">
+
+							@foreach (var trip in Model)
+
+							{
+								@await Html.PartialAsync("Partials/PrivateTripCardPartial", trip)
+							}
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 

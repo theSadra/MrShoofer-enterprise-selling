@@ -8,9 +8,9 @@ public class Agency
   public string Address { get; set; }
   public string AdminMobile { get; set; }
   public DateTime DateJoined { get; set; }
-  public List<Ticket> SoldTickets { get; set; }
   public string ORSAPI_token { set; get; }
   public int Commission { get; set; }
 
   public IdentityUser IdentityUser { get; set; }
+  public ICollection<Ticket> SoldTickets { get; set; }
 }

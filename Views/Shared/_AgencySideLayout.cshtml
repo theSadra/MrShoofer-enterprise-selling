@@ -320,35 +320,21 @@ nav.layout-navbar.navbar-active::after {
 }
 
 
-
-    .landing-hero {
-        background: linear-gradient(to top right, #ff80b5, #9089fc) !important; /* gradient colors */
-        opacity: 0.3 !important;
-        position: relative !important;
-    }
-
-    .gradient-background {
-        position: relative;
-        left: calc(50% - 11rem);
-        width: 36.125rem;
-        aspect-ratio: 1155 / 678;
-        transform: translateX(-50%) rotate(30deg);
-        background: linear-gradient(to top right, #ff80b5, #9089fc);
-        opacity: 0.3;
-        clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
-    }
+	.landing-hero {
+		background-color: hsla(213.08823529411762, 0%, 93%, 1) !important;
+		background-image: radial-gradient(circle at 83% 22%, hsla(35.735294117647136, 82%, 87%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 50%, hsla(194.5588235294118, 37%, 91%, 1) 0%, transparent 50%), radial-gradient(circle at 21% 21%, hsla(27.999999999999577, 0%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 54% 77%, hsla(193.2352941176474, 100%, 95%, 1) 0%, transparent 50%), radial-gradient(circle at 30% 75%, hsla(197.87234042553195, 25%, 35%, 1) 0%, transparent 20%) !important;
+		background-blend-mode: normal, normal, normal, normal, normal !important;
+	}
 
 
 </style>
 
 
 
-<div data-bs-spy="scroll" class="pt-5">
-
+<div data-bs-spy="scroll" class="">
     <!-- Hero: Start -->
-    <section id="hero-animation" class="pt-5">
-        <div id="landingHero" style="padding-top: 2rem; background-color: none !important;" class="landing-hero position-relative">
-            <div class="gradient-background"></div>
+    <section id="hero-animation" style="min-height: 85vh !important;">
+        <div id="landingHero" style="padding-top: 8rem; background-color: none !important;" class="landing-hero position-relative">
             <div class="px-lg-5 mx-lg-2">
                 <div class="container">
                     @RenderBody()
