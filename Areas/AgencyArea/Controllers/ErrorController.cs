@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-namespace Application.Controllers
+namespace Application.Areas.AgencyArea
 {
   public class ErrorController : Controller
   {
 
 
     [Route("Error/{statusCode}")]
-    public async Task< IActionResult> HandleError(int statusCode)
+    public async Task<IActionResult> HandleError(int statusCode)
     {
 
 

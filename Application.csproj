@@ -5,11 +5,39 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Views\Shared\Sections\Footer\_Footer.cshtml" />
+    <Content Remove="Views\Shared\Sections\Footer\_FooterFront.cshtml" />
+    <Content Remove="Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
+    <Content Remove="Views\Shared\Sections\Menu\_VerticalMenu.cshtml" />
+    <Content Remove="Views\Shared\Sections\Navbar\_Navbar.cshtml" />
+    <Content Remove="Views\Shared\Sections\Navbar\_NavbarFront.cshtml" />
+    <Content Remove="Views\Shared\Sections\Navbar\_NavbarPartial.cshtml" />
+    <Content Remove="Views\Shared\Sections\_Scripts.cshtml" />
+    <Content Remove="Views\Shared\Sections\_ScriptsFront.cshtml" />
+    <Content Remove="Views\Shared\Sections\_ScriptsIncludes.cshtml" />
+    <Content Remove="Views\Shared\Sections\_ScriptsIncludesFront.cshtml" />
+    <Content Remove="Views\Shared\Sections\_Styles.cshtml" />
+    <Content Remove="Views\Shared\Sections\_StylesFront.cshtml" />
+    <Content Remove="Views\Shared\Sections\_Variables.cshtml" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy (2).js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy - Copy.js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy.js" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Footer\_Footer.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Footer\_FooterFront.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Menu\_VerticalMenu.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Navbar\_Navbar.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Navbar\_NavbarFront.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\Navbar\_NavbarPartial.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_Scripts.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_ScriptsFront.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_ScriptsIncludes.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_ScriptsIncludesFront.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_Styles.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_StylesFront.cshtml" />
+    <None Include="Areas\AgencyArea\Views\Shared\Sections\_Variables.cshtml" />
     <None Include="Views\Shared\Sections\Footer\_Footer.cshtml" />
     <None Include="Views\Shared\Sections\Footer\_FooterFront.cshtml" />
     <None Include="Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
@@ -178,6 +206,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\" />
     <Folder Include="wwwroot\libs\NewFolder\" />
   </ItemGroup>
 </Project>

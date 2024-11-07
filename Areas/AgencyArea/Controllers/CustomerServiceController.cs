@@ -1,4 +1,5 @@
 using Application.Data;
+using Application.Models;
 using Application.Services.MrShooferORS;
 using Application.ViewModels.CustomerService;
 using iText.Html2pdf;
@@ -12,8 +13,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Controllers
+namespace Application.Areas.AgencyArea
 {
+
+  [Area("AgencyArea")]
   public class CustomerServiceController : Controller
   {
     private readonly MrShooferAPIClient apiclient;

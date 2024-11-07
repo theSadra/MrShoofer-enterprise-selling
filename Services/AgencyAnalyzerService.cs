@@ -1,4 +1,5 @@
 using Application.Migrations;
+using Application.Models;
 
 namespace Application.Services
 {

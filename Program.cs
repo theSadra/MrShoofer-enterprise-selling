@@ -27,12 +27,9 @@ builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new M
 builder.Services.AddTransient<KavenegarApi>(k => new KavenegarApi(builder.Configuration["kavehnegar_key"]));
 builder.Services.AddTransient<CustomerServiceSmsSender>();
 
-
 builder.Services.AddControllersWithViews();
 
 builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
-
-
 
 
 var sqlite_connstring = "Data Source=/home/ubuntu/mrshoofer_org/Mrshoofer_org.db";
@@ -41,16 +38,33 @@ if (builder.Environment.IsDevelopment())
   sqlite_connstring = builder.Configuration.GetConnectionString("development");
 }
 
-Console.WriteLine("***CONNSTRING : " +  sqlite_connstring);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(sqlite_connstring));
 
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+  options.Password.RequiredLength = 6;
+  options.Password.RequireDigit = false;
+  options.Password.RequireNonAlphanumeric = false;
+  options.Password.RequireUppercase = false;
+  options.Password.RequiredUniqueChars = 0;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options =>
+{
+  options.AddPolicy("Agency", policy =>
+      policy.RequireClaim("Role", "Agency"));
+
+  options.AddPolicy("Admin", policy =>
+      policy.RequireClaim("Role", "Admin"));
+});
+
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -59,7 +73,7 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.Cookie.HttpOnly = true;
   options.ExpireTimeSpan = TimeSpan.FromDays(2);
   options.LoginPath = "/Auth/Login";
-  
+
   options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
   options.SlidingExpiration = true;
 });
@@ -70,9 +84,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+  app.UseExceptionHandler("/Home/Error");
+  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+  app.UseHsts();
 }
 
 
@@ -85,11 +99,25 @@ app.UseRouting();
 
 app.UseAuthentication();
 
-app.UseAuthorization(); 
+app.UseAuthorization();
 
 
+
+// Configure routing for Admin and Agency areas
+app.MapControllerRoute(
+    name: "agency",
+    pattern: "{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = "AgencyArea" });
+
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = "Admin" });
+
+// Configure default routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

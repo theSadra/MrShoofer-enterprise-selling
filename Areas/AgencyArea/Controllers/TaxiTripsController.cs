@@ -8,9 +8,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Build.Execution;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Globalization;
+using Application.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Application.Controllers
+
+namespace Application.Areas.AgencyArea
 {
+  [Area("AgencyArea")]
+  [Authorize]
   public class TaxiTripsController : Controller
   {
     private readonly DirectionsRepository directionsRepository;
@@ -24,8 +29,8 @@ namespace Application.Controllers
     public TaxiTripsController(DirectionsRepository directionsRepository, MrShooferAPIClient mrShooferAPIClient, UserManager<IdentityUser> userManager, AppDbContext context)
     {
       this.context = context;
-      this._userManager = userManager;
-      this._mrShooferAPIClient = mrShooferAPIClient;
+      _userManager = userManager;
+      _mrShooferAPIClient = mrShooferAPIClient;
       this.directionsRepository = directionsRepository;
 
     }
@@ -33,7 +38,6 @@ namespace Application.Controllers
 
     // todo: need for adding mrshooferORS client to ioc service and injecting that to this class
     // todo: need for logging the search info 
-
 
 
     public async Task<IActionResult> Index(string originstring, string destinationstring, string searchdate)
@@ -51,7 +55,7 @@ namespace Application.Controllers
 
 
       // Fetching trips based on search parameters from ORS
-      var response = (await _mrShooferAPIClient.SearchTrips(searchedDatetime, searchedDatetime.AddDays(1), origin_id, destination_id));
+      var response = await _mrShooferAPIClient.SearchTrips(searchedDatetime, searchedDatetime.AddDays(1), origin_id, destination_id);
       // Filling viewbags
 
       ViewBag.origin_city_text = originstring;
@@ -70,10 +74,10 @@ namespace Application.Controllers
       base.OnActionExecuting(context);
 
       var identityUser = _userManager.GetUserAsync(User).Result;
-      this.agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+      agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
 
-      this._mrShooferAPIClient.SetSellerApiKey(this.agency.ORSAPI_token);
+      _mrShooferAPIClient.SetSellerApiKey(agency.ORSAPI_token);
     }
   }
 }

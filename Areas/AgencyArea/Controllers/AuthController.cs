@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Policy;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace AspnetCoreMvcStarter.Controllers
+namespace Application.Areas.AgencyArea
 {
+  [Area("AgencyArea")]
   public class AuthController : Controller
   {
 
@@ -147,7 +148,7 @@ namespace AspnetCoreMvcStarter.Controllers
 
 
 
-      return RedirectToAction("LoginotpSubmit", new { numberphone = numberphone });
+      return RedirectToAction("LoginotpSubmit", new { numberphone });
     }
 
     [HttpGet]

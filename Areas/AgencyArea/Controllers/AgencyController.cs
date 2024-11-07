@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-namespace Application.Controllers
+using Application.ViewModels;
+using Application.Models;
+namespace Application.Areas.AgencyArea
 {
+  [Area("AgencyArea")]
   [Authorize]
   public class AgencyController : Controller
   {
@@ -38,9 +40,9 @@ namespace Application.Controllers
       ViewBag.agency = agency;
 
       // loading and fetching TODAY sold group
-     await _context.Entry(agency)
-        .Collection(a => a.SoldTickets)
-        .LoadAsync();
+      await _context.Entry(agency)
+         .Collection(a => a.SoldTickets)
+         .LoadAsync();
 
       AgencyAnalyzerService analyzer = new AgencyAnalyzerService(agency);
 
@@ -104,9 +106,9 @@ namespace Application.Controllers
       base.OnActionExecuting(context);
 
       var identityUser = _userManager.GetUserAsync(User).Result;
-      this.agency = this._context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+      agency = _context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
-      this._apiClient.SetSellerApiKey(this.agency.ORSAPI_token);
+      _apiClient.SetSellerApiKey(agency.ORSAPI_token);
     }
 
   }

@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using System.Data.Entity;
 using System.Diagnostics;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+using Application.Models;
 
-namespace Application.Controllers
+namespace Application.Areas.AgencyArea
 {
+  [Area("AgencyArea")]
   [Authorize]
   public class ReserveController : Controller
   {
@@ -28,9 +30,9 @@ namespace Application.Controllers
     public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context, CustomerServiceSmsSender smssender, IConfiguration configuration)
     {
       this.configuration = configuration;
-      this.customerSmsSender = smssender;
+      customerSmsSender = smssender;
       this.context = context;
-      this._userManager = usermanager;
+      _userManager = usermanager;
       this.apiclient = apiclient;
 
     }
@@ -90,7 +92,7 @@ namespace Application.Controllers
 
       ViewBag.agancy_balance = agancy_balance;
 
-      ViewBag.agancy = this.agency;
+      ViewBag.agancy = agency;
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
 
@@ -192,10 +194,10 @@ namespace Application.Controllers
       base.OnActionExecuting(context);
 
       var identityUser = _userManager.GetUserAsync(User).Result;
-      this.agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+      agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
 
-      this.apiclient.SetSellerApiKey(this.agency.ORSAPI_token);
+      apiclient.SetSellerApiKey(agency.ORSAPI_token);
     }
   }
 }

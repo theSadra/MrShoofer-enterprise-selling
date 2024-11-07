@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
+using Application.Models;
 
-namespace Application.Controllers
+namespace Application.Areas.AgencyArea
 {
+  [Area("AgencyArea")]
   [Authorize]
   public class TicketInfoController : Controller
   {
