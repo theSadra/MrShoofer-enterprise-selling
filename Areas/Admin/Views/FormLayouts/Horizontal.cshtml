@@ -1,0 +1,913 @@
+@{
+  ViewData["Title"] = "فرم ها - افقی";
+}
+@section VendorStyles{
+
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+}
+@section VendorScripts {
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/jdate/jdate.min.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+}
+@section PageScripts {
+<script src="~/js/form-layouts.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  فرم‌های افقی
+</h4>
+<!-- Basic Layout & Basic with Icons -->
+<div class="row">
+  <!-- Basic Layout -->
+  <div class="col-xxl">
+    <div class="card mb-4">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">لایه پایه</h5>
+        <small class="text-muted float-end">برچسب پیش فرض</small>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">نام</label>
+            <div class="col-sm-10">
+              <input class="form-control" id="basic-default-name" placeholder="نـوید" type="text"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-company">شرکت</label>
+            <div class="col-sm-10">
+              <input class="form-control" id="basic-default-company" placeholder="شرکت راستچین." type="text"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-email">ایمیل</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-default-email2">
+                  <bdi>&#64;example.com</bdi>
+                </span>
+                <input aria-describedby="basic-default-email2" aria-label="soheil.n" class="form-control" id="basic-default-email" placeholder="soheil.n" type="text"/>
+              </div>
+              <div class="form-text">می توانید از حروف، اعداد و نقطه استفاده کنید</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-phone">شماره تلفن</label>
+            <div class="col-sm-10">
+              <input aria-describedby="basic-default-phone" aria-label="658 799 8941" class="form-control phone-mask" id="basic-default-phone" placeholder="658 799 8941" type="text"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-message">پیام</label>
+            <div class="col-sm-10">
+              <textarea aria-describedby="basic-icon-default-message2" aria-label="پیام خود را وارد کنید" class="form-control" id="basic-default-message" placeholder="پیام خود را وارد کنید"></textarea>
+            </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col-sm-10">
+              <button class="btn btn-primary" type="submit">ثبت مشخصات</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Basic with Icons -->
+  <div class="col-xxl">
+    <div class="card mb-4">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">پایه با آیکون ها</h5>
+        <small class="text-muted float-end">شامل اینپوت گروپ</small>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">نام</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-icon-default-fullname2">
+                  <i class="ti ti-user"></i>
+                </span>
+                <input aria-describedby="basic-icon-default-fullname2" aria-label="نـوید" class="form-control" id="basic-icon-default-fullname" placeholder="نـوید" type="text"/>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-icon-default-company">شرکت</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-icon-default-company2">
+                  <i class="ti ti-building"></i>
+                </span>
+                <input aria-describedby="basic-icon-default-company2" aria-label="شرکت راستچین." class="form-control" id="basic-icon-default-company" placeholder="شرکت راستچین." type="text"/>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-icon-default-email">ایمیل</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text">
+                  <i class="ti ti-mail"></i>
+                </span>
+                <span class="input-group-text" id="basic-icon-default-email2">
+                  <bdi>&#64;example.com</bdi>
+                </span>
+                <input aria-describedby="basic-icon-default-email2" aria-label="soheil.n" class="form-control" id="basic-icon-default-email" placeholder="soheil.n" type="text"/>
+              </div>
+              <div class="form-text">می توانید از حروف، اعداد و نقطه استفاده کنید</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-icon-default-phone">شماره تلفن</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-icon-default-phone2">
+                  <i class="ti ti-phone"></i>
+                </span>
+                <input aria-describedby="basic-icon-default-phone2" aria-label="658 799 8941" class="form-control phone-mask" id="basic-icon-default-phone" placeholder="658 799 8941" type="text"/>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-icon-default-message">پیام</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-icon-default-message2">
+                  <i class="ti ti-message-dots"></i>
+                </span>
+                <textarea aria-describedby="basic-icon-default-message2" aria-label="پیام خود را وارد کنید" class="form-control" id="basic-icon-default-message" placeholder="پیام خود را وارد کنید"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col-sm-10">
+              <button class="btn btn-primary" type="submit">ثبت مشخصات</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Multi Column with Form Separator -->
+<div class="row">
+  <!-- Form Separator -->
+  <div class="col-xxl">
+    <div class="card mb-4">
+      <h5 class="card-header">جداکننده فرم</h5>
+      <form class="card-body">
+        <h6>1. جزئیات حساب</h6>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="multicol-username">نام کاربری</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="multicol-username" placeholder="soheil.n" type="text"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="multicol-email">ایمیل</label>
+          <div class="col-sm-9">
+            <div class="input-group input-group-merge">
+              <span class="input-group-text" id="multicol-email2">
+                <bdi>&#64;example.com</bdi>
+              </span>
+              <input aria-describedby="multicol-email2" aria-label="soheil.n" class="form-control" id="multicol-email" placeholder="soheil.n" type="text"/>
+            </div>
+          </div>
+        </div>
+        <div class="row form-password-toggle">
+          <label class="col-sm-3 col-form-label" for="multicol-password">کلمه عبور</label>
+          <div class="col-sm-9">
+            <div class="input-group input-group-merge">
+              <input aria-describedby="multicol-password2" class="form-control" id="multicol-password" placeholder="············" type="password"/>
+              <span class="input-group-text cursor-pointer" id="multicol-password2">
+                <i class="ti ti-eye-off"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4 mx-n4"/>
+        <h6>2. اطلاعات شخصی</h6>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="multicol-full-name">نام و نام خانوادگی</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="multicol-full-name" placeholder="نـوید" type="text"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="multicol-country">کشور</label>
+          <div class="col-sm-9">
+            <select class="select2 form-select" data-allow-clear="true" id="multicol-country">
+              <option value="">انتخاب کنید</option>
+              <option value="Australia">استرالیا</option>
+              <option value="Bangladesh">بنگلادش</option>
+              <option value="Belarus">بلاروس</option>
+              <option value="Brazil">برزیل</option>
+              <option value="Canada">کانادا</option>
+              <option value="China">چین</option>
+              <option value="France">فرانسه</option>
+              <option value="Germany">آلمان</option>
+              <option value="India">هندوستان</option>
+              <option value="Indonesia">اندونزی</option>
+              <option value="Israel">اسرائيل</option>
+              <option value="Italy">ایتالیا</option>
+              <option value="Japan">ژاپن</option>
+              <option value="Korea">جمهوری کره</option>
+              <option value="Mexico">مکزیک</option>
+              <option value="Philippines">فیلیپین</option>
+              <option value="Russia">فدراسیون روسیه</option>
+              <option value="South Africa">آفریقای جنوبی</option>
+              <option value="Thailand">تایلند</option>
+              <option value="Turkey">ترکیه</option>
+              <option value="Ukraine">اوکراین</option>
+              <option value="United Arab Emirates">امارات متحده عربی</option>
+              <option value="United Kingdom">انگلستان</option>
+              <option value="United States">ایالات متحده</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3 select2-primary">
+          <label class="col-sm-3 col-form-label" for="multicol-language">زبان</label>
+          <div class="col-sm-9">
+            <select class="select2 form-select" id="multicol-language" multiple>
+              <option selected value="en">انگلیسی</option>
+              <option selected value="fr">فرانسوی</option>
+              <option value="de">آلمانی</option>
+              <option value="pt">پرتغالی</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="multicol-birthdate">تاریخ تولد</label>
+          <div class="col-sm-9">
+            <input class="form-control dob-picker" id="multicol-birthdate" placeholder="YYYY-MM-DD" type="text"/>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-3 col-form-label" for="multicol-phone">شماره تلفن</label>
+          <div class="col-sm-9">
+            <input aria-label="658 799 8941" class="form-control phone-mask bdi" id="multicol-phone" placeholder="658 799 8941" type="text"/>
+          </div>
+        </div>
+        <div class="pt-4">
+          <div class="row justify-content-end">
+            <div class="col-sm-9">
+              <button class="btn btn-primary me-sm-2 me-1" type="submit">ثبت مشخصات</button>
+              <button class="btn btn-label-secondary" type="reset">لغو</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Form Label Alignment -->
+  <div class="col-xxl">
+    <div class="card mb-4">
+      <h5 class="card-header">تراز کردن برچسب فرم</h5>
+      <form class="card-body">
+        <h6>1. جزئیات حساب</h6>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-username">نام کاربری</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="alignment-username" placeholder="soheil.n" type="text"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-email">ایمیل</label>
+          <div class="col-sm-9">
+            <div class="input-group input-group-merge">
+              <span class="input-group-text" id="alignment-email2">
+                <bdi>&#64;example.com</bdi>
+              </span>
+              <input aria-describedby="alignment-email2" aria-label="soheil.n" class="form-control" id="alignment-email" placeholder="soheil.n" type="text"/>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3 form-password-toggle">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-password">کلمه عبور</label>
+          <div class="col-sm-9">
+            <div class="input-group input-group-merge">
+              <input aria-describedby="alignment-password2" class="form-control" id="alignment-password" placeholder="············" type="password"/>
+              <span class="input-group-text cursor-pointer" id="alignment-password2">
+                <i class="ti ti-eye-off"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4 mx-n4"/>
+        <h6>2. اطلاعات شخصی</h6>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-full-name">نام و نام خانوادگی</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="alignment-full-name" placeholder="نـوید" type="text"/>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-country">کشور</label>
+          <div class="col-sm-9">
+            <select class="select2 form-select" data-allow-clear="true" id="alignment-country">
+              <option value="">انتخاب کنید</option>
+              <option value="Australia">استرالیا</option>
+              <option value="Bangladesh">بنگلادش</option>
+              <option value="Belarus">بلاروس</option>
+              <option value="Brazil">برزیل</option>
+              <option value="Canada">کانادا</option>
+              <option value="China">چین</option>
+              <option value="France">فرانسه</option>
+              <option value="Germany">آلمان</option>
+              <option value="India">هندوستان</option>
+              <option value="Indonesia">اندونزی</option>
+              <option value="Israel">اسرائيل</option>
+              <option value="Italy">ایتالیا</option>
+              <option value="Japan">ژاپن</option>
+              <option value="Korea">جمهوری کره</option>
+              <option value="Mexico">مکزیک</option>
+              <option value="Philippines">فیلیپین</option>
+              <option value="Russia">فدراسیون روسیه</option>
+              <option value="South Africa">آفریقای جنوبی</option>
+              <option value="Thailand">تایلند</option>
+              <option value="Turkey">ترکیه</option>
+              <option value="Ukraine">اوکراین</option>
+              <option value="United Arab Emirates">امارات متحده عربی</option>
+              <option value="United Kingdom">انگلستان</option>
+              <option value="United States">ایالات متحده</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3 select2-primary">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-language">زبان</label>
+          <div class="col-sm-9">
+            <select class="select2 form-select" id="alignment-language" multiple>
+              <option selected value="en">انگلیسی</option>
+              <option selected value="fr">فرانسوی</option>
+              <option value="de">آلمانی</option>
+              <option value="pt">پرتغالی</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-birthdate">تاریخ تولد</label>
+          <div class="col-sm-9">
+            <input class="form-control dob-picker" id="alignment-birthdate" placeholder="YYYY-MM-DD" type="text"/>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-3 col-form-label text-sm-end" for="alignment-phone">شماره تلفن</label>
+          <div class="col-sm-9">
+            <input aria-label="658 799 8941" class="form-control phone-mask bdi" id="alignment-phone" placeholder="658 799 8941" type="text"/>
+          </div>
+        </div>
+        <div class="pt-4">
+          <div class="row justify-content-end">
+            <div class="col-sm-9">
+              <button class="btn btn-primary me-sm-2 me-1" type="submit">ثبت مشخصات</button>
+              <button class="btn btn-label-secondary" type="reset">لغو</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Collapsible Section -->
+<div class="row my-4">
+  <div class="col">
+    <h6>بخش جمع شونده</h6>
+    <div class="accordion" id="collapsibleSection">
+      <!-- Delivery Address -->
+      <div class="card accordion-item">
+        <h2 class="accordion-header" id="headingDeliveryAddress">
+          <button aria-controls="collapseDeliveryAddress" aria-expanded="true" class="accordion-button" data-bs-target="#collapseDeliveryAddress" data-bs-toggle="collapse" type="button"> آدرس تحویل</button>
+        </h2>
+        <div aria-labelledby="headingDeliveryAddress" class="accordion-collapse collapse show" data-bs-parent="#collapsibleSection" id="collapseDeliveryAddress">
+          <div class="accordion-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-fullname">نام و نام خانوادگی</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" id="collapsible-fullname" placeholder="نـوید" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-phone">شماره تلفن</label>
+                  <div class="col-sm-9">
+                    <input aria-label="658 799 8941" class="form-control phone-mask bdi" id="collapsible-phone" placeholder="658 799 8941" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-address">آدرس</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" id="collapsible-address" name="collapsible-address" placeholder="ایران ، اصفهان ، کاشان ، خیابان امیرکبیر" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <div class="row">
+                    <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-pincode">کد پستی</label>
+                    <div class="col-sm-9">
+                      <input class="form-control bdi" id="collapsible-pincode" placeholder="658468" type="text"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="row">
+                    <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-landmark">راهنما</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" id="collapsible-landmark" placeholder="روبروی نانوایی" type="text"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-city">شهر</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" id="collapsible-city" placeholder="کاشان" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-state">استان</label>
+                  <div class="col-sm-9">
+                    <select class="select2 form-select" data-allow-clear="true" id="collapsible-state">
+                      <option value="">انتخاب کنید</option>
+                      <option label="اذربایجان شرقی" value="2">اذربایجان شرقی</option>
+                      <option label="اذربایجان غربی" value="3">اذربایجان غربی</option>
+                      <option label="زنجان" value="4">زنجان</option>
+                      <option label="خراسان" value="5">خراسان</option>
+                      <option label="اردبیل" value="6">اردبیل</option>
+                      <option label="اصفهان" value="7">اصفهان</option>
+                      <option label="بوشهر" value="8">بوشهر</option>
+                      <option label="تهران" value="9">تهران</option>
+                      <option label="قزوین" value="10">قزوین</option>
+                      <option label="قم" value="11">قم</option>
+                      <option label="چهارمحال وبختیاری" value="12">چهارمحال وبختیاری</option>
+                      <option label="کهگیلویه وبویراحمد" value="13">کهگیلویه وبویراحمد</option>
+                      <option label="خوزستان" value="15">خوزستان</option>
+                      <option label="سمنان" value="16">سمنان</option>
+                      <option label="سیستان وبلوچستان" value="17">سیستان وبلوچستان</option>
+                      <option label="فارس" value="18">فارس</option>
+                      <option label="کردستان" value="19">کردستان</option>
+                      <option label="کرمان" value="20">کرمان</option>
+                      <option label="کرمانشاه" value="21">کرمانشاه</option>
+                      <option label="هرمزگان" value="22">هرمزگان</option>
+                      <option label="گیلان" value="23">گیلان</option>
+                      <option label="لرستان" value="24">لرستان</option>
+                      <option label="مازندران" value="25">مازندران</option>
+                      <option label="گلستان" value="26">گلستان</option>
+                      <option label="مرکزی" value="27">مرکزی</option>
+                      <option label="همدان" value="28">همدان</option>
+                      <option label="یزد" value="29">یزد</option>
+                      <option label="ایلام" value="30">ایلام</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end">نوع آدرس</label>
+                  <div class="col-sm-9">
+                    <div class="form-check mb-2">
+                      <input checked="" class="form-check-input" id="collapsible-addressType-home" name="collapsible-addressType" type="radio" value=""/>
+                      <label class="form-check-label" for="collapsible-addressType-home"> درب منزل (تحویل تمام طول روز)</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" id="collapsible-addressType-office" name="collapsible-addressType" type="radio" value=""/>
+                      <label class="form-check-label" for="collapsible-addressType-office"> دفتر (تحویل بین 10 صبح تا 5 بعد از ظهر)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Delivery Options -->
+      <div class="card accordion-item">
+        <h2 class="accordion-header" id="headingDeliveryOptions">
+          <button aria-controls="collapseDeliveryOptions" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#collapseDeliveryOptions" data-bs-toggle="collapse" type="button"> گزینه های تحویل</button>
+        </h2>
+        <div aria-labelledby="headingDeliveryOptions" class="accordion-collapse collapse" data-bs-parent="#collapsibleSection" id="collapseDeliveryOptions">
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col-md mb-md-0 mb-2">
+                <div class="form-check custom-option custom-option-basic">
+                  <label class="form-check-label custom-option-content" for="radioStandard">
+                    <input checked class="form-check-input" id="radioStandard" name="CustomRadioDelivery" type="radio" value=""/>
+                    <span class="custom-option-header">
+                      <span class="h6 mb-0">استاندارد 3-5 روز</span>
+                      <span>رایگان</span>
+                    </span>
+                    <span class="custom-option-body">
+                      <small> جمعه، 15 بهمن - دوشنبه، 18 بهمن</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md mb-md-0 mb-2">
+                <div class="form-check custom-option custom-option-basic">
+                  <label class="form-check-label custom-option-content" for="radioExpress">
+                    <input class="form-check-input" id="radioExpress" name="CustomRadioDelivery" type="radio" value=""/>
+                    <span class="custom-option-header">
+                      <span class="h6 mb-0">پیشتاز</span>
+                      <span>5٬000 ءتء</span>
+                    </span>
+                    <span class="custom-option-body">
+                      <small> جمعه، 15 بهمن - یکشنبه، 17 بهمن</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-check custom-option custom-option-basic">
+                  <label class="form-check-label custom-option-content" for="radioOvernight">
+                    <input class="form-check-input" id="radioOvernight" name="CustomRadioDelivery" type="radio" value=""/>
+                    <span class="custom-option-header">
+                      <span class="h6 mb-0">فوری</span>
+                      <span>10٬000 ءتءءءء</span>
+                    </span>
+                    <span class="custom-option-body">
+                      <small>جمعه، 15 بهمن - شنبه، 16 بهمن</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Payment Method -->
+      <div class="card accordion-item">
+        <h2 class="accordion-header" id="headingPaymentMethod">
+          <button aria-controls="collapsePaymentMethod" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#collapsePaymentMethod" data-bs-toggle="collapse" type="button"> روش پرداخت</button>
+        </h2>
+        <div aria-labelledby="headingPaymentMethod" class="accordion-collapse collapse" data-bs-parent="#collapsibleSection" id="collapsePaymentMethod">
+          <form>
+            <div class="accordion-body">
+              <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input checked="" class="form-check-input form-check-input-payment" id="collapsible-payment-cc" name="collapsible-payment" type="radio" value="credit-card"/>
+                  <label class="form-check-label" for="collapsible-payment-cc"> کارت اعتباری / رسید / ATM
+                    <i class="ti ti-credit-card"></i>
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input form-check-input-payment" id="collapsible-payment-cash" name="collapsible-payment" type="radio" value="cash"/>
+                  <label class="form-check-label" for="collapsible-payment-cash">نقدی در محل تحویل
+                    <i class="ti ti-help text-muted" data-bs-placement="top" data-bs-toggle="tooltip" title="پس از دریافت محصول می توانید پرداخت کنید."></i>
+                  </label>
+                </div>
+              </div>
+              <div class="row" id="form-credit-card">
+                <div class="col-12 col-md-8 col-xl-6">
+                  <div class="mb-3">
+                    <label class="form-label w-100" for="creditCardMask">شماره کارت</label>
+                    <div class="input-group input-group-merge">
+                      <input aria-describedby="creditCardMask2" class="form-control credit-card-mask ltr" id="creditCardMask" name="creditCardMask" placeholder="1356 3215 6548 7898" type="text"/>
+                      <span class="input-group-text cursor-pointer p-1" id="creditCardMask2">
+                        <span class="card-type"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-name">نام</label>
+                        <input class="form-control" id="collapsible-payment-name" placeholder="نـوید" type="text"/>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-expiry-date">انقضا تاریخ</label>
+                        <input class="form-control expiry-date-mask" id="collapsible-payment-expiry-date" placeholder="MM/YY" type="text"/>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-cvv">رمز دوم کارت اعتباری</label>
+                        <div class="input-group input-group-merge">
+                          <input class="form-control cvv-code-mask" id="collapsible-payment-cvv" maxlength="3" placeholder="" type="text"/>
+                          <span class="input-group-text cursor-pointer" id="collapsible-payment-cvv2">
+                            <i class="ti ti-help text-muted" data-bs-placement="top" data-bs-toggle="tooltip" title="ارزش تأیید کارت"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-1">
+                <button class="btn btn-primary me-sm-3 me-1" type="submit">ثبت مشخصات</button>
+                <button class="btn btn-label-secondary" type="reset">لغو</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Form with Tabs -->
+<div class="row">
+  <div class="col">
+    <h6 class="mt-4">فرم دسته بندی شده</h6>
+    <div class="card mb-3">
+      <div class="card-header pt-2">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item">
+            <button aria-selected="true" class="nav-link active" data-bs-target="#form-tabs-personal" data-bs-toggle="tab" role="tab">
+              اطلاعات شخصی
+            </button>
+          </li>
+          <li class="nav-item">
+            <button aria-selected="false" class="nav-link" data-bs-target="#form-tabs-account" data-bs-toggle="tab" role="tab"> جزئیات حساب</button>
+          </li>
+          <li class="nav-item">
+            <button aria-selected="false" class="nav-link" data-bs-target="#form-tabs-social" data-bs-toggle="tab" role="tab"> شبکه‌های اجتماعی</button>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <!-- Personal Info -->
+        <div class="tab-pane fade active show" id="form-tabs-personal" role="tabpanel">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-first-name">نام کوچک</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" id="formtabs-first-name" placeholder="امیر" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-last-name">نام خانوادگی</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" id="formtabs-last-name" placeholder="مقصودلو" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">کشور</label>
+                  <div class="col-sm-9">
+                    <select class="select2 form-select" data-allow-clear="true" id="formtabs-country">
+                      <option value="">انتخاب کنید</option>
+                      <option value="Australia">استرالیا</option>
+                      <option value="Bangladesh">بنگلادش</option>
+                      <option value="Belarus">بلاروس</option>
+                      <option value="Brazil">برزیل</option>
+                      <option value="Canada">کانادا</option>
+                      <option value="China">چین</option>
+                      <option value="France">فرانسه</option>
+                      <option value="Germany">آلمان</option>
+                      <option value="India">هندوستان</option>
+                      <option value="Indonesia">اندونزی</option>
+                      <option value="Israel">اسرائيل</option>
+                      <option value="Italy">ایتالیا</option>
+                      <option value="Japan">ژاپن</option>
+                      <option value="Korea">جمهوری کره</option>
+                      <option value="Mexico">مکزیک</option>
+                      <option value="Philippines">فیلیپین</option>
+                      <option value="Russia">فدراسیون روسیه</option>
+                      <option value="South Africa">آفریقای جنوبی</option>
+                      <option value="Thailand">تایلند</option>
+                      <option value="Turkey">ترکیه</option>
+                      <option value="Ukraine">اوکراین</option>
+                      <option value="United Arab Emirates">امارات متحده عربی</option>
+                      <option value="United Kingdom">انگلستان</option>
+                      <option value="United States">ایالات متحده</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 select2-primary">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-language">زبان</label>
+                  <div class="col-sm-9">
+                    <select class="select2 form-select" id="formtabs-language" multiple>
+                      <option selected value="en">انگلیسی</option>
+                      <option selected value="fr">فرانسوی</option>
+                      <option value="de">آلمانی</option>
+                      <option value="pt">پرتغالی</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-birthdate">تاریخ تولد</label>
+                  <div class="col-sm-9">
+                    <input class="form-control dob-picker" id="formtabs-birthdate" placeholder="YYYY-MM-DD" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">شماره تلفن</label>
+                  <div class="col-sm-9">
+                    <input aria-label="658 799 8941" class="form-control phone-mask bdi" id="formtabs-phone" placeholder="658 799 8941" type="text"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <div class="row justify-content-end">
+                  <div class="col-sm-9">
+                    <button class="btn btn-primary me-sm-3 me-1" type="submit">ثبت مشخصات</button>
+                    <button class="btn btn-label-secondary" type="reset">لغو</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Account Details -->
+        <div class="tab-pane fade" id="form-tabs-account" role="tabpanel">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">نام کاربری</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" id="formtabs-username" placeholder="soheil.n" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">ایمیل</label>
+                  <div class="col-sm-9">
+                    <div class="input-group input-group-merge">
+                      <span class="input-group-text" id="formtabs-email2">
+                        <bdi>&#64;example.com</bdi>
+                      </span>
+                      <input aria-describedby="formtabs-email2" aria-label="soheil.n" class="form-control" id="formtabs-email" placeholder="soheil.n" type="text"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row form-password-toggle">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">کلمه عبور</label>
+                  <div class="col-sm-9">
+                    <div class="input-group input-group-merge">
+                      <input aria-describedby="formtabs-password2" class="form-control" id="formtabs-password" placeholder="············" type="password"/>
+                      <span class="input-group-text cursor-pointer" id="formtabs-password2">
+                        <i class="ti ti-eye-off"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row form-password-toggle">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-confirm-password">تایید</label>
+                  <div class="col-sm-9">
+                    <div class="input-group input-group-merge">
+                      <input aria-describedby="formtabs-confirm-password2" class="form-control" id="formtabs-confirm-password" placeholder="············" type="password"/>
+                      <span class="input-group-text cursor-pointer" id="formtabs-confirm-password2">
+                        <i class="ti ti-eye-off"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <div class="row justify-content-end">
+                  <div class="col-sm-9">
+                    <button class="btn btn-primary me-sm-3 me-1" type="submit">ثبت مشخصات</button>
+                    <button class="btn btn-label-secondary" type="reset">لغو</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Social Links -->
+        <div class="tab-pane fade" id="form-tabs-social" role="tabpanel">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-twitter">توییتر</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-twitter" placeholder="https://twitter.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-facebook">فیس بوک</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-facebook" placeholder="https://facebook.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-google">گوگل+</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-google" placeholder="https://plus.google.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-linkedin">لینکدین</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-linkedin" placeholder="https://linkedin.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-instagram">Instagram</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-instagram" placeholder="https://instagram.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-quora">Quora</label>
+                  <div class="col-sm-9">
+                    <input class="form-control ltr" id="formtabs-quora" placeholder="https://quora.com/abc" type="text"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <div class="row justify-content-end">
+                  <div class="col-sm-9">
+                    <button class="btn btn-primary me-sm-3 me-1" type="submit">ثبت مشخصات</button>
+                    <button class="btn btn-label-secondary" type="reset">لغو</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Form Alignment -->
+<div class="card">
+  <h5 class="card-header">تراز فرم</h5>
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-center h-px-500">
+      <form class="w-px-500 border rounded p-3 p-md-5">
+        <h3 class="mb-4">ورود</h3>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label" for="form-alignment-username">نام کاربری</label>
+          <div class="col-sm-9">
+            <input class="form-control" id="form-alignment-username" placeholder="soheil.n" type="text"/>
+          </div>
+        </div>
+        <div class="row mb-3 form-password-toggle">
+          <label class="col-sm-3 col-form-label" for="form-alignment-password">کلمه عبور</label>
+          <div class="col-sm-9">
+            <div class="input-group input-group-merge">
+              <input aria-describedby="form-alignment-password2" class="form-control" id="form-alignment-password" placeholder="············" type="password"/>
+              <span class="input-group-text cursor-pointer" id="form-alignment-password2">
+                <i class="ti ti-eye-off"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-check m-0">
+            <input class="form-check-input" type="checkbox"/>
+            <span class="form-check-label">مرا به خاطر بسپار</span>
+          </label>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary" type="submit">وارد شدن</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

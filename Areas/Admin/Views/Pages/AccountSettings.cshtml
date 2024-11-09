@@ -1,0 +1,207 @@
+@{
+  ViewData["Title"] = "تنظیمات حساب - حساب کاربری";
+}
+
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/pages-account-settings-account.js"></script>
+}
+
+@* ************** Content ************** *@
+
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">تنظیمات حساب /</span>
+    حساب کاربری
+  </h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-4">
+      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ti-xs ti ti-users me-1"></i> حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsSecurity"><i class="ti-xs ti ti-lock me-1"></i> امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsBilling"><i class="ti-xs ti ti-file-description me-1"></i> تراکنش‌ها و پرداخت</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsNotifications"><i class="ti-xs ti ti-bell me-1"></i> نوتیفیکیشن</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsConnections"><i class="ti-xs ti ti-link me-1"></i> اکانت‌های متصل</a></li>
+    </ul>
+    <div class="card mb-4">
+      <h5 class="card-header">جزئیات پروفایل</h5>
+      <!-- Account -->
+      <div class="card-body">
+        <div class="d-flex align-items-start align-items-sm-center gap-4">
+          <img src="~/img/avatars/14.png" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
+          <div class="button-wrapper">
+            <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+              <span class="d-none d-sm-block">آپلود عکس جدید</span>
+              <i class="ti ti-upload d-block d-sm-none"></i>
+              <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
+            </label>
+            <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
+              <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+              <span class="d-none d-sm-block">حذف عکس</span>
+            </button>
+
+            <div class="text-muted">حداکثر 5 مگابایت و با فرمت png , jpeg , jpg</div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-0">
+      <div class="card-body">
+        <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="firstName">نام کوچک</label>
+              <input autofocus class="form-control" id="firstName" name="firstName" type="text" value="نـوید"/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="lastName">نام خانوادگی</label>
+              <input class="form-control" id="lastName" name="lastName" type="text" value="محمدزاده"/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="email">ایمیل</label>
+              <input class="form-control" type="text" id="email" name="email" value="john.doe&#64;example.com" placeholder="john.doe&#64;example.com" />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="organization">سازمان</label>
+              <input type="text" class="form-control" id="organization" name="organization" value='@TempData.Peek("authorName")' />
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="phoneNumber">شماره تلفن</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text">IR (+98)</span>
+                <input class="form-control ltr" id="phoneNumber" name="phoneNumber" placeholder="910 000 0000" type="text"/>
+              </div>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="address">آدرس</label>
+              <input class="form-control" id="address" name="address" placeholder="ایران ، تهران ..." type="text"/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="state">استان</label>
+              <input class="form-control" id="state" name="state" placeholder="تهران" type="text"/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="zipCode">کد پستی</label>
+              <input class="form-control" id="zipCode" maxlength="6" name="zipCode" placeholder="231465" type="text"/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="country">کشور</label>
+              <select class="select2 form-select" id="country">
+                <option value="">انتخاب کنید</option>
+                <option value="Australia">استرالیا</option>
+                <option value="Bangladesh">بنگلادش</option>
+                <option value="Belarus">بلاروس</option>
+                <option value="Brazil">برزیل</option>
+                <option value="Canada">کانادا</option>
+                <option value="China">چین</option>
+                <option value="France">فرانسه</option>
+                <option value="Germany">آلمان</option>
+                <option value="India">هندوستان</option>
+                <option value="Indonesia">اندونزی</option>
+                <option value="Israel">اسرائيل</option>
+                <option value="Italy">ایتالیا</option>
+                <option value="Japan">ژاپن</option>
+                <option value="Korea">جمهوری کره</option>
+                <option value="Mexico">مکزیک</option>
+                <option value="Philippines">فیلیپین</option>
+                <option value="Russia">فدراسیون روسیه</option>
+                <option value="South Africa">آفریقای جنوبی</option>
+                <option value="Thailand">تایلند</option>
+                <option value="Turkey">ترکیه</option>
+                <option value="Ukraine">اوکراین</option>
+                <option value="United Arab Emirates">امارات متحده عربی</option>
+                <option value="United Kingdom">انگلستان</option>
+                <option value="United States">ایالات متحده</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="language">زبان</label>
+              <select class="select2 form-select" id="language">
+                <option value="">زبان را انتخاب کنید</option>
+                <option value="en">انگلیسی</option>
+                <option value="fr">فرانسوی</option>
+                <option value="de">آلمانی</option>
+                <option value="pt">پرتغالی</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="timeZones">منطقه زمانی</label>
+              <select class="select2 form-select" id="timeZones">
+                <option value="">منطقه زمانی را انتخاب کنید</option>
+                <option value="-12">(GMT-12:00) خط تاریخ بین المللی غرب</option>
+                <option value="-11">(GMT-11:00) جزیره میدوی، ساموآ</option>
+                <option value="-10">(GMT-10:00) هاوایی</option>
+                <option value="-9">(GMT-09:00) آلاسکا</option>
+                <option value="-8">(GMT-08:00) به وقت اقیانوس آرام (ایالات متحده و کانادا)</option>
+                <option value="-8">(GMT-08:00) تیجوانا، باخا کالیفرنیا</option>
+                <option value="-7">(GMT-07:00) آریزونا</option>
+                <option value="-7">(GMT-07:00) چیهواهوا، لاپاز، مازاتلان</option>
+                <option value="-7">(GMT-07:00) به وقت کوهستان (ایالات متحده و کانادا)</option>
+                <option value="-6">(GMT-06:00) آمریکای مرکزی</option>
+                <option value="-6">(GMT-06:00) به وقت مرکزی (ایالات متحده و کانادا)</option>
+                <option value="-6">(GMT-06:00) گوادالاخارا، مکزیکو سیتی، مونتری</option>
+                <option value="-6">(GMT-06:00) ساسکاچوان</option>
+                <option value="-5">(GMT-05:00) بوگوتا، لیما، کیتو، ریو برانکو</option>
+                <option value="-5">(GMT-05:00) به وقت شرقی (ایالات متحده و کانادا)</option>
+                <option value="-5">(GMT-05:00) ایندیانا (شرق)</option>
+                <option value="-4">(GMT-04:00) به وقت اقیانوس اطلس (کانادا)</option>
+                <option value="-4">(GMT-04:00) کاراکاس، لاپاز</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label class="form-label" for="currency">واحد پول</label>
+              <select class="select2 form-select" id="currency">
+                <option value="">واحد پول را انتخاب کنید</option>
+                <option value="usd">USD</option>
+                <option value="euro">یورو</option>
+                <option value="pound">پوند</option>
+                <option value="bitcoin">بیت کوین</option>
+                <option value="IRT">ءتء</option>
+                <option value="IRR">ءرء</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-primary me-2" type="submit">ذخیره تغییرات</button>
+            <button class="btn btn-label-secondary" type="reset">لغو</button>
+          </div>
+        </form>
+      </div>
+      <!-- /Account -->
+    </div>
+    <div class="card">
+      <h5 class="card-header">حذف حساب کاربری</h5>
+      <div class="card-body">
+        <div class="mb-3 col-12 mb-0">
+          <div class="alert alert-warning">
+            <h5 class="alert-heading mb-1">آیا مطمئن هستید که می خواهید اکانت خود را حذف کنید؟</h5>
+            <p class="mb-0">هنگامی که حساب خود را حذف می کنید، دیگر راه برگشتی وجود ندارد. لطفا مطمئن باشید</p>
+          </div>
+        </div>
+        <form id="formAccountDeactivation" onsubmit="return false">
+          <div class="form-check mb-4">
+            <input class="form-check-input" id="accountActivation" name="accountActivation" type="checkbox"/>
+            <label class="form-check-label" for="accountActivation">من حذف حساب خود را تأیید می کنم</label>
+          </div>
+          <button class="btn btn-danger deactivate-account" type="submit">حذف حساب کاربری</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

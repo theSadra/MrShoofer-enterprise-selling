@@ -1,0 +1,719 @@
+@{
+  ViewData["Title"] = "رابط کاربری - کارت آمار و گزارشات";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/cards-analytics.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">امکانات /</span>
+  کارت آمار و گزارشات
+</h4>
+<div class="row">
+  <!-- Earning Reports -->
+  <div class="col-lg-6 mb-4 order-md-0 order-lg-0">
+    <div class="card h-100">
+      <div class="card-header pb-0 d-flex justify-content-between mb-lg-n4">
+        <div class="card-title mb-0">
+          <h5 class="mb-0">گزارش درآمد</h5>
+          <small class="text-muted">بررسی مختصر درآمدهای هفتگی</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="earningReportsId" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="earningReportsId" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-4 d-flex flex-column align-self-end">
+            <div class="d-flex gap-2 align-items-center mb-2 pb-1 flex-wrap">
+              <h1 class="mb-0">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>468</bdi>
+              </h1>
+              <div class="badge rounded bg-label-success">
+                <bdi>+4.2%</bdi>
+              </div>
+            </div>
+            <small class="text-muted">شما از این هفته نسبت به هفته گذشته خبر دادید</small>
+          </div>
+          <div class="col-12 col-md-8">
+            <div id="weeklyEarningReports"></div>
+          </div>
+        </div>
+        <div class="border rounded p-3 mt-4">
+          <div class="row gap-4 gap-sm-0">
+            <div class="col-12 col-sm-4">
+              <div class="d-flex gap-2 align-items-center">
+                <div class="badge rounded bg-label-primary p-1">
+                  <i class="ti ti-currency-dollar ti-sm"></i>
+                </div>
+                <h6 class="mb-0">درآمد</h6>
+              </div>
+              <h4 class="my-2 pt-1">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>545.69</bdi>
+              </h4>
+              <div class="progress w-75" style="height: 4px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar" role="progressbar" style="width: 65%"></div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="d-flex gap-2 align-items-center">
+                <div class="badge rounded bg-label-info p-1">
+                  <i class="ti ti-chart-pie-2 ti-sm"></i>
+                </div>
+                <h6 class="mb-0">سود</h6>
+              </div>
+              <h4 class="my-2 pt-1">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>256.34</bdi>
+              </h4>
+              <div class="progress w-75" style="height: 4px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar bg-info" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="d-flex gap-2 align-items-center">
+                <div class="badge rounded bg-label-danger p-1">
+                  <i class="ti ti-brand-paypal ti-sm"></i>
+                </div>
+                <h6 class="mb-0">هزینه</h6>
+              </div>
+              <h4 class="my-2 pt-1">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>74.19</bdi>
+              </h4>
+              <div class="progress w-75" style="height: 4px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar bg-danger" role="progressbar" style="width: 65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Support Tracker -->
+  <div class="col-md-6 mb-4 order-md-3 order-lg-0">
+    <div class="card">
+      <div class="card-header pb-0 d-flex justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="mb-0">گزارش پشتیبانی</h5>
+          <small class="text-muted">7 روز گذشته</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="supportTrackerMenu" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="supportTrackerMenu" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body row">
+        <div class="col-12 col-sm-4 col-md-12 col-lg-4">
+          <div class="mt-lg-4 mt-lg-2 mb-lg-4 mb-2 pt-1">
+            <h1 class="mb-0">164</h1>
+            <p class="mb-0">کل تیکت ها</p>
+          </div>
+          <ul class="p-0 m-0">
+            <li class="d-flex gap-3 align-items-center mb-lg-3 pt-2 pb-1">
+              <div class="badge rounded bg-label-primary p-1">
+                <i class="ti ti-ticket ti-sm"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">تیکت جدید</h6>
+                <small class="text-muted">142</small>
+              </div>
+            </li>
+            <li class="d-flex gap-3 align-items-center mb-lg-3 pb-1">
+              <div class="badge rounded bg-label-info p-1">
+                <i class="ti ti-circle-check ti-sm"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">تیکت باز</h6>
+                <small class="text-muted">28</small>
+              </div>
+            </li>
+            <li class="d-flex gap-3 align-items-center pb-1">
+              <div class="badge rounded bg-label-warning p-1">
+                <i class="ti ti-clock ti-sm"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">زمان پاسخ</h6>
+                <small class="text-muted">1 روز</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-sm-8 col-md-12 col-lg-8">
+          <div id="supportTracker"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sales last 6 months -->
+  <div class="col-md-6 col-lg-4 mb-4 order-md-3 order-lg-0">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="mb-0">تخفیف</h5>
+          <small class="text-muted">6 ماه گذشته</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="salesLastMonthMenu" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="salesLastMonthMenu" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="salesLastMonth"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Revenue Report -->
+  <div class="col-12 col-lg-8 mb-4 order-md-1 order-lg-0">
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="row row-bordered g-0">
+          <div class="col-md-8 position-relative p-4">
+            <div class="card-header d-inline-block p-0 text-wrap position-absolute">
+              <h5 class="m-0 card-title">گزارش درآمد</h5>
+            </div>
+            <div class="mt-n1" id="totalRevenueChart"></div>
+          </div>
+          <div class="col-md-4 p-4">
+            <div class="text-center mt-4">
+              <div class="dropdown">
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" id="budgetId" type="button">
+                  <script>
+                    document.write(new Date().getFullYear());
+
+                  </script>
+                </button>
+                <div aria-labelledby="budgetId" class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item prev-year1" href="javascript:void(0);">
+                    <script>
+                      document.write(new Date().getFullYear() - 1);
+
+                    </script>
+                  </a>
+                  <a class="dropdown-item prev-year2" href="javascript:void(0);">
+                    <script>
+                      document.write(new Date().getFullYear() - 2);
+
+                    </script>
+                  </a>
+                  <a class="dropdown-item prev-year3" href="javascript:void(0);">
+                    <script>
+                      document.write(new Date().getFullYear() - 3);
+
+                    </script>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-center pt-4 mb-2">
+              <bdi><svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>25,825</bdi>
+            </h3>
+            <p class="mb-5 text-center">
+              <span class="fw-medium">بودجه:</span>
+              56,800
+            </p>
+            <div class="px-3">
+              <div id="budgetChart"></div>
+            </div>
+            <div class="text-center mt-5 mb-2">
+              <button class="btn btn-primary" type="button">دکمه افزایش</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Project Status -->
+  <div class="col-lg-6 col-xl-4 mb-4 order-3 order-xl-0">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <h5 class="mb-0 card-title">وضعیت پروژه</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="projectStatusId" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="projectStatusId" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-flex align-items-start">
+          <div class="badge rounded bg-label-primary p-2 me-3 rounded">
+            <i class="ti ti-currency-dollar ti-sm"></i>
+          </div>
+          <div class="d-flex justify-content-between w-100 gap-2 align-items-center">
+            <div class="me-2">
+              <h6 class="mb-0">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>4,3742</bdi>
+              </h6>
+              <small class="text-muted">درآمد شما</small>
+            </div>
+            <p class="mb-0 text-success">
+              <bdi>+10.2%</bdi>
+            </p>
+          </div>
+        </div>
+        <div id="projectStatusChart"></div>
+        <div class="d-flex justify-content-between mb-3">
+          <h6 class="mb-0">حمایت ها</h6>
+          <div class="d-flex">
+            <p class="mb-0 me-3">
+              <bdi><svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>756.26</bdi>
+            </p>
+            <p class="mb-0 text-danger">
+              <bdi>-139.34</bdi>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mb-3 pb-1">
+          <h6 class="mb-0">پادکست ها</h6>
+          <div class="d-flex">
+            <p class="mb-0 me-3">
+              <bdi><svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>2,207.03</bdi>
+            </p>
+            <p class="mb-0 text-success">
+              <bdi>+576.24</bdi>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Earning Reports Tabs-->
+  <div class="col-12 col-xl-8 mb-4 order-1 order-lg-0">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div class="card-title m-0">
+          <h5 class="mb-0">گزارش درآمد</h5>
+          <small class="text-muted">بررسی مختصر درآمد سالانه</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="earningReportsTabsId" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="earningReportsTabsId" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="nav nav-tabs widget-nav-tabs pb-3 gap-4 mx-1 d-flex flex-nowrap" role="tablist">
+          <li class="nav-item">
+            <a aria-controls="navs-orders-id" aria-selected="true" class="nav-link btn active d-flex flex-column align-items-center justify-content-center" data-bs-target="#navs-orders-id" data-bs-toggle="tab" href="javascript:void(0);" role="tab">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-shopping-cart ti-sm"></i>
+              </div>
+              <h6 class="tab-widget-title mb-0 mt-2">سفارشات</h6>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a aria-controls="navs-sales-id" aria-selected="false" class="nav-link btn d-flex flex-column align-items-center justify-content-center" data-bs-target="#navs-sales-id" data-bs-toggle="tab" href="javascript:void(0);" role="tab">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-chart-bar ti-sm"></i>
+              </div>
+              <h6 class="tab-widget-title mb-0 mt-2">تخفیف</h6>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a aria-controls="navs-profit-id" aria-selected="false" class="nav-link btn d-flex flex-column align-items-center justify-content-center" data-bs-target="#navs-profit-id" data-bs-toggle="tab" href="javascript:void(0);" role="tab">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-currency-dollar ti-sm"></i>
+              </div>
+              <h6 class="tab-widget-title mb-0 mt-2">سود</h6>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a aria-controls="navs-income-id" aria-selected="false" class="nav-link btn d-flex flex-column align-items-center justify-content-center" data-bs-target="#navs-income-id" data-bs-toggle="tab" href="javascript:void(0);" role="tab">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-chart-pie-2 ti-sm"></i>
+              </div>
+              <h6 class="tab-widget-title mb-0 mt-2">درآمد</h6>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a aria-selected="false" class="nav-link btn d-flex align-items-center justify-content-center disabled" data-bs-toggle="tab" href="javascript:void(0);" role="tab">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-plus ti-sm"></i>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content p-0 ms-0 ms-sm-2">
+          <div class="tab-pane fade show active" id="navs-orders-id" role="tabpanel">
+            <div id="earningReportsTabsOrders"></div>
+          </div>
+          <div class="tab-pane fade" id="navs-sales-id" role="tabpanel">
+            <div id="earningReportsTabsSales"></div>
+          </div>
+          <div class="tab-pane fade" id="navs-profit-id" role="tabpanel">
+            <div id="earningReportsTabsProfit"></div>
+          </div>
+          <div class="tab-pane fade" id="navs-income-id" role="tabpanel">
+            <div id="earningReportsTabsIncome"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Total Earning -->
+  <div class="col-12 col-md-6 col-xl-4 mb-4 order-2 order-xl-0">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between pb-1">
+        <h5 class="mb-0 card-title">کل درآمد</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="totalEarning" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="totalEarning" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-flex align-items-center">
+          <h1 class="mb-0 me-2">87%</h1>
+          <i class="ti ti-chevron-up text-success me-1"></i>
+          <p class="text-success mb-0">25.8%</p>
+        </div>
+        <div id="totalEarningChart"></div>
+        <div class="d-flex align-items-start my-4">
+          <div class="badge rounded bg-label-danger p-2 me-3 rounded">
+            <i class="ti ti-brand-paypal ti-sm"></i>
+          </div>
+          <div class="d-flex justify-content-between w-100 gap-2 align-items-center">
+            <div class="me-2">
+              <h6 class="mb-0">کل درآمد</h6>
+              <small class="text-muted">پرداخت مشتری</small>
+            </div>
+            <p class="mb-0 text-success">
+              <bdi>+<svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>126</bdi>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start">
+          <div class="badge rounded bg-label-primary p-2 me-3 rounded">
+            <i class="ti ti-currency-dollar ti-sm"></i>
+          </div>
+          <div class="d-flex justify-content-between w-100 gap-2 align-items-center">
+            <div class="me-2">
+              <h6 class="mb-0">کل فروش</h6>
+              <small class="text-muted">چک و اقساط</small>
+            </div>
+            <p class="mb-0 text-success">
+              <bdi>+<svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>98</bdi>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Interested Topics -->
+  <div class="col-12 col-lg-8 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="card-title m-0 me-2">موضوع مورد علاقه شما</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="topic" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="topic" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">پربازدید ترین‌ها</a>
+            <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <div id="horizontalBarChart"></div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-around align-items-center">
+          <div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-primary me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">طراحی UI</p>
+                <h5>35%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline my-3">
+              <span class="text-success me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">موسیقی</p>
+                <h5>14%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-danger me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">ری‌اکت نیتیو</p>
+                <h5>10%</h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-info me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">طراحی UX</p>
+                <h5>20%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline my-3">
+              <span class="text-secondary me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">انیمیشن</p>
+                <h5>12%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-warning me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">سئو</p>
+                <h5>9%</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Carrier Performance -->
+  <div class="col-12 col-lg-7 mb-4 order-3 order-xl-0">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="card-title m-0 me-2">عملکرد پیک ارسال</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="performance" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="performance" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">نرخ تحویل</a>
+            <a class="dropdown-item" href="javascript:void(0);">زمان تحویل</a>
+            <a class="dropdown-item" href="javascript:void(0);">عدم تحویل</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="carrierPerformance"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Vehicles overview -->
+  <div class="col-12 col-lg-5 mb-4 order-3 order-xl-0">
+    <div class="card h-100">
+      <div class="card-header">
+        <div class="card-title mb-0">
+          <h5 class="m-0">عملکرد وسایل نقلیه</h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-none d-lg-flex vehicles-progress-labels mb-3">
+          <div class="vehicles-progress-label on-the-way-text" style="width: 39.7%">در مسیر تحویل</div>
+          <div class="vehicles-progress-label unloading-text" style="width: 28.3%">تحویل شده</div>
+          <div class="vehicles-progress-label loading-text" style="width: 17.4%">دریافت شده</div>
+          <div class="vehicles-progress-label waiting-text text-nowrap" style="width: 14.6%">در انتظار</div>
+        </div>
+        <div class="vehicles-overview-progress progress rounded-2 mb-3" style="height: 46px">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="39.7" class="progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0" role="progressbar" style="width: 39.7%"> 39.7%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="28.3" class="progress-bar fw-medium text-start bg-primary px-3" role="progressbar" style="width: 28.3%"> 28.3%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="17.4" class="progress-bar fw-medium text-start text-bg-info px-3" role="progressbar" style="width: 17.4%"> 17.4%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="14.6" class="progress-bar fw-medium text-start bg-gray-900 px-2 rounded-0 px-lg-2 px-xxl-3" role="progressbar" style="width: 14.6%"> 14.6%</div>
+        </div>
+        <div class="table-responsive">
+          <table class="table card-table">
+            <tbody class="table-border-bottom-0">
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-truck mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">در مسیر تحویل</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">2 ساعت 10 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">39.7%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-circle-arrow-down mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">تحویل شده</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">3 ساعت 15 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">28.3%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-circle-arrow-up mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">دریافت شده</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">1 ساعت و 24 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">17.4%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-clock mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">در انتظار</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">5 ساعت 19 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">14.6%</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delivery Exceptions -->
+  <div class="col-12 col-md-6 col-lg-4 mb-4 order-1 order-xl-0">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">دلایل عدم تحویل</h5>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="deliveryExceptions" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="deliveryExceptions" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">همه</a>
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="deliveryExceptionsChart"></div>
+      </div>
+    </div>
+  </div>
+</div>

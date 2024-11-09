@@ -184,7 +184,7 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'جستجو سفارش'
+        searchPlaceholder: 'جستجو فروشنده'
       },
       // Buttons with Dropdown
       buttons: [
@@ -329,7 +329,7 @@ $(function () {
           ]
         },
         {
-          text: '<i class="ti ti-plus me-0 me-sm-1 mb-1 ti-xs"></i><span class="d-none d-sm-inline-block">افزودن مشتری</span>',
+          text: '<i class="ti ti-plus me-0 me-sm-1 mb-1 ti-xs"></i><span class="d-none d-sm-inline-block">افزودن فروشنده</span>',
           className: 'add-new btn btn-primary py-2 waves-effect waves-light',
           attr: {
             'data-bs-toggle': 'offcanvas',

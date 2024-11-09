@@ -1,0 +1,435 @@
+@{
+  ViewData["Title"] = "جداول داده‌ای - پایه";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+<!-- Row Group CSS -->
+<link rel="stylesheet" href="~/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css">
+<!-- Form Validation -->
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<!-- Flat Picker -->
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/jdate/jdate.min.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+<!-- Form Validation -->
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/tables-datatables-basic.js"></script>
+}
+
+@* ************** Content ************** *@
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">جداول داده‌ای /</span>
+  پایه
+</h4>
+<!-- DataTable direct html : by byteMaster at 2024-02-01 -->
+<div class="card">
+  <h5 class="card-header">جدول داده مستقیم (بدون Ajax)</h5>
+  <div class="card-datatable table-responsive pt-0">
+    <table class="datatables-direct-basic table">
+      <thead>
+      <tr>
+        <th>کد</th>
+        <th>پرچم</th>
+        <th>کشور</th>
+        <th>مساحت</th>
+        <th>جمعیت</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><bdi>+1</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/us.svg" width="32">
+        </td>
+        <td>
+          آمریکا
+        </td>
+        <td>
+          9,834,000
+        </td>
+        <td>
+          331,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+61</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/au.svg" width="32">
+        </td>
+        <td>
+          استرالیا
+        </td>
+        <td>
+          7,688,000
+        </td>
+        <td>
+          25,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+55</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/br.svg" width="32">
+        </td>
+        <td>
+          برزیل
+        </td>
+        <td>
+          8,512,000
+        </td>
+        <td>
+          214,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+33</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/fr.svg" width="32">
+        </td>
+        <td>
+          فرانسه
+        </td>
+        <td>
+          643,801
+        </td>
+        <td>
+          68,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+351</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/pt.svg" width="32">
+        </td>
+        <td>
+          پرتغال
+        </td>
+        <td>
+          92,152
+        </td>
+        <td>
+          10,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+86</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/cn.svg" width="32">
+        </td>
+        <td>
+          چین
+        </td>
+        <td>
+          9,597,000
+        </td>
+        <td>
+          1,412,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      <tr>
+        <td><bdi>+91</bdi></td>
+        <td>
+          <img alt="User" class="rounded-circle" src="~/svg/flags/in.svg" width="32">
+        </td>
+        <td>
+          هند
+        </td>
+        <td>
+          3,287,000
+        </td>
+        <td>
+          1,408,000,000
+        </td>
+        <td>
+          <span class="badge  bg-label-success">فعال</span>
+        </td>
+        <td>
+          <div class="d-inline-block">
+            <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="text-primary ti ti-dots-vertical"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end m-0">
+              <li><a href="javascript:;" class="dropdown-item">جزئیات</a></li>
+              <li><a href="javascript:;" class="dropdown-item">بایگانی</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="text-primary ti ti-pencil"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr class="my-5"/>
+
+<!-- DataTable with Buttons -->
+<div class="card">
+  <div class="card-datatable table-responsive pt-0">
+    <table class="datatables-basic table">
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>شناسه</th>
+        <th>نام</th>
+        <th>ایمیل</th>
+        <th>تاریخ</th>
+        <th>حقوق</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<!-- Modal to add new record -->
+<div class="offcanvas offcanvas-end" id="add-new-record">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="exampleModalLabel">رکورد جدید</h5>
+    <button aria-label="بستن" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
+  </div>
+  <div class="offcanvas-body flex-grow-1">
+    <form class="add-new-record pt-0 row g-2" id="form-add-new-record" onsubmit="return false">
+      <div class="col-sm-12">
+        <label class="form-label" for="basicFullname">نام و نام خانوادگی</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basicFullname2">
+            <i class="ti ti-user"></i>
+          </span>
+          <input aria-describedby="basicFullname2" aria-label="نـوید" class="form-control dt-full-name" id="basicFullname" name="basicFullname" placeholder="نـوید" type="text"/>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicPost">پست</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basicPost2">
+            <i class="ti ti-briefcase"></i>
+          </span>
+          <input aria-describedby="basicPost2" aria-label="توسعه دهنده وب" class="form-control dt-post" id="basicPost" name="basicPost" placeholder="توسعه دهنده وب" type="text"/>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicEmail">ایمیل</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text">
+            <i class="ti ti-mail"></i>
+          </span>
+          <input aria-label="john.doe&#64;example.com" class="form-control dt-email" id="basicEmail" name="basicEmail" placeholder="john.doe&#64;example.com" type="text"/>
+        </div>
+        <div class="form-text">می توانید از حروف، اعداد و نقطه استفاده کنید</div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicDate">تاریخ عضویت</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basicDate2">
+            <i class="ti ti-calendar"></i>
+          </span>
+          <input aria-describedby="basicDate2" aria-label="MM/DD/YYYY" class="form-control dt-date" id="basicDate" name="basicDate" placeholder="MM/DD/YYYY" type="text"/>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <label class="form-label" for="basicSalary">حقوق</label>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basicSalary2">ءتء</span>
+          <input aria-describedby="basicSalary2" aria-label="12000" class="form-control dt-salary" id="basicSalary" name="basicSalary" placeholder="12000" type="number"/>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <button class="btn btn-primary data-submit me-sm-3 me-1" type="submit">ارسال</button>
+        <button class="btn btn-outline-secondary" data-bs-dismiss="offcanvas" type="reset">لغو</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--/ DataTable with Buttons -->
+<hr class="my-5"/>
+<!-- Complex Headers -->
+<div class="card">
+  <h5 class="card-header">هدرهای پیچیده</h5>
+  <div class="card-datatable text-nowrap">
+    <table class="dt-complex-header table table-bordered">
+      <thead>
+      <tr>
+        <th rowspan="2">نام</th>
+        <th colspan="2">مخاطب</th>
+        <th colspan="3">اطلاعات منابع انسانی</th>
+        <th rowspan="2">عملیات</th>
+      </tr>
+      <tr>
+        <th>ایمیل</th>
+        <th>شهر</th>
+        <th>موقعیت</th>
+        <th>حقوق</th>
+        <th class="border-1">وضعیت</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<!--/ Complex Headers -->
+<hr class="my-5"/>
+<!-- Row grouping -->
+<div class="card">
+  <h5 class="card-header">گروه بندی ردیف</h5>
+  <div class="card-datatable table-responsive">
+    <table class="dt-row-grouping table">
+      <thead>
+      <tr>
+        <th></th>
+        <th>نام</th>
+        <th>موقعیت</th>
+        <th>ایمیل</th>
+        <th>شهر</th>
+        <th>تاریخ</th>
+        <th>حقوق</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <th></th>
+        <th>نام</th>
+        <th>موقعیت</th>
+        <th>ایمیل</th>
+        <th>شهر</th>
+        <th>تاریخ</th>
+        <th>حقوق</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<!--/ Row grouping -->
+<hr class="my-5"/>
+<!-- Multilingual -->
+<div class="card">
+  <h5 class="card-header">چند زبانه</h5>
+  <div class="card-datatable table-responsive">
+    <table class="dt-multilingual table">
+      <thead>
+      <tr>
+        <th></th>
+        <th>نام</th>
+        <th>موقعیت</th>
+        <th>ایمیل</th>
+        <th>تاریخ</th>
+        <th>حقوق</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<!--/ Multilingual -->

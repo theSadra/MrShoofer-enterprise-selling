@@ -1,0 +1,218 @@
+@{
+  ViewData["Title"] = "رابط کاربری - هشدارها";
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">رابط کاربری /</span>
+  هشدارها
+</h4>
+<div class="row mb-4">
+  <!-- Basic Alerts -->
+  <div class="col-md mb-4 mb-md-0">
+    <div class="card">
+      <h5 class="card-header">هشدارهای پایه</h5>
+      <div class="card-body">
+        <div class="alert alert-primary" role="alert">این یک هشدار اصلی است - توجه کنید!</div>
+        <div class="alert alert-secondary" role="alert">این یک هشدار فرعی است - توجه کنید!</div>
+        <div class="alert alert-success" role="alert">این یک هشدار موفق است - توجه کنید!</div>
+        <div class="alert alert-danger" role="alert">این یک هشدار خطا است - توجه کنید!</div>
+        <div class="alert alert-warning" role="alert">این یک هشدار اخطار است - توجه کنید!</div>
+        <div class="alert alert-info" role="alert">این یک هشدار راهنما است - توجه کنید!</div>
+        <div class="alert alert-dark mb-0" role="alert">این یک هشدار دارک است - توجه کنید!</div>
+      </div>
+    </div>
+  </div>
+  <!--/ Basic Alerts -->
+  <!-- Alerts with links -->
+  <div class="col-md">
+    <div class="card">
+      <h5 class="card-header">هشدار با لینک</h5>
+      <div class="card-body">
+        <div class="alert alert-primary" role="alert"> این یک هشدار اصلی با یک
+          <a class="alert-link" href=""> لینک تست</a>
+          است.
+        </div>
+        <div class="alert alert-secondary" role="alert">
+          این یک هشدار فرعی با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+        <div class="alert alert-success" role="alert">
+          این یک هشدار موفق با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+        <div class="alert alert-danger" role="alert">
+          این یک هشدار خطا با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+        <div class="alert alert-warning" role="alert">
+          این یک هشدار اخطار با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+        <div class="alert alert-info" role="alert">
+          این یک هشدار راهنما با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+        <div class="alert alert-dark mb-0" role="alert">
+          این یک هشدار دارک با یک
+          <a class="alert-link" href=""> لینک مثال</a>
+          است.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Alerts with links -->
+</div>
+<div class="row mb-4">
+  <!-- Dismissible Alerts -->
+  <div class="col-md mb-4 mb-md-0">
+    <div class="card">
+      <h5 class="card-header">هشدارهای محوشونده</h5>
+      <div class="card-body">
+        <div class="alert alert-primary alert-dismissible" role="alert"> این یک هشدار اصلی قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-secondary alert-dismissible" role="alert"> این یک هشدار فرعی قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-success alert-dismissible" role="alert"> این یک هشدار موفق قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert"> این یک هشدار خطا و قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-warning alert-dismissible" role="alert"> این یک هشدار اخطار و قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-info alert-dismissible" role="alert"> این یک هشدار راهنما قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-dark alert-dismissible mb-0" role="alert"> این یک هشدار دارک قابل رد می باشد - توجه کنید!
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Dismissible Alerts -->
+  <!-- Alerts with Icons -->
+  <div class="col-md">
+    <div class="card">
+      <h5 class="card-header">هشدار با آیکون</h5>
+      <div class="card-body">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <span class="alert-icon text-primary me-2">
+            <i class="ti ti-user ti-xs"></i>
+          </span>
+          این یک هشدار اصلی است - توجه کنید!
+        </div>
+        <div class="alert alert-secondary d-flex align-items-center" role="alert">
+          <span class="alert-icon text-secondary me-2">
+            <i class="ti ti-bookmark ti-xs"></i>
+          </span>
+          این یک هشدار فرعی است - توجه کنید!
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+          <span class="alert-icon text-success me-2">
+            <i class="ti ti-check ti-xs"></i>
+          </span>
+          این یک هشدار موفقیت آمیز است - توجه کنید!
+        </div>
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <span class="alert-icon text-danger me-2">
+            <i class="ti ti-ban ti-xs"></i>
+          </span>
+          این یک هشدار جدی برای خطا است - توجه کنید!
+        </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+          <span class="alert-icon text-warning me-2">
+            <i class="ti ti-bell ti-xs"></i>
+          </span>
+          این یک هشدار اخطار است - توجه کنید!
+        </div>
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+          <span class="alert-icon text-info me-2">
+            <i class="ti ti-info-circle ti-xs"></i>
+          </span>
+          این یک هشدار راهنما است - توجه کنید!
+        </div>
+        <div class="alert alert-dark d-flex align-items-center mb-0" role="alert">
+          <span class="alert-icon me-2">
+            <i class="ti ti-at ti-xs"></i>
+          </span>
+          این یک هشدار دارک است - توجه کنید!
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Alerts with Icons -->
+</div>
+<div class="row">
+  <!-- Alerts with headings -->
+  <div class="col-lg-6 mb-4 mb-lg-0">
+    <div class="card">
+      <h5 class="card-header">هشدار با سرتیتر</h5>
+      <div class="card-body">
+        <div class="alert alert-primary alert-dismissible" role="alert">
+          <h5 class="alert-heading mb-2">هشدار اصلی!</h5>
+          <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-secondary alert-dismissible" role="alert">
+          <h5 class="alert-heading mb-2">هشدار فرعی!</h5>
+          <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-success mb-0 alert-dismissible" role="alert">
+          <h5 class="alert-heading mb-2">هشدار موفق!</h5>
+          <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+          <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Alerts with headings -->
+  <!-- Alert headings with icon -->
+  <div class="col-lg-6 mb-4 mb-md-0">
+    <div class="card">
+      <h5 class="card-header">هشدار با سرتیتر و آیکون</h5>
+      <div class="card-body">
+        <div class="alert alert-primary alert-dismissible d-flex align-items-baseline" role="alert">
+          <span class="alert-icon alert-icon-lg text-primary me-2">
+            <i class="ti ti-user ti-sm"></i>
+          </span>
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">هشدار اصلی!</h5>
+            <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+          </div>
+        </div>
+        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
+          <span class="alert-icon alert-icon-lg text-secondary me-2">
+            <i class="ti ti-bookmark ti-sm"></i>
+          </span>
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">هشدار فرعی!</h5>
+            <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+          </div>
+        </div>
+        <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
+          <span class="alert-icon alert-icon-lg text-success me-2">
+            <i class="ti ti-check ti-sm"></i>
+          </span>
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">هشدار موفق!</h5>
+            <p class="mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Alert headings with icon -->
+</div>

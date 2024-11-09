@@ -1,0 +1,64 @@
+@{
+  ViewData["Title"] = "رابط کاربری - بازشونده";
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">رابط کاربری /</span>
+  بازشونده
+</h4>
+<!-- Collapse -->
+<h5>باز و بسته شونده</h5>
+<div class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">پایه</h5>
+      <div class="card-body">
+        <p class="card-text"> با کمی تغییرات می توانید نمایش محتوا را تغییر دهید.</p>
+        <p class="demo-inline-spacing">
+          <a aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary me-1" data-bs-toggle="collapse" href="#collapseExample" role="button"> با استفاده از href</a>
+          <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary me-1" data-bs-target="#collapseExample" data-bs-toggle="collapse" type="button"> با استفاده از data-bs-target</button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <div class="d-grid d-sm-flex p-3 border">
+            <img alt="فروپاشی-تصویر" class="me-4 mb-sm-0 mb-2" height="125" src="~/img/elements/1.jpg"/>
+            <span class="justify-text lh-2">
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">کادرهای متعدد</h5>
+      <div class="card-body">
+        <p class="card-text">چنین المنت نیز قابل نمایش و محو شدن هستند.</p>
+        <p class="demo-inline-spacing">
+          <a aria-controls="multiCollapseExample1" aria-expanded="false" class="btn btn-primary me-1" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button">باز / بسته شدن کادر 1</a>
+          <button aria-controls="multiCollapseExample2" aria-expanded="false" class="btn btn-primary me-1" data-bs-target="#multiCollapseExample2" data-bs-toggle="collapse" type="button"> باز / بسته شدن کادر 2</button>
+          <button aria-controls="multiCollapseExample1 multiCollapseExample2" aria-expanded="false" class="btn btn-primary me-1" data-bs-target=".multi-collapse" data-bs-toggle="collapse" type="button"> باز / بسته شدن هر دو کادر</button>
+        </p>
+        <div class="row">
+          <div class="col-12 col-md-6 mb-2 mb-md-0">
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <div class="d-grid d-sm-flex p-3 border">
+                <img alt="فروپاشی-تصویر" class="me-4 mb-sm-0 mb-2" height="125" src="~/img/elements/2.jpg"/>
+                <span class="justify-text lh-2"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+              <div class="d-grid d-sm-flex p-3 border">
+                <img alt="فروپاشی-تصویر" class="me-4 mb-sm-0 mb-2" height="125" src="~/img/elements/3.jpg"/>
+                <span class="justify-text lh-2"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+@{
+  ViewData["Title"] = "فرم ها - آپلود فایل";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/dropzone/dropzone.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/dropzone/dropzone.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/forms-file-upload.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  آپلود فایل
+</h4>
+<div class="row">
+  <!-- Basic  -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">پایه</h5>
+      <div class="card-body">
+        <form action="/upload" class="dropzone needsclick" id="dropzone-basic">
+          <div class="dz-message needsclick"> فایل ها را اینجا رها کنید یا کلیک کنید
+            <span class="note needsclick">
+              این فقط یک دمو است
+              <span class="fw-medium">(فایل های انتخاب شده آپلود نمی شوند.)</span>
+            </span>
+          </div>
+          <div class="fallback">
+            <input name="file" type="file"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Basic  -->
+  <!-- Multi  -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">چندگانه</h5>
+      <div class="card-body">
+        <form action="/upload" class="dropzone needsclick" id="dropzone-multi">
+          <div class="dz-message needsclick"> فایل ها را اینجا رها کنید یا کلیک کنید
+            <span class="note needsclick">
+              این فقط یک دمو است
+              <span class="fw-medium">(فایل های انتخاب شده آپلود نمی شوند.)</span>
+            </span>
+          </div>
+          <div class="fallback">
+            <input name="file" type="file"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Multi  -->
+</div>

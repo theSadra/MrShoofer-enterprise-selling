@@ -1,0 +1,118 @@
+@{
+  ViewData["Title"] = "طراحی سفارشی - سوئیت 2";
+}
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+  <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+}
+@section VendorScripts {
+  <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+}
+@section PageScripts {
+  <script src="~/js/extended-ui-sweetalert2.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">طراحی سفارشی /</span> پاپ‌آپ SweetAlert2 </h4>
+<div class="row">
+  <!-- Basic example section -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">نمونه‌های پایه</h5>
+      <div class="card-body"> <span> SweetAlert به صورت خودکار در وسط صفحه قرار میگیرد و قابل شخصی سازی است که در پایین
+          می توانید نمونه های آن را ببینید. </span>
+        <div class="demo-inline-spacing">
+          <button type="button" class="btn btn-primary" id="basic-alert">پایه</button>
+          <button type="button" class="btn btn-primary" id="with-title">با عنوان</button>
+          <button type="button" class="btn btn-primary" id="footer-alert">با Footer</button>
+          <button type="button" class="btn btn-primary" id="html-alert">HTML</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Basic example section -->
+  <!-- Sweet alert Positions -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">موقعیت نمایش</h5>
+      <div class="card-body"> <span> شما می توانید موقعیت هشدار خود را با
+          <code>{position : top-start | top-end | bottom-start | bottom-end }</code> در js مشخص کنید. </span>
+        <div class="demo-inline-spacing">
+          <button class="btn btn-primary" id="position-top-start">بالا راست</button>
+          <button class="btn btn-primary" id="position-top-end">بالا چپ</button>
+          <button class="btn btn-primary" id="position-bottom-start">پایین راست</button>
+          <button class="btn btn-primary" id="position-bottom-end">پایین چپ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Sweet alert Positions -->
+  <!-- SweetAlert Animations -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انیمیشن</h5>
+      <div class="card-body"> <span> با استفاده از <code>popup</code> در داخل <code>showClass</code> برای افزودن انیمیشن
+          به پاپ‌آپ می باشد </span>
+        <div class="demo-inline-spacing">
+          <button class="btn btn-primary waves-effect waves-light" id="bounce-in-animation"> Bounce In </button>
+          <button class="btn btn-primary waves-effect waves-light" id="fade-in-animation"> Fade In </button>
+          <button class="btn btn-primary waves-effect waves-light" id="flip-x-animation"> Flip In </button>
+          <button class="btn btn-primary waves-effect waves-light" id="tada-animation"> Tada </button>
+          <button class="btn btn-primary waves-effect waves-light" id="shake-animation"> Shake </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /SweetAlert Animations -->
+  <!-- Types section -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انواع</h5>
+      <div class="card-body"> <span> با استفاده از <code>icon</code> نوع و آیکن پاپ‌آپ تعیین می شود. </span>
+        <div class="demo-inline-spacing">
+          <button type="button" class="btn btn-success waves-effect waves-light" id="type-success"> موفقیت </button>
+          <button type="button" class="btn btn-info waves-effect waves-light" id="type-info"> راهنما </button>
+          <button type="button" class="btn btn-warning waves-effect waves-light" id="type-warning"> هشدار </button>
+          <button type="button" class="btn btn-danger waves-effect waves-light" id="type-error"> اخطار </button>
+          <button type="button" class="btn btn-secondary waves-effect waves-light" id="type-question"> پرسشی </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Types section -->
+  <!-- Options section -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">آپشن ها</h5>
+      <div class="card-body">
+        <div class="demo-inline-spacing">
+          <button type="button" class="btn btn-primary" id="custom-image">با عکس</button>
+          <button type="button" class="btn btn-primary" id="auto-close">بستن زماندار</button>
+          <button type="button" class="btn btn-primary" id="outside-click">بستن با کلیک خارجی</button>
+          <button type="button" class="btn btn-primary" id="progress-steps">مرحله ای</button>
+          <button type="button" class="btn btn-primary" id="ajax-request">AJAX</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Options section -->
+  <!-- Confirm option section -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">دکمه ها</h5>
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-6 col-sm-12">
+            <p>دکمه تایید</p>
+            <button type="button" class="btn btn-primary" id="confirm-text">نمایش پاپ‌آپ</button>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <p>دکمه تایید و لغو</p>
+            <button type="button" class="btn btn-primary" id="confirm-color">نمایش پاپ‌آپ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Confirm option section -->
+</div>

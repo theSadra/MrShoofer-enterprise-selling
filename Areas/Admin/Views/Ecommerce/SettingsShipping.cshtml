@@ -1,0 +1,324 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - تنظیمات - حمل و نقل";
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-settings.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">تجارت الکترونیک /</span>
+  تنظیمات فروشگاه
+</h4>
+
+<div class="row g-4">
+
+  <!-- Navigation -->
+  <div class="col-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-column mb-3 mb-md-0">
+      <ul class="nav nav-align-left nav-pills flex-column">
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsStoreDetails">
+            <i class="ti ti-building-store me-2"></i>
+            <span class="align-middle">جزئیات فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsPayments">
+            <i class="ti ti-credit-card me-2"></i>
+            <span class="align-middle">سیستم پرداخت</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsCheckout">
+            <i class="ti ti-shopping-cart me-2"></i>
+            <span class="align-middle">ثبت سفارش</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2 active" href="javascript:void(0);">
+            <i class="ti ti-discount-2 me-2"></i>
+            <span class="align-middle">ارسال و تحویل</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsLocations">
+            <i class="ti ti-map-pin me-2"></i>
+            <span class="align-middle">آدرس فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-2" href="SettingsNotifications">
+            <i class="ti ti-bell-ringing me-2"></i>
+            <span class="align-middle">نوتیفیکیشن</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Navigation -->
+
+  <!-- Options -->
+  <div class="col-12 col-lg-8 pt-4 pt-lg-0">
+    <div class="tab-content p-0">
+      <!-- Shipping & delivery Tab -->
+      <div class="tab-pane fade show active" id="shipping_delivery" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-start">
+            <div class="card-title m-0">
+              <h5 class="m-0">مناطق حمل و نقل</h5>
+              <p class="text-muted mb-0"> محل های مجاز دریافت کالا و هزینه ارسال را تعیین کنید.</p>
+            </div>
+            <a href="javascript:void(0);">افزودن ناحیه</a>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="fi fi-ir fis rounded-circle fs-1"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <h6 class="mb-0">داخلی</h6>
+                  <p class="mb-0">ایران</p>
+                </div>
+              </div>
+              <div>
+                <a class="text-muted" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-3"></i>
+                </a>
+                <a class="text-muted" href="javascript:void(0);">
+                  <i class="ti ti-trash"></i>
+                </a>
+              </div>
+            </div>
+            <div class="card mb-3 shadow-none border">
+              <div class="table-responsive text-nowrap rounded pb-1">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>ویژگی</th>
+                    <th>شروط</th>
+                    <th>قیمت</th>
+                    <th class="text-end">عملیات</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>وزن</td>
+                    <td>5-10 کیلوگرم</td>
+                    <td>
+                      <bdi><svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>9</bdi>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-1"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-1"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>حجم</td>
+                    <td>12%</td>
+                    <td>
+                      <bdi><svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>25</bdi>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-2"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-2"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-transparent">
+                    <td>مالیات</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-2"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-2"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <button class="btn btn-label-primary mb-4">افزودن نرخ</button>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="me-2">
+                  <i class="ti ti-world ti-xl"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <h6 class="mb-0">بین المللی</h6>
+                  <p class="mb-0">ایالات متحده آمریکا</p>
+                </div>
+              </div>
+              <div>
+                <a class="text-muted" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-3"></i>
+                </a>
+                <a class="text-muted" href="javascript:void(0);">
+                  <i class="ti ti-trash"></i>
+                </a>
+              </div>
+            </div>
+            <div class="card mb-3 shadow-none border">
+              <div class="table-responsive text-nowrap rounded pb-1">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>ویژگی</th>
+                    <th>شروط</th>
+                    <th>قیمت</th>
+                    <th class="text-end">عملیات</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>وزن</td>
+                    <td>5-10 کیلوگرم</td>
+                    <td>
+                      <bdi><svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>9</bdi>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-1"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-1"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>حجم</td>
+                    <td>12%</td>
+                    <td>
+                      <bdi><svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>25</bdi>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-2"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-2"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-transparent">
+                    <td>مالیات</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td class="text-end">
+                      <div class="dropdown pe-3">
+                        <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                          <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-edit me-2"></i>
+                            ویرایش
+                          </a>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            <i class="ti ti-trash me-2"></i>
+                            حذف
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <button class="btn btn-label-primary">افزودن نرخ</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-3">
+          <button class="btn btn-label-secondary waves-effect" type="reset">صرف نظر</button>
+          <a class="btn btn-primary waves-effect waves-light" href="">اعمال تغییرات</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Options-->
+  </div>
+    <!-- /Options-->
+  </div>

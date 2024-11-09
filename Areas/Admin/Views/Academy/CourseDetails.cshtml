@@ -1,0 +1,324 @@
+@{
+  ViewData["Title"] = "آکادمی - جزئیات دوره";
+}
+
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/plyr/plyr.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/plyr/plyr.js"></script>
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/css/pages/app-academy-details.css" />
+}
+
+@section PageScripts {
+  <script src="~/js/app-academy-course-details.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="pt-3 mb-0">
+  <span class="text-muted fw-light">آکادمی /</span>
+  جزئیات دوره
+</h4>
+<div class="card g-3 mt-5">
+  <div class="card-body row g-3">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
+        <div class="me-1">
+          <h5 class="mb-1">جامع ترین دوره آموزش ui ux</h5>
+          <p class="mb-1">استاد
+            <span class="fw-medium"> پارسا پیروزفر</span>
+          </p>
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="badge bg-label-danger">UI/UX</span>
+          <i class="ti ti-share ti-sm mx-4"></i>
+          <i class="ti ti-bookmarks ti-sm"></i>
+        </div>
+      </div>
+      <div class="card academy-content shadow-none border">
+        <div class="p-2">
+          <div class="cursor-pointer">
+            <video class="w-100" controls id="plyr-video-player" playsinline
+              poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">
+              <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 class="mb-2">درباره دوره</h5>
+          <p class="mb-0 pt-1"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز
+            و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+          <hr class="my-4" />
+          <h5>جزئیات</h5>
+          <div class="d-flex flex-wrap">
+            <div class="me-5">
+              <p class="text-nowrap">
+                <i class="ti ti-checks ti-sm me-2 mt-n2"></i>
+                سطح مهارت: مبتدی
+              </p>
+              <p class="text-nowrap">
+                <i class="ti ti-user ti-sm me-2 mt-n2"></i>
+                شرکت کننده: 38,815
+              </p>
+              <p class="text-nowrap">
+                <i class="ti ti-flag ti-sm me-2 mt-n2"></i>
+                زبان ها: انگلیسی
+              </p>
+              <p class="text-nowrap">
+                <i class="ti ti-file ti-sm me-2 mt-n2"></i>
+                زیرنویس دارد: بله
+              </p>
+            </div>
+            <div>
+              <p class="text-nowrap">
+                <i class="ti ti-pencil ti-sm me-2 mt-n2"></i>
+                جلسات: 19
+              </p>
+              <p class="text-nowrap">
+                <i class="ti ti-clock ti-sm me-2 mt-n2"></i>
+                مدت دوره: 1.5
+              </p>
+            </div>
+          </div>
+          <hr class="mb-4 mt-2" />
+          <h5>توضیحات</h5>
+          <p class="mb-4"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
+            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
+            کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+          <p class="mb-4"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
+            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+          <p> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون
+            بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع
+            با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و
+            متخصصان را می طلبد</p>
+          <hr class="my-4" />
+          <h5>استاد</h5>
+          <div class="d-flex justify-content-start align-items-center user-name">
+            <div class="avatar-wrapper">
+              <div class="avatar me-2">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/11.png" />
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              <span class="fw-medium">پارسا پیروز فر</span>
+              <small class="text-muted">توسعه دهنده، طراح و متخصص فرانت</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="accordion stick-top accordion-bordered" id="courseContent">
+        <div class="accordion-item active mb-0">
+          <div class="accordion-header" id="headingOne">
+            <button aria-controls="chapterOne" aria-expanded="true" class="accordion-button bg-lighter rounded-0"
+              data-bs-target="#chapterOne" data-bs-toggle="collapse" type="button">
+              <span class="d-flex flex-column">
+                <span class="h5 mb-1">هفته اول – آنچه باید بدانید</span>
+                <span class="fw-normal text-body">
+                  <bdi>1 / 4</bdi>
+                  | 4.4 دقیقه
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="accordion-collapse collapse show" data-bs-parent="#courseContent" id="chapterOne">
+            <div class="accordion-body py-3 border-top">
+              <div class="form-check d-flex align-items-center mb-3">
+                <input checked="" class="form-check-input" id="defaultCheck1" type="checkbox" />
+                <label class="form-check-label ms-3" for="defaultCheck1">
+                  <span class="mb-0 h6">1. 5 قدم برای تبدیل شدن به طراح UX-UI</span>
+                  <span class="text-muted d-block">2.4 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input checked="" class="form-check-input" id="defaultCheck2" type="checkbox" />
+                <label class="form-check-label ms-3" for="defaultCheck2">
+                  <span class="mb-0 h6">2. سفر به دنیای طراحی محصولات دیجیتال</span>
+                  <span class="text-muted d-block">4.8 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defaultCheck3" type="checkbox" />
+                <label class="form-check-label ms-3" for="defaultCheck3">
+                  <span class="mb-0 h6">3. بوم مدل کسب و کار فارسی</span>
+                  <span class="text-muted d-block">5.9 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defaultCheck4" type="checkbox" />
+                <label class="form-check-label ms-3" for="defaultCheck4">
+                  <span class="mb-0 h6">4. ارتباط با مشتری و اجزای کلیدی
+                  </span>
+                  <span class="text-muted d-block">3.6 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input class="form-check-input" id="defaultCheck5" type="checkbox" />
+                <label class="form-check-label ms-3" for="defaultCheck5">
+                  <span class="mb-0 h6">5. پروسه ساخت یک محصول نرم افزاری</span>
+                  <span class="text-muted d-block">10.6 دقیقه</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mb-0">
+          <div class="accordion-header" id="headingTwo">
+            <button aria-controls="chapterTwo" aria-expanded="false"
+              class="bg-lighter rounded-0 accordion-button collapsed" data-bs-target="#chapterTwo"
+              data-bs-toggle="collapse" type="button">
+              <span class="d-flex flex-column">
+                <span class="h5 mb-1">هفته دوم – اصول طراحی تجربه کاربری UX</span>
+                <span class="fw-normal text-body">
+                  <bdi>2 / 4</bdi>
+                  | 4.4 دقیقه
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="accordion-collapse collapse" data-bs-parent="#courseContent" id="chapterTwo">
+            <div class="accordion-body py-3 border-top">
+              <div class="form-check d-flex align-items-center mb-3">
+                <input checked="" class="form-check-input" id="defCheck1" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck1">
+                  <span class="mb-0 h6">1. مفهوم دیزاین و طراحی</span>
+                  <span class="text-muted d-block">8:31 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck2" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck2">
+                  <span class="mb-0 h6">2. طراحی تعاملی و طراحی چرخشی</span>
+                  <span class="text-muted d-block">2 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck3" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck3">
+                  <span class="mb-0 h6">3. مفهوم کاربردپذیری</span>
+                  <span class="text-muted d-block">5.9 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input class="form-check-input" id="defCheck4" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck4">
+                  <span class="mb-0 h6">4. فیلد های کاری UX</span>
+                  <span class="text-muted d-block">3.6 دقیقه</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mb-0">
+          <div class="accordion-header" id="headingThree">
+            <button aria-controls="chapterThree" aria-expanded="false"
+              class="bg-lighter rounded-0 accordion-button collapsed" data-bs-target="#chapterThree"
+              data-bs-toggle="collapse" type="button">
+              <span class="d-flex flex-column">
+                <span class="h5 mb-1">هفته سوم – اصول طراحی رابط کاربری UI</span>
+                <span class="fw-normal text-body">
+                  <bdi>3 / 4</bdi>
+                  | 4.4 دقیقه
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="accordion-collapse collapse" data-bs-parent="#courseContent" id="chapterThree">
+            <div class="accordion-body py-3 border-top">
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-01" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-01">
+                  <span class="mb-0 h6">1. اینترکشن و میکرو اینترکشن</span>
+                  <span class="text-muted d-block">8:31 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-02" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-02">
+                  <span class="mb-0 h6">2. فلسفه و قوانین میکرواینترکشن</span>
+                  <span class="text-muted d-block">8 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-03" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-03">
+                  <span class="mb-0 h6">3. فیدبک و حالت / تمرین</span>
+                  <span class="text-muted d-block">2.9 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-04" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-04">
+                  <span class="mb-0 h6">4. کامپوننت و المان های طراحی</span>
+                  <span class="text-muted d-block">7.6 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-05" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-05">
+                  <span class="mb-0 h6">5. بررسی المان ها به صورت عملی</span>
+                  <span class="text-muted d-block">10 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input class="form-check-input" id="defCheck-06" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-06">
+                  <span class="mb-0 h6">6. معماری اطلاعات - گفتگو با ماشین</span>
+                  <span class="text-muted d-block">9.10 دقیقه</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mb-0">
+          <div class="accordion-header" id="headingFour">
+            <button aria-controls="chapterFour" aria-expanded="false"
+              class="bg-lighter rounded-0 accordion-button collapsed" data-bs-target="#chapterFour"
+              data-bs-toggle="collapse" type="button">
+              <span class="d-flex flex-column">
+                <span class="h5 mb-1">هفته چهارم : اصول گرافیک کاربردی</span>
+                <span class="fw-normal text-body">
+                  <bdi>4 / 4</bdi>
+                  | 4.4 دقیقه
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="accordion-collapse collapse" data-bs-parent="#courseContent" id="chapterFour">
+            <div class="accordion-body py-3 border-top">
+              <div class="form-check d-flex align-items-center mb-3">
+                <input checked="" class="form-check-input" id="defCheck-101" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-101">
+                  <span class="mb-0 h6">1. گرافیک چیست؟</span>
+                  <span class="text-muted d-block">10:0 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input checked="" class="form-check-input" id="defCheck-102" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-102">
+                  <span class="mb-0 h6">2. نماد شناسی و استوره شناسی</span>
+                  <span class="text-muted d-block">13:00 دقیقه</span>
+                </label>
+              </div>
+              <div class="form-check d-flex align-items-center mb-3">
+                <input class="form-check-input" id="defCheck-103" type="checkbox" />
+                <label class="form-check-label ms-3" for="defCheck-103">
+                  <span class="mb-0 h6">3. ترکیب بندی و سلسله مرتب بصری</span>
+                  <span class="text-muted d-block">15 دقیقه</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

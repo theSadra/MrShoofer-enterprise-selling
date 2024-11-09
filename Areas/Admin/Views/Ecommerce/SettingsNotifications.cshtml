@@ -1,0 +1,271 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - تنظیمات - نوتیفیکیشن";
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-settings.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">تجارت الکترونیک /</span>
+  تنظیمات فروشگاه
+</h4>
+
+<div class="row g-4">
+
+  <!-- Navigation -->
+  <div class="col-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-column mb-3 mb-md-0">
+      <ul class="nav nav-align-left nav-pills flex-column">
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsStoreDetails">
+            <i class="ti ti-building-store me-2"></i>
+            <span class="align-middle">جزئیات فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsPayments">
+            <i class="ti ti-credit-card me-2"></i>
+            <span class="align-middle">سیستم پرداخت</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsCheckout">
+            <i class="ti ti-shopping-cart me-2"></i>
+            <span class="align-middle">ثبت سفارش</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsShipping">
+            <i class="ti ti-discount-2 me-2"></i>
+            <span class="align-middle">ارسال و تحویل</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsLocations">
+            <i class="ti ti-map-pin me-2"></i>
+            <span class="align-middle">آدرس فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-2 active" href="javascript:void(0);">
+            <i class="ti ti-bell-ringing me-2"></i>
+            <span class="align-middle">نوتیفیکیشن</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Navigation -->
+
+  <!-- Options -->
+  <div class="col-12 col-lg-8 pt-4 pt-lg-0">
+    <div class="tab-content p-0">
+      <!-- Notification Tab -->
+      <div class="tab-pane fade show active" id="notifications" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-2">ارتباط با مشتری</h5>
+            <div class="card shadow-none mb-4 border">
+              <div class="table-responsive rounded">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th class="text-nowrap w-50">نوع</th>
+                    <th class="text-nowrap text-center w-25">ایمیل</th>
+                    <th class="text-nowrap text-center w-25">پیامک</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text-nowrap">ثبت نام مشتری جدید</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_cust_1" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_cust_2" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap">فراموشی رمز عبور</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_cust_4" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_cust_5" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-transparent">
+                    <td class="text-nowrap">دعوت کاربران</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_cust_7" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_cust_8" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <h5 class="card-title mb-2">سفارشات</h5>
+            <div class="card shadow-none mb-4 border">
+              <div class="table-responsive rounded">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th class="text-nowrap w-50">نوع</th>
+                    <th class="text-nowrap text-center w-25">ایمیل</th>
+                    <th class="text-nowrap text-center w-25">پیامک</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text-nowrap">سفارش خرید محصول</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_1" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_2" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap">لغو سفارشات</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_4" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_order_5" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap">درخواست بازپرداخت</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_order_7" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_8" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap">تایید سفارشات</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_9" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_order_10" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-transparent">
+                    <td class="text-nowrap">خطای پرداخت</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_order_11" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_order_12" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <h5 class="card-title mb-2">حمل و نقل</h5>
+            <div class="card shadow-none border">
+              <div class="table-responsive rounded">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th class="text-nowrap w-50">نوع</th>
+                    <th class="text-nowrap text-center w-25">ایمیل</th>
+                    <th class="text-nowrap text-center w-25">پیامک</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text-nowrap">اطلاع از بارگیری کالا</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_ship_1" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_ship_2" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap">به روزرسانی وضعیت</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_ship_3" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_ship_4" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-transparent">
+                    <td class="text-nowrap">تحویل کالا و بازخورد</td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" id="defaultCheck_ship_5" type="checkbox"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check d-flex justify-content-center">
+                        <input checked class="form-check-input" id="defaultCheck_ship_6" type="checkbox"/>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-3">
+          <button class="btn btn-label-secondary waves-effect" type="reset">صرف نظر</button>
+          <a class="btn btn-primary waves-effect waves-light" href="">اعمال تغییرات</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Options-->
+</div>

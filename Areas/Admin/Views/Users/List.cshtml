@@ -1,0 +1,208 @@
+@{
+  ViewData["Title"] = "لیست کاربران";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/app-user-list.js"></script>
+}
+
+@* ************** Content ************** *@
+<div class="row g-4 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between">
+          <div class="content-left"> <span>مجموع کاربران</span>
+            <div class="d-flex align-items-center my-2">
+              <h3 class="mb-0 me-2">21,459</h3>
+              <p class="text-success mb-0">
+                <bdi>(+29%)</bdi>
+              </p>
+            </div>
+            <p class="mb-0">آمار هفته قبل</p>
+          </div>
+          <div class="avatar"> <span class="avatar-initial rounded bg-label-primary"> <i class="ti ti-user ti-sm"></i> </span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between">
+          <div class="content-left"> <span>کاربران وفادار</span>
+            <div class="d-flex align-items-center my-2">
+              <h3 class="mb-0 me-2">4,567</h3>
+              <p class="text-success mb-0">
+                <bdi>(+18%)</bdi>
+              </p>
+            </div>
+            <p class="mb-0">آمار هفته قبل</p>
+          </div>
+          <div class="avatar"> <span class="avatar-initial rounded bg-label-danger"> <i class="ti ti-user-plus ti-sm"></i> </span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between">
+          <div class="content-left"> <span>کاربران فعال</span>
+            <div class="d-flex align-items-center my-2">
+              <h3 class="mb-0 me-2">19,860</h3>
+              <p class="text-danger mb-0">
+                <bdi>(-14%)</bdi>
+              </p>
+            </div>
+            <p class="mb-0">آمار هفته قبل</p>
+          </div>
+          <div class="avatar"> <span class="avatar-initial rounded bg-label-success"> <i class="ti ti-user-check ti-sm"></i> </span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between">
+          <div class="content-left"> <span>کاربران مسدود</span>
+            <div class="d-flex align-items-center my-2">
+              <h3 class="mb-0 me-2">237</h3>
+              <p class="text-success mb-0">
+                <bdi>(+42%)</bdi>
+              </p>
+            </div>
+            <p class="mb-0">آمار هفته قبل</p>
+          </div>
+          <div class="avatar"> <span class="avatar-initial rounded bg-label-warning"> <i class="ti ti-user-exclamation ti-sm"></i> </span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Users List Table -->
+<div class="card">
+  <div class="card-header border-bottom">
+    <h5 class="card-title mb-3">فیلتر جستجو</h5>
+    <div class="d-flex justify-content-between align-items-center row pb-2 gap-3 gap-md-0 mt-3">
+      <div class="col-md-4 user_role"></div>
+      <div class="col-md-4 user_plan"></div>
+      <div class="col-md-4 user_status"></div>
+    </div>
+  </div>
+  <div class="card-datatable table-responsive">
+    <table class="datatables-users table">
+      <thead class="border-top">
+      <tr>
+        <th></th>
+        <th>کاربر</th>
+        <th>نقش</th>
+        <th>واحد</th>
+        <th>روش پرداخت</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+  <!-- Offcanvas to add new user -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+    <div class="offcanvas-header">
+      <h5 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن کاربر</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="بستن"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
+      <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+        <div class="mb-3">
+          <label class="form-label" for="add-user-fullname">نام و نام خانوادگی</label>
+          <input type="text" class="form-control" id="add-user-fullname" placeholder="نـوید" name="userFullname"
+                 aria-label="نـوید" /> </div>
+        <div class="mb-3">
+          <label class="form-label" for="add-user-email">ایمیل</label>
+          <input type="text" id="add-user-email" class="form-control" placeholder="john.doe@example.com" aria-label="john.doe@example.com"
+                 name="userEmail" /> </div>
+        <div class="mb-3">
+          <label class="form-label" for="add-user-contact">شماره موبایل</label>
+          <input type="text" id="add-user-contact" class="form-control phone-mask bdi" placeholder="+1 (609) 988-44-11"
+                 aria-label="john.doe@example.com" name="userContact" /> </div>
+        <div class="mb-3">
+          <label class="form-label" for="add-user-company">شرکت</label>
+          <input type="text" id="add-user-company" class="form-control" placeholder="توسعه دهنده وب" aria-label="jdoe1"
+                 name="companyName" /> </div>
+        <div class="mb-3">
+          <label class="form-label" for="country">کشور</label>
+          <select id="country" class="select2 form-select">
+            <option value="">انتخاب کنید</option>
+            <option value="Australia">استرالیا</option>
+            <option value="Bangladesh">بنگلادش</option>
+            <option value="Belarus">بلاروس</option>
+            <option value="Brazil">برزیل</option>
+            <option value="Canada">کانادا</option>
+            <option value="China">چین</option>
+            <option value="France">فرانسه</option>
+            <option value="Germany">آلمان</option>
+            <option value="India">هندوستان</option>
+            <option value="Indonesia">اندونزی</option>
+            <option value="Israel">اسرائيل</option>
+            <option value="Italy">ایتالیا</option>
+            <option value="Japan">ژاپن</option>
+            <option value="Korea">جمهوری کره</option>
+            <option value="Mexico">مکزیک</option>
+            <option value="Philippines">فیلیپین</option>
+            <option value="Russia">فدراسیون روسیه</option>
+            <option value="South Africa">آفریقای جنوبی</option>
+            <option value="Thailand">تایلند</option>
+            <option value="Turkey">ترکیه</option>
+            <option value="Ukraine">اوکراین</option>
+            <option value="United Arab Emirates">امارات متحده عربی</option>
+            <option value="United Kingdom">انگلستان</option>
+            <option value="United States">ایالات متحده</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="user-role">نقش کاربر</label>
+          <select id="user-role" class="form-select">
+            <option value="subscriber">کاربر</option>
+            <option value="editor">ویرایشگر</option>
+            <option value="maintainer">نگهدارنده</option>
+            <option value="author">نویسنده</option>
+            <option value="admin">مدیر</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="user-plan">انتخاب اشتراک</label>
+          <select id="user-plan" class="form-select">
+            <option value="basic">پایه</option>
+            <option value="enterprise">شرکت، پروژه</option>
+            <option value="company">شرکت</option>
+            <option value="team">تیم</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ارسال</button>
+        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">لغو</button>
+      </form>
+    </div>
+  </div>
+</div>

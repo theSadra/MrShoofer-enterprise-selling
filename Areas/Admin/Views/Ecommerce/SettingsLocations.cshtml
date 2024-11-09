@@ -1,0 +1,158 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - تنظیمات - آدرس فروشگاه";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-settings.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">تجارت الکترونیک /</span> تنظیمات فروشگاه</h4>
+
+<div class="row g-4">
+
+  <!-- Navigation -->
+  <div class="col-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-column mb-3 mb-md-0">
+      <ul class="nav nav-align-left nav-pills flex-column">
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsStoreDetails">
+            <i class="ti ti-building-store me-2"></i>
+            <span class="align-middle">جزئیات فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsPayments">
+            <i class="ti ti-credit-card me-2"></i>
+            <span class="align-middle">سیستم پرداخت</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsCheckout">
+            <i class="ti ti-shopping-cart me-2"></i>
+            <span class="align-middle">ثبت سفارش</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsShipping">
+            <i class="ti ti-discount-2 me-2"></i>
+            <span class="align-middle">ارسال و تحویل</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2 active" href="javascript:void(0);">
+            <i class="ti ti-map-pin me-2"></i>
+            <span class="align-middle">آدرس فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-2" href="SettingsNotifications">
+            <i class="ti ti-bell-ringing me-2"></i>
+            <span class="align-middle">نوتیفیکیشن</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Navigation -->
+
+  <!-- Options -->
+  <div class="col-12 col-lg-8 pt-4 pt-lg-0">
+    <div class="tab-content p-0">
+      <!-- Locations Tab -->
+      <div class="tab-pane fade show active" id="locations" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">مکان فروشگاه</h5> </div>
+          <div class="card-body">
+            <div class="col-12 mb-3">
+              <label for="locationName" class="form-label mb-0">آدرس مختصر</label>
+              <input class="form-control" type="text" name="locationName" id="locationName" placeholder="محل فروشگاه"
+              /> </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="" id="def_location" checked disabled />
+              <label class="form-check-label" for="def_location"> سفارشات آنلاین را از این مکان انجام دهید </label>
+            </div>
+            <div class="alert d-flex align-items-center bg-label-info mb-0" role="alert"> <span class="alert-icon text-info me-2 bg-label-light px-1 pb-1 rounded-2"> <i class="ti ti-info-circle ti-xs"></i> </span>                                                    آدرس فروشگاه که مشتریان نیز می توانند برای ارتباطات و .. به آن مراجعه کنند. </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">آدرس</h5> </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label mb-0" for="country_region">کشور/منطقه</label>
+                <select id="country_region" class="select2 form-select" data-placeholder="ایران">
+                  <option value="">ایالات متحده</option>
+                  <option value="Australia">استرالیا</option>
+                  <option value="Bangladesh">بنگلادش</option>
+                  <option value="Belarus">بلاروس</option>
+                  <option value="Brazil">برزیل</option>
+                  <option value="Canada">کانادا</option>
+                  <option value="China">چین</option>
+                  <option value="France">فرانسه</option>
+                  <option value="Germany">آلمان</option>
+                  <option value="India">هندوستان</option>
+                  <option value="Indonesia">اندونزی</option>
+                  <option value="Israel">اسرائيل</option>
+                  <option value="Italy">ایتالیا</option>
+                  <option value="Japan">ژاپن</option>
+                  <option value="Korea">جمهوری کره</option>
+                  <option value="Mexico">مکزیک</option>
+                  <option value="Philippines">فیلیپین</option>
+                  <option value="Russia">فدراسیون روسیه</option>
+                  <option value="South Africa">آفریقای جنوبی</option>
+                  <option value="Thailand">تایلند</option>
+                  <option value="Turkey">ترکیه</option>
+                  <option value="Ukraine">اوکراین</option>
+                  <option value="United Arab Emirates">امارات متحده عربی</option>
+                  <option value="United Kingdom">انگلستان</option>
+                  <option value="United States">ایالات متحده</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_address">آدرس</label>
+                <input type="text" id="loc_address" class="form-control" placeholder="نشانی" /> </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_apa_suite">نوع ساختمان</label>
+                <input type="text" id="loc_apa_suite" class="form-control" placeholder="آپارتمان، سوئیت و غیره"
+                /> </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_phone">تلفن</label>
+                <input type="tel" class="form-control phone-mask bdi" id="loc_phone" placeholder="تلفن" name="loc_phone"
+                       aria-label="loc_phone" /> </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_city">شهر</label>
+                <input type="text" id="loc_city" class="form-control" placeholder="شهر" /> </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_state">استان</label>
+                <input type="text" id="loc_state" class="form-control" placeholder="استان" /> </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label mb-0" for="loc_pincode">کد پستی</label>
+                <input type="number" id="loc_pincode" class="form-control" placeholder="کد پستی" min="0"
+                       max="999999" /> </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-3">
+          <button type="reset" class="btn btn-label-secondary">صرف نظر</button>
+          <a class="btn btn-primary" href="SettingsNotifications">اعمال تغییرات</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Options-->
+  </div>
+</div>

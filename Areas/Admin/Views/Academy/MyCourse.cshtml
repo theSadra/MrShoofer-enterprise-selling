@@ -1,0 +1,465 @@
+@{
+  ViewData["Title"] = "آکادمی - دوره های من";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="~/vendor/libs/plyr/plyr.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+  <script src="~/vendor/libs/plyr/plyr.js"></script>
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/css/pages/app-academy.css" />
+}
+
+@section PageScripts {
+  <script src="~/js/app-academy-course.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">آکادمی/</span>
+  دوره ها
+</h4>
+
+<div class="app-academy">
+  <div class="card p-0 mb-4">
+    <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
+      <div class="app-academy-md-25 card-body py-0">
+        <img src="~/img/illustrations/bulb-light.png"
+          class="img-fluid app-academy-img-height scaleX-n1-rtl" alt="Bulb in hand"
+          data-app-light-img="illustrations/bulb-light.png" data-app-dark-img="illustrations/bulb-dark.png"
+          height="90" />
+      </div>
+      <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
+        <h3 class="card-title mb-4 lh-sm px-md-5 lh-lg">
+          تحصیلات، استعدادها و فرصت های شغلی.
+          <span class="text-primary fw-medium text-nowrap">همه در یک سایت</span>
+          .
+        </h3>
+        <p class="mb-3"> مهارت های خود را با معتبرترین دوره های آنلاین و گواهینامه های بازاریابی، فناوری اطلاعات، برنامه
+          نویسی و علم داده افزایش دهید.
+        </p>
+        <div class="d-flex align-items-center justify-content-between app-academy-md-80">
+          <input type="search" placeholder="جستجو دوره..." class="form-control me-2" />
+          <button type="submit" class="btn btn-primary btn-icon"><i class="ti ti-search"></i></button>
+        </div>
+      </div>
+      <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
+        <img src="~/img/illustrations/pencil-rocket.png" alt="pencil rocket" height="188" class="scaleX-n1-rtl" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header d-flex flex-wrap justify-content-between gap-3">
+      <div class="card-title mb-0 me-1">
+        <h5 class="mb-1">دوره های من</h5>
+        <p class="text-muted mb-0">در 6 دوره شرکت کرده اید</p>
+      </div>
+      <div class="d-flex justify-content-md-end align-items-center gap-3 flex-wrap">
+        <select class="select2 form-select" data-placeholder="دسته بندی" id="select2_course_select">
+          <option value="">همه دوره ها</option>
+          <option value="ui/ux">UI/UX</option>
+          <option value="seo">سئو</option>
+          <option value="web">وب</option>
+          <option value="music">موسیقی</option>
+          <option value="painting">نقاشی</option>
+        </select>
+        <label class="switch">
+          <input class="switch-input" type="checkbox" />
+          <span class="switch-toggle-slider">
+            <span class="switch-on"></span>
+            <span class="switch-off"></span>
+          </span>
+          <span class="switch-label text-nowrap mb-0">مخفی کردن</span>
+        </label>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row gy-4 mb-4">
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 1" class="img-fluid" src="~/img/pages/app-academy-tutor-1.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-label-primary">وب</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  4.4
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted">(1.23k)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">
+                دوره تدوین فیلم با پریمیر
+              </a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center">
+                <i class="ti ti-clock me-2 mt-n1"></i>
+                30 دقیقه
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-75"
+                  role="progressbar"></div>
+              </div>
+              <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                <a class="app-academy-md-50 btn btn-label-secondary me-md-2 d-flex align-items-center"
+                  href="CourseDetails">
+                  <i class="ti ti-rotate-clockwise-2 align-middle scaleX-n1-rtl me-2 mt-n1 ti-sm"></i>
+                  <span>شروع مجدد</span>
+                </a>
+                <a class="app-academy-md-50 btn btn-label-primary d-flex align-items-center" href="CourseDetails">
+                  <span class="me-2">ادامه</span>
+                  <i class="ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 2" class="img-fluid" src="~/img/pages/app-academy-tutor-2.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3 pe-xl-3 pe-xxl-0">
+                <span class="badge bg-label-danger">UI/UX</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  4.2
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted"> (424)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">
+                دوره مبانی برنامه نویسی
+              </a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center">
+                <i class="ti ti-clock me-2 mt-n1"></i>
+                16 ساعت
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-25"
+                  role="progressbar"></div>
+              </div>
+              <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                <a class="app-academy-md-50 btn btn-label-secondary me-md-2 d-flex align-items-center"
+                  href="CourseDetails">
+                  <i class="ti ti-rotate-clockwise-2 align-middle scaleX-n1-rtl me-2 mt-n1 ti-sm"></i>
+                  <span>شروع مجدد</span>
+                </a>
+                <a class="app-academy-md-50 btn btn-label-primary d-flex align-items-center" href="CourseDetails">
+                  <span class="me-2">ادامه</span>
+                  <i class="ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 3" class="img-fluid" src="~/img/pages/app-academy-tutor-3.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-label-success">سئو</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  5
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted"> (12)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">
+                دوره عکاسی حرفه‌ای با موبایل
+              </a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center">
+                <i class="ti ti-clock me-2 mt-n1"></i>
+                7 ساعت
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-50"
+                  role="progressbar"></div>
+              </div>
+              <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                <a class="app-academy-md-50 btn btn-label-secondary me-md-2 d-flex align-items-center"
+                  href="CourseDetails">
+                  <i class="ti ti-rotate-clockwise-2 align-middle scaleX-n1-rtl me-2 mt-n1 ti-sm"></i>
+                  <span>شروع مجدد</span>
+                </a>
+                <a class="app-academy-md-50 btn btn-label-primary d-flex align-items-center" href="CourseDetails">
+                  <span class="me-2">ادامه</span>
+                  <i class="ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 4" class="img-fluid" src="~/img/pages/app-academy-tutor-4.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-label-info">موسیقی</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  3.8
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted"> (634)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">
+                طراحی حرفه هویت بصری برند
+              </a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center">
+                <i class="ti ti-clock me-2 mt-n1"></i>
+                30 دقیقه
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-75"
+                  role="progressbar"></div>
+              </div>
+              <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                <a class="app-academy-md-50 btn btn-label-secondary me-md-2 d-flex align-items-center"
+                  href="CourseDetails">
+                  <i class="ti ti-rotate-clockwise-2 align-middle scaleX-n1-rtl me-2 mt-n1 ti-sm"></i>
+                  <span>شروع مجدد</span>
+                </a>
+                <a class="app-academy-md-50 btn btn-label-primary d-flex align-items-center" href="CourseDetails">
+                  <span class="me-2">ادامه</span>
+                  <i class="ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 5" class="img-fluid" src="~/img/pages/app-academy-tutor-5.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-label-warning">نقاشی</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  4.7
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted"> (34)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">
+                اولین موسیقی کلاسیک شما
+              </a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center text-success">
+                <i class="ti ti-checks me-2 mt-n1"></i>
+                تکمیل شد
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-100"
+                  role="progressbar"></div>
+              </div>
+              <a class="w-100 btn btn-label-primary" href="CourseDetails">
+                <i class="ti ti-rotate-clockwise-2 me-2 mt-n1 scaleX-n1-rtl"></i>
+                شروع مجدد
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card p-2 h-100 shadow-none border">
+            <div class="rounded-2 text-center mb-3">
+              <a href="CourseDetails">
+                <img alt="تصویر معلم 6" class="img-fluid" src="~/img/pages/app-academy-tutor-6.png" />
+              </a>
+            </div>
+            <div class="card-body p-3 pt-2">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-label-danger">UI/UX</span>
+                <h6 class="d-flex align-items-center justify-content-center gap-1 mb-0">
+                  3.6
+                  <span class="text-warning">
+                    <i class="ti ti-star-filled me-1 mt-n1"></i>
+                  </span>
+                  <span class="text-muted"> (2.5k)</span>
+                </h6>
+              </div>
+              <a class="h5" href="CourseDetails">طراحی رابط کاربری</a>
+              <p class="mt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                است .</p>
+              <p class="d-flex align-items-center">
+                <i class="ti ti-clock me-2 mt-n1"></i>
+                16 ساعت
+              </p>
+              <div class="progress mb-4" style="height: 8px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar w-25"
+                  role="progressbar"></div>
+              </div>
+              <div class="d-flex flex-column flex-md-row gap-2 text-nowrap">
+                <a class="app-academy-md-50 btn btn-label-secondary me-md-2 d-flex align-items-center"
+                  href="CourseDetails">
+                  <i class="ti ti-rotate-clockwise-2 align-middle scaleX-n1-rtl me-2 mt-n1 ti-sm"></i>
+                  <span>شروع مجدد</span>
+                </a>
+                <a class="app-academy-md-50 btn btn-label-primary d-flex align-items-center" href="CourseDetails">
+                  <span class="me-2">ادامه</span>
+                  <i class="ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav aria-label="پیمایش صفحه" class="d-flex align-items-center justify-content-center">
+        <ul class="pagination">
+          <li class="page-item prev">
+            <a class="page-link" href="javascript:void(0);">
+              <i class="ti ti-chevron-left ti-xs scaleX-n1-rtl"></i>
+            </a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" href="javascript:void(0);">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);">4</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);">5</a>
+          </li>
+          <li class="page-item next">
+            <a class="page-link" href="javascript:void(0);">
+              <i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="row gy-4 mb-4">
+    <div class="col-lg-6">
+      <div class="card bg-label-primary h-100">
+        <div class="card-body d-flex justify-content-between flex-wrap-reverse">
+          <div
+            class="mb-0 w-100 app-academy-sm-60 d-flex flex-column justify-content-between text-center text-sm-start">
+            <div class="card-title">
+              <h4 class="text-primary mb-2">کسب مدرک معتبر</h4>
+              <p class="text-body w-sm-80 app-academy-xl-100"> گواهینامه حرفه ای مناسب را برای خود دریافت کنید.</p>
+            </div>
+            <div class="mb-0">
+              <button class="btn btn-primary">مشاهده دوره‌ها</button>
+            </div>
+          </div>
+          <div
+            class="w-100 app-academy-sm-40 d-flex justify-content-center justify-content-sm-end h-px-150 mb-3 mb-sm-0">
+            <img alt="تصویر پسر" class="img-fluid scaleX-n1-rtl" src="~/img/illustrations/boy-app-academy.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card bg-label-danger h-100">
+        <div class="card-body d-flex justify-content-between flex-wrap-reverse">
+          <div
+            class="mb-0 w-100 app-academy-sm-60 d-flex flex-column justify-content-between text-center text-sm-start">
+            <div class="card-title">
+              <h4 class="text-danger mb-2">بهترین اساتید ایران</h4>
+              <p class="text-body app-academy-sm-60 app-academy-xl-100"> اکنون در محبوب ترین و بهترین دوره ها ثبت نام
+                کنید.</p>
+            </div>
+            <div class="mb-0">
+              <button class="btn btn-danger">مشاهده اساتید</button>
+            </div>
+          </div>
+          <div
+            class="w-100 app-academy-sm-40 d-flex justify-content-center justify-content-sm-end h-px-150 mb-3 mb-sm-0">
+            <img alt="تصویر دختر" class="img-fluid scaleX-n1-rtl" src="~/img/illustrations/girl-app-academy.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body row gy-4">
+      <div class="col-sm-12 col-lg-4 text-center pt-md-5 px-3">
+        <span class="badge bg-label-primary p-2 mb-3">
+          <i class="ti ti-gift ti-lg"></i>
+        </span>
+        <h3 class="card-title mb-4">دوره های برتر امروز</h3>
+        <p class="card-text mb-4"> ما 284 دوره آنلاین رایگان را از آموزگاران و شرکت‌های برتر ارائه می‌دهیم تا به شما در
+          شروع یا پیشرفت مهارت‌های شغلی خود کمک کنید. امروز به صورت رایگان و سریع آنلاین بیاموزید!</p>
+        <button class="btn btn-primary">مشاهده دوره‌ها</button>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100 border shadow-none">
+          <div class="p-2 pb-0">
+            <video controls id="guitar-video-player" playsinline
+              poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">
+              <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">اولین موسیقی کلاسیک شما</h5>
+            <p class="card-text"> مانند هر حوزه هنری دیگری، آواز خواندن کاملاً به خودآموزی کمک می کند.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100 border shadow-none">
+          <div class="p-2 pb-0">
+            <video controls id="guitar-video-player-2" playsinline
+              poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">
+              <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">گیتار برای مبتدیان</h5>
+            <p class="card-text"> گیتار آکوستیک فندر بهترین انتخاب برای افراد مبتدی و حرفه ای است که صدایی عالی ارائه می
+              دهد.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

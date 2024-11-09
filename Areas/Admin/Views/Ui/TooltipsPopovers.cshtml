@@ -1,0 +1,99 @@
+@{
+  ViewData["Title"] = "رابط کاربری - تولتیپ و پاپ‌آپ راهنما";
+}
+@section PageScripts {
+<script src="~/js/ui-popover.js"></script>
+}
+@* ************** Content ************** *@
+    <h4 class="py-3 mb-4">
+      <span class="text-muted fw-light">امکانات /</span>
+      تولتیپ و پاپ‌آپ راهنما
+    </h4>
+    <!-- Tooltips -->
+    <div class="card mb-4">
+      <h5 class="card-header">تولتیپ ها</h5>
+      <div class="card-body">
+        <div class="text-light small fw-medium">موقعیت نمایش</div>
+        <div class="row demo-vertical-spacing">
+          <div class="col">
+            <button class="btn btn-primary waves-effect waves-light" data-bs-original-title="تولتیپ در چپ" data-bs-placement="right" data-bs-toggle="tooltip" type="button">
+              چپ
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary waves-effect waves-light" data-bs-original-title="تولتیپ در بالا" data-bs-placement="top" data-bs-toggle="tooltip" type="button">
+              بالا
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary waves-effect waves-light" data-bs-original-title="تولتیپ در پایین" data-bs-placement="bottom" data-bs-toggle="tooltip" type="button">
+              پایین
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary waves-effect waves-light" data-bs-original-title="تولتیپ در راست" data-bs-placement="left" data-bs-toggle="tooltip" type="button">
+              راست
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr class="m-0">
+      <div class="card-body">
+        <div class="text-light small fw-medium">رنگ ها</div>
+        <div class="demo-inline-spacing">
+          <button class="btn btn-primary waves-effect waves-light" data-bs-custom-class="tooltip-primary" data-bs-original-title="تولتیپ اصلی" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> اصلی</button>
+          <button class="btn btn-secondary waves-effect waves-light" data-bs-custom-class="tooltip-secondary" data-bs-original-title="تولتیپ فرعی" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> فرعی</button>
+          <button class="btn btn-success waves-effect waves-light" data-bs-custom-class="tooltip-success" data-bs-original-title="تولتیپ موفق" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> موفق</button>
+          <button class="btn btn-danger waves-effect waves-light" data-bs-custom-class="tooltip-danger" data-bs-original-title="تولتیپ اخطار" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> اخطار</button>
+          <button class="btn btn-warning waves-effect waves-light" data-bs-custom-class="tooltip-warning" data-bs-original-title="تولتیپ هشدار" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> هشدار</button>
+          <button class="btn btn-info waves-effect waves-light" data-bs-custom-class="tooltip-info" data-bs-original-title="تولتیپ راهنما" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> راهنما</button>
+          <button class="btn btn-dark waves-effect waves-light" data-bs-custom-class="tooltip-dark" data-bs-original-title="تولتیپ دارک" data-bs-placement="top" data-bs-toggle="tooltip" type="button"> دارک</button>
+        </div>
+      </div>
+    </div>
+    <!--/ Tooltips -->
+    <!-- Popovers -->
+    <div class="card">
+      <h5 class="card-header">پاپ‌آپ راهنما (Popovers)</h5>
+      <div class="card-body">
+        <div class="text-light small fw-medium">موقعیت نمایش</div>
+        <div class="row demo-vertical-spacing">
+          <div class="col">
+            <button class="btn btn-primary text-nowrap waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="left" data-bs-toggle="popover" type="button">
+              نمایش در راست
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary text-nowrap waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="top" data-bs-toggle="popover" type="button">
+              نمایش در بالا
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary text-nowrap waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="bottom" data-bs-toggle="popover" type="button">
+              نمایش در پایین
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary text-nowrap waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="right" data-bs-toggle="popover" type="button">
+              نمایش در چپ
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr class="m-0">
+      <div class="card-body">
+        <div class="text-light small fw-medium">رنگ ها</div>
+        <div class="demo-inline-spacing">
+          <button class="btn btn-primary waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-primary" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="right" data-bs-toggle="popover" type="button">
+            اصلی
+          </button>
+          <button class="btn btn-secondary waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-secondary" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="right" data-bs-toggle="popover" type="button"> فرعی</button>
+          <button class="btn btn-success waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-success" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="top" data-bs-toggle="popover" type="button"> موفقیت</button>
+          <button class="btn btn-danger waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-danger" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="top" data-bs-toggle="popover" type="button"> اخطار</button>
+          <button class="btn btn-warning waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-warning" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="left" data-bs-toggle="popover" type="button"> هشدار</button>
+          <button class="btn btn-info waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-info" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="bottom" data-bs-toggle="popover" type="button"> راهنما</button>
+          <button class="btn btn-dark waves-effect waves-light" data-bs-content="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ." data-bs-custom-class="popover-dark" data-bs-original-title="عنوان پاپ‌آور" data-bs-placement="top" data-bs-toggle="popover" type="button"> دارک</button>
+        </div>
+      </div>
+    </div>
+    <!--/ Popovers -->

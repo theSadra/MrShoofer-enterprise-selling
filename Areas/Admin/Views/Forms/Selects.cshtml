@@ -1,0 +1,422 @@
+@{
+  ViewData["Title"] = "فرم ها - انتخابگرها و برچسب‌ها";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="~/vendor/libs/typeahead-js/typeahead.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/tagify/tagify.js"></script>
+<script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+<script src="~/vendor/libs/typeahead-js/typeahead.js"></script>
+<script src="~/vendor/libs/bloodhound/bloodhound.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/forms-selects.js"></script>
+<script src="~/js/forms-tagify.js"></script>
+<script src="~/js/forms-typeahead.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  انتخابگرها و برچسب‌ها
+</h4>
+<div class="row">
+  <!-- Select2 -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">انتخابگرهای select2</h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Basic -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Basic">پایه</label>
+            <select class="select2 form-select form-select-lg" data-allow-clear="true" id="select2Basic">
+              <option label="اذربایجان شرقی" value="2">اذربایجان شرقی</option>
+              <option label="اذربایجان غربی" value="3">اذربایجان غربی</option>
+              <option label="زنجان" value="4">زنجان</option>
+              <option label="خراسان" value="5">خراسان</option>
+              <option label="اردبیل" value="6">اردبیل</option>
+              <option label="اصفهان" value="7">اصفهان</option>
+              <option label="بوشهر" value="8">بوشهر</option>
+              <option label="تهران" value="9">تهران</option>
+              <option label="قزوین" value="10">قزوین</option>
+              <option label="قم" value="11">قم</option>
+              <option label="چهارمحال وبختیاری" value="12">چهارمحال وبختیاری</option>
+              <option label="کهگیلویه وبویراحمد" value="13">کهگیلویه وبویراحمد</option>
+              <option label="خوزستان" value="15">خوزستان</option>
+              <option label="سمنان" value="16">سمنان</option>
+              <option label="سیستان وبلوچستان" value="17">سیستان وبلوچستان</option>
+              <option label="فارس" value="18">فارس</option>
+              <option label="کردستان" value="19">کردستان</option>
+              <option label="کرمان" value="20">کرمان</option>
+              <option label="کرمانشاه" value="21">کرمانشاه</option>
+              <option label="هرمزگان" value="22">هرمزگان</option>
+              <option label="گیلان" value="23">گیلان</option>
+              <option label="لرستان" value="24">لرستان</option>
+              <option label="مازندران" value="25">مازندران</option>
+              <option label="گلستان" value="26">گلستان</option>
+              <option label="مرکزی" value="27">مرکزی</option>
+              <option label="همدان" value="28">همدان</option>
+              <option label="یزد" value="29">یزد</option>
+              <option label="ایلام" value="30">ایلام</option>
+            </select>
+          </div>
+          <!-- Multiple -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Multiple">چندگانه</label>
+            <select class="select2 form-select" id="select2Multiple" multiple>
+              <optgroup label="تهران">
+                <option value="AK">تهران</option>
+                <option value="HI">دماوند</option>
+                <option value="HI">ری</option>
+              </optgroup>
+              <optgroup label="اصفهان">
+                <option value="CA">کاشان</option>
+                <option value="NV">نطنز</option>
+                <option value="OR">شهرضا</option>
+              </optgroup>
+              <optgroup label="مازندران">
+                <option value="AZ">ساری</option>
+                <option selected value="CO">آمل</option>
+                <option value="ID">بابل</option>
+                <option value="MT">بابلسر</option>
+              </optgroup>
+            </select>
+          </div>
+          <!-- Disabled -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Disabled">غیرفعال</label>
+            <select class="select2 form-select" disabled id="select2Disabled">
+              <option value="1">گزینه 1</option>
+              <option selected value="2">گزینه 2</option>
+              <option value="3">گزینه 3</option>
+              <option value="4">گزینه 4</option>
+            </select>
+          </div>
+          <!-- Icons -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Icons">نمادها</label>
+            <select class="select2-icons form-select" id="select2Icons">
+              <optgroup label="خدمات">
+                <option data-icon="ti ti-brand-bootstrap" selected value="Bootstrap5"> بوت استرپ 5</option>
+                <option data-icon="ti ti-brand-codepen" value="codepen">OpenSource</option>
+                <option data-icon="ti ti-brand-php" value="php">PHP</option>
+                <option data-icon="ti ti-brand-css3" value="pinterest2">CSS3</option>
+                <option data-icon="ti ti-brand-html5" value="html5">HTML5</option>
+              </optgroup>
+              <optgroup label="انواع فایل">
+                <option data-icon="ti ti-file-description" value="pdf">PDF</option>
+                <option data-icon="ti ti-file-description" value="word">WORD</option>
+                <option data-icon="ti ti-brand-javascript" value="js">JavaScript</option>
+                <option data-icon="ti ti-brand-facebook" value="facebook">فیس بوک</option>
+              </optgroup>
+              <optgroup label="مرورگرها">
+                <option data-icon="ti ti-brand-chrome" value="chrome">کروم</option>
+                <option data-icon="ti ti-brand-firefox" value="firefox">Firefox</option>
+                <option data-icon="ti ti-brand-edge" value="safari">Edge</option>
+                <option data-icon="ti ti-brand-opera" value="opera">اپرا</option>
+                <option data-icon="ti ti-brand-ubuntu" value="Ubuntu">اوبونتو</option>
+              </optgroup>
+            </select>
+          </div>
+          <!-- Colors -->
+          <!-- Primary -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Primary">حالت اصلی</label>
+            <div class="select2-primary">
+              <select class="select2 form-select" id="select2Primary" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+          <!-- Success -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Success">حالت موفق</label>
+            <div class="select2-success">
+              <select class="select2 form-select" id="select2Success" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+          <!-- Info -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Info">حالت اطلاع</label>
+            <div class="select2-info">
+              <select class="select2 form-select" id="select2Info" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+          <!-- Warning -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="select2Warning">حالت هشدار</label>
+            <div class="select2-warning">
+              <select class="select2 form-select" id="select2Warning" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+          <!-- Danger -->
+          <div class="col-md-6 mb-4 mb-md-0">
+            <label class="form-label" for="select2Danger">حالت خطا</label>
+            <div class="select2-danger">
+              <select class="select2 form-select" id="select2Danger" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+          <!-- Dark -->
+          <div class="col-md-6">
+            <label class="form-label" for="select2Dark">حالت شب</label>
+            <div class="select2-dark">
+              <select class="select2 form-select" id="select2Dark" multiple>
+                <option selected value="1">گزینه 1</option>
+                <option selected value="2">گزینه 2</option>
+                <option value="3">گزینه 3</option>
+                <option value="4">گزینه 4</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Select2 -->
+  <!-- Tagify -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">برچسب‌های Tagify</h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Basic -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TagifyBasic">پایه</label>
+            <input class="form-control" id="TagifyBasic" name="TagifyBasic" value="برچسب 1, برچسب 2, برچسب 3"/>
+          </div>
+          <!-- Readonly Mode -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TagifyReadonly">غیرقابل تغییر</label>
+            <input class="form-control readonlyMix" id="TagifyReadonly" name="TagifyReadonly" readonly value='[{"value" : "برچسب ۱","readonly" : true, "title" : "Non-editable Read-only tag"},{"value" : "برچسب ۲","title" : "Editable read-only tag"},{"value" : "برچسب ۳","readonly" : true,"title" : "Another readonly tag"}]'/>
+          </div>
+          <!-- Custom Suggestions: Inline -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TagifyCustomInlineSuggestion">پیشنهادات تک خطی سفارشی</label>
+            <input class="form-control" id="TagifyCustomInlineSuggestion" name="TagifyCustomInlineSuggestion" placeholder="فناوری ها را انتخاب کنید" value="css, html, javascript"/>
+          </div>
+          <!-- Custom Suggestions: List -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TagifyCustomListSuggestion">پیشنهادات لیست سفارشی</label>
+            <input class="form-control" id="TagifyCustomListSuggestion" name="TagifyCustomListSuggestion" placeholder="فناوری ها را انتخاب کنید" value="css, html, php"/>
+          </div>
+          <!-- Users List -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TagifyUserList">لیست کاربران</label>
+            <input class="form-control" id="TagifyUserList" name="TagifyUserList" value="abatisse2@nih.gov, Justinian Hattersley"/>
+          </div>
+          <!-- Email -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label d-block" for="TagifyEmailList">لیست ایمیل</label>
+            <input class="tagify-email-list" id="TagifyEmailList" value="some56.name@website.com"/>
+            <button class="btn btn-sm rounded-pill btn-icon btn-outline-primary mb-1" type="button">
+              <span class="tf-icons ti ti-plus"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Tagify -->
+  <!-- Typeahead -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">پیشنهادهای Typeahead</h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Basic -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TypeaheadBasic">پایه</label>
+            <input autocomplete="off" class="form-control typeahead" id="TypeaheadBasic" placeholder="استان‌های ایران را تایپ کنید" type="text"/>
+          </div>
+          <!-- Bloodhound -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TypeaheadBloodHound">BloodHound (موتور پیشنهادات)</label>
+            <input autocomplete="off" class="form-control typeahead-bloodhound" id="TypeaheadBloodHound" placeholder="استان‌های ایران را تایپ کنید" type="text"/>
+          </div>
+          <!-- Prefetch -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TypeaheadPrefetch">واکشی Prefetch</label>
+            <input autocomplete="off" class="form-control typeahead-prefetch" id="TypeaheadPrefetch" placeholder="استان‌های ایران را تایپ کنید" type="text"/>
+          </div>
+          <!-- Default Suggestions -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="TypeaheadSuggestions">پیشنهادات پیش فرض</label>
+            <input autocomplete="off" class="form-control typeahead-default-suggestions" id="TypeaheadSuggestions" type="text"/>
+          </div>
+          <!-- Custom Template -->
+          <div class="col-md-6 mb-4 mb-md-0">
+            <label class="form-label" for="TypeaheadCustom">قالب سفارشی</label>
+            <input autocomplete="off" class="form-control typeahead-custom-template" id="TypeaheadCustom" placeholder="جستجوی بازیگر ایرانی" type="text"/>
+          </div>
+          <!-- Multiple Datasets -->
+          <div class="col-md-6">
+            <label class="form-label" for="TypeaheadMultipleDataset">مجموعه داده های متعدد</label>
+            <input autocomplete="off" class="form-control typeahead-multi-datasets" id="TypeaheadMultipleDataset" type="text"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Typeahead -->
+  <!-- Bootstrap Select -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">انتخابگر bootstrap</h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Basic -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerBasic">پایه</label>
+            <select class="selectpicker w-100" data-style="btn-default" id="selectpickerBasic">
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Group -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerGroups">گروه ها</label>
+            <select class="selectpicker w-100" data-style="btn-default" id="selectpickerGroups">
+              <optgroup label="سریال ها">
+                <option>زخم کاری</option>
+                <option>پوست شیر</option>
+                <option>گناه فرشته</option>
+              </optgroup>
+              <optgroup label="فیلم ها">
+                <option>چهارانگشت</option>
+                <option>هتل</option>
+                <option>درمدت معلوم</option>
+              </optgroup>
+            </select>
+          </div>
+          <!-- Multiple -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerMultiple">چندگانه</label>
+            <select class="selectpicker w-100" data-icon-base="ti" data-style="btn-default" data-tick-icon="ti-check text-white" id="selectpickerMultiple" multiple>
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Live Search -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerLiveSearch">جستجوی آنی</label>
+            <select class="selectpicker w-100" data-live-search="true" data-style="btn-default" id="selectpickerLiveSearch">
+              <option data-tokens="ketchup mustard">هات داگ، سیب زمینی سرخ کرده و نوشابه</option>
+              <option data-tokens="mustard">برگر، شیک و یک لبخند</option>
+              <option data-tokens="frosting">شکر، ادویه و ...</option>
+            </select>
+          </div>
+          <!-- Icons -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerIcons">نمادها</label>
+            <select class="selectpicker w-100 show-tick" data-icon-base="ti" data-style="btn-default" data-tick-icon="ti-check" id="selectpickerIcons">
+              <option data-icon="ti ti-brand-instagram">اینستاگرام</option>
+              <option data-icon="ti ti-brand-pinterest">پینترست</option>
+              <option data-icon="ti ti-brand-twitch">توئیچ</option>
+            </select>
+          </div>
+          <!-- Subtext -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerSubtext">زیرعنوان</label>
+            <select class="selectpicker w-100" data-show-subtext="true" data-style="btn-default" id="selectpickerSubtext">
+              <option data-subtext="1402">زخم کاری 2</option>
+              <option data-subtext="1400">زخم کاری</option>
+              <option data-subtext="توضیحش">پوست شیر</option>
+            </select>
+          </div>
+          <!-- Selection Limit -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerSelection">محدودیت انتخاب</label>
+            <select class="selectpicker w-100" data-max-options="2" data-style="btn-default" id="selectpickerSelection" multiple>
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Select / Deselect All -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerSelectDeselect">انتخاب / لغو انتخاب همه</label>
+            <select class="selectpicker w-100" data-actions-box="true" data-style="btn-default" id="selectpickerSelectDeselect" multiple>
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Divider -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerDivider">جداکننده</label>
+            <select class="selectpicker w-100" data-style="btn-default" id="selectpickerDivider">
+              <option>زخم کاری</option>
+              <option data-divider="true">تقسیم کننده</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Header -->
+          <div class="col-md-6 mb-4">
+            <label class="form-label" for="selectpickerHeader">سرتیتر</label>
+            <select class="selectpicker w-100" data-header="انتخاب سریال" data-style="btn-default" id="selectpickerHeader">
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Disabled -->
+          <div class="col-md-6 mb-4 mb-md-0">
+            <label class="form-label" for="selectpickerDisabled">غیرفعال</label>
+            <select class="selectpicker w-100" data-style="btn-default" disabled id="selectpickerDisabled">
+              <option>زخم کاری</option>
+              <option>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+          <!-- Disabled Options -->
+          <div class="col-md-6">
+            <label class="form-label" for="selectpickerDisabledOptions">گزینه های غیرفعال</label>
+            <select class="selectpicker w-100" data-style="btn-default" id="selectpickerDisabledOptions">
+              <option>زخم کاری</option>
+              <option disabled>پوست شیر</option>
+              <option>گناه فرشته</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Bootstrap Select -->
+</div>

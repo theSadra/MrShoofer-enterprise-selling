@@ -1,0 +1,180 @@
+@{
+  ViewData["Title"] = "Modals Examples - UI elements";
+}
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+<link rel="stylesheet" href="~/vendor/libs/bs-stepper/bs-stepper.css" />
+}
+@section VendorScripts {
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/bs-stepper/bs-stepper.js"></script>
+}
+@section PageScripts {
+<script src="~/js/pages-pricing.js"></script>
+<script src="~/js/modal-create-app.js"></script>
+<script src="~/js/modal-add-new-cc.js"></script>
+<script src="~/js/modal-add-new-address.js"></script>
+<script src="~/js/modal-edit-user.js"></script>
+<script src="~/js/modal-enable-otp.js"></script>
+<script src="~/js/modal-share-project.js"></script>
+<script src="~/js/modal-two-factor-auth.js"></script>
+}
+
+@* ************** Content ************** *@
+<h4 class="py-3 mb-4">نمونه های مُدال</h4>
+<div class="row mb-4">
+  <!--  Pricing -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-currency-dollar ti-lg"></i>
+        <h5>قیمت‌گذاری</h5>
+        <p>گزینه های قیمت گذاری زیبا مثال پاپ آپ مُدال، آسان برای استفاده در هر صفحه.</p>
+        <button class="btn btn-primary" data-bs-target="#pricingModal" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Pricing -->
+  <!--  Add New Credit Card -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-credit-card ti-lg"></i>
+        <h5>افزودن کارت اعتباری</h5>
+        <p> دریافت جزئیات کارت اعتباری، قالب بندی ورودی ها و اعتبار سنجی اطلاعات ورودی کاربر.</p>
+        <button class="btn btn-primary" data-bs-target="#addNewCCModal" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Add New Credit Card -->
+  <!--  Add New Address -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-home ti-lg"></i>
+        <h5>افزودن آدرس جدید</h5>
+        <p>فرم آماده برای دریافت آدرس کاربر و فیلد های مرتبط به آن همراه با اعتبار سنجی.</p>
+        <button class="btn btn-primary" data-bs-target="#addNewAddress" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Add New Address -->
+  <!--  Refer & Earn -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-gift ti-lg"></i>
+        <h5>باشگاه مشتریان و کسب درآمد</h5>
+        <p>از روش زیرمجموعه گیری و دعوت دوستان برای افزایش درآمد استفاده کنید که این مدال به شما کمک می کند</p>
+        <button class="btn btn-primary" data-bs-target="#referAndEarn" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Refer & Earn -->
+  <!--  Edit User -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-user ti-lg"></i>
+        <h5>ویرایش کاربر</h5>
+        <p>به راحتی داده های کاربر را ویرایش کنید همراه با قالب بندی ورودی ها و اعتبار سنجی با فرمت دلخواه.</p>
+        <button class="btn btn-primary" data-bs-target="#editUser" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Edit User -->
+  <!--  Enable OTP -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-device-mobile ti-lg"></i>
+        <h5>کد احراز هویت</h5>
+        <p>از این مُدال برای افزایش امنیت برنامه خود با فعال کردن احراز هویت با OTP استفاده کنید.</p>
+        <button class="btn btn-primary" data-bs-target="#enableOTP" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Enable OTP -->
+  <!--  Share Project -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-file-text ti-lg"></i>
+        <h5>اشتراک گذاری</h5>
+        <p>پاپ آپ مُدال گزینه ای مناسب برای اشتراک گذاری جمعی یک لینک و ... می باشد</p>
+        <button class="btn btn-primary" data-bs-target="#shareProject" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Share Project -->
+  <!--  Create App -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-box ti-lg"></i>
+        <h5>ایجاد پروژه ، تسک و...</h5>
+        <p>شما می توانید با استفاده از این مدال در چند مرحله یک تسک و ... را ایجاد کنید</p>
+        <button class="btn btn-primary" data-bs-target="#createApp" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Create App -->
+  <!--  Two Factor Auth -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-lock ti-lg"></i>
+        <h5>تأیید دو مرحله‌ای</h5>
+        <p>تایید دو مرحله گوگل و پیامکی که موجب افزایش امنیت سامانه و سرویس شما می شود</p>
+        <button class="btn btn-primary" data-bs-target="#twoFactorAuth" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Two Factor Auth -->
+  <!--  Payment providers -->
+  <div class="col-12 col-sm-6 col-lg-4 mb-4 mb-sm-0">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-brand-mastercard ti-lg"></i>
+        <h5>روش پرداخت</h5>
+        <p>روش های پرداخت را برای اطلاع کاربر به ایشان نشان می دهد که ظاهر مناسبی نیز دارد.</p>
+        <button class="btn btn-primary" data-bs-target="#paymentProvider" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Payment providers -->
+  <!--  Payment methods -->
+  <div class="col-12 col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="mb-3 ti ti-credit-card ti-lg"></i>
+        <h5>روش پرداخت 2</h5>
+        <p>روش های پرداخت را برای اطلاع کاربر به ایشان نشان می دهد ظاهر متفاوتی با اولی دارد.</p>
+        <button class="btn btn-primary" data-bs-target="#paymentMethods" data-bs-toggle="modal" type="button"> نمایش</button>
+      </div>
+    </div>
+  </div>
+  <!--/  Payment methods -->
+</div>
+
+<!-- All Modals -->
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewCc")
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewAddress")
+@await Html.PartialAsync("../_Partials/_Modals/ModalReferEarn")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditUser")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEnableOtp")
+@await Html.PartialAsync("../_Partials/_Modals/ModalPricing")
+@await Html.PartialAsync("../_Partials/_Modals/ModalShareProject")
+@await Html.PartialAsync("../_Partials/_Modals/ModalCreateApp")
+@await Html.PartialAsync("../_Partials/_Modals/ModalTwoFactorAuth")
+@await Html.PartialAsync("../_Partials/_Modals/ModalSelectPaymentProviders")
+@await Html.PartialAsync("../_Partials/_Modals/ModalSelectPaymentMethods")

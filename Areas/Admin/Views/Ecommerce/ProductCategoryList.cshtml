@@ -1,0 +1,135 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - دسته بندی";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css">
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css">
+<link rel="stylesheet" href="~/vendor/libs/quill/typography.css">
+<link rel="stylesheet" href="~/vendor/libs/quill/katex.css">
+<link rel="stylesheet" href="~/vendor/libs/quill/editor.css">
+
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/app-ecommerce.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/quill/katex.js"></script>
+<script src="~/vendor/libs/quill/quill.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-category-list.js"></script>
+}
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">تجارت الکترونیک /</span>
+  دسته بندی
+</h4>
+<div class="app-ecommerce-category">
+  <!-- Category List Table -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <table class="datatables-category-list table border-top">
+        <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>دسته بندی ها</th>
+          <th class="text-nowrap text-sm-end">تعداد موجودی  </th>
+          <th class="text-nowrap text-sm-end">کل درآمد</th>
+          <th class="text-lg-center">عملیات</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <!-- Offcanvas to add new customer -->
+  <div aria-labelledby="offcanvasEcommerceCategoryListLabel" class="offcanvas offcanvas-end" id="offcanvasEcommerceCategoryList" tabindex="-1">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header py-4">
+      <h5 class="offcanvas-title" id="offcanvasEcommerceCategoryListLabel">افزودن دسته بندی</h5>
+      <button aria-label="بستن" class="btn-close bg-label-secondary text-reset" data-bs-dismiss="offcanvas" type="button"></button>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body border-top">
+      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+        <!-- Title -->
+        <div class="mb-3">
+          <label class="form-label" for="ecommerce-category-title">عنوان</label>
+          <input aria-label="عنوان دسته" class="form-control" id="ecommerce-category-title" name="categoryTitle" placeholder="ابزار آلات ، ..." type="text"/>
+        </div>
+        <!-- Slug -->
+        <div class="mb-3">
+          <label class="form-label" for="ecommerce-category-slug">توضیح مختصر</label>
+          <input aria-label="Slug" class="form-control" id="ecommerce-category-slug" name="slug" placeholder="هدفون 3d سونی با کیفیت بالا" type="text"/>
+        </div>
+        <!-- Image -->
+        <div class="mb-3">
+          <label class="form-label" for="ecommerce-category-image">پیوست</label>
+          <input class="form-control" id="ecommerce-category-image" type="file"/>
+        </div>
+        <!-- Parent category -->
+        <div class="mb-3 ecommerce-select2-dropdown">
+          <label class="form-label" for="ecommerce-category-parent-category">دسته بالاتر</label>
+          <select class="select2 form-select" data-placeholder="انتخاب یک دسته" id="ecommerce-category-parent-category">
+            <option value="">انتخاب ...</option>
+            <option value="Household">خانواده</option>
+            <option value="Management">مدیریت</option>
+            <option value="Electronics">الکترونیک</option>
+            <option value="Office">دفتر</option>
+            <option value="Automotive">خودرو</option>
+          </select>
+        </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label class="form-label">توضیحات</label>
+          <div class="form-control p-0 py-1">
+            <div class="comment-editor border-0" id="ecommerce-category-description"></div>
+            <div class="comment-toolbar border-0">
+              <div class="d-flex justify-content-end">
+                <span class="ql-formats me-0">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Status -->
+        <div class="mb-4 ecommerce-select2-dropdown">
+          <label class="form-label">وضعیت دسته بندی</label>
+          <select class="select2 form-select" data-placeholder="انتخاب وضعیت" id="ecommerce-category-status">
+            <option value="">وضعیت دسته را انتخاب کنید</option>
+            <option value="Scheduled">زمان بندی شده</option>
+            <option value="Publish">منتشر شده</option>
+            <option value="Inactive">غیر فعال</option>
+          </select>
+        </div>
+        <!-- Submit and reset -->
+        <div class="mb-3">
+          <button class="btn bg-label-danger" data-bs-dismiss="offcanvas" type="reset">لغو فرایند</button>
+          <button class="btn btn-primary me-sm-3 me-1 data-submit" type="submit">ثبت و اتمام</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

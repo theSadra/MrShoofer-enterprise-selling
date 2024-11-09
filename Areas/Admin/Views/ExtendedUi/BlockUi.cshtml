@@ -1,0 +1,111 @@
+@{
+  ViewData["Title"] = "طراحی سفارشی - قفل عناصر طراحی";
+}
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/spinkit/spinkit.css" />
+}
+@section VendorScripts{
+<script src="~/vendor/libs/block-ui/block-ui.js"></script>
+}
+@section PageScripts{
+<script src="~/js/extended-ui-blockui.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">طراحی سفارشی /</span>
+  قفل عناصر طراحی
+</h4>
+<!-- Block UI -->
+<div class="row">
+  <!-- Block Ui Section-->
+  <div class="col-xl-6 col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">بلاک کردن بخشی خاص</h5>
+      <div class="card-body">
+        <div class="border p-3" id="section-block">
+          <p class="lh-2"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+        </div>
+        <div class="demo-inline-spacing">
+          <button class="btn btn-primary btn-section-block-overlay">لایه‌رویی رنگی</button>
+          <button class="btn btn-primary btn-section-block">پیش‌فرض</button>
+          <button class="btn btn-primary btn-section-block-spinner">اسپینر</button>
+          <button class="btn btn-primary btn-section-block-custom">پیام و اسپینر</button>
+          <button class="btn btn-primary btn-section-block-multiple">اسپینر و چندپیام</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Block Ui Section-->
+  <!-- Block Ui Card-->
+  <div class="col-xl-6 col-12">
+    <div class="card mb-4" id="card-block">
+      <h5 class="card-header">بلاک کردن کردن کارت</h5>
+      <div class="card-body">
+        <p class="card-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+        <p class="card-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+        <div class="block-ui-btn demo-inline-spacing">
+          <button class="btn btn-primary btn-card-block-overlay">لایه‌رویی رنگی</button>
+          <button class="btn btn-primary btn-card-block">پیش‌فرض</button>
+          <button class="btn btn-primary btn-card-block-spinner">اسپینر</button>
+          <button class="btn btn-primary btn-card-block-custom">پیام و اسپینر</button>
+          <button class="btn btn-primary btn-card-block-multiple">اسپینر و چندپیام</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Block Ui Card-->
+  <!-- /Block Ui Page-->
+  <div class="col-xl-6 col-12">
+    <div class="card mb-4" id="page-block">
+      <h5 class="card-header">بلاک کردن صفحه</h5>
+      <div class="card-body">
+        <p class="card-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+        <p class="card-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+        <div class="block-ui-btn demo-inline-spacing">
+          <button class="btn btn-primary btn-page-block-overlay">لایه‌رویی رنگی</button>
+          <button class="btn btn-primary btn-page-block">پیش‌فرض</button>
+          <button class="btn btn-primary btn-page-block-spinner">اسپینر</button>
+          <button class="btn btn-primary btn-page-block-custom">پیام و اسپینر</button>
+          <button class="btn btn-primary btn-page-block-multiple">اسپینر و چندپیام</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Block Ui Page-->
+  <!-- /Block Ui Form-->
+  <div class="col-xl-6 col-12">
+    <div class="card">
+      <h5 class="card-header">بلاک کردن فرم</h5>
+      <div class="card-body">
+        <div class="p-2 form-block">
+          <div class="mb-3">
+            <label class="form-label" for="username">نام کاربری</label>
+            <input class="form-control" id="username" placeholder="نام کاربری" type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">ایمیل</label>
+            <input class="form-control" id="email" placeholder="پست الکترونیک" type="email"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">کلمه عبور</label>
+            <input class="form-control" id="password" placeholder="کلمه عبور" type="password"/>
+          </div>
+          <div class="mb-3 text-end">
+            <button class="btn btn-label-secondary ms-2 disabled">ریست</button>
+            <button class="btn btn-primary disabled">ارسال</button>
+          </div>
+        </div>
+        <div class="block-ui-btn demo-inline-spacing">
+          <button class="btn btn-primary btn-form-block-overlay">لایه‌رویی رنگی</button>
+          <button class="btn btn-primary btn-form-block">پیش‌فرض</button>
+          <button class="btn btn-primary btn-form-block-spinner">اسپینر</button>
+          <button class="btn btn-primary btn-form-block-custom">پیام و اسپینر</button>
+          <button class="btn btn-primary btn-form-block-multiple">اسپینر و چندپیام</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Block Ui Forms-->
+</div>
+<!-- /Block UI -->

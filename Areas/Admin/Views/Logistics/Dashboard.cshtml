@@ -1,0 +1,679 @@
+@{
+  ViewData["Title"] = "داشبورد - حمل و نقل";
+}
+
+@section VendorStyles{
+  <link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+  <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+}
+
+@section VendorScripts{
+  <script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+  <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+}
+
+@section PageStyles{
+  <link rel="stylesheet" href="~/vendor/css/pages/app-logistics-dashboard.css" />
+}
+
+@section PageScripts{
+  <script src="~/js/app-logistics-dashboard.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">حمل و نقل /</span>
+  داشبورد
+</h4>
+<!-- Card Border Shadow -->
+<div class="row">
+  <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="card card-border-shadow-primary">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-primary">
+              <i class="ti ti-truck ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">42</h4>
+        </div>
+        <p class="mb-1">درمسیر تحویل</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>+18.2</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="card card-border-shadow-warning">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-warning">
+              <i class="ti ti-alert-triangle ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">8</h4>
+        </div>
+        <p class="mb-1">تحویل ناموفق</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>-8.7</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="card card-border-shadow-danger">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-danger">
+              <i class="ti ti-git-fork ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">27</h4>
+        </div>
+        <p class="mb-1">تحویل داده شده</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>+4.3</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3 mb-4">
+    <div class="card card-border-shadow-info">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-info">
+              <i class="ti ti-clock ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">13</h4>
+        </div>
+        <p class="mb-1">تحویل دیرهنگام</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>-2.5</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Card Border Shadow -->
+<div class="row">
+  <!-- Vehicles overview -->
+  <div class="col-xxl-6 mb-4 order-5 order-xxl-0">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title mb-0">
+          <h5 class="m-0">عملکرد وسایل نقلیه</h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-none d-lg-flex vehicles-progress-labels mb-2">
+          <div class="vehicles-progress-label on-the-way-text" style="width: 39.7%">در مسیر تحویل</div>
+          <div class="vehicles-progress-label unloading-text" style="width: 28.3%">تحویل شده</div>
+          <div class="vehicles-progress-label loading-text" style="width: 17.4%">دریافت شده</div>
+          <div class="vehicles-progress-label waiting-text text-nowrap" style="width: 14.6%">در انتظار</div>
+        </div>
+        <div class="vehicles-overview-progress progress rounded-2 mb-4" style="height: 46px">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="39.7" class="progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0" role="progressbar" style="width: 39.7%"> 39.7%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="28.3" class="progress-bar fw-medium text-start bg-primary px-3" role="progressbar" style="width: 28.3%"> 28.3%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="17.4" class="progress-bar fw-medium text-start text-bg-info px-3" role="progressbar" style="width: 17.4%"> 17.4%</div>
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="14.6" class="progress-bar fw-medium text-start bg-gray-900 px-2 rounded-0 px-lg-2 px-xxl-3" role="progressbar" style="width: 14.6%"> 14.6%</div>
+        </div>
+        <div class="table-responsive">
+          <table class="table card-table">
+            <tbody class="table-border-bottom-0">
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-truck mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">در مسیر تحویل</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">2 ساعت 10 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">39.7%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-circle-arrow-down mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">تحویل شده</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">3 ساعت 15 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">28.3%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-circle-arrow-up mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">دریافت شده</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">1 ساعت 24 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">17.4%</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="w-50 ps-0">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-2">
+                    <i class="ti ti-clock mt-n1"></i>
+                  </div>
+                  <h6 class="mb-0 fw-normal">در انتظار</h6>
+                </div>
+              </td>
+              <td class="text-end pe-0 text-nowrap">
+                <h6 class="mb-0">5 ساعت 19 دقیقه</h6>
+              </td>
+              <td class="text-end pe-0">
+                <span class="fw-medium">14.6%</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Vehicles overview -->
+  <!-- Shipment statistics-->
+  <div class="col-lg-6 col-xxl-6 mb-4 order-3 order-xxl-1">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">آمار حمل و نقل</h5>
+          <small class="text-muted">تعداد کل تحویل 23.8 </small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" class="btn btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" type="button"> فروردین</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">فروردین</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">اردیبهشت</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">خرداد</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">تیر</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">مرداد</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">شهریور</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">مهر</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">آبان</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">آذر</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">دی</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">بهمن</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">اسفند</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="my-1" id="shipmentStatisticsChart"></div>
+      </div>
+    </div>
+  </div>
+  <!--/ Shipment statistics -->
+  <!-- Delivery Performance -->
+  <div class="col-lg-6 col-xxl-4 mb-4 order-2 order-xxl-2">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between mb-2">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">عملکرد تحویل</h5>
+          <small class="text-muted">12 درصد افزایش در این ماه</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="deliveryPerformance" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="deliveryPerformance" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">همه</a>
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="p-0 m-0">
+          <li class="d-flex mb-4 pb-1">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-primary">
+                <i class="ti ti-package"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">درحال ارسال</h6>
+                <small class="text-success fw-normal d-block">
+                  <i class="ti ti-chevron-up mb-1"></i>
+                  25.8%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">10 </h6>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-info">
+                <i class="ti ti-truck"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">درانتظار بارگیری</h6>
+                <small class="text-success fw-normal d-block">
+                  <i class="ti ti-chevron-up mb-1"></i>
+                  4.3%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">5 </h6>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-success">
+                <i class="ti ti-circle-check"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">تحویل داده شده</h6>
+                <small class="text-danger fw-normal d-block">
+                  <i class="ti ti-chevron-down mb-1"></i>
+                  12.5%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">15 </h6>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-warning">
+                <i class="ti ti-percentage"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">نرخ تحویل موفق</h6>
+                <small class="text-success fw-normal d-block">
+                  <i class="ti ti-chevron-up mb-1"></i>
+                  35.6%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">95%</h6>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-secondary">
+                <i class="ti ti-clock"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">میانگین زمان تحویل</h6>
+                <small class="text-danger fw-normal d-block">
+                  <i class="ti ti-chevron-down mb-1"></i>
+                  2.15%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">2.5 روز</h6>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-danger">
+                <i class="ti ti-users"></i>
+              </span>
+            </div>
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <h6 class="mb-0 fw-normal">رضایت مشتری</h6>
+                <small class="text-success fw-normal d-block">
+                  <i class="ti ti-chevron-up mb-1"></i>
+                  5.7%
+                </small>
+              </div>
+              <div class="user-progress">
+                <h6 class="mb-0">4.5/5</h6>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--/ Delivery Performance -->
+  <!-- Reasons for delivery exceptions -->
+  <div class="col-md-6 col-xxl-4 mb-4 order-1 order-xxl-3">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">دلایل عدم تحویل</h5>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="deliveryExceptions" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="deliveryExceptions" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">همه</a>
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="pt-md-4" id="deliveryExceptionsChart"></div>
+      </div>
+    </div>
+  </div>
+  <!--/ Reasons for delivery exceptions -->
+  <!-- Orders by Countries -->
+  <div class="col-md-6 col-xxl-4 mb-4 order-0 order-xxl-4">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between pb-2">
+        <div class="card-title mb-1">
+          <h5 class="m-0 me-2">سفارشات</h5>
+          <small class="text-muted">62 سفارش درحال تحویل</small>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="salesByCountryTabs" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="salesByCountryTabs" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="nav-align-top">
+          <ul class="nav nav-tabs nav-fill" role="tablist">
+            <li class="nav-item">
+              <button aria-controls="navs-justified-new" aria-selected="true" class="nav-link active" data-bs-target="#navs-justified-new" data-bs-toggle="tab" role="tab" type="button"> جدید</button>
+            </li>
+            <li class="nav-item">
+              <button aria-controls="navs-justified-link-preparing" aria-selected="false" class="nav-link" data-bs-target="#navs-justified-link-preparing" data-bs-toggle="tab" role="tab" type="button"> درحال پردازش</button>
+            </li>
+            <li class="nav-item">
+              <button aria-controls="navs-justified-link-shipping" aria-selected="false" class="nav-link" data-bs-target="#navs-justified-link-shipping" data-bs-toggle="tab" role="tab" type="button"> ارسال شده</button>
+            </li>
+          </ul>
+          <div class="tab-content px-2 mx-1 pb-0">
+            <div class="tab-pane fade show active" id="navs-justified-new" role="tabpanel">
+              <ul class="timeline mb-0 pb-1">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">محسن تنابنده</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">شهاب حسینی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+              <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+              <ul class="timeline mb-0">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">بهاره افشاری</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">ترانه علیدوستی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="navs-justified-link-preparing" role="tabpanel">
+              <ul class="timeline mb-0 pb-1">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">شهاب حسینی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">محسن تنابنده</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+              <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+              <ul class="timeline mb-0">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">بهاره افشاری</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">ترانه علیدوستی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="navs-justified-link-shipping" role="tabpanel">
+              <ul class="timeline mb-0 pb-1">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">بهاره افشاری</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">شهاب حسینی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+              <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+              <ul class="timeline mb-0">
+                <li class="timeline-item ps-4 border-left-dashed pb-1">
+                  <span class="timeline-indicator-advanced timeline-indicator-success">
+                    <i class="ti ti-circle-check"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                    </div>
+                    <h6 class="mb-1">محسن تنابنده</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+                <li class="timeline-item ps-4 border-transparent">
+                  <span class="timeline-indicator-advanced timeline-indicator-primary">
+                    <i class="ti ti-map-pin"></i>
+                  </span>
+                  <div class="timeline-event px-0 pb-0">
+                    <div class="timeline-header">
+                      <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                    </div>
+                    <h6 class="mb-1">ترانه علیدوستی</h6>
+                    <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Orders by Countries -->
+  <!-- On route vehicles Table -->
+  <div class="col-12 order-5">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">درمسیر تحویل</h5>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="routeVehicles" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="routeVehicles" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">همه</a>
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-datatable table-responsive">
+        <table class="dt-route-vehicles table">
+          <thead class="border-top">
+          <tr>
+            <th></th>
+            <th></th>
+            <th>محل</th>
+            <th>مبدأ</th>
+            <th>مقصد</th>
+            <th>هشدارها</th>
+            <th class="w-20">درصد پیشروی</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--/ On route vehicles Table -->
+</div>

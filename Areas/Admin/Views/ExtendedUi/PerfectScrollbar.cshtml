@@ -1,0 +1,50 @@
+@{
+  ViewData["Title"] = "طراحی سفارشی - نوار اسکرول";
+}
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+}
+@section VendorScripts{
+<script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+}
+@section PageScripts{
+<script src="~/js/extended-ui-perfect-scrollbar.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">طراحی سفارشی /</span>
+  نوار اسکرول
+</h4>
+<div class="row">
+  <!-- Vertical Scrollbar -->
+  <div class="col-md-6 col-sm-12">
+    <div class="card overflow-hidden mb-4" style="height: 300px">
+      <h5 class="card-header">نوار پیمایش عمودی</h5>
+      <div class="card-body" id="vertical-example">
+        <p class="lh-2 justify-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+      </div>
+    </div>
+  </div>
+  <!--/ Vertical Scrollbar -->
+  <!-- Horizontal Scrollbar -->
+  <div class="col-md-6 col-sm-12">
+    <div class="card overflow-hidden mb-4" style="height: 300px">
+      <h5 class="card-header">نوار پیمایش افقی</h5>
+      <div class="card-body" id="horizontal-example">
+        <img alt="اسکرول-تصویر" src="~/img/backgrounds/7.jpg"/>
+      </div>
+    </div>
+  </div>
+  <!--/ Horizontal Scrollbar -->
+  <!-- Vertical & Horizontal Scrollbars -->
+  <div class="col-12">
+    <div class="card overflow-hidden" style="height: 500px">
+      <h5 class="card-header">نوارهای پیمایش عمودی و افقی</h5>
+      <div class="card-body ltr" id="both-scrollbars-example">
+        <img alt="اسکرول-تصویر" src="~/img/backgrounds/7.jpg"/>
+      </div>
+    </div>
+  </div>
+  <!--/ Vertical & Horizontal Scrollbars -->
+</div>

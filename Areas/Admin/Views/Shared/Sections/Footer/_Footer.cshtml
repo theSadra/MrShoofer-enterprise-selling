@@ -1,0 +1,29 @@
+@{
+  TempData.Keep();
+  ViewData["containerNav"] = (ViewData["containerNav"] ??= "container-fluid");
+}
+
+<footer class="content-footer footer bg-footer-theme">
+  <div class='@ViewData["containerNav"]'>
+  <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+
+      <div>
+        ©
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        طراحی و توسعه توسط
+        @* <a href='@TempData.Peek("authorUrl")' class="text-danger byte-hover">@TempData.Peek("authorName")</a> *@
+
+        <a class="fw-medium" href="#support" target="_blank">مسترشوفر</a>
+      </div>
+
+    <div class="d-none d-lg-inline-block">
+     @*  <a href='@TempData.Peek("licenseUrl")' class="footer-link me-4" target="_blank">لایسنس</a>
+      <a href='@TempData.Peek("productPage")' target="_blank" class="footer-link me-4">قالب‌های بیشتر</a>
+      <a href='@TempData.Peek("documentation")' target="_blank" class="footer-link me-4">مستندات</a>
+      <a href='@TempData.Peek("support")' target="_blank" class="footer-link d-none d-sm-inline-block">پشتیبانی</a> *@
+    </div>
+    </div>
+  </div>
+</footer>

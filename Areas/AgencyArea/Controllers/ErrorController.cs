@@ -4,7 +4,7 @@ namespace Application.Areas.AgencyArea
   public class ErrorController : Controller
   {
 
-
+    [Area("AgencyArea")]
     [Route("Error/{statusCode}")]
     public async Task<IActionResult> HandleError(int statusCode)
     {

@@ -1,0 +1,391 @@
+@{
+  ViewData["Title"] = "فرم ها - سوئیچ ها";
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم/</span>
+  سوئیچ ها
+</h4>
+<div class="row">
+  <!-- Default switches -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">سوئیچ های پیش فرض</h5>
+      <div class="row row-bordered g-0">
+        <div class="col-sm-6 p-4">
+          <div class="text-light small fw-medium mb-3">پیش فرض</div>
+          <label class="switch">
+            <input class="switch-input" type="checkbox"/>
+            <span class="switch-toggle-slider">
+              <span class="switch-on"></span>
+              <span class="switch-off"></span>
+            </span>
+            <span class="switch-label">پیش فرض</span>
+          </label>
+        </div>
+        <div class="col-sm-6 p-4">
+          <div class="text-light small fw-medium mb-3">مربع</div>
+          <label class="switch switch-square">
+            <input class="switch-input" type="checkbox"/>
+            <span class="switch-toggle-slider">
+              <span class="switch-on"></span>
+              <span class="switch-off"></span>
+            </span>
+            <span class="switch-label">مربع</span>
+          </label>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <div class="row row-bordered g-0">
+        <div class="col-sm-6 p-4">
+          <div class="text-light small fw-medium mb-3">پیش فرض با آیکون</div>
+          <label class="switch">
+            <input class="switch-input" type="checkbox"/>
+            <span class="switch-toggle-slider">
+              <span class="switch-on">
+                <i class="ti ti-check"></i>
+              </span>
+              <span class="switch-off">
+                <i class="ti ti-x"></i>
+              </span>
+            </span>
+            <span class="switch-label">با آیکون</span>
+          </label>
+        </div>
+        <div class="col-sm-6 p-4">
+          <div class="text-light small fw-medium mb-3">مربع با آیکون</div>
+          <label class="switch switch-square">
+            <input class="switch-input" type="checkbox"/>
+            <span class="switch-toggle-slider">
+              <span class="switch-on">
+                <i class="ti ti-check"></i>
+              </span>
+              <span class="switch-off">
+                <i class="ti ti-x"></i>
+              </span>
+            </span>
+            <span class="switch-label">با آیکون</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Default switches -->
+  <!-- Variations -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">انواع رنگ‌ها</h5>
+      <div class="row row-bordered g-0">
+        <div class="col-xl-12 px-4 pb-4">
+          <div class="text-light small fw-medium">حالت سوئیچ پیشفرض</div>
+          <div class="demo-inline-spacing">
+            <label class="switch switch-primary ">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">اصلی</span>
+            </label>
+            <label class="switch switch-secondary ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">فرعی</span>
+            </label>
+            <label class="switch switch-success ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">موفق</span>
+            </label>
+            <label class="switch switch-danger ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">خطا</span>
+            </label>
+            <label class="switch switch-warning ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">هشدار</span>
+            </label>
+            <label class="switch switch-info ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">راهنما</span>
+            </label>
+            <label class="switch switch-dark ms-3">
+              <input checked="" class="switch-input" type="checkbox">
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">تیره</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Variations -->
+  <!-- Size -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">اندازه‌ها‌</h5>
+      <div class="row row-bordered g-0">
+        <div class="col-sm-6 px-4 pb-4">
+          <div class="text-light small fw-medium">پیش فرض</div>
+          <div class="demo-vertical-spacing">
+            <label class="switch switch-sm">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">کوچک</span>
+            </label>
+            <br/>
+            <label class="switch">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">پیشفرض</span>
+            </label>
+            <br/>
+            <label class="switch switch-lg">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">بزرگ</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-6 px-4 pb-4">
+          <div class="text-light small fw-medium">مربع</div>
+          <div class="demo-vertical-spacing">
+            <label class="switch switch-square switch-sm">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">کوچک</span>
+            </label>
+            <br/>
+            <label class="switch switch-square">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">پیشفرض</span>
+            </label>
+            <br/>
+            <label class="switch switch-square switch-lg">
+              <input class="switch-input" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on">
+                  <i class="ti ti-check"></i>
+                </span>
+                <span class="switch-off">
+                  <i class="ti ti-x"></i>
+                </span>
+              </span>
+              <span class="switch-label">بزرگ</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Size -->
+  <!-- States -->
+  <div class="col-12">
+    <div class="card mb-4">
+      <h5 class="card-header">حالت‌ها</h5>
+      <div class="row row-bordered g-0">
+        <div class="col-sm-6 px-4 pb-4">
+          <div class="text-light small fw-medium">غیرفعال</div>
+          <div class="demo-vertical-spacing">
+            <label class="switch">
+              <input class="switch-input" disabled type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">پیش فرض - خاموش</span>
+            </label>
+            <br/>
+            <label class="switch">
+              <input checked class="switch-input" disabled type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">پیش فرض - روشن</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-6 p-4">
+          <div class="text-light small fw-medium">حالت های اعتبار سنجی</div>
+          <div class="demo-vertical-spacing">
+            <label class="switch">
+              <input checked class="switch-input is-valid" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">معتبر</span>
+            </label>
+            <div class="has-error">
+              <label class="switch">
+                <input checked class="switch-input is-invalid" type="checkbox"/>
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+                <span class="switch-label">نامعتبر</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ States -->
+  <!-- Stacked Radio -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">سوئیچ وابسته</h5>
+      <div class="row row-bordered g-0">
+        <div class="col-sm-6 px-4 pb-4">
+          <div class="text-light small fw-medium mb-3">پیشفرض</div>
+          <div class="switches-stacked">
+            <label class="switch">
+              <input checked="" class="switch-input" name="switches-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 1</span>
+            </label>
+            <label class="switch">
+              <input class="switch-input" name="switches-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 2</span>
+            </label>
+            <label class="switch">
+              <input class="switch-input" name="switches-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 3</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-6 px-4 pb-4">
+          <div class="text-light small fw-medium mb-3">مربعی</div>
+          <div class="switches-stacked">
+            <label class="switch switch-square">
+              <input checked="" class="switch-input" name="switches-square-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 1</span>
+            </label>
+            <label class="switch switch-square">
+              <input class="switch-input" name="switches-square-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 2</span>
+            </label>
+            <label class="switch switch-square">
+              <input class="switch-input" name="switches-square-stacked-radio" type="radio">
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">گزینه 3</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Stacked Radio -->
+</div>
+

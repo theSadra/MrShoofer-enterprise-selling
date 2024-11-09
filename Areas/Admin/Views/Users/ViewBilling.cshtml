@@ -1,0 +1,333 @@
+@{
+  ViewData["Title"] = "نمایش کاربر - تراکنش و پرداخت";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/modal-edit-user.js"></script>
+<script src="~/js/modal-edit-cc.js"></script>
+<script src="~/js/modal-add-new-cc.js"></script>
+<script src="~/js/modal-add-new-address.js"></script>
+<script src="~/js/app-user-view.js"></script>
+<script src="~/js/app-user-view-billing.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">مشاهده کاربر/</span>
+  تراکنش و پرداخت
+</h4>
+<div class="row">
+  <!-- User Sidebar -->
+  <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+    <!-- User Card -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="user-avatar-section">
+          <div class=" d-flex align-items-center flex-column">
+            <img class="img-fluid rounded mb-3 pt-1 mt-4" src="~/img/avatars/15.png" height="100" width="100" alt="User avatar" />
+            <div class="user-info text-center">
+              <h4 class="mb-2">مهتاب کرامتی</h4>
+              <span class="badge bg-label-secondary mt-1">نویسنده</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-around
+        flex-wrap mt-3 pt-3 pb-4 border-bottom">
+          <div class="d-flex align-items-start me-4 mt-3 gap-2">
+            <span class="badge bg-label-primary p-2 rounded"><i class='ti ti-checkbox ti-sm'></i></span>
+            <div>
+              <p class="mb-0 fw-medium">1.23k</p>
+              <small>تسک‌های موفق</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-start mt-3 gap-2">
+            <span class="badge bg-label-primary p-2 rounded"><i class='ti ti-briefcase ti-sm'></i></span>
+            <div>
+              <p class="mb-0 fw-medium">568</p>
+              <small>پروژه‌های موفق</small>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 small text-uppercase text-muted">جزئیات</p>
+        <div class="info-container">
+          <ul class="list-unstyled">
+            <li class="mb-2">
+              <span class="fw-medium me-1">نام کاربری:</span>
+              <span>violet.dev</span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">ایمیل:</span>
+              <span>vafgot@vultukir.org</span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">وضعیت:</span>
+              <span class="badge bg-label-success">فعال</span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">نقش:</span>
+              <span>نویسنده</span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">کد مالیاتی:</span>
+              <span>Tax-8965</span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">شماره موبایل:</span>
+              <span>
+                <bdi>0913 000 0000</bdi>
+              </span>
+            </li>
+            <li class="mb-2 pt-1">
+              <span class="fw-medium me-1">زبان ها:</span>
+              <span>فرانسوی</span>
+            </li>
+            <li class="pt-1">
+              <span class="fw-medium me-1">کشور:</span>
+              <span>امارات متحده عربی</span>
+            </li>
+          </ul>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal" href="javascript:">ویرایش</a>
+            <a class="btn btn-label-danger suspend-user" href="javascript:">مسدود سازی</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /User Card -->
+    <!-- Plan Card -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <span class="badge bg-label-primary">استاندارد</span>
+          <div class="d-flex justify-content-center">
+            <sup class="h6 pricing-currency mt-3 mb-0 me-1 text-primary fw-normal">ءتء</sup>
+            <h1 class="mb-0 text-primary">99</h1>
+            <sub class="h6 pricing-duration mt-auto mb-2 text-muted fw-normal">درماه</sub>
+          </div>
+        </div>
+        <ul class="ps-3 g-2 my-3">
+          <li class="mb-2">امکان ارسال پیشنهاد برای 30 پروژه</li>
+          <li class="mb-2">تا 10 گیگابایت فضای ذخیره سازی</li>
+          <li>پشتیبانی تلفنی و درخواست مشاوره</li>
+        </ul>
+        <div class="d-flex justify-content-between align-items-center mb-1 fw-medium text-heading">
+          <span>روزهای باقی مانده</span>
+          <span>65٪ استفاده شده</span>
+        </div>
+        <div class="progress mb-1" style="height: 8px">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar" role="progressbar" style="width: 65%"></div>
+        </div>
+        <span>4 روز</span>
+        <div class="d-grid w-100 mt-4">
+          <button class="btn btn-primary" data-bs-target="#upgradePlanModal" data-bs-toggle="modal"> تمدید اشتراک</button>
+        </div>
+      </div>
+    </div>
+    <!-- /Plan Card -->
+  </div>
+  <!--/ User Sidebar -->
+
+
+  <!-- User Content -->
+  <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+    <!-- User Pills -->
+    <ul class="nav nav-pills flex-column flex-md-row mb-4">
+      <li class="nav-item"><a class="nav-link" href="ViewAccount"><i class="ti ti-user-check me-1 ti-xs"></i>حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link" href="viewSecurity"><i class="ti ti-lock me-1 ti-xs"></i>امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ti ti-currency-dollar me-1 ti-xs"></i>تراکنش و پرداخت</a></li>
+      <li class="nav-item"><a class="nav-link" href="ViewNotifications"><i class="ti ti-bell me-1 ti-xs"></i>نوتیفیکیشن</a></li>
+      <li class="nav-item"><a class="nav-link" href="ViewConnections"><i class="ti ti-link me-1 ti-xs"></i>اکانت‌های متصل</a></li>
+    </ul>
+    <!--/ User Pills -->
+
+    <!-- Current Plan -->
+    <div class="card mb-4">
+      <h5 class="card-header">اشتراک فعلی</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-6 order-1 order-xl-0">
+            <div class="mb-2">
+              <h6 class="mb-1">اشتراک شما نقره ای است</h6>
+              <p>با این اشتراک به 90 درصد امکانات سامانه دسترسی دارید</p>
+            </div>
+            <div class="mb-2 pt-1">
+              <h6 class="mb-1">فعال تا 9 اسفند 1400</h6>
+              <p>پس از انقضای اشتراک برای شما اعلان ارسال می کنیم</p>
+            </div>
+            <div class="mb-3 pt-1">
+              <h6 class="mb-1">
+                <span class="me-2">199 ءتء در ماه</span>
+                <span class="badge bg-label-primary">تخفیف دار</span>
+              </h6>
+              <p>طرح استاندارد برای مشاغل کوچک تا متوسط</p>
+            </div>
+          </div>
+          <div class="col-xl-6 order-0 order-xl-0">
+            <div class="alert alert-warning" role="alert">
+              <h5 class="alert-heading mb-2">توجه!</h5>
+              <span> شما نیا زبه تمدید اشتراک دارید</span>
+            </div>
+            <div class="plan-statistics">
+              <div class="d-flex justify-content-between">
+                <h6 class="mb-1">روزهای باقی مانده</h6>
+                <h6 class="mb-1">24 از 30 روز</h6>
+              </div>
+              <div class="progress mb-1" style="height: 10px">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="progress-bar w-75" role="progressbar"></div>
+              </div>
+              <p>66 روز باقی مانده تا اتمام اشتراک</p>
+            </div>
+          </div>
+          <div class="col-12 order-2 order-xl-0 d-flex flex-wrap gap-2">
+            <button class="btn btn-primary me-2" data-bs-target="#upgradePlanModal" data-bs-toggle="modal"> تمدید اشتراک</button>
+            <button class="btn btn-label-danger cancel-subscription">لغو اشتراک</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Current Plan -->
+
+    <!-- Payment Methods -->
+    <div class="card card-action mb-4">
+      <div class="card-header align-items-center">
+        <h5 class="card-action-title mb-0">روش های پرداخت</h5>
+        <div class="card-action-element">
+          <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addNewCCModal"><i class="ti ti-plus ti-xs me-1"></i>افزودن کارت</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="added-cards">
+          <div class="cardMaster border p-3 rounded mb-3">
+            <div class="d-flex justify-content-between flex-sm-row flex-column">
+              <div class="card-information">
+                <img class="mb-3 img-fluid" src="~/img/icons/payments/mastercard.png" alt="Master Card">
+                <h6 class="mb-2 pt-1">ترلان پروانه</h6>
+                <span class="card-number">
+                  <bdi>∗∗∗∗ ∗∗∗∗ ∗∗∗∗ 9856</bdi>
+                </span>
+              </div>
+              <div class="d-flex flex-column text-start text-lg-end">
+                <div class="d-flex order-sm-0 order-1 mt-3">
+                  <button class="btn btn-label-primary me-3" data-bs-toggle="modal" data-bs-target="#editCCModal">ویرایش</button>
+                  <button class="btn btn-label-secondary">حذف</button>
+                </div>
+                <small class="mt-sm-auto mt-2 order-sm-1 order-0">انقضا: 10/27</small>
+              </div>
+            </div>
+          </div>
+          <div class="cardMaster border p-3 rounded mb-3">
+            <div class="d-flex justify-content-between flex-sm-row flex-column">
+              <div class="card-information">
+                <img alt="مستر کارت" class="mb-3 img-fluid" src="~/img/icons/payments/visa.png"/>
+                <div class="d-flex align-items-center mb-2 pt-1">
+                  <h6 class="mb-0 me-3">رامبد جوان</h6>
+                  <span class="badge bg-label-primary me-1">اصلی</span>
+                </div>
+                <span class="card-number">
+                  <bdi>∗∗∗∗ ∗∗∗∗ ∗∗∗∗ 6542</bdi>
+                </span>
+              </div>
+              <div class="d-flex flex-column text-start text-lg-end">
+                <div class="d-flex order-sm-0 order-1 mt-3">
+                  <button class="btn btn-label-primary me-3" data-bs-target="#editCCModal" data-bs-toggle="modal"> ویرایش</button>
+                  <button class="btn btn-label-secondary">حذف</button>
+                </div>
+                <small class="mt-sm-auto mt-2 order-sm-1 order-0">انقضا: 10/27</small>
+              </div>
+            </div>
+          </div>
+          <div class="cardMaster border p-3 rounded">
+            <div class="d-flex justify-content-between flex-sm-row flex-column">
+              <div class="card-information">
+                <img alt="ویزا کارت" class="mb-3 img-fluid" src="~/img/icons/payments/american-express-logo.png"/>
+                <h6 class="mb-1 pt-1">سردار آزمون</h6>
+                <span class="card-number">
+                  <bdi>∗∗∗∗ ∗∗∗∗ ∗∗∗∗ 5896</bdi>
+                </span>
+              </div>
+              <div class="d-flex flex-column text-start text-lg-end">
+                <div class="d-flex order-sm-0 order-1 mt-3">
+                  <button class="btn btn-label-primary me-3" data-bs-target="#editCCModal" data-bs-toggle="modal"> ویرایش</button>
+                  <button class="btn btn-label-secondary">حذف</button>
+                </div>
+                <small class="mt-sm-auto mt-2 order-sm-1 order-0">انقضا: 10/27</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Payment Methods -->
+
+    <!-- Billing Address -->
+    <div class="card card-action mb-4">
+      <div class="card-header align-items-center">
+        <h5 class="card-action-title mb-0">آدرس صورتحساب</h5>
+        <div class="card-action-element">
+          <button class="btn btn-primary btn-sm edit-address" type="button" data-bs-toggle="modal" data-bs-target="#addNewAddress">ویرایش آدرس</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-7 col-12">
+            <dl class="row mb-0">
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">نام شرکت:</dt>
+              <dd class="col-sm-8">@TempData.Peek("authorName")</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">ایمیل صورتحساب:</dt>
+              <dd class="col-sm-8">user@ex.com</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">کد مالیاتی:</dt>
+              <dd class="col-sm-8">TAX-357378</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">شماره مالیات:</dt>
+              <dd class="col-sm-8">SDF754K77</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">آدرس صورتحساب:</dt>
+              <dd class="col-sm-8"> ایران ، اصفهان ، میدان نقش جهان ، پلاک 1</dd>
+            </dl>
+          </div>
+          <div class="col-xl-5 col-12">
+            <dl class="row mb-0">
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">شماره موبایل:</dt>
+              <dd class="col-sm-8">
+                <bdi>+98 (913) 000 0000</bdi>
+              </dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">کشور:</dt>
+              <dd class="col-sm-8">ایران</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">استان:</dt>
+              <dd class="col-sm-8">اصفهان</dd>
+              <dt class="col-sm-4 mb-3 fw-medium text-nowrap">کد پستی:</dt>
+              <dd class="col-sm-8">403114</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Billing Address -->
+
+  </div>
+  <!--/ User Content -->
+</div>
+
+<!-- Modal -->
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditUser")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditCc")
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewAddress")
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewCc")
+@await Html.PartialAsync("../_Partials/_Modals/ModalUpgradePlan")
+<!-- /Modal -->

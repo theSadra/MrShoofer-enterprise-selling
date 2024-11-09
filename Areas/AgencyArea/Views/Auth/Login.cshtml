@@ -46,8 +46,8 @@
 
                     <form id="formAuthentication" class="mb-3" method="POST" asp-action="Login">
                         <div class="mb-3">
-                            <label class="form-label" for="NumberPhone">شماره تلفن</label>
-                            <input autofocus class="form-control" id="NumberPhone" asp-for="NumberPhone" placeholder="شماره تلفن خود را وارد کنید" type="text" />
+                            <label class="form-label" for="NumberPhone">نام کاربری</label>
+							<input autofocus class="form-control" id="Username" asp-for="Username" placeholder="نام کاربری را وارد کنید" type="text" />
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
@@ -65,7 +65,7 @@
                         <div class="mb-2 d-flex justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="remember-me">
-                                <label class="form-check-label" for="remember-me"> مرا به خاطر بسپار</label>
+                                <label class="form-check-label" asp-for="RemmemberMe"> مرا به خاطر بسپار</label>
                             </div>
                             <div>
                             <a asp-action="Loginotp">

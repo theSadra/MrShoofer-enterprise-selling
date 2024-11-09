@@ -50,6 +50,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
   options.Password.RequireNonAlphanumeric = false;
   options.Password.RequireUppercase = false;
   options.Password.RequiredUniqueChars = 0;
+  options.Password.RequireLowercase = false;
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
@@ -103,12 +104,12 @@ app.UseAuthorization();
 
 
 
-// Configure routing for Admin and Agency areas
 app.MapControllerRoute(
     name: "agency",
     pattern: "{controller=Home}/{action=Index}/{id?}",
     defaults: new { area = "AgencyArea" });
 
+// Configure routing for Admin and Agency areas
 app.MapControllerRoute(
     name: "admin",
     pattern: "Admin/{controller=Home}/{action=Index}/{id?}",

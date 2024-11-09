@@ -1,0 +1,476 @@
+@{
+  ViewData["Title"] = "فرم ها - ورودی های اساسی";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css">
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/jdate/jdate.min.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/form-basic-inputs.js"></script>
+}
+
+@* ************** Content ************** *@
+
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">فرم ها /</span>
+    ورودی های اساسی
+  </h4>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">پیش فرض</h5>
+      <div class="card-body">
+        <div>
+          <label class="form-label" for="defaultFormControlInput">نام</label>
+          <input aria-describedby="defaultFormControlHelp" class="form-control" id="defaultFormControlInput" placeholder="نـوید" type="text"/>
+          <div class="form-text" id="defaultFormControlHelp"> ما هرگز اطلاعات شما را در اختیار کسی نمی‌گذاریم.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">برچسب شناور</h5>
+      <div class="card-body">
+        <div class="form-floating">
+          <input aria-describedby="floatingInputHelp" class="form-control" id="floatingInput" placeholder="" type="text"/>
+          <label for="floatingInput">نام</label>
+          <div class="form-text" id="floatingInputHelp"> ما هرگز اطلاعات شما را در اختیار کسی نمی‌گذاریم.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form controls -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">کنترل های فرم</h5>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label" for="exampleFormControlInput1">آدرس ایمیل</label>
+          <input class="form-control" id="exampleFormControlInput1" placeholder="name&#64;example.com" type="email"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="exampleFormControlReadOnlyInput1">غیرقابل تغییر</label>
+          <input class="form-control" id="exampleFormControlReadOnlyInput1" placeholder="ورودی فقط خواندنی در اینجا..." readonly type="text"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="exampleFormControlReadOnlyInputPlain1">متن ساده</label>
+          <input class="form-control-plaintext" id="exampleFormControlReadOnlyInputPlain1" readonly type="text" value="email&#64;example.com"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="exampleFormControlSelect1">انتخابگر</label>
+          <select aria-label="نمونه انتخاب پیش فرض" class="form-select" id="exampleFormControlSelect1">
+            <option selected>پیشفرض</option>
+            <option value="1">یکی</option>
+            <option value="2">دو</option>
+            <option value="3">سه</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="exampleDataList">لیست داده‌های پیشنهادی</label>
+          <input class="form-control" id="exampleDataList" list="datalistOptions" placeholder="برای تست بنویسید تهران ..."/>
+          <datalist id="datalistOptions">
+            <option value="هرمزگان"></option>
+            <option value="کاشان"></option>
+            <option value="اصفهان"></option>
+            <option value="مازندران"></option>
+            <option value="تهران"></option>
+          </datalist>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="exampleFormControlSelect2">انتخابگر چندگزینه‌ای‌</label>
+          <select aria-label="نمونه انتخاب چندگانه" class="form-select" id="exampleFormControlSelect2" multiple>
+            <option selected>پیشفرض</option>
+            <option value="1">یکی</option>
+            <option value="2">دو</option>
+            <option value="3">سه</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label" for="exampleFormControlTextarea1">متن نمونه</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Sizing -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">اندازه ورودی</h5>
+      <div class="card-body">
+        <small class="text-light fw-medium">فیلدها</small>
+        <div class="mt-2 mb-3">
+          <label class="form-label" for="largeInput">ورودی بزرگ</label>
+          <input class="form-control form-control-lg" id="largeInput" placeholder="ورودی پیش فرض" type="text"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="defaultInput">ورودی پیش فرض</label>
+          <input class="form-control" id="defaultInput" placeholder="ورودی پیش فرض" type="text"/>
+        </div>
+        <div>
+          <label class="form-label" for="smallInput">ورودی کوچک</label>
+          <input class="form-control form-control-sm" id="smallInput" placeholder="ورودی پیش فرض" type="text"/>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <div class="card-body">
+        <small class="text-light fw-medium">انتخابگر</small>
+        <div class="mt-2 mb-3">
+          <label class="form-label" for="largeSelect">انتخابگر بزرگ</label>
+          <select class="form-select form-select-lg" id="largeSelect">
+            <option>انتخاب بزرگ</option>
+            <option value="1">یکی</option>
+            <option value="2">دو</option>
+            <option value="3">سه</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="defaultSelect">انتخابگر پیش فرض</label>
+          <select class="form-select" id="defaultSelect">
+            <option>انتخاب پیش فرض</option>
+            <option value="1">یکی</option>
+            <option value="2">دو</option>
+            <option value="3">سه</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label" for="smallSelect">انتخابگر کوچک</label>
+          <select class="form-select form-select-sm" id="smallSelect">
+            <option>انتخاب کوچک</option>
+            <option value="1">یکی</option>
+            <option value="2">دو</option>
+            <option value="3">سه</option>
+          </select>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <div class="card-body">
+        <small class="text-light fw-medium">شکل فیلد</small>
+        <div class="mt-2">
+          <label class="form-label" for="roundedInput">فیلد گرد</label>
+          <input class="form-control rounded-pill" id="roundedInput" placeholder="ورودی پیش فرض" type="text"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Default Checkboxes and radios & Default checkboxes and radios -->
+  <div class="col-xl-6">
+    <div class="card mb-4">
+      <h5 class="card-header">چک باکس ها و رادیوباتن‌ها</h5>
+      <!-- Checkboxes and Radios -->
+      <div class="row row-bordered g-0">
+        <div class="col-md p-4">
+          <small class="text-light fw-medium">چک باکس ها</small>
+          <div class="form-check mt-3">
+            <input class="form-check-input" id="defaultCheck1" type="checkbox" value=""/>
+            <label class="form-check-label" for="defaultCheck1"> انتخاب نشده</label>
+          </div>
+          <div class="form-check mt-2">
+            <input checked class="form-check-input" id="defaultCheck2" type="checkbox" value=""/>
+            <label class="form-check-label" for="defaultCheck2"> نامشخص</label>
+          </div>
+          <div class="form-check mt-2">
+            <input checked class="form-check-input" id="defaultCheck3" type="checkbox" value=""/>
+            <label class="form-check-label" for="defaultCheck3"> انتخاب شد</label>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" disabled id="disabledCheck1" type="checkbox" value=""/>
+            <label class="form-check-label" for="disabledCheck1"> غیرفعال شده</label>
+          </div>
+          <div class="form-check mt-2">
+            <input checked class="form-check-input" disabled id="disabledCheck2" type="checkbox" value=""/>
+            <label class="form-check-label" for="disabledCheck2"> غیرفعال تیک دار</label>
+          </div>
+        </div>
+        <div class="col-md p-4">
+          <small class="text-light fw-medium">رادیو</small>
+          <div class="form-check mt-3">
+            <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value=""/>
+            <label class="form-check-label" for="defaultRadio1"> انتخاب نشده</label>
+          </div>
+          <div class="form-check mt-2">
+            <input checked class="form-check-input" id="defaultRadio2" name="default-radio-1" type="radio" value=""/>
+            <label class="form-check-label" for="defaultRadio2"> انتخاب شده</label>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" disabled id="disabledRadio1" type="radio" value=""/>
+            <label class="form-check-label" for="disabledRadio1"> غیرفعال، بدون تیک</label>
+          </div>
+          <div class="form-check mt-2">
+            <input checked class="form-check-input" disabled id="disabledRadio2" type="radio" value=""/>
+            <label class="form-check-label" for="disabledRadio2"> غیرفعال، با تیک</label>
+          </div>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <!-- Inline Checkboxes -->
+      <div class="row row-bordered g-0">
+        <div class="col-md p-4">
+          <small class="text-light fw-medium d-block">چک‌باکس‌های تک خطی</small>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" id="inlineCheckbox1" type="checkbox" value="option1"/>
+            <label class="form-check-label" for="inlineCheckbox1">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="inlineCheckbox2" type="checkbox" value="option2"/>
+            <label class="form-check-label" for="inlineCheckbox2">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" disabled id="inlineCheckbox3" type="checkbox" value="option3"/>
+            <label class="form-check-label" for="inlineCheckbox3">3 (غیرفعال)</label>
+          </div>
+        </div>
+        <div class="col-md p-4">
+          <small class="text-light fw-medium d-block">رادیو تک خطی</small>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" id="inlineRadio1" name="inlineRadioOptions" type="radio" value="option1"/>
+            <label class="form-check-label" for="inlineRadio1">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" id="inlineRadio2" name="inlineRadioOptions" type="radio" value="option2"/>
+            <label class="form-check-label" for="inlineRadio2">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" disabled id="inlineRadio3" name="inlineRadioOptions" type="radio" value="option3"/>
+            <label class="form-check-label" for="inlineRadio3">3 (غیرفعال)</label>
+          </div>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <!-- Checkboxes & Radio Colors -->
+      <div class="row row-bordered g-0">
+        <div class="col-md p-4">
+          <small class="text-light fw-medium d-block">چک باکس ها رنگ ها</small>
+          <div class="form-check form-check-primary mt-3">
+            <input checked class="form-check-input" id="customCheckPrimary" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckPrimary">اصلی</label>
+          </div>
+          <div class="form-check form-check-secondary mt-2">
+            <input checked class="form-check-input" id="customCheckSecondary" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckSecondary">ثانوی</label>
+          </div>
+          <div class="form-check form-check-success mt-2">
+            <input checked class="form-check-input" id="customCheckSuccess" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckSuccess">موفق</label>
+          </div>
+          <div class="form-check form-check-danger mt-2">
+            <input checked class="form-check-input" id="customCheckDanger" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckDanger">اخطار</label>
+          </div>
+          <div class="form-check form-check-warning mt-2">
+            <input checked class="form-check-input" id="customCheckWarning" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckWarning"> هشدار</label>
+          </div>
+          <div class="form-check form-check-info mt-2">
+            <input checked class="form-check-input" id="customCheckInfo" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckInfo"> اطلاعات</label>
+          </div>
+          <div class="form-check form-check-dark mt-2">
+            <input checked class="form-check-input" id="customCheckDark" type="checkbox" value=""/>
+            <label class="form-check-label" for="customCheckDark"> تاریک</label>
+          </div>
+        </div>
+        <div class="col-md p-4">
+          <small class="text-light fw-medium d-block">رادیوباتن‌های رنگی</small>
+          <div class="form-check form-check-primary mt-3">
+            <input checked class="form-check-input" id="customRadioPrimary" name="customRadioPrimary" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioPrimary"> اولیه</label>
+          </div>
+          <div class="form-check form-check-secondary mt-2">
+            <input checked class="form-check-input" id="customRadioSecondary" name="customRadioSecondary" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioSecondary"> ثانوی</label>
+          </div>
+          <div class="form-check form-check-success mt-2">
+            <input checked class="form-check-input" id="customRadioSuccess" name="customRadioSuccess" type="radio" value=""/>
+            <label class="form-check-label" for="customRadioSuccess"> موفقیت</label>
+          </div>
+          <div class="form-check form-check-danger mt-2">
+            <input checked class="form-check-input" id="customRadioDanger" name="customRadioDanger" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioDanger"> خطا</label>
+          </div>
+          <div class="form-check form-check-warning mt-2">
+            <input checked class="form-check-input" id="customRadioWarning" name="customRadioWarning" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioWarning"> هشدار</label>
+          </div>
+          <div class="form-check form-check-info mt-2">
+            <input checked class="form-check-input" id="customRadioInfo" name="customRadioInfo" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioInfo"> اطلاعات</label>
+          </div>
+          <div class="form-check form-check-dark mt-2">
+            <input checked class="form-check-input" id="customRadioDark" name="customRadioDark" type="radio" value=""/>
+            <label class="form-check-label " for="customRadioDark"> تاریک</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Switches -->
+    <div class="card mb-4">
+      <h5 class="card-header">سوئیچ ها</h5>
+      <div class="card-body">
+        <div class="form-check form-switch mb-2">
+          <input class="form-check-input" id="flexSwitchCheckDefault" type="checkbox"/>
+          <label class="form-check-label" for="flexSwitchCheckDefault">سوپیچ پیشفرض</label>
+        </div>
+        <div class="form-check form-switch mb-2">
+          <input checked class="form-check-input" id="flexSwitchCheckChecked" type="checkbox"/>
+          <label class="form-check-label" for="flexSwitchCheckChecked">سوئیچ روشن</label>
+        </div>
+        <div class="form-check form-switch mb-2">
+          <input class="form-check-input" disabled id="flexSwitchCheckDisabled" type="checkbox"/>
+          <label class="form-check-label" for="flexSwitchCheckDisabled">سوئیچ غیرفعال</label>
+        </div>
+        <div class="form-check form-switch">
+          <input checked class="form-check-input" disabled id="flexSwitchCheckCheckedDisabled" type="checkbox"/>
+          <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">سوئیچ روشن ، غیرفعال</label>
+        </div>
+      </div>
+    </div>
+    <!-- Range -->
+    <div class="card mb-4 mb-xl-0">
+      <h5 class="card-header">انتخابگر شناور</h5>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label" for="formRange1">انتخابگر ساده</label>
+          <input class="form-range" id="formRange1" type="range"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="disabledRange">انتخابگر غیرفعال</label>
+          <input class="form-range" disabled id="disabledRange" type="range"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="formRange2">حداقل و حداکثر</label>
+          <input class="form-range" id="formRange2" max="5" min="0" type="range"/>
+        </div>
+        <div>
+          <label class="form-label" for="formRange3">واحدی</label>
+          <input class="form-range" id="formRange3" max="5" min="0" step="0.5" type="range"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <!-- HTML5 Inputs -->
+    <div class="card mb-4">
+      <h5 class="card-header">فیلدهای HTML5</h5>
+      <div class="card-body">
+        <div class="mb-3 row">
+          <label for="html5-text-input" class="col-md-2 col-form-label">متن</label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" value='@TempData.Peek("appName")' id="html5-text-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-search-input">جستجو کردن</label>
+          <div class="col-md-10">
+            <input class="form-control" type="search" value="جستجو ..." id="html5-search-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-email-input">ایمیل</label>
+          <div class="col-md-10">
+            <input class="form-control" type="email" value="john&#64;example.com" id="html5-email-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="html5-url-input" class="col-md-2 col-form-label">URL</label>
+          <div class="col-md-10">
+            <input class="form-control" type="url" value='@TempData.Peek("authorUrl")' id="html5-url-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="html5-tel-input" class="col-md-2 col-form-label">تلفن</label>
+          <div class="col-md-10">
+            <input class="form-control" type="tel" value="90-(164)-188-556" id="html5-tel-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-password-input">کلمه عبور</label>
+          <div class="col-md-10">
+            <input class="form-control" type="password" value="password" id="html5-password-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-number-input">عدد</label>
+          <div class="col-md-10">
+            <input class="form-control" type="number" value="18" id="html5-number-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-datetime-local-input">تاریخ و ساعت</label>
+          <div class="col-md-10">
+            <input class="form-control bdi" id="html5-datetime-local-input" placeholder="YYYY/MM/DD HH:MM" type="text" value="1381-11-23 11:45"/>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-date-input">تاریخ</label>
+          <div class="col-md-10">
+            <input class="form-control bdi" id="html5-date-input" placeholder="YYYY/MM/DD" type="text" value="1381-11-23"/>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-month-input">ماه</label>
+          <div class="col-md-10">
+            <input class="form-control" id="html5-month-input" type="month" value="1381/11"/>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-week-input">هفته</label>
+          <div class="col-md-10">
+            <input class="form-control" type="week" value="2021-W25" id="html5-week-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-md-2 col-form-label" for="html5-time-input">زمان</label>
+          <div class="col-md-10">
+            <input class="form-control" type="time" value="12:30:00" id="html5-time-input" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="html5-color-input" class="col-md-2 col-form-label">رنگ</label>
+          <div class="col-md-10">
+            <input class="form-control" type="color" value="#666EE8" id="html5-color-input" />
+          </div>
+        </div>
+        <div class="row">
+          <label for="html5-range" class="col-md-2 col-form-label">دامنه</label>
+          <div class="col-md-10">
+            <input type="range" class="form-range mt-3" id="html5-range" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File input -->
+    <div class="card">
+      <h5 class="card-header">ورودی فایل</h5>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label" for="formFile">انتخاب فایل پیش فرض</label>
+          <input class="form-control" id="formFile" type="file"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="formFileMultiple">انتخاب چند فایل</label>
+          <input class="form-control" id="formFileMultiple" multiple type="file"/>
+        </div>
+        <div>
+          <label class="form-label" for="formFileDisabled">ورودی فایل غیرفعال</label>
+          <input class="form-control" disabled id="formFileDisabled" type="file"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

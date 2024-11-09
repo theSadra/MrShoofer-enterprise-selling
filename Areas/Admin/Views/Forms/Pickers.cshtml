@@ -1,0 +1,231 @@
+@{
+  ViewData["Title"] = "فرم ها - انتخابگرها";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+<link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+<link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr.js"></script>
+<script src="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+<script src="~/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+<script src="~/vendor/libs/pickr/pickr.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/forms-pickers.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  انتخابگرها
+</h4>
+<div class="row">
+  <!-- Flat Picker -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انتخابگر تاریخ و زمان (Flatpickr)</h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Date Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-date">انتخابگر تاریخ</label>
+            <input class="form-control" id="flatpickr-date" placeholder="YYYYY-MM-DD" type="text"/>
+          </div>
+          <!-- /Date Picker -->
+          <!-- Time Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-time">انتخابگر زمان</label>
+            <input class="form-control" id="flatpickr-time" placeholder="HH:MM" type="text"/>
+          </div>
+          <!-- /Time Picker -->
+          <!-- Datetime Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-datetime">انتخابگر تاریخ و زمان</label>
+            <input class="form-control" id="flatpickr-datetime" placeholder="YYYYY-MM-DD HH:MM" type="text"/>
+          </div>
+          <!-- /Datetime Picker-->
+          <!-- Multiple Dates Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-multi">انتخابگر چند تاریخ و زمان</label>
+            <input class="form-control" id="flatpickr-multi" placeholder="YYYYY-MM-DD HH:MM" type="text"/>
+          </div>
+          <!-- /Multiple Dates Picker-->
+          <!-- Range Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-range">انتخابگر بازه</label>
+            <input class="form-control" id="flatpickr-range" placeholder="YYYY-MM-DD به YYYY-MM-DD" type="text"/>
+          </div>
+          <!-- /Range Picker-->
+          <!-- Human Friendly Date Picker-->
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="flatpickr-human-friendly">انتخابگر تاریخ سفارشی </label>
+            <input class="form-control bdi" id="flatpickr-human-friendly" placeholder="ماه DD، YYYY" type="text"/>
+          </div>
+          <!-- /Human Friendly Date Picker-->
+          <!-- Disabled Range-->
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <label class="form-label" for="flatpickr-disabled-range">انتخابگر بازه غیرفعال</label>
+            <input class="form-control" id="flatpickr-disabled-range" placeholder="YYYY-MM-DD" type="text"/>
+          </div>
+          <!-- /Disabled Range-->
+          <!-- Inline Picker-->
+          <div class="col-md-6 col-12">
+            <label class="form-label" for="flatpickr-inline">انتخابگر درون صفحه</label>
+            <input class="form-control mb-1" id="flatpickr-inline" placeholder="YYYY-MM-DD" type="text"/>
+          </div>
+          <!-- /Inline Picker-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Flatpickr -->
+  <!-- Bootstrap Datepicker -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انتخابگر تاریخ بوت‌استرپ</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-datepicker-basic">پایه</label>
+            <input class="form-control" id="bs-datepicker-basic" placeholder="MM/DD/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-datepicker-format">فرمت دار</label>
+            <input class="form-control" id="bs-datepicker-format" placeholder="DD/MM/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="dateRangePicker">انتخابگر بازه</label>
+            <div class="input-group input-daterange" id="bs-datepicker-daterange">
+              <input class="form-control" id="dateRangePicker" placeholder="MM/DD/YYYY" type="text"/>
+              <span class="input-group-text">تا</span>
+              <input class="form-control" placeholder="MM/DD/YYYY" type="text"/>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-datepicker-disabled-days">روزهای غیرفعال</label>
+            <input class="form-control" id="bs-datepicker-disabled-days" placeholder="MM/DD/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-datepicker-multidate">انتخابگر چند تاریخ</label>
+            <input class="form-control" id="bs-datepicker-multidate" placeholder="MM/DD/YYYY، MM/DD/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-datepicker-options">کلیدها</label>
+            <input class="form-control" id="bs-datepicker-options" placeholder="MM/DD/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <label class="form-label" for="bs-datepicker-autoclose">بسته شدن بعد انتخاب</label>
+            <input class="form-control" id="bs-datepicker-autoclose" placeholder="MM/DD/YYYY" type="text"/>
+          </div>
+          <div class="col-md-6 col-12">
+            <label class="form-label">انتخابگر درون صفحه</label>
+            <div id="bs-datepicker-inline"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Bootstrap Datepicker -->
+  <!-- Bootstrap Daterangepicker -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انتخابگر بازه بوت‌استرپ</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-rangepicker-basic">پایه</label>
+            <input class="form-control" id="bs-rangepicker-basic" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-rangepicker-single">انتخابگر تکی</label>
+            <input class="form-control" id="bs-rangepicker-single" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-rangepicker-time">تاریخ و زمان</label>
+            <input class="form-control" id="bs-rangepicker-time" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="bs-rangepicker-range">بازه سفارشی</label>
+            <input class="form-control" id="bs-rangepicker-range" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <label class="form-label" for="bs-rangepicker-week-num">شماره‌های هفته</label>
+            <input class="form-control" id="bs-rangepicker-week-num" type="text"/>
+          </div>
+          <div class="col-md-6 col-12">
+            <label class="form-label" for="bs-rangepicker-dropdown">انتخابگر ماه و سال</label>
+            <input class="form-control" id="bs-rangepicker-dropdown" type="text"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Bootstrap Daterangepicker -->
+  <!-- jQuery Timepicker -->
+  <div class="col-12 mb-4">
+    <div class="card">
+      <h5 class="card-header">انتخابگر زمان jQuery</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="timepicker-basic">پایه</label>
+            <input class="form-control" id="timepicker-basic" placeholder="HH:MMam" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="timepicker-min-max">حداقل حداکثر</label>
+            <input class="form-control" id="timepicker-min-max" placeholder="HH:MMam" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="timepicker-disabled-times">آیتم‌های غیرفعال</label>
+            <input class="form-control" id="timepicker-disabled-times" placeholder="HH:MMam" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-4">
+            <label class="form-label" for="timepicker-format">فرمت</label>
+            <input class="form-control" id="timepicker-format" placeholder="HH:MM:SS" type="text"/>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <label class="form-label" for="timepicker-step">فاصله زمانی (15 دقیقه)</label>
+            <input class="form-control" id="timepicker-step" placeholder="HH:MMam" type="text"/>
+          </div>
+          <div class="col-md-6 col-12">
+            <label class="form-label" for="timepicker-24hours">فرمت 24 ساعته</label>
+            <input class="form-control" id="timepicker-24hours" placeholder="HH:MM" type="text"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /jQuery Timepicker -->
+  <!-- Color Picker -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">انتخابگر رنگ</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="classic col col-sm-3 col-lg-2">
+            <p>کلاسیک</p>
+            <div id="color-picker-classic"></div>
+          </div>
+          <div class="monolith col col-sm-3 col-lg-2">
+            <p>مونولیت</p>
+            <div id="color-picker-monolith"></div>
+          </div>
+          <div class="nano col col-sm-3 col-lg-2">
+            <p>نانو</p>
+            <div id="color-picker-nano"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Color Picker-->
+</div>

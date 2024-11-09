@@ -1,0 +1,402 @@
+@{
+  ViewData["Title"] = "فرم ها - اعتبار سنجی";
+}
+
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="~/vendor/libs/typeahead-js/typeahead.css" />
+<link rel="stylesheet" href="~/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts{
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/jdate/jdate.min.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+<script src="~/vendor/libs/typeahead-js/typeahead.js"></script>
+<script src="~/vendor/libs/tagify/tagify.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/form-validation.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  اعتبارسنجی
+</h4>
+<div class="row mb-4">
+  <!-- Browser Default -->
+  <div class="col-md mb-4 mb-md-0">
+    <div class="card">
+      <h5 class="card-header">پیش فرض مرورگر</h5>
+      <div class="card-body">
+        <form class="browser-default-validation">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-name">نام</label>
+            <input class="form-control" id="basic-default-name" placeholder="نـوید" required type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-email">ایمیل</label>
+            <input class="form-control" id="basic-default-email" placeholder="mail@gmail.com" required type="email"/>
+          </div>
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label" for="basic-default-password">کلمه عبور</label>
+            <div class="input-group input-group-merge">
+              <input aria-describedby="basic-default-password3" class="form-control" id="basic-default-password" placeholder="············" required type="password"/>
+              <span class="input-group-text cursor-pointer" id="basic-default-password3">
+                <i class="ti ti-eye-off"></i>
+              </span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-country">کشور</label>
+            <select class="form-select" id="basic-default-country" required>
+              <option value="">کشور را انتخاب کنید</option>
+              <option value="usa">ایران</option>
+              <option value="uk">انگلستان</option>
+              <option value="france">فرانسه</option>
+              <option value="australia">استرالیا</option>
+              <option value="spain">اسپانیا</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-dob">تاریخ تولد</label>
+            <input class="form-control flatpickr-validation" id="basic-default-dob" required type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-upload-file">عکس پروفایل</label>
+            <input class="form-control" id="basic-default-upload-file" required type="file"/>
+          </div>
+          <div class="mb-3">
+            <label class="d-block form-label">جنسیت</label>
+            <div class="form-check mb-2">
+              <input checked class="form-check-input" id="basic-default-radio-male" name="basic-default-radio" required type="radio"/>
+              <label class="form-check-label" for="basic-default-radio-male">مرد</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="basic-default-radio-female" name="basic-default-radio" required type="radio"/>
+              <label class="form-check-label" for="basic-default-radio-female">زن</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-bio">بیوگرافی</label>
+            <textarea class="form-control" id="basic-default-bio" name="basic-default-bio" required rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" id="basic-default-checkbox" required type="checkbox"/>
+              <label class="form-check-label" for="basic-default-checkbox">با شرایط و ضوابط موافقم</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="switch switch-primary">
+              <input class="switch-input" required type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">دریافت ایمیل و پیشنهادات</span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">ارسال</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Browser Default -->
+  <!-- Bootstrap Validation -->
+  <div class="col-md">
+    <div class="card">
+      <h5 class="card-header">اعتبار سنجی bootstrap</h5>
+      <div class="card-body">
+        <form class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-name">نام</label>
+            <input class="form-control" id="bs-validation-name" placeholder="نـوید" required type="text"/>
+            <div class="valid-feedback">ورودی مورد تایید!</div>
+            <div class="invalid-feedback">لطفا نام خود را وارد کنید.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-email">ایمیل</label>
+            <input aria-label="mail@gmail.com" class="form-control" id="bs-validation-email" placeholder="mail@gmail.com" required type="email"/>
+            <div class="valid-feedback">ورودی مورد تایید!</div>
+            <div class="invalid-feedback">لطفا یک ایمیل معتبر وارد کنید</div>
+          </div>
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label" for="bs-validation-password">کلمه عبور</label>
+            <div class="input-group input-group-merge">
+              <input class="form-control" id="bs-validation-password" placeholder="············" required type="password"/>
+              <span class="input-group-text cursor-pointer" id="basic-default-password4">
+                <i class="ti ti-eye-off"></i>
+              </span>
+            </div>
+            <div class="valid-feedback">ورودی مورد تایید!</div>
+            <div class="invalid-feedback">لطفا رمز عبور خود را وارد کنید.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-country">کشور</label>
+            <select class="form-select" id="bs-validation-country" required>
+              <option value="">کشور را انتخاب کنید</option>
+              <option value="usa">ایران</option>
+              <option value="uk">انگلستان</option>
+              <option value="france">فرانسه</option>
+              <option value="australia">استرالیا</option>
+              <option value="spain">اسپانیا</option>
+            </select>
+            <div class="valid-feedback">ورودی مورد تایید!</div>
+            <div class="invalid-feedback">لطفا کشور خود را انتخاب کنید</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-dob">تاریخ تولد</label>
+            <input class="form-control flatpickr-validation" id="bs-validation-dob" required type="text"/>
+            <div class="valid-feedback">ورودی مورد تایید!</div>
+            <div class="invalid-feedback">لطفاً تاریخ تولد خود را وارد کنید</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-upload-file">عکس پروفایل</label>
+            <input class="form-control" id="bs-validation-upload-file" required type="file"/>
+          </div>
+          <div class="mb-3">
+            <label class="d-block form-label">جنسیت</label>
+            <div class="form-check mb-2">
+              <input checked class="form-check-input" id="bs-validation-radio-male" name="bs-validation-radio" required type="radio"/>
+              <label class="form-check-label" for="bs-validation-radio-male">مرد</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="bs-validation-radio-female" name="bs-validation-radio" required type="radio"/>
+              <label class="form-check-label" for="bs-validation-radio-female">زن</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="bs-validation-bio">بیوگرافی</label>
+            <textarea class="form-control" id="bs-validation-bio" name="bs-validation-bio" required rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" id="bs-validation-checkbox" required type="checkbox"/>
+              <label class="form-check-label" for="bs-validation-checkbox">با شرایط و ضوابط موافقم</label>
+              <div class="invalid-feedback">قبل از ارسال باید موافقت کنید.</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="switch switch-primary">
+              <input class="switch-input" required type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">دریافت ایمیل و پیشنهادات</span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">ارسال</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Bootstrap Validation -->
+</div>
+<div class="row">
+  <!-- FormValidation -->
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">اعتبارسنجی فرم</h5>
+      <div class="card-body">
+        <form class="row g-3" id="formValidationExamples">
+          <!-- Account Details -->
+          <div class="col-12">
+            <h6>1. جزئیات حساب</h6>
+            <hr class="mt-0"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationName">نام و نام خانوادگی</label>
+            <input class="form-control" id="formValidationName" name="formValidationName" placeholder="نـوید" type="text"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationEmail">ایمیل</label>
+            <input class="form-control" id="formValidationEmail" name="formValidationEmail" placeholder="test@email.com" type="email"/>
+          </div>
+          <div class="col-md-6">
+            <div class="form-password-toggle">
+              <label class="form-label" for="formValidationPass">کلمه عبور</label>
+              <div class="input-group input-group-merge">
+                <input aria-describedby="multicol-password2" class="form-control" id="formValidationPass" name="formValidationPass" placeholder="············" type="password"/>
+                <span class="input-group-text cursor-pointer" id="multicol-password2">
+                  <i class="ti ti-eye-off"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-password-toggle">
+              <label class="form-label" for="formValidationConfirmPass">تایید کلمه عبور</label>
+              <div class="input-group input-group-merge">
+                <input aria-describedby="multicol-confirm-password2" class="form-control" id="formValidationConfirmPass" name="formValidationConfirmPass" placeholder="············" type="password"/>
+                <span class="input-group-text cursor-pointer" id="multicol-confirm-password2">
+                  <i class="ti ti-eye-off"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- Personal Info -->
+          <div class="col-12">
+            <h6 class="mt-2">2. اطلاعات شخصی</h6>
+            <hr class="mt-0"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationFile">عکس پروفایل</label>
+            <input class="form-control" id="formValidationFile" name="formValidationFile" type="file"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationDob">تاریخ تولد</label>
+            <input class="form-control flatpickr-validation" id="formValidationDob" name="formValidationDob" required type="text"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationSelect2">کشور</label>
+            <select class="form-select select2" data-allow-clear="true" id="formValidationSelect2" name="formValidationSelect2">
+              <option value="">انتخاب کنید</option>
+              <option value="Australia">استرالیا</option>
+              <option value="Bangladesh">بنگلادش</option>
+              <option value="Belarus">بلاروس</option>
+              <option value="Brazil">برزیل</option>
+              <option value="Canada">کانادا</option>
+              <option value="China">چین</option>
+              <option value="France">فرانسه</option>
+              <option value="Germany">آلمان</option>
+              <option value="India">هندوستان</option>
+              <option value="Indonesia">اندونزی</option>
+              <option value="Israel">اسرائيل</option>
+              <option value="Italy">ایتالیا</option>
+              <option value="Japan">ژاپن</option>
+              <option value="Korea">جمهوری کره</option>
+              <option value="Mexico">مکزیک</option>
+              <option value="Philippines">فیلیپین</option>
+              <option value="Russia">فدراسیون روسیه</option>
+              <option value="South Africa">آفریقای جنوبی</option>
+              <option value="Thailand">تایلند</option>
+              <option value="Turkey">ترکیه</option>
+              <option value="Ukraine">اوکراین</option>
+              <option value="United Arab Emirates">امارات متحده عربی</option>
+              <option value="United Kingdom">انگلستان</option>
+              <option value="United States">ایالات متحده</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationLang">زبان ها</label>
+            <input class="form-control" id="formValidationLang" name="formValidationLang" type="text" value=""/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationTech">تخصص و مهارت ها</label>
+            <input autocomplete="off" class="form-control typeahead" id="formValidationTech" name="formValidationTech" type="text"/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationHobbies">سرگرمی ها</label>
+            <select class="selectpicker hobbies-select w-100" data-icon-base="ti" data-style="btn-default" data-tick-icon="ti-check text-white" id="formValidationHobbies" multiple name="formValidationHobbies">
+              <option>ورزش</option>
+              <option>فیلم</option>
+              <option>کتاب</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="formValidationBio">بیوگرافی</label>
+            <textarea class="form-control" id="formValidationBio" name="formValidationBio" rows="3"></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">جنسیت</label>
+            <div class="form-check custom mb-2">
+              <input checked class="form-check-input" id="formValidationGender" name="formValidationGender" type="radio"/>
+              <label class="form-check-label" for="formValidationGender">مرد</label>
+            </div>
+            <div class="form-check custom">
+              <input class="form-check-input" id="formValidationGender2" name="formValidationGender" type="radio"/>
+              <label class="form-check-label" for="formValidationGender2">زن</label>
+            </div>
+          </div>
+          <!-- Choose Your Plan -->
+          <div class="col-12">
+            <h6 class="mt-2">3. انتخاب اشتراک</h6>
+            <hr class="mt-0"/>
+          </div>
+          <div class="row gy-3 mt-0">
+            <div class="col-xl-3 col-md-5 col-sm-6 col-12">
+              <div class="form-check custom-option custom-option-icon">
+                <label class="form-check-label custom-option-content" for="basicPlanMain1">
+                  <span class="custom-option-body">
+                    <i class="ti ti-brand-telegram"></i>
+                    <span class="custom-option-title"> ساده</span>
+                    <small>لورم ایپسوم متن ساختگی با تولید نامفهوم.</small>
+                  </span>
+                  <input checked class="form-check-input" id="basicPlanMain1" name="formValidationPlan" type="radio" value=""/>
+                </label>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-5 col-sm-6 col-12">
+              <div class="form-check custom-option custom-option-icon">
+                <label class="form-check-label custom-option-content" for="basicPlanMain2">
+                  <span class="custom-option-body">
+                    <i class="ti ti-users"></i>
+                    <span class="custom-option-title"> پیشرفته</span>
+                    <small>لورم ایپسوم متن ساختگی با تولید نامفهوم.</small>
+                  </span>
+                  <input class="form-check-input" id="basicPlanMain2" name="formValidationPlan" type="radio" value=""/>
+                </label>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-5 col-sm-6 col-12">
+              <div class="form-check custom-option custom-option-icon">
+                <label class="form-check-label custom-option-content" for="basicPlanMain3">
+                  <span class="custom-option-body">
+                    <i class="ti ti-crown"></i>
+                    <span class="custom-option-title"> حرفه‌ایءء</span>
+                    <small>لورم ایپسوم متن ساختگی با تولید نامفهوم.</small>
+                  </span>
+                  <input class="form-check-input" id="basicPlanMain3" name="formValidationPlan" type="radio" value=""/>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="switch switch-primary">
+              <input class="switch-input" name="formValidationSwitch" type="checkbox"/>
+              <span class="switch-toggle-slider">
+                <span class="switch-on"></span>
+                <span class="switch-off"></span>
+              </span>
+              <span class="switch-label">دریافت ایمیل و پیشنهادات</span>
+            </label>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" id="formValidationCheckbox" name="formValidationCheckbox" type="checkbox"/>
+              <label class="form-check-label" for="formValidationCheckbox">با شرایط و ضوابط موافقم</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" name="submitButton" type="submit">ارسال</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /FormValidation -->
+</div>

@@ -1,0 +1,671 @@
+@{
+  ViewData["Title"] = "رابط کاربری - کارت‌های آماری";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/cards-statistics.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">امکانات /</span>
+  کارت آماری
+</h4>
+<div class="row">
+  <!-- Statistics -->
+  <div class="col-lg-8 mb-4 col-md-12">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title mb-0">آمار</h5>
+        <small class="text-muted">آخرین آپدیت 1 ماه پیش</small>
+      </div>
+      <div class="card-body pt-2">
+        <div class="row gy-3">
+          <div class="col-md-3 col-6">
+            <div class="d-flex align-items-center">
+              <div class="badge rounded-pill bg-label-primary me-3 p-2">
+                <i class="ti ti-chart-pie-2 ti-sm"></i>
+              </div>
+              <div class="card-info">
+                <h5 class="mb-0">230k</h5>
+                <small>تخفیف</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="d-flex align-items-center">
+              <div class="badge rounded-pill bg-label-info me-3 p-2">
+                <i class="ti ti-users ti-sm"></i>
+              </div>
+              <div class="card-info">
+                <h5 class="mb-0">8.549k</h5>
+                <small>مشتریان</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="d-flex align-items-center">
+              <div class="badge rounded-pill bg-label-danger me-3 p-2">
+                <i class="ti ti-shopping-cart ti-sm"></i>
+              </div>
+              <div class="card-info">
+                <h5 class="mb-0">1.423k</h5>
+                <small>محصولات</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="d-flex align-items-center">
+              <div class="badge rounded-pill bg-label-success me-3 p-2">
+                <i class="ti ti-currency-dollar ti-sm"></i>
+              </div>
+              <div class="card-info">
+                <h5 class="mb-0">
+                  <bdi><svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>9745</bdi>
+                </h5>
+                <small>درآمد</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Orders -->
+  <div class="col-lg-2 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <div class="badge rounded-pill p-2 bg-label-danger mb-2">
+          <i class="ti ti-briefcase ti-sm"></i>
+        </div>
+        <h5 class="card-title mb-2">97.8k</h5>
+        <small>سفارشات</small>
+      </div>
+    </div>
+  </div>
+  <!-- Reviews -->
+  <div class="col-lg-2 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <div class="badge rounded-pill p-2 bg-label-success mb-2">
+          <i class="ti ti-message-dots ti-sm"></i>
+        </div>
+        <h5 class="card-title mb-2">3.4k</h5>
+        <small>نظرات</small>
+      </div>
+    </div>
+  </div>
+  <!-- Orders last week -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-3">
+        <h5 class="card-title mb-0">سفارش</h5>
+        <small class="text-muted">هفته گذشته</small>
+      </div>
+      <div class="card-body">
+        <div id="ordersLastWeek"></div>
+        <div class="d-flex justify-content-between align-items-center gap-3">
+          <h4 class="mb-0">124k</h4>
+          <small class="text-success">
+            <bdi>+12.6%</bdi>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sales last year -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="card-title mb-0">تخفیف</h5>
+        <small class="text-muted">سال گذشته</small>
+      </div>
+      <div id="salesLastYear"></div>
+      <div class="card-body pt-0">
+        <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
+          <h4 class="mb-0">175k</h4>
+          <small class="text-danger">
+            <bdi>-16.2%</bdi>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Profit last month -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="card-title mb-0">سود</h5>
+        <small class="text-muted">ماه گذشته</small>
+      </div>
+      <div class="card-body">
+        <div id="profitLastMonth"></div>
+        <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
+          <h4 class="mb-0">624k</h4>
+          <small class="text-success">
+            <bdi>+8.24%</bdi>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sessions Last month -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="card-title mb-0">سرمایه‌گذاری</h5>
+        <small class="text-muted">ماه گذشته</small>
+      </div>
+      <div class="card-body">
+        <div id="sessionsLastMonth"></div>
+        <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
+          <h4 class="mb-0">45.1k</h4>
+          <small class="text-success">
+            <bdi>+12.6%</bdi>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Expenses -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="card-title mb-0">82.5k</h5>
+        <small class="text-muted">هزینه‌ها</small>
+      </div>
+      <div class="card-body">
+        <div id="expensesChart"></div>
+        <div class="mt-3 text-center">
+          <small class="text-muted mt-3">21k ءتء بیشتر از ماه گذشته خرج کردید</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Impression -->
+  <div class="col-xl-2 col-md-4 col-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="card-title mb-0">رضایت</h5>
+        <small class="text-muted">این هفته</small>
+      </div>
+      <div class="card-body">
+        <div id="impressionThisWeek"></div>
+        <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
+          <h4 class="mb-0">26.1k</h4>
+          <small class="text-danger">
+            <bdi>-24.5%</bdi>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card Border Shadow -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card card-border-shadow-primary h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-primary">
+              <i class="ti ti-truck ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">42</h4>
+        </div>
+        <p class="mb-1">درمسیر تحویل</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>+18.2</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card card-border-shadow-warning h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-warning">
+              <i class="ti ti-alert-triangle ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">8</h4>
+        </div>
+        <p class="mb-1">تحویل ناموفق</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>-8.7</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card card-border-shadow-danger h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-danger">
+              <i class="ti ti-git-fork ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">27</h4>
+        </div>
+        <p class="mb-1">تحویل داده شده</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>+4.3</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card card-border-shadow-info h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2 pb-1">
+          <div class="avatar me-2">
+            <span class="avatar-initial rounded bg-label-info">
+              <i class="ti ti-clock ti-md"></i>
+            </span>
+          </div>
+          <h4 class="ms-1 mb-0">13</h4>
+        </div>
+        <p class="mb-1">تحویل دیرهنگام</p>
+        <p class="mb-0">
+          <span class="fw-medium me-1">
+            <bdi>-2.5</bdi>
+            درصد
+          </span>
+          <small class="text-muted">نسبت به هفته گذشته</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <!--/ Card Border Shadow -->
+  <!-- Cards with few info -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="card-title mb-0">
+          <h5 class="mb-0 me-2">86%</h5>
+          <small>میزان استفاده از پردازنده</small>
+        </div>
+        <div class="card-icon">
+          <span class="badge bg-label-primary rounded-pill p-2">
+            <i class="ti ti-cpu ti-sm"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="card-title mb-0">
+          <h5 class="mb-0 me-2">1.24 گیگابایت</h5>
+          <small>استفاده از حافظه</small>
+        </div>
+        <div class="card-icon">
+          <span class="badge bg-label-success rounded-pill p-2">
+            <i class="ti ti-server ti-sm"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="card-title mb-0">
+          <h5 class="mb-0 me-2">0.2%</h5>
+          <small>نسبت خرابی</small>
+        </div>
+        <div class="card-icon">
+          <span class="badge bg-label-danger rounded-pill p-2">
+            <i class="ti ti-chart-pie-2 ti-sm"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="card-title mb-0">
+          <h5 class="mb-0 me-2">128</h5>
+          <small>ایراد و اشکال</small>
+        </div>
+        <div class="card-icon">
+          <span class="badge bg-label-warning rounded-pill p-2">
+            <i class="ti ti-alert-octagon ti-sm"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Cards with few info -->
+  <!-- Cards with charts & info -->
+  <!-- Subscriber Gained -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body pb-0">
+        <div class="card-icon">
+          <span class="badge bg-label-primary rounded-pill p-2">
+            <i class="ti ti-users ti-sm"></i>
+          </span>
+        </div>
+        <h5 class="card-title mb-0 mt-2">92.6k</h5>
+        <small>مشتریان وفادار</small>
+      </div>
+      <div id="subscriberGained"></div>
+    </div>
+  </div>
+  <!-- Quarterly Sales -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body pb-0">
+        <div class="card-icon">
+          <span class="badge bg-label-danger rounded-pill p-2">
+            <i class="ti ti-shopping-cart ti-sm"></i>
+          </span>
+        </div>
+        <h5 class="card-title mb-0 mt-2">36.5%</h5>
+        <small>فروش فصلی</small>
+      </div>
+      <div id="quarterlySales"></div>
+    </div>
+  </div>
+  <!-- Order Received -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body pb-0">
+        <div class="card-icon">
+          <span class="badge bg-label-warning rounded-pill p-2">
+            <i class="ti ti-package ti-sm"></i>
+          </span>
+        </div>
+        <h5 class="card-title mb-0 mt-2">97.5k</h5>
+        <small>سفارش کالا</small>
+      </div>
+      <div id="orderReceived"></div>
+    </div>
+  </div>
+  <!-- Revenue Generated -->
+  <div class="col-lg-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-body pb-0">
+        <div class="card-icon">
+          <span class="badge bg-label-success rounded-pill p-2">
+            <i class="ti ti-credit-card ti-sm"></i>
+          </span>
+        </div>
+        <h5 class="card-title mb-0 mt-2">97.5k</h5>
+        <small>سود خالص</small>
+      </div>
+      <div id="revenueGenerated"></div>
+    </div>
+  </div>
+  <!-- Average Daily Sales -->
+  <div class="col-xl-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h5 class="mb-2 card-title">میانگین فروش</h5>
+        <p class="mb-1 text-muted">کل فروش این ماه</p>
+        <h5 class="mb-0">
+          <bdi><svg class="toman" width="1rem" height="1rem">
+              <use xlink:href="#toman">
+                <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                </symbol>
+              </use>
+            </svg>28,450</bdi>
+        </h5>
+      </div>
+      <div class="card-body px-0">
+        <div class="mt-2" id="averageDailySales"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Sales Overview -->
+  <div class="col-xl-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <div class="d-flex justify-content-between">
+          <small class="d-block mb-2 text-muted">بررسی مختصر فروش</small>
+          <p class="card-text text-success">
+            <bdi>+18.2%</bdi>
+          </p>
+        </div>
+        <h4 class="card-title mb-1">
+          <bdi><svg class="toman" width="1rem" height="1rem">
+              <use xlink:href="#toman">
+                <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                </symbol>
+              </use>
+            </svg>42.5k</bdi>
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="row mt-4">
+          <div class="col-4">
+            <div class="d-flex gap-2 align-items-center mb-2">
+              <span class="badge bg-label-info p-1 rounded">
+                <i class="ti ti-shopping-cart ti-xs"></i>
+              </span>
+              <p class="mb-0">سفارش</p>
+            </div>
+            <h5 class="mb-0 pt-1">62.2%</h5>
+            <small class="text-muted">6,440</small>
+          </div>
+          <div class="col-4">
+            <div class="divider divider-vertical">
+              <div class="divider-text">
+                <span class="badge-divider-bg bg-label-secondary">VS</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 text-end">
+            <div class="d-flex gap-2 justify-content-end align-items-center mb-2">
+              <p class="mb-0">بازدید</p>
+              <span class="badge bg-label-primary p-1 rounded">
+                <i class="ti ti-link ti-xs"></i>
+              </span>
+            </div>
+            <h5 class="mb-0 pt-1">25.5%</h5>
+            <small class="text-muted">12,749</small>
+          </div>
+        </div>
+        <div class="d-flex align-items-center mt-4">
+          <div class="progress w-100" style="height: 8px">
+            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar bg-info" role="progressbar" style="width: 70%"></div>
+            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="progress-bar bg-primary" role="progressbar" style="width: 30%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Avg Daily Traffic -->
+  <div class="col-xl-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header pb-0 d-flex justify-content-between align-items-start">
+        <div class="card-title mb-0">
+          <h3 class="mb-0">2.84k</h3>
+          <small class="text-muted">میانگین ترافیک روزانه</small>
+        </div>
+        <div class="badge bg-label-success">
+          <bdi>+92k</bdi>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mt-3" id="averageDailyTraffic"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Statistics -->
+  <div class="col-xl-3 col-sm-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-start justify-content-between pb-2">
+        <h5 class="card-title mb-0">آمار</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="progressStat" type="button">
+            <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+          </button>
+          <div aria-labelledby="progressStat" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a>
+            <a class="dropdown-item" href="javascript:void(0);">حذف</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body pt-1">
+        <div class="d-flex justify-content-between align-items-center mb-2 gap-3 pt-1">
+          <h6 class="mb-0">مشتریان وفادار</h6>
+          <div class="badge bg-label-success">
+            <bdi>+92k</bdi>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between gap-3">
+          <p class="mb-0">1.2k مشترک جدید</p>
+          <span class="text-muted">85%</span>
+        </div>
+        <div class="d-flex align-items-center mt-1">
+          <div class="progress w-100" style="height: 8px">
+            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-2 gap-3 pt-1">
+          <h6 class="mb-0">سفارش موفق</h6>
+          <div class="badge bg-label-success">
+            <bdi>+38k</bdi>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between gap-3">
+          <p class="mb-0">2.4k سفارش جدید</p>
+          <span class="text-muted">65%</span>
+        </div>
+        <div class="d-flex align-items-center mt-1">
+          <div class="progress w-100" style="height: 8px">
+            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar bg-info" role="progressbar" style="width: 65%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Total Profit -->
+  <div class="col-lg-2 col-6 mb-4 mb-lg-0">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="badge p-2 bg-label-danger mb-2 rounded">
+          <i class="ti ti-credit-card ti-sm"></i>
+        </div>
+        <h5 class="card-title mb-1 pt-1">سود کل</h5>
+        <small class="text-muted">هفته گذشته</small>
+        <p class="mb-2 mt-1">1.28k</p>
+        <div class="pt-1">
+          <span class="badge bg-label-danger">
+            <bdi>-12.2%</bdi>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Total Sales -->
+  <div class="col-lg-2 col-6 mb-4 mb-lg-0">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="badge p-2 bg-label-success mb-2 rounded">
+          <i class="ti ti-credit-card ti-sm"></i>
+        </div>
+        <h5 class="card-title mb-1 pt-1">کل فروش</h5>
+        <small class="text-muted">هفته گذشته</small>
+        <p class="mb-2 mt-1">
+          <bdi><svg class="toman" width="1rem" height="1rem">
+              <use xlink:href="#toman">
+                <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                </symbol>
+              </use>
+            </svg>42k</bdi>
+        </p>
+        <div class="pt-1">
+          <span class="badge bg-label-success">
+            <bdi>+25.2%</bdi>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Revenue Growth -->
+  <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between">
+        <div class="d-flex flex-column">
+          <div class="card-title mb-auto">
+            <h5 class="mb-1 text-nowrap">رشد درآمد</h5>
+            <small>گزارش هفتگی</small>
+          </div>
+          <div class="chart-statistics">
+            <h3 class="card-title mb-1">
+              <bdi><svg class="toman" width="1rem" height="1rem">
+                  <use xlink:href="#toman">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                    </symbol>
+                  </use>
+                </svg>42k</bdi>
+            </h3>
+            <span class="badge bg-label-success">
+              <bdi>+15.2%</bdi>
+            </span>
+          </div>
+        </div>
+        <div id="revenueGrowth"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Generated Leads -->
+  <div class="col-lg-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-body d-flex justify-content-between">
+        <div class="d-flex flex-column">
+          <div class="card-title mb-auto">
+            <h5 class="mb-0 text-nowrap">نرخ تعامل</h5>
+            <small>گزارش ماهانه</small>
+          </div>
+          <div class="chart-statistics">
+            <h3 class="card-title mb-0">4,350</h3>
+            <small class="text-success text-nowrap fw-medium">
+              <i class="ti ti-chevron-up me-1"></i>
+              15.8%
+            </small>
+          </div>
+        </div>
+        <div id="generatedLeadsChart"></div>
+      </div>
+    </div>
+  </div>
+  <!--/ Cards with charts & info -->
+</div>
+

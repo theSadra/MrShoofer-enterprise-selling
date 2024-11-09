@@ -1,0 +1,288 @@
+@{
+  ViewData["Title"] = "رابط کاربری - اسلایدر";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/swiper/swiper.css">
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/css/pages/ui-carousel.css">
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/swiper/swiper.js"></script>
+}
+
+@section PageScripts {
+  <script src="~/js/ui-carousel.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">رابط کاربری /</span>
+  اسلایدر
+</h4>
+<div class="row">
+  <!-- Bootstrap carousel -->
+  <div class="col-md">
+    <h5 class="my-4">اسلایدر bootstrap</h5>
+    <div class="carousel slide" data-bs-ride="carousel" id="carouselExample">
+      <div class="carousel-indicators">
+        <button aria-current="true" aria-label="اسلاید 1" class="active" data-bs-slide-to="0"
+          data-bs-target="#carouselExample" type="button"></button>
+        <button aria-label="اسلاید 2" data-bs-slide-to="1" data-bs-target="#carouselExample" type="button"></button>
+        <button aria-label="اسلاید 3" data-bs-slide-to="2" data-bs-target="#carouselExample" type="button"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img alt="اسلاید اول" class="d-block w-100" src="~/img/elements/10.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید اول</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img alt="اسلاید دوم" class="d-block w-100" src="~/img/elements/2.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید دوم</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img alt="اسلاید سوم" class="d-block w-100" src="~/img/elements/13.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید سوم</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" data-bs-slide="prev" href="#carouselExample" role="button">
+        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">قبلی</span>
+      </a>
+      <a class="carousel-control-next" data-bs-slide="next" href="#carouselExample" role="button">
+        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">بعد</span>
+      </a>
+    </div>
+  </div>
+  <!-- Bootstrap crossfade carousel -->
+  <div class="col-md">
+    <h5 class="my-4">اسلایدر محوشونده bootstrap</h5>
+    <div class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" id="carouselExampleDark">
+      <div class="carousel-indicators">
+        <button aria-current="true" aria-label="اسلاید 1" class="active" data-bs-slide-to="0"
+          data-bs-target="#carouselExampleDark" type="button"></button>
+        <button aria-label="اسلاید 2" data-bs-slide-to="1" data-bs-target="#carouselExampleDark" type="button"></button>
+        <button aria-label="اسلاید 3" data-bs-slide-to="2" data-bs-target="#carouselExampleDark" type="button"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img alt="اسلاید اول" class="d-block w-100" src="~/img/elements/13.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید اول</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img alt="اسلاید دوم" class="d-block w-100" src="~/img/elements/10.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید دوم</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img alt="اسلاید سوم" class="d-block w-100" src="~/img/elements/2.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h4>اسلاید سوم</h4>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" data-bs-slide="prev" href="#carouselExampleDark" role="button">
+        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">قبلی</span>
+      </a>
+      <a class="carousel-control-next" data-bs-slide="next" href="#carouselExampleDark" role="button">
+        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">بعد</span>
+      </a>
+    </div>
+  </div>
+</div>
+<hr class="container-m-nx mt-5" />
+<h5 class="my-4">اسلایدر swiper</h5>
+<div class="row">
+  <!-- Default -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">پیش فرض</h6>
+    <div class="swiper" id="swiper-default">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 5</div>
+      </div>
+    </div>
+  </div>
+  <!-- With arrows -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">با فلش</h6>
+    <div class="swiper" id="swiper-with-arrows">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-button-next swiper-button-white custom-icon"></div>
+      <div class="swiper-button-prev swiper-button-white custom-icon"></div>
+    </div>
+  </div>
+  <!-- With pagination -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">با نقطه</h6>
+    <div class="swiper" id="swiper-with-pagination">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- With progress -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">با پیشرفت</h6>
+    <div class="swiper" id="swiper-with-progress">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next swiper-button-white custom-icon"></div>
+      <div class="swiper-button-prev swiper-button-white custom-icon"></div>
+    </div>
+  </div>
+  <!-- With scrollbar -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">با اسکرول</h6>
+    <div class="swiper" id="swiper-with-scrollbar">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-scrollbar"></div>
+    </div>
+  </div>
+  <!-- Vertical -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">عمودی</h6>
+    <div class="swiper" id="swiper-vertical">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/8.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/1.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/5.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/9.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- Multiple slides -->
+  <div class="col-12 mb-4">
+    <h6 class="text-muted mt-3">اسلایدهای متعدد</h6>
+    <div class="swiper" id="swiper-multiple-slides">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/10.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/14.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/13.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/15.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- 3D coverflow effect -->
+  <div class="col-12 mb-4">
+    <h6 class="text-muted mt-3">جریان سه بعدی</h6>
+    <div class="swiper" id="swiper-3d-coverflow-effect">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/15.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/10.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/14.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/13.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- 3D cube effect -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">مکعب سه بعدی</h6>
+    <div class="swiper" id="swiper-3d-cube-effect">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/13.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/15.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/10.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/14.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- 3D flip effect -->
+  <div class="col-md-6 mb-4">
+    <h6 class="text-muted mt-3">افکت حرکت سه بعدی</h6>
+    <div class="swiper" id="swiper-3d-flip-effect">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url(/img/elements/14.jpg)"> اسلاید 1</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/13.jpg)"> اسلاید 2</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/15.jpg)"> اسلاید 3</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/7.jpg)"> اسلاید 4</div>
+        <div class="swiper-slide" style="background-image: url(/img/elements/10.jpg)"> اسلاید 5</div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next swiper-button-black custom-icon"></div>
+      <div class="swiper-button-prev swiper-button-black custom-icon"></div>
+    </div>
+  </div>
+  <!-- Gallery effect-->
+  <div class="col-12">
+    <h6 class="text-muted mt-3">اسلایدر گالری</h6>
+    <div id="swiper-gallery">
+      <div class="swiper gallery-top">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/2.jpg)"> اسلاید 1</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/1.jpg)"> اسلاید 2</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/3.jpg)"> اسلاید 3</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/4.jpg)"> اسلاید 4</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/6.jpg)"> اسلاید 5</div>
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+      </div>
+      <div class="swiper gallery-thumbs">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/2.jpg)"> اسلاید 1</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/1.jpg)"> اسلاید 2</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/3.jpg)"> اسلاید 3</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/4.jpg)"> اسلاید 4</div>
+          <div class="swiper-slide" style="background-image: url(/img/backgrounds/6.jpg)"> اسلاید 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

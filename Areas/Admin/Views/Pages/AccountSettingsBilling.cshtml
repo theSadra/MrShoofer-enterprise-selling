@@ -1,0 +1,295 @@
+@{
+  ViewData["Title"] = "تنظیمات حساب - تراکنش‌ها و پرداخت";
+}
+
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/pages-pricing.js"></script>
+<script src="~/js/pages-account-settings-billing.js"></script>
+<script src="~/js/app-invoice-list.js"></script>
+<script src="~/js/modal-edit-cc.js"></script>
+}
+
+@* ************** Content ************** *@
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">تنظیمات حساب /</span>
+    تراکنش‌ها و پرداخت
+  </h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-4">
+      <li class="nav-item"><a class="nav-link" href="AccountSettings"><i class="ti-xs ti ti-users me-1"></i> حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsSecurity"><i class="ti-xs ti ti-lock me-1"></i> امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ti-xs ti ti-file-description me-1"></i> تراکنش‌ها و پرداخت</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsNotifications"><i class="ti-xs ti ti-bell me-1"></i> نوتیفیکیشن</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsConnections"><i class="ti-xs ti ti-link me-1"></i> اکانت‌های متصل</a></li>
+    </ul>
+    <div class="card mb-4">
+      <!-- Current Plan -->
+      <h5 class="card-header">اشتراک فعلی</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-1">
+            <div class="mb-3">
+              <h6 class="mb-1">اشتراک شما نقره ای است</h6>
+              <p>با این اشتراک به 90 درصد امکانات سامانه دسترسی دارید</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="mb-1">فعال تا 9 اسفند 1400</h6>
+              <p>پس از انقضای اشتراک برای شما اعلان ارسال می کنیم</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="mb-1">
+                <span class="me-2">199 ءتء در ماه</span>
+                <span class="badge bg-label-primary">تخفیف دار</span>
+              </h6>
+              <p>طرح نقرع ای برای استارتاپ های نوپا</p>
+            </div>
+          </div>
+          <div class="col-md-6 mb-1">
+            <div class="alert alert-warning mb-3" role="alert">
+              <h5 class="alert-heading mb-1">توجه!</h5>
+              <span>شما نیا زبه تمدید اشتراک دارید</span>
+            </div>
+            <div class="plan-statistics">
+              <div class="d-flex justify-content-between">
+                <h6 class="mb-2">روزهای باقی مانده</h6>
+                <h6 class="mb-2">24 از 30 روز</h6>
+              </div>
+              <div class="progress">
+                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="progress-bar w-75" role="progressbar"></div>
+              </div>
+              <p class="mt-1 mb-0">6 روز باقی مانده تا اتمام اشتراک</p>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary me-2 mt-2" data-bs-target="#pricingModal" data-bs-toggle="modal"> تمدید اشتراک</button>
+            <button class="btn btn-label-danger cancel-subscription mt-2">لغو اشتراک</button>
+          </div>
+        </div>
+      </div>
+      <!-- /Current Plan -->
+    </div>
+
+       <!-- Modal -->
+
+       @await Html.PartialAsync("../_Partials/_Modals/ModalPricing")
+       <!-- /Modal -->
+
+    <div class="card mb-4">
+      <h5 class="card-header">روش های پرداخت</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <form id="creditCardForm" class="row g-3" onsubmit="return false">
+              <div class="col-12 mb-2">
+                <div class="form-check form-check-inline">
+                  <input name="collapsible-payment" class="form-check-input" type="radio" value="" id="collapsible-payment-cc" checked="" />
+                  <label class="form-check-label" for="collapsible-payment-cc">کردیت کارت</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input name="collapsible-payment" class="form-check-input" type="radio" value="" id="collapsible-payment-cash" />
+                  <label class="form-check-label" for="collapsible-payment-cash">حساب پی پال</label>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label w-100" for="paymentCard">شماره کارت</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="paymentCard2" class="form-control credit-card-mask ltr" id="paymentCard" name="paymentCard" placeholder="1356 3215 6548 7898" type="text"/>
+                  <span class="input-group-text cursor-pointer p-1" id="paymentCard2"><span class="card-type"></span></span>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="paymentName">نام</label>
+                <input class="form-control" id="paymentName" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label" for="paymentExpiryDate">انقضا تاریخ</label>
+                <input type="text" id="paymentExpiryDate" class="form-control expiry-date-mask" placeholder="MM/YY" />
+              </div>
+              <div class="col-6 col-md-3">
+                <label class="form-label" for="paymentCvv">cvv</label>
+                <div class="input-group input-group-merge">
+                  <input class="form-control cvv-code-mask" id="paymentCvv" maxlength="3" placeholder="" type="text">
+                  <span class="input-group-text cursor-pointer" id="paymentCvv2">
+                    <i class="ti ti-help text-muted" data-bs-placement="top" data-bs-toggle="tooltip" aria-label="ارزش تأیید کارت" data-bs-original-title="ارزش تأیید کارت"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="switch">
+                  <input type="checkbox" class="switch-input">
+                  <span class="switch-toggle-slider">
+                    <span class="switch-on"></span>
+                    <span class="switch-off"></span>
+                  </span>
+                  <span class="switch-label">ذخیره کارت برای پرداخت بعدی</span>
+                </label>
+              </div>
+              <div class="col-12 mt-4">
+                <button class="btn btn-primary me-sm-3 me-1" type="submit">ذخیره تغییرات</button>
+                <button class="btn btn-label-secondary" type="reset">لغو</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6 mt-5 mt-md-0">
+            <h6>کارت های من</h6>
+            <div class="added-cards">
+              <div class="cardMaster bg-lighter p-3 rounded mb-3">
+                <div class="d-flex justify-content-between flex-sm-row flex-column">
+                  <div class="card-information me-2">
+                    <img alt="مستر کارت" class="mb-3 img-fluid" src="~/img/icons/payments/mastercard.png"/>
+                    <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+                      <p class="mb-0 me-2">ترلان پروانه</p>
+                      <span class="badge bg-label-primary">اصلی</span>
+                    </div>
+                    <span class="card-number">
+                      <bdi>∗∗∗∗ ∗∗∗∗ 9856</bdi>
+                    </span>
+                  </div>
+                  <div class="d-flex flex-column text-start text-lg-end">
+                    <div class="d-flex order-sm-0 order-1 mt-sm-0 mt-3">
+                      <button class="btn btn-label-primary me-2" data-bs-target="#editCCModal" data-bs-toggle="modal"> ویرایش</button>
+                      <button class="btn btn-label-secondary">حذف</button>
+                    </div>
+                    <small class="mt-sm-auto mt-2 order-sm-1 order-0">انقضا: 10/27</small>
+                  </div>
+                </div>
+              </div>
+              <div class="cardMaster bg-lighter p-3 rounded">
+                <div class="d-flex justify-content-between flex-sm-row flex-column">
+                  <div class="card-information me-2">
+                    <img alt="ویزا کارت" class="mb-3 img-fluid" src="~/img/icons/payments/visa.png"/>
+                    <p class="mb-2">رامبد جوان</p>
+                    <span class="card-number">
+                      <bdi>∗∗∗∗ ∗∗∗∗ 5896</bdi>
+                    </span>
+                  </div>
+                  <div class="d-flex flex-column text-start text-lg-end">
+                    <div class="d-flex order-sm-0 order-1 mt-sm-0 mt-3">
+                      <button class="btn btn-label-primary me-2" data-bs-target="#editCCModal" data-bs-toggle="modal"> ویرایش</button>
+                      <button class="btn btn-label-secondary">حذف</button>
+                    </div>
+                    <small class="mt-sm-auto mt-2 order-sm-1 order-0">انقضا: 10/27</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <!-- Modal -->
+              @await Html.PartialAsync("../_Partials/_Modals/ModalEditCc")
+              <!--/ Modal -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <!-- Billing Address -->
+      <h5 class="card-header">صورتحساب</h5>
+      <div class="card-body">
+        <form id="formAccountSettings" onsubmit="return false">
+          <div class="row">
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="companyName">نام شرکت</label>
+              <input class="form-control" id="companyName" name="companyName" placeholder="راستچین" type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="billingEmail">ایمیل</label>
+              <input class="form-control" id="billingEmail" name="billingEmail" placeholder="john.doe&#64;example.com" type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="taxId">کد مالیاتی</label>
+              <input class="form-control" id="taxId" name="taxId" placeholder="کد مالیاتی را وارد کنید" type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="vatNumber">شماره VAT</label>
+              <input class="form-control" id="vatNumber" name="vatNumber" placeholder="شماره VAT را وارد کنید" type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="mobileNumber">شماره موبایل</label>
+              <div class="input-group input-group-merge">
+                <input class="form-control mobile-number ltr" id="mobileNumber" name="mobileNumber" placeholder="910 000 0000" type="text"/>
+                <span class="input-group-text">IR (+98)</span>
+              </div>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="country">کشور</label>
+              <select class="form-select select2" id="country" name="country">
+                <option selected>ایران</option>
+                <option>کانادا</option>
+                <option>انگلستان</option>
+                <option>آلمان</option>
+                <option>فرانسه</option>
+              </select>
+            </div>
+            <div class="mb-3 col-12">
+              <label class="form-label" for="billingAddress">آدرس</label>
+              <input class="form-control" id="billingAddress" name="billingAddress" placeholder="تهران ، خیابان فرشته ..." type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="state">استان</label>
+              <input class="form-control" id="state" name="state" placeholder="اصفهان" type="text"/>
+            </div>
+            <div class="mb-3 col-sm-6">
+              <label class="form-label" for="zipCode">کد پستی</label>
+              <input class="form-control zip-code" id="zipCode" maxlength="6" name="zipCode" placeholder="231465" type="text"/>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-primary me-2" type="submit">ذخیره تغییرات</button>
+            <button class="btn btn-label-secondary" type="reset">صرف نظر</button>
+          </div>
+        </form>
+      </div>
+      <!-- /Billing Address -->
+    </div>
+    <div class="card">
+      <!-- Billing History -->
+      <h5 class="card-header">لیست تراکنش ها</h5>
+      <div class="card-datatable table-responsive">
+        <table class="invoice-list-table table border-top">
+          <thead>
+          <tr>
+            <th></th>
+            <th>#ID</th>
+            <th>
+              <i class="ti ti-trending-up"></i>
+            </th>
+            <th>مشتری</th>
+            <th>جمع</th>
+            <th class="text-truncate">تاریخ صدور</th>
+            <th>وضعیت</th>
+            <th>وضعیت فاکتور</th>
+            <th class="cell-fit">عملیات</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <!--/ Billing History -->
+    </div>
+  </div>
+</div>

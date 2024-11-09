@@ -1,0 +1,193 @@
+@{
+  ViewData["Title"] = "تنظیمات حساب - اکانت‌های متصل";
+}
+
+@* ************** Content ************** *@
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">تنظیمات حساب /</span>
+    اکانت‌های متصل
+  </h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-4">
+      <li class="nav-item"><a class="nav-link" href="AccountSettings"><i class="ti-xs ti ti-users me-1"></i> حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsSecurity"><i class="ti-xs ti ti-lock me-1"></i> امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsBilling"><i class="ti-xs ti ti-file-description me-1"></i> تراکنش‌ها و پرداخت</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsNotifications"><i class="ti-xs ti ti-bell me-1"></i> نوتیفیکیشن</a></li>
+      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ti-xs ti ti-link me-1"></i> اکانت‌های متصل</a></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-md-0 mb-4">
+        <div class="card">
+          <h5 class="card-header pb-1">اکانت‌های متصل</h5>
+          <div class="card-body">
+            <p class="mb-4">محتوای حساب های متصل خود را در سایت خود نمایش دهید</p>
+            <!-- Connections -->
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0  mt-auto mb-auto">
+                <img alt="گوگل" class="me-3" height="40" src="~/img/icons/brands/google.png"/>
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-9">
+                  <h6 class="mb-0">گوگل</h6>
+                  <small class="text-muted">تقویم و مخاطبین</small>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end mt-sm-0 mt-2">
+                  <div class="form-check form-switch">
+                    <input checked class="form-check-input float-end" type="checkbox"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0  mt-auto mb-auto">
+                <img alt="سستی" class="me-3" height="40" src="~/img/icons/brands/slack.png"/>
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-9">
+                  <h6 class="mb-0">اِسـلـَک</h6>
+                  <small class="text-muted">ارتباط</small>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end mt-sm-0 mt-2">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input float-end" type="checkbox"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0  mt-auto mb-auto">
+                <img alt="github" class="me-3" height="40" src="~/img/icons/brands/github.png"/>
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-9">
+                  <h6 class="mb-0">گیت‌هاب</h6>
+                  <small class="text-muted">مخازن Git خود را مدیریت کنید</small>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end mt-sm-0 mt-2">
+                  <div class="form-check form-switch">
+                    <input checked class="form-check-input float-end" type="checkbox"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0 mt-auto mb-auto">
+                <img alt="mailchimp" class="me-3" height="40" src="~/img/icons/brands/mailchimp.png"/>
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-9">
+                  <h6 class="mb-0">میل چیمپ</h6>
+                  <small class="text-muted">خدمات ایمیل مارکتینگ</small>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end mt-sm-0 mt-2">
+                  <div class="form-check form-switch">
+                    <input checked class="form-check-input float-end" type="checkbox"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="flex-shrink-0  mt-auto mb-auto">
+                <img alt="آسانا" class="me-3" height="40" src="~/img/icons/brands/asana.png"/>
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-9">
+                  <h6 class="mb-0">آسانا</h6>
+                  <small class="text-muted">گفتگو و ارتباط</small>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end mt-sm-0 mt-2">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input float-end" type="checkbox"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /Connections -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12">
+        <div class="card">
+          <h5 class="card-header pb-1">شبکه‌های اجتماعی</h5>
+          <div class="card-body">
+            <p class="mb-4">محتوای حساب های متصل خود را در سایت خود نمایش دهید</p>
+            <!-- Social Accounts -->
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0">
+                <img src="~/img/icons/brands/facebook.png" alt="facebook" class="me-3" height="38">
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-7">
+                  <h6 class="mb-0">فیس بوک</h6>
+                  <small class="text-muted">متصل نیست</small>
+                </div>
+                <div class="col-5 text-end mt-sm-0 mt-2">
+                  <button class="btn btn-label-secondary btn-icon"><i class="ti ti-link ti-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0">
+                <img src="~/img/icons/brands/twitter.png" alt="twitter" class="me-3" height="38">
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-7">
+                  <h6 class="mb-0">توییتر</h6>
+                  <a href='@TempData.Peek("twitterUrl")' target="_blank">@TempData.Peek("authorName")</a>
+                </div>
+                <div class="col-5 text-end mt-sm-0 mt-2">
+                  <button class="btn btn-label-danger btn-icon"><i class="ti ti-trash ti-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0">
+                <img src="~/img/icons/brands/instagram.png" alt="instagram" class="me-3" height="38">
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-7">
+                  <h6 class="mb-0">اینستاگرام</h6>
+                  <a href='@TempData.Peek("instagramUrl")' target="_blank">@TempData.Peek("authorName")</a>
+                </div>
+                <div class="col-5 text-end mt-sm-0 mt-2">
+                  <button class="btn btn-label-danger btn-icon"><i class="ti ti-trash ti-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0">
+                <img src="~/img/icons/brands/dribbble.png" alt="dribbble" class="me-3" height="38">
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-7">
+                  <h6 class="mb-0">دریبل</h6>
+                  <small class="text-muted">متصل نیست</small>
+                </div>
+                <div class="col-5 text-end mt-sm-0 mt-2">
+                  <button class="btn btn-label-secondary btn-icon"><i class="ti ti-link ti-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="~/img/icons/brands/behance.png" alt="behance" class="me-3" height="38">
+              </div>
+              <div class="flex-grow-1 row">
+                <div class="col-7">
+                  <h6 class="mb-0">بی هانس</h6>
+                  <small class="text-muted">متصل نیست</small>
+                </div>
+                <div class="col-5 text-end mt-sm-0 mt-2">
+                  <button class="btn btn-label-secondary btn-icon"><i class="ti ti-link ti-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <!-- /Social Accounts -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2474 @@
+@{
+  ViewData["Title"] = "رابط کاربری - کارت‌های پیشرفته";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+<link rel="stylesheet" href="~/vendor/libs/swiper/swiper.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="~/vendor/libs/swiper/swiper.js"></script>
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/cards-advance.css" />
+}
+
+@section PageScripts {
+<script src="~/js/cards-advance.js"></script>
+}
+
+@* ************** Content ************** *@
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">عناصر رابط کاربری/</span>
+    کارت‌های پیشرفته
+  </h4>
+
+  <div class="row">
+    <!-- Monthly Campaign State -->
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="mb-0">وضعیت کمپین ماهانه</h5>
+            <small class="text-muted">8.52k بازدید کنندگان اجتماعی</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="MonthlyCampaign" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="MonthlyCampaign" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="mb-4 pb-1 d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-success rounded p-2">
+                <i class="ti ti-mail ti-sm"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">ایمیل ها</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">12,346</p>
+                  <p class="ms-3 text-success mb-0">0.3%</p>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4 pb-1 d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-info rounded p-2">
+                <i class="ti ti-link ti-sm"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">افتتاح شد</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">8,734</p>
+                  <p class="ms-3 text-success mb-0">2.1%</p>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4 pb-1 d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-warning rounded p-2">
+                <i class="ti ti-click ti-sm"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">کلیک کرد</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">967</p>
+                  <p class="ms-3 text-success mb-0">1.4%</p>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4 pb-1 d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-primary rounded p-2">
+                <i class="ti ti-users ti-sm"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">اشتراک</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">345</p>
+                  <p class="ms-3 text-success mb-0">8.5k</p>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4 pb-1 d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-secondary rounded p-2">
+                <i class="ti ti-alert-triangle ti-sm text-body"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">شکایات</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">10</p>
+                  <p class="ms-3 text-success mb-0">1.5%</p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex justify-content-between align-items-center">
+              <div class="badge bg-label-danger rounded p-2">
+                <i class="ti ti-ban ti-sm"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100 flex-wrap">
+                <h6 class="mb-0 ms-3">لغو اشتراک</h6>
+                <div class="d-flex">
+                  <p class="mb-0 fw-medium">86</p>
+                  <p class="ms-3 text-success mb-0">0.8%</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Monthly Campaign State -->
+
+    <!-- Active Projects -->
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="mb-0">پروژه فعال</h5>
+            <small class="text-muted">میانگین 72% تکمیل شده</small>
+          </div>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="activeProjects" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="activeProjects">
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="mb-4 d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/laravel-logo.png" alt="laravel-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">لاراول</h6>
+                  <small class="text-muted">تجارت الکترونیک</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 54%" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">54%</span>
+              </div>
+            </li>
+            <li class="mb-4 d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/figma-logo.png" alt="figma-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">فیگما</h6>
+                  <small class="text-muted">کیت رابط کاربری برنامه</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">86%</span>
+              </div>
+            </li>
+            <li class="mb-4 d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/vue-logo.png" alt="vue-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">VueJs</h6>
+                  <small class="text-muted">برنامه تقویم</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">90%</span>
+              </div>
+            </li>
+            <li class="mb-4 d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/react-logo.png" alt="react-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">ری‌اکت نیتیو</h6>
+                  <small class="text-muted">داشبورد</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">37%</span>
+              </div>
+            </li>
+            <li class="mb-4 d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/bootstrap-logo.png" alt="bootstrap-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">بوت استرپ</h6>
+                  <small class="text-muted">وبسایت</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">22%</span>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="d-flex w-50 align-items-center me-3">
+                <img src="~/img/icons/brands/sketch-logo.png" alt="sketch-logo" class="me-3" width="35"/>
+                <div>
+                  <h6 class="mb-0">Sketch</h6>
+                  <small class="text-muted">طراحی سایت</small>
+                </div>
+              </div>
+              <div class="d-flex flex-grow-1 align-items-center">
+                <div class="progress w-100 me-3" style="height:8px;">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 29%" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="text-muted">29%</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Active Projects -->
+
+    <!-- Source Visit -->
+    <div class="col-xl-4 col-lg-6 mb-4 order-2 order-xl-0">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="mb-0">بازدیدهای منبع</h5>
+            <small class="text-muted">38.4k بازدید کنندگان</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="sourceVisits" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="sourceVisits" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-4">
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-shadow ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">منبع مستقیم</h6>
+                    <small class="text-muted">کلیک لینک مستقیم</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">۱٫۲</p>
+                    <div class="ms-3 badge bg-label-success">
+                      <bdi>+4.2%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4">
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-globe ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">شبکه اجتماعی</h6>
+                    <small class="text-muted">کانال های اجتماعی</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">۳۱٫۵</p>
+                    <div class="ms-3 badge bg-label-success">
+                      <bdi>+8.2%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4">
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-mail ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">خبرنامه ایمیل</h6>
+                    <small class="text-muted">کمپین های ایمیل</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">893</p>
+                    <div class="ms-3 badge bg-label-success">
+                      <bdi>+2.4%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4">
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-external-link ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">ارجاع</h6>
+                    <small class="text-muted">بازدیدهای شعاع ضربه</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">342</p>
+                    <div class="ms-3 badge bg-label-danger">
+                      <bdi>-0.4%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="mb-4">
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-discount-2 ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">پیشبرد</h6>
+                    <small class="text-muted">گوگل تبلیغات</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">۲٫۱۵</p>
+                    <div class="ms-3 badge bg-label-success">
+                      <bdi>+9.1%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex align-items-start">
+                <div class="badge bg-label-secondary p-2 me-3 rounded">
+                  <i class="ti ti-star ti-sm"></i>
+                </div>
+                <div class="d-flex justify-content-between w-100 flex-wrap gap-2">
+                  <div class="me-2">
+                    <h6 class="mb-0">دیگر</h6>
+                    <small class="text-muted">بسیاری از منابع</small>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">12.5k</p>
+                    <div class="ms-3 badge bg-label-success">
+                      <bdi>+6.2%</bdi>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Source Visit -->
+
+    <!-- Sales By Country -->
+    <div class="col-xl-4 col-md-6 mb-4 order-1 order-xl-0">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="m-0 me-2">فروش بر اساس کشورها</h5>
+            <small class="text-muted">بررسی مختصر فروش ماهانه</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="salesByCountry" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="salesByCountry" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex align-items-center mb-4">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/us.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        8,567k
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">ایالات متحده</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-success fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up"></i>
+                    25.8%
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/br.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        8,000k
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">برزیل</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-danger fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-down"></i>
+                    6.2%
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/in.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        865
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">هـند</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-success fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up"></i>
+                    12.4%
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/au.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        745
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">استرالیا</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-danger fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-down"></i>
+                    11.9%
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/fr.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        45
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">فرانسه</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-success fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up"></i>
+                    16.2%
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center">
+              <img alt="کاربر" class="rounded-circle me-3" src="~/svg/flags/cn.svg" width="40"/>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <div class="d-flex align-items-center">
+                    <h6 class="mb-0 me-1">
+                      <bdi>
+                        <svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>
+                        12
+                      </bdi>
+                    </h6>
+                  </div>
+                  <small class="text-muted">چـین</small>
+                </div>
+                <div class="user-progress">
+                  <p class="text-success fw-medium mb-0 d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up"></i>
+                    14.8%
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Sales By Country -->
+
+    <!-- Earning Reports -->
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="m-0 me-2">گزارشات سود</h5>
+            <small class="text-muted">نمای کلی درآمد هفتگی</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="earningReports" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="earningReports" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pb-0">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-3">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-primary">
+                  <i class="ti ti-chart-pie-2 ti-sm"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">سود خالص</h6>
+                  <small class="text-muted">فروش 12.4</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-3">
+                  <small>
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      1,619
+                    </bdi>
+                  </small>
+                  <div class="d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up text-success"></i>
+                    <small class="text-muted">18.6%</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-success">
+                  <i class="ti ti-currency-dollar ti-sm"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">مجموع درآمد</h6>
+                  <small class="text-muted">فروش، حمایت</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-3">
+                  <small>
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      3,571
+                    </bdi>
+                  </small>
+                  <div class="d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up text-success"></i>
+                    <small class="text-muted">39.6%</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="ti ti-credit-card ti-sm"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">مجموع هزینه ها</h6>
+                  <small class="text-muted">تبلیغات, بازاریابی</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-3">
+                  <small>
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      430
+                    </bdi>
+                  </small>
+                  <div class="d-flex align-items-center gap-1">
+                    <i class="ti ti-chevron-up text-success"></i>
+                    <small class="text-muted">52.8%</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div id="reportBarChart"></div>
+        </div>
+      </div>
+    </div>
+    <!--/ Earning Reports -->
+
+    <!-- Browser States -->
+    <div class="col-xl-4 col-md-6 mb-4 order-1 order-xl-0">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title m-0 me-2">
+            <h5 class="m-0 me-2">مرورگر کاربران</h5>
+            <small class="text-muted">آمار بهمن 1401</small>
+          </div>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="employeeList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="employeeList">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <img src="~/img/icons/brands/chrome.png" alt="Chrome" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">گوگل کروم</h6>
+                  </div>
+
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">90.4%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="secondary" data-series="85"></div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <img src="~/img/icons/brands/safari.png" alt="Safari" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">اپل سافاری</h6>
+                  </div>
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">70.6%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="success" data-series="70"></div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <img src="~/img/icons/brands/firefox.png" alt="Firefox" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">موزیلا فایرفاکس</h6>
+                  </div>
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">35.5%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="primary" data-series="25"></div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <img src="~/img/icons/brands/opera.png" alt="Opera" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">اپرا مینی</h6>
+                  </div>
+
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">80.0%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="danger" data-series="75"></div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <img src="~/img/icons/brands/edge.png" alt="Edge" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">اینترنت اکسپلورر</h6>
+                  </div>
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">62.2%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="info" data-series="60"></div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center">
+              <img src="~/img/icons/brands/brave.png" alt="Brave" height="28" class="me-3 rounded">
+              <div class="d-flex w-100 align-items-center gap-2">
+                <div class="d-flex justify-content-between flex-grow-1 flex-wrap">
+                  <div>
+                    <h6 class="mb-0">بِرِیو</h6>
+                  </div>
+                  <div class="user-progress d-flex align-items-center gap-2">
+                    <h6 class="mb-0">46.3%</h6>
+                  </div>
+                </div>
+                <div class="chart-progress" data-color="warning" data-series="45"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Browser States -->
+    <!-- Orders tabs-->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between pb-2 mb-1">
+          <div class="card-title mb-1">
+            <h5 class="m-0 me-2">سفارشات</h5>
+            <small class="text-muted">62 سفارش درحال تحویل</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="salesByCountryTabs" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="salesByCountryTabs" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="nav-align-top">
+            <ul class="nav nav-tabs nav-fill" role="tablist">
+              <li class="nav-item">
+                <button aria-controls="navs-justified-new" aria-selected="true" class="nav-link active" data-bs-target="#navs-justified-new" data-bs-toggle="tab" role="tab" type="button"> جدید</button>
+              </li>
+              <li class="nav-item">
+                <button aria-controls="navs-justified-link-preparing" aria-selected="false" class="nav-link" data-bs-target="#navs-justified-link-preparing" data-bs-toggle="tab" role="tab" type="button"> آماده سازی</button>
+              </li>
+              <li class="nav-item">
+                <button aria-controls="navs-justified-link-shipping" aria-selected="false" class="nav-link" data-bs-target="#navs-justified-link-shipping" data-bs-toggle="tab" role="tab" type="button"> حمل و نقل</button>
+              </li>
+            </ul>
+            <div class="tab-content pb-0">
+              <div class="tab-pane fade show active" id="navs-justified-new" role="tabpanel">
+                <ul class="timeline mb-2 pb-1">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">بهرام نورایی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">شهاب حسینی</h6>
+                      <p class="text-muted mb-0">قطر، دوحه، خیابان ابن محمود، پلاک 11</p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+                <ul class="timeline mb-0">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">بهاره افشاری</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">ترانه علیدوستی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-link-preparing" role="tabpanel">
+                <ul class="timeline mb-2 pb-1">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">شهاب حسینی</h6>
+                      <p class="text-muted mb-0">قطر، دوحه، خیابان ابن محمود، پلاک 11</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">بهرام نورایی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+                <ul class="timeline mb-0">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">بهاره افشاری</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">ترانه علیدوستی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-link-shipping" role="tabpanel">
+                <ul class="timeline mb-2 pb-1">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">بهاره افشاری</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">شهاب حسینی</h6>
+                      <p class="text-muted mb-0">قطر، دوحه، خیابان ابن محمود، پلاک 11</p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="border-bottom border-bottom-dashed mt-0 mb-4"></div>
+                <ul class="timeline mb-0">
+                  <li class="timeline-item ps-4 border-left-dashed">
+                    <span class="timeline-indicator-advanced timeline-indicator-success">
+                      <i class="ti ti-circle-check"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-success text-uppercase fw-medium">فرستنده</small>
+                      </div>
+                      <h6 class="mb-0">بهرام نورایی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                  <li class="timeline-item ps-4 border-transparent">
+                    <span class="timeline-indicator-advanced timeline-indicator-primary">
+                      <i class="ti ti-map-pin"></i>
+                    </span>
+                    <div class="timeline-event ps-0 pb-0">
+                      <div class="timeline-header">
+                        <small class="text-primary text-uppercase fw-medium">گیرنده</small>
+                      </div>
+                      <h6 class="mb-0">ترانه علیدوستی</h6>
+                      <p class="text-muted mb-0">ایـران، تهران، نیاوران، پلاک 1234</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Orders tabs -->
+
+    <!-- Transactions -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title m-0 me-2">
+            <h5 class="m-0 me-2">معامله ها</h5>
+            <small class="text-muted">مجموع 58 تراکنش انجام شده در این ماه</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="transactionID" type="button">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="transactionID" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">28 روز گذشته</a>
+              <a class="dropdown-item" href="javascript:void(0);">ماه گذشته</a>
+              <a class="dropdown-item" href="javascript:void(0);">سال گذشته</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-primary me-3 rounded p-2">
+                <i class="ti ti-wallet ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">کیف پول</h6>
+                  <small class="text-muted d-block">استارباکس</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-danger">
+                    <bdi>-
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      75
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-success rounded me-3 p-2">
+                <i class="ti ti-browser-check ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">انتقال بانکی</h6>
+                  <small class="text-muted d-block">اضافه کردن پول</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-success">
+                    <bdi>+
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      480
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-danger rounded me-3 p-2">
+                <i class="ti ti-brand-paypal ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">پی پال</h6>
+                  <small class="text-muted d-block mb-1">پرداخت مشتری</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-success">
+                    <bdi>+
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      268
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-secondary me-3 rounded p-2">
+                <i class="ti ti-credit-card ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">کارت مستر</h6>
+                  <small class="text-muted d-block mb-1">سفارش آیفون 13</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-danger">
+                    <bdi>-
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      699
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-info me-3 rounded p-2">
+                <i class="ti ti-currency-dollar ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">تراکنش های بانکی</h6>
+                  <small class="text-muted d-block mb-1">چک و اقساط</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-success">
+                    <bdi>+
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      98
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-2 pb-1 align-items-center">
+              <div class="badge bg-label-danger me-3 rounded p-2">
+                <i class="ti ti-brand-paypal ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">پی پال</h6>
+                  <small class="text-muted d-block mb-1">پرداخت مشتری</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-success">
+                    <bdi>+
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      126
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center">
+              <div class="badge bg-label-success me-3 rounded p-2">
+                <i class="ti ti-browser-check ti-sm"></i>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">انتقال بانکی</h6>
+                  <small class="text-muted d-block mb-1">پرداخت هزینه‌ها</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <h6 class="mb-0 text-danger">
+                    <bdi>-
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      1290
+                    </bdi>
+                  </h6>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Transactions -->
+
+    <!-- Popular Product -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div class="card-title m-0 me-2">
+            <h5 class="m-0 me-2">محصولات محبوب</h5>
+            <small class="text-muted">مجموع 10.4k بازدید کنندگان</small>
+          </div>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="popularProduct" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularProduct">
+              <a class="dropdown-item" href="javascript:void(0);">28 روز گذشته</a>
+              <a class="dropdown-item" href="javascript:void(0);">ماه گذشته</a>
+              <a class="dropdown-item" href="javascript:void(0);">سال گذشته</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-4 pb-1">
+              <div class="me-3">
+                <img src="~/img/products/iphone.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">آیفون 13 اپل</h6>
+                  <small class="text-muted d-block">کد: #FXZ-4567</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      999.29
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1">
+              <div class="me-3">
+                <img src="~/img/products/nike-air-jordan.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">ایر جردن نایک</h6>
+                  <small class="text-muted d-block">کد: #FXZ-3456</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      72.40
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1">
+              <div class="me-3">
+                <img src="~/img/products/headphones.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">بیتس استودیو 2</h6>
+                  <small class="text-muted d-block">کد: #FXZ-9485</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      99
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1">
+              <div class="me-3">
+                <img src="~/img/products/apple-watch.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">اپل واچ سری 7</h6>
+                  <small class="text-muted d-block">کد: #FXZ-2345</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      249.99
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1">
+              <div class="me-3">
+                <img src="~/img/products/amazon-echo.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">اکودات آمازون</h6>
+                  <small class="text-muted d-block">کد: #FXZ-8959</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      79.40
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="me-3">
+                <img src="~/img/products/play-station.png" alt="User" class="rounded" width="46">
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">کنسول پلی استیشن</h6>
+                  <small class="text-muted d-block">کد: #FXZ-7892</small>
+                </div>
+                <div class="user-progress d-flex align-items-center gap-1">
+                  <p class="mb-0 fw-medium">
+                    <bdi>
+                      <svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>
+                      129.48
+                    </bdi>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Popular Product -->
+    <!-- Top Courses -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title m-0 me-2">دوره های برتر</h5>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="topCourses" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div aria-labelledby="topCourses" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-primary">
+                  <i class="ti ti-video ti-md"></i>
+                </span>
+              </div>
+              <div class="row w-100 align-items-center">
+                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                  <p class="mb-0 fw-medium">دوره تدوین فیلم با پریمیر</p>
+                </div>
+                <div class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-xxl-end">
+                  <div class="badge bg-label-secondary">1.2k نمایش</div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-info">
+                  <i class="ti ti-code ti-md"></i>
+                </span>
+              </div>
+              <div class="row w-100 align-items-center">
+                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                  <p class="mb-0 fw-medium">دوره مبانی برنامه نویسی</p>
+                </div>
+                <div class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-xxl-end">
+                  <div class="badge bg-label-secondary">834 مشاهده</div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-success">
+                  <i class="ti ti-camera ti-md"></i>
+                </span>
+              </div>
+              <div class="row w-100 align-items-center">
+                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                  <p class="mb-0 fw-medium">دوره عکاسی حرفه‌ای با موبایل</p>
+                </div>
+                <div class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-xxl-end">
+                  <div class="badge bg-label-secondary">3.7k نمایش</div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4 pb-1 align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-warning">
+                  <i class="ti ti-brand-dribbble ti-md"></i>
+                </span>
+              </div>
+              <div class="row w-100 align-items-center">
+                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                  <p class="mb-0 fw-medium">طراحی حرفه هویت بصری برند</p>
+                </div>
+                <div class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-xxl-end">
+                  <div class="badge bg-label-secondary">2.5k نمایش</div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex align-items-center">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-danger">
+                  <i class="ti ti-microphone-2 ti-md"></i>
+                </span>
+              </div>
+              <div class="row w-100 align-items-center">
+                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                  <p class="mb-0 fw-medium">اولین موسیقی کلاسیک شما</p>
+                </div>
+                <div class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-xxl-end">
+                  <div class="badge bg-label-secondary">948 مشاهده</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Top Courses -->
+    <!-- Upcoming Webinar -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
+            <img class="img-fluid" src="~/img/illustrations/girl-with-laptop.png" alt="Card girl image" width="140"/>
+          </div>
+          <h4 class="mb-2 pb-1">وبینار آینده</h4>
+          <p class="small"> وبینار مسیر راه برنامه نویسی و طراحی وبسایت ؛ از شروع تا درآمد</p>
+          <div class="row mb-3 g-3">
+            <div class="col-6">
+              <div class="d-flex">
+                <div class="avatar flex-shrink-0 me-2">
+                  <span class="avatar-initial rounded bg-label-primary">
+                    <i class="ti ti-calendar-event ti-md"></i>
+                  </span>
+                </div>
+                <div>
+                  <h6 class="mb-0 text-nowrap">۱۷ بهمن ۲۳</h6>
+                  <small>تاریخ</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex">
+                <div class="avatar flex-shrink-0 me-2">
+                  <span class="avatar-initial rounded bg-label-primary">
+                    <i class="ti ti-clock ti-md"></i>
+                  </span>
+                </div>
+                <div>
+                  <h6 class="mb-0 text-nowrap">32 دقیقه</h6>
+                  <small>مدت زمان</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="btn btn-primary w-100" href="javascript:void(0);">پیش ثبت نام</a>
+        </div>
+      </div>
+    </div>
+    <!--/ Upcoming Webinar -->
+    <!-- Assignment Progress -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title m-0 me-2">پیشرفت دوره‌ها</h5>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-3 pb-1">
+              <div class="chart-progress me-3" data-color="primary" data-progress_variant="true" data-series="72"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-9">
+                  <div class="me-2">
+                    <h6 class="mb-2">طراحی UI/UX</h6>
+                    <small>120 تکلیف</small>
+                  </div>
+                </div>
+                <div class="col-3 text-end">
+                  <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                    <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="chart-progress me-3" data-color="success" data-progress_variant="true" data-series="48"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-9">
+                  <div class="me-2">
+                    <h6 class="mb-2">فن بیان و سخنوری</h6>
+                    <small>32 تکلیف</small>
+                  </div>
+                </div>
+                <div class="col-3 text-end">
+                  <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                    <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="chart-progress me-3" data-color="danger" data-progress_variant="true" data-series="15"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-9">
+                  <div class="me-2">
+                    <h6 class="mb-2">برنامه نویسی React</h6>
+                    <small>182 تکلیف</small>
+                  </div>
+                </div>
+                <div class="col-3 text-end">
+                  <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                    <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="chart-progress me-3" data-color="info" data-progress_variant="true" data-series="24"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-9">
+                  <div class="me-2">
+                    <h6 class="mb-2">یادگیری زبان با موسیقی</h6>
+                    <small>56 تکلیف</small>
+                  </div>
+                </div>
+                <div class="col-3 text-end">
+                  <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                    <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Assignment Progress -->
+    <!-- Delivery Performance -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="m-0 me-2">عملکرد تحویل</h5>
+            <small class="text-muted">افزایش ۱۲ درصدی در این ماه</small>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="deliveryPerformance" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div aria-labelledby="deliveryPerformance" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">انتخاب همه</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-3 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-primary">
+                  <i class="ti ti-package"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">بسته های حمل و نقل</h6>
+                  <small class="text-success fw-normal d-block">
+                    <i class="ti ti-chevron-up mb-1"></i>
+                    25.8%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">۱۰</h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-info">
+                  <i class="ti ti-truck"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">درانتظار بارگیری</h6>
+                  <small class="text-success fw-normal d-block">
+                    <i class="ti ti-chevron-up mb-1"></i>
+                    4.3%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">۵</h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-success">
+                  <i class="ti ti-circle-check"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">بسته های تحویل داده شده</h6>
+                  <small class="text-danger fw-normal d-block">
+                    <i class="ti ti-chevron-down mb-1"></i>
+                    12.5%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">۱۵</h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-warning">
+                  <i class="ti ti-percentage"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">میزان موفقیت تحویل</h6>
+                  <small class="text-success fw-normal d-block">
+                    <i class="ti ti-chevron-up mb-1"></i>
+                    35.6%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">95%</h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-3 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-secondary">
+                  <i class="ti ti-clock"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">میانگین زمان تحویل</h6>
+                  <small class="text-danger fw-normal d-block">
+                    <i class="ti ti-chevron-down mb-1"></i>
+                    2.15%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">2.5 روز</h6>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-danger">
+                  <i class="ti ti-users"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0 fw-normal">رضایت مشتری</h6>
+                  <small class="text-success fw-normal d-block">
+                    <i class="ti ti-chevron-up mb-1"></i>
+                    5.7%
+                  </small>
+                </div>
+                <div class="user-progress">
+                  <h6 class="mb-0">4.5/5</h6>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Delivery Performance -->
+    <!-- Vehicles Condition -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="m-0 me-2">وضعیت وسایل نقلیه</h5>
+          </div>
+          <div class="dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="vehiclesCondition" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div aria-labelledby="vehiclesCondition" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">انتخاب همه</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="p-0 m-0">
+            <li class="d-flex mb-4">
+              <div class="chart-progress me-3" data-color="success" data-progress_variant="true" data-series="83"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-8">
+                  <div class="me-2">
+                    <h6 class="mb-1 text-success">آدرس نادرست</h6>
+                    <small>همه استثنائات</small>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <div class="badge bg-label-secondary">
+                    <bdi>+10%</bdi>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4">
+              <div class="chart-progress me-3" data-color="info" data-progress_variant="true" data-series="50"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-8">
+                  <div class="me-2">
+                    <h6 class="mb-1 text-info">خوب</h6>
+                    <small>24 وسیله نقلیه</small>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <div class="badge bg-label-secondary">
+                    <bdi>+8.1</bdi>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4">
+              <div class="chart-progress me-3" data-color="primary" data-progress_variant="true" data-series="35"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-8">
+                  <div class="me-2">
+                    <h6 class="mb-1 text-primary">متوسط</h6>
+                    <small class="14 Vehicles">18 وسیله نقلیه</small>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <div class="badge bg-label-secondary">
+                    <bdi>-2.5%</bdi>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex mb-4">
+              <div class="chart-progress me-3" data-color="warning" data-progress_variant="true" data-series="28"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-8">
+                  <div class="me-2">
+                    <h6 class="mb-1 text-warning">بد</h6>
+                    <small>8 وسایل نقلیه</small>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <div class="badge bg-label-secondary">
+                    <bdi>-3.4%</bdi>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="chart-progress me-3" data-color="danger" data-progress_variant="true" data-series="15"></div>
+              <div class="row w-100 align-items-center">
+                <div class="col-8">
+                  <div class="me-2">
+                    <h6 class="mb-1 text-danger">کار نمی کند</h6>
+                    <small>4 وسایل نقلیه</small>
+                  </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <div class="badge bg-label-secondary">
+                    <bdi>+12.6%</bdi>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Vehicles Condition -->
+    <!-- Popular Instructors -->
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="card-title mb-0">
+            <h5 class="m-0 me-2">مربیان محبوب</h5>
+          </div>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="popularInstructors" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div aria-labelledby="popularInstructors" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">انتخاب همه</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-borderless border-top">
+            <thead class="border-bottom">
+            <tr>
+              <th>مربیان</th>
+              <th class="text-end">دوره ها</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center mt-lg-3">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/1.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">دانیال رئیسی</h6>
+                    <small class="text-truncate text-muted">هوش کسب و کار</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress mt-lg-3">
+                  <p class="mb-0 fw-medium">33</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/2.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">رعنا آزادی ور</h6>
+                    <small class="text-truncate text-muted">بازاریابی دیجیتال</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <p class="mb-0 fw-medium">52</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/3.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">شایان خسروی‌نژاد</h6>
+                    <small class="text-truncate text-muted">طراحی UI/UX</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <p class="mb-0 fw-medium">12</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/4.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">آزاده صمدی</h6>
+                    <small class="text-truncate text-muted">ری‌اکت نیتیو</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <h6 class="mb-0">8</h6>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/5.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">جواد عزتی</h6>
+                    <small class="text-truncate text-muted">توسعه دهنده iOS</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <h6 class="mb-0">13</h6>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img src="~/img/avatars/6.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">طنین رضازاده</h6>
+                    <small class="text-truncate text-muted">توسعه دهنده جاوا</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <h6 class="mb-0">9</h6>
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/ Popular Instructors -->
+    <!-- Team Members -->
+    <div class="col-lg-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <h5 class="card-title m-0 me-2">آخرین پرداخت‌ها</h5>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="teamMemberList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="teamMemberList" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-borderless border-top">
+            <thead class="border-bottom">
+            <tr>
+              <th>کارت</th>
+              <th>تاریخ</th>
+              <th>وضعیت</th>
+              <th>مبلغ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-3">
+                    <img src="~/img/icons/payments/visa-img.png" alt="Visa" height="30">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p class="mb-0 fw-medium">
+                      <bdi>*4230</bdi>
+                    </p>
+                    <small class="text-muted">اعتبار</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-medium">پرداخت شده</p>
+                  <small class="text-muted text-nowrap">17 خرداد 1402</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-label-success">تایید شده</span>
+              </td>
+              <td>
+                <p class="mb-0 fw-medium">
+                  <bdi>+
+                    <svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>
+                    1,678
+                  </bdi>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-3">
+                    <img src="~/img/icons/payments/master-card-img.png" alt="Visa" height="30">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p class="mb-0 fw-medium">
+                      <bdi>*5578</bdi>
+                    </p>
+                    <small class="text-muted">اعتبار</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-medium">پرداخت شده</p>
+                  <small class="text-muted text-nowrap">۱۲ اردیبهشت 1402</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-label-danger">رد شده</span>
+              </td>
+              <td>
+                <p class="mb-0 fw-medium">
+                  <bdi>-
+                    <svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>
+                    839
+                  </bdi>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-3">
+                    <img src="~/img/icons/payments/american-express-img.png" alt="Visa" height="30">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p class="mb-0 fw-medium"><bdi>*4567</bdi></p>
+                    <small class="text-muted">ATM</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-medium">پرداخت شده</p>
+                  <small class="text-muted text-nowrap">۲۸ اردیبهشت 1402</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-label-success">تایید شده</span>
+              </td>
+              <td>
+                <p class="mb-0 fw-medium">
+                  <bdi>+
+                    <svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>
+                    435
+                  </bdi>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-3">
+                    <img src="~/img/icons/payments/visa-img.png" alt="Visa" height="30">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p class="mb-0 fw-medium">
+                      <bdi>*5699</bdi>
+                    </p>
+                    <small class="text-muted">اعتبار</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-medium">پرداخت شده</p>
+                  <small class="text-muted text-nowrap">۸ فروردین 1402</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-label-secondary">در انتظار</span>
+              </td>
+              <td>
+                <p class="mb-0 fw-medium">
+                  <bdi>+
+                    <svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>
+                    2,345
+                  </bdi>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="me-3">
+                    <img src="~/img/icons/payments/visa-img.png" alt="Visa" height="30">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p class="mb-0 fw-medium">
+                      <bdi>*5699</bdi>
+                    </p>
+                    <small class="text-muted">اعتبار</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-medium">پرداخت شده</p>
+                  <small class="text-muted text-nowrap">۸ فروردین 1402</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-label-danger">رد شده</span>
+              </td>
+              <td>
+                <p class="mb-0 fw-medium">
+                  <bdi>-
+                    <svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>
+                    234
+                  </bdi>
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/ Last Transaction -->
+
+    <!-- Activity Timeline -->
+    <div class="col-xl-6 mb-4 order-2 order-xl-0">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <h5 class="card-title m-0 me-2 pt-1 mb-2 d-flex align-items-center">
+            <i class="ti ti-list-details ms-n1 me-2"></i>
+            روند فعالیت‌ها
+          </h5>
+          <div class="dropdown">
+            <button class="btn p-0" type="button" id="timelineWapper" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+            </button>
+            <div aria-labelledby="timelineWapper" class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+              <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+              <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pb-0">
+          <ul class="timeline ms-1 mb-0">
+            <li class="timeline-item timeline-item-transparent ps-4">
+              <span class="timeline-point timeline-point-warning"></span>
+              <div class="timeline-event">
+                <div class="timeline-header">
+                  <h6 class="mb-0">جلسه مشتری</h6>
+                  <small class="text-muted">امروز</small>
+                </div>
+                <p class="mb-2">جلسه پروژه با نـوید در ساعت 10:15 صبح</p>
+                <div class="d-flex flex-wrap">
+                  <div class="avatar me-2">
+                    <img src="~/img/avatars/3.png" alt="Avatar" class="rounded-circle"/>
+                  </div>
+                  <div class="ms-1">
+                    <h6 class="mb-0">امیر آقایی (مشتری)</h6>
+                    <span>مدیر عامل شرکت اسنپ</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-item timeline-item-transparent ps-4">
+              <span class="timeline-point timeline-point-primary"></span>
+              <div class="timeline-event">
+                <div class="timeline-header">
+                  <h6 class="mb-0">ایجاد یک پروژه جدید برای مشتری</h6>
+                  <small class="text-muted">2 روز پیش</small>
+                </div>
+                <p class="mb-0">اضافه کردن فایل ها به پوشه طراحی جدید</p>
+              </div>
+            </li>
+            <li class="timeline-item timeline-item-transparent ps-4">
+              <span class="timeline-point timeline-point-info"></span>
+              <div class="timeline-event">
+                <div class="timeline-header">
+                  <h6 class="mb-0">2 فایل پروژه جدید به اشتراک گذاشته شده</h6>
+                  <small class="text-muted">6 روز پیش</small>
+                </div>
+                <p class="mb-2">فرستاده شده توسط بهرام افشاری</p>
+                <div class="d-flex flex-wrap gap-2 pt-1">
+                  <a href="javascript:void(0)" class="me-3 d-flex align-items-center">
+                    <i class="ti ti-file-text text-warning me-2 ti-xs"></i>
+                    <span class="fw-medium text-heading">راهنمای اپلیکیشن</span>
+                  </a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center">
+                    <i class="ti ti-table text-success me-2 ti-xs"></i>
+                    <span class="fw-medium text-heading">نتایج بررسی</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-item timeline-item-transparent ps-4 border-transparent">
+              <span class="timeline-point timeline-point-secondary"></span>
+              <div class="timeline-event pb-0">
+                <div class="timeline-header">
+                  <h6 class="mb-0">وضعیت پروژه به روز شده</h6>
+                  <small class="text-muted">10 روز پیش</small>
+                </div>
+                <p class="mb-0">برنامه ووکامرس iOS تکمیل شد</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Activity Timeline -->
+
+    <!-- Website Analytics -->
+    <div class="col-lg-6 mb-4 mb-lg-0 order-3 order-xl-0">
+      <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg" id="swiper-with-pagination-cards">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="row">
+              <div class="col-12">
+                <h5 class="text-white mb-2 mt-0">بررسی وب‌سایت</h5>
+                <small>نرخ تبدیل کل : 28.5%</small>
+              </div>
+              <div class="row">
+                <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                  <h6 class="text-white mt-0 mt-md-3 mb-3">ترافیک</h6>
+                  <div class="row">
+                    <div class="col-6">
+                      <ul class="list-unstyled mb-0">
+                        <li class="d-flex mb-3 align-items-center">
+                          <p class="mb-0 fw-medium me-2 website-analytics-text-bg">28%</p>
+                          <p class="mb-0">بازدید یکتا</p>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <p class="mb-0 fw-medium me-2 website-analytics-text-bg">1.2k</p>
+                          <p class="mb-0">کاربر یکتا</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-6">
+                      <ul class="list-unstyled mb-0">
+                        <li class="d-flex mb-3 align-items-center">
+                          <p class="mb-0 fw-medium me-2 website-analytics-text-bg">3.1k</p>
+                          <p class="mb-0">بازدید صفحات</p>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <p class="mb-0 fw-medium me-2 website-analytics-text-bg">12%</p>
+                          <p class="mb-0">نرخ تبدیل</p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                  <img alt="بررسی وب‌سایت" class="card-website-analytics-img" src="~/img/illustrations/card-website-analytics-1.png" width="170"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="row">
+              <div class="col-12">
+                <h5 class="text-white mb-2 mt-0">بررسی وب‌سایت</h5>
+                <small>نرخ تبدیل کل : 28.5%</small>
+              </div>
+              <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                <h6 class="text-white mt-0 mt-md-3 mb-3">آمار فروش</h6>
+                <div class="row">
+                  <div class="col-6">
+                    <ul class="list-unstyled mb-0">
+                      <li class="d-flex mb-3 align-items-center">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">12h</p>
+                        <p class="mb-0">سود</p>
+                      </li>
+                      <li class="d-flex align-items-center ">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">127</p>
+                        <p class="mb-0">سفارشات</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-6">
+                    <ul class="list-unstyled mb-0">
+                      <li class="d-flex mb-3 align-items-center">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">18</p>
+                        <p class="mb-0">تعداد سفارشات</p>
+                      </li>
+                      <li class="d-flex align-items-center ">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">2.3k</p>
+                        <p class="mb-0">آیتم‌ها</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                <img alt="بررسی وب‌سایت" class="card-website-analytics-img" src="~/img/illustrations/card-website-analytics-2.png" width="170"/>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="row">
+              <div class="col-12">
+                <h5 class="text-white mb-2 mt-0">بررسی وب‌سایت</h5>
+                <small>نرخ تبدیل کل : 28.5%</small>
+              </div>
+              <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
+                <h6 class="text-white mt-0 mt-md-3 mb-3">منابع درآمد</h6>
+                <div class="row">
+                  <div class="col-6">
+                    <ul class="list-unstyled mb-0">
+                      <li class="d-flex mb-3 align-items-center">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">268</p>
+                        <p class="mb-0">مستقیم</p>
+                      </li>
+                      <li class="d-flex align-items-center ">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">62</p>
+                        <p class="mb-0">زیرمجموعه</p>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-6">
+                    <ul class="list-unstyled mb-0">
+                      <li class="d-flex mb-3 align-items-center">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">890</p>
+                        <p class="mb-0">خدمات</p>
+                      </li>
+                      <li class="d-flex align-items-center ">
+                        <p class="mb-0 fw-medium me-2 website-analytics-text-bg">1.2k</p>
+                        <p class="mb-0">کمپین‌ها</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
+                <img alt="بررسی وب‌سایت" class="card-website-analytics-img" src="~/img/illustrations/card-website-analytics-3.png" width="170"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <!--/ Website Analytics -->
+
+    <!-- View sales -->
+    <div class="col-lg-6 order-3 order-xl-0">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-3">تبریک نـوید! 🎉</h5>
+              <p class="mb-4">پرفروش ترین ماه</p>
+              <h2 class="text-primary mb-3">
+                <bdi>
+                  <svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>
+                  48.9k
+                </bdi>
+              </h2>
+              <a class="btn btn-primary mt-2" href="javascript:">مشاهده فروش</a>
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img alt="مشاهده فروش" height="200" src="~/img/illustrations/card-advance-sale.png"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View sales -->
+  </div>

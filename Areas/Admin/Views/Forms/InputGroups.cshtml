@@ -1,0 +1,450 @@
+@{
+  ViewData["Title"] = "فرم ها - اینپوت گروپ";
+}
+
+@section PageScripts {
+  <script src="~/js/form-input-group.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  اینپوت گروپ
+</h4>
+<div class="row">
+  <!-- Basic -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">پایه</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <div class="input-group">
+                    <span class="input-group-text" id="basic-addon11">&#64;</span>
+          <input aria-describedby="basic-addon11" aria-label="نام کاربری" class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+        <div class="form-password-toggle">
+          <label class="form-label" for="basic-default-password12">کلمه عبور</label>
+          <div class="input-group">
+            <input aria-describedby="basic-default-password2" class="form-control" id="basic-default-password12" placeholder="············" type="password"/>
+            <span class="input-group-text cursor-pointer" id="basic-default-password2">
+              <i class="ti ti-eye-off"></i>
+            </span>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon13">example.com&#64;</span>
+          <input aria-describedby="basic-addon13" aria-label="نام کاربری" class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+        <div class="input-group">
+          <input aria-describedby="basic-addon14" class="form-control" id="basic-url1" placeholder="URL" style="direction: ltr" type="text"/>
+          <span class="input-group-text" id="basic-addon14">
+            <bdi>https://example.com/users/</bdi>
+          </span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text">
+            <bdi>.00</bdi>
+          </span>
+          <input aria-label="(به نزدیکترین ءتء)" class="form-control" placeholder="مقدار" type="number"/>
+          <span class="input-group-text">ءتء</span>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text">فیلد متن</span>
+          <textarea aria-label="با متن" class="form-control" placeholder="نظر" rows="4"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Merged -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">بدون خط جداکننده</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basic-addon-search31">
+            <i class="ti ti-search h-mirror"></i>
+          </span>
+          <input aria-describedby="basic-addon-search31" aria-label="جستجو ..." class="form-control" placeholder="جستجو ..." type="text"/>
+        </div>
+        <div class="form-password-toggle">
+          <label class="form-label" for="basic-default-password32">کلمه عبور</label>
+          <div class="input-group input-group-merge">
+            <input aria-describedby="basic-default-password" class="form-control" id="basic-default-password32" placeholder="············" type="password"/>
+            <span class="input-group-text cursor-pointer" id="basic-default-password">
+              <i class="ti ti-eye-off"></i>
+            </span>
+          </div>
+        </div>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text" id="basic-addon33">
+            <bdi>&#64;example.com</bdi>
+          </span>
+          <input aria-describedby="basic-addon33" aria-label="نام کاربری" class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+        <div class="input-group input-group-merge">
+          <input aria-describedby="basic-addon34" class="form-control ltr" id="basic-url3" type="text"/>
+          <span class="input-group-text" id="basic-addon34">
+            <bdi>https://example.com/users/</bdi>
+          </span>
+        </div>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text">
+            <bdi>.00</bdi>
+          </span>
+          <input aria-label="مبلغ (به نزدیکترین ءتء)" class="form-control" placeholder="100" type="number"/>
+          <span class="input-group-text">ءتء</span>
+        </div>
+        <div class="input-group input-group-merge">
+          <span class="input-group-text">فیلد متن</span>
+          <textarea aria-label="با textarea" class="form-control" rows="4"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sizing -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">اندازه و شکل</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <div class="input-group input-group-lg">
+          <span class="input-group-text">&#64;</span>
+          <input class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+        <div class="input-group">
+          <span class="input-group-text">&#64;</span>
+          <input class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-text">&#64;</span>
+          <input class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+      </div>
+      <hr class="m-0"/>
+      <div class="card-body">
+        <div class="input-group rounded-pill">
+          <span class="input-group-text">&#64;</span>
+          <input class="form-control" placeholder="نام کاربری" type="text"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Checkbox and radio addons -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">چک باکس و رادیو باتن</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <div class="input-group">
+          <div class="input-group-text">
+            <input aria-label="کادر انتخاب برای ورودی متن زیر" class="form-check-input mt-0" type="checkbox" value=""/>
+          </div>
+          <input aria-label="ورودی متن با چک باکس" class="form-control" type="text"/>
+        </div>
+        <div class="input-group">
+          <div class="input-group-text">
+            <input aria-label="دکمه رادیویی برای ورودی متن زیر" class="form-check-input mt-0" type="radio" value=""/>
+          </div>
+          <input aria-label="ورودی متن با دکمه رادیویی" class="form-control" type="text"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!-- Multiple inputs & addon -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">فیلدهای چندقسمتی</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <small class="text-light fw-medium d-block">فیلد چندگانه</small>
+        <div class="input-group">
+          <span class="input-group-text">نام و نام خانوادگی</span>
+          <input aria-label="نام کوچک" class="form-control" type="text"/>
+          <input aria-label="نام خانوادگی" class="form-control" type="text"/>
+        </div>
+        <small class="text-light fw-medium d-block pt-3">حالت های متنوع</small>
+        <div class="input-group">
+          <span class="input-group-text">ءتء</span>
+          <span class="input-group-text">
+            <bdi>.00</bdi>
+          </span>
+          <input aria-label="مبلغ ءتء (با نقطه و دو رقم اعشار)" class="form-control" type="number"/>
+        </div>
+        <div class="input-group">
+          <input aria-label="مبلغ ءتء (با نقطه و دو رقم اعشار)" class="form-control ltr" type="number"/>
+          <span class="input-group-text">
+            <bdi>0.</bdi>
+          </span>
+          <span class="input-group-text">ءتء</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Speech To Text -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">گفتار به متن</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <small class="text-light fw-medium d-block">گروه ورودی</small>
+        <div class="input-group input-group-merge form-send-message">
+          <input aria-describedby="text-to-speech-addon" class="form-control message-input" placeholder="صحبت کنید" type="text"/>
+          <span class="message-actions input-group-text" id="text-to-speech-addon">
+            <i class="ti ti-microphone cursor-pointer speech-to-text"></i>
+          </span>
+        </div>
+        <small class="text-light fw-medium d-block pt-1">فیلد متن</small>
+        <div class="input-group input-group-merge form-send-message">
+          <textarea class="form-control message-input" placeholder="صحبت کنید" rows="4"></textarea>
+          <span class="message-actions input-group-text">
+            <i class="ti ti-microphone cursor-pointer speech-to-text"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button with dropdowns & addons -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <h5 class="card-header">فیلد با کلید و منو</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <small class="text-light fw-medium d-block">فیلد با کلید</small>
+        <div class="input-group">
+          <button class="btn btn-outline-primary" id="button-addon1" type="button">کلید</button>
+          <input aria-describedby="button-addon1" aria-label="متن مثال با افزونه دکمه" class="form-control" placeholder="" type="text"/>
+        </div>
+        <div class="input-group">
+          <input aria-describedby="button-addon2" aria-label="" class="form-control" placeholder="نام کاربری" type="text"/>
+          <button class="btn btn-outline-primary" id="button-addon2" type="button">کلید</button>
+        </div>
+        <div class="input-group">
+          <button class="btn btn-outline-primary" type="button">دکمه</button>
+          <button class="btn btn-outline-primary" type="button">کلید</button>
+          <input aria-label="متن مثال با دو افزونه دکمه" class="form-control" placeholder="" type="text"/>
+        </div>
+        <div class="input-group">
+          <input aria-label="نام کاربری با دو افزونه دکمه" class="form-control" placeholder="نام کاربری" type="text"/>
+          <button class="btn btn-outline-primary" type="button">کلید</button>
+          <button class="btn btn-outline-primary" type="button">دکمه</button>
+        </div>
+        <small class="text-light fw-medium d-block pt-3">منو بازشونده</small>
+        <div class="input-group">
+          <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button"> مـنـو</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider"/>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+            </li>
+          </ul>
+          <input aria-label="ورودی متن با دکمه کشویی" class="form-control" type="text"/>
+        </div>
+        <div class="input-group">
+          <input aria-label="ورودی متن با دکمه کشویی" class="form-control" type="text"/>
+          <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button">
+            یک منو
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider"/>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+            </li>
+          </ul>
+        </div>
+        <div class="input-group">
+          <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button"> یک منو</button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider"/>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+            </li>
+          </ul>
+          <input aria-label="ورودی متن با 2 دکمه کشویی" class="form-control" type="text"/>
+          <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button">
+            منو
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider"/>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- Segmented buttons -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <h5 class="card-header">دکمه های تقسیم بندی شده</h5>
+          <div class="card-body demo-vertical-spacing demo-only-element">
+            <div class="input-group">
+              <button class="btn btn-outline-primary" type="button">عملیات</button>
+              <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" type="button">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+                </li>
+              </ul>
+              <input aria-label="ورودی متن با دکمه کشویی بخش‌بندی شده" class="form-control" type="text"/>
+            </div>
+            <div class="input-group">
+              <input aria-label="ورودی متن با دکمه کشویی بخش‌بندی‌شده" class="form-control" type="text"/>
+              <button class="btn btn-outline-primary" type="button">اقدام</button>
+              <button aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" type="button">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">عملیات</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">یک عمل</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">یک عمل دیگر</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">لینک جدا شده</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Custom select -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <h5 class="card-header">انتخاب سفارشی</h5>
+          <div class="card-body demo-vertical-spacing demo-only-element">
+            <div class="input-group">
+              <label class="input-group-text" for="inputGroupSelect01">گزینه ها</label>
+              <select class="form-select" id="inputGroupSelect01">
+                <option selected>انتخاب کنید...</option>
+                <option value="1">یکی</option>
+                <option value="2">دو</option>
+                <option value="3">سه</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <select class="form-select" id="inputGroupSelect02">
+                <option selected>انتخاب کنید...</option>
+                <option value="1">یکی</option>
+                <option value="2">دو</option>
+                <option value="3">سه</option>
+              </select>
+              <label class="input-group-text" for="inputGroupSelect02">گزینه ها</label>
+            </div>
+            <div class="input-group">
+              <button class="btn btn-outline-primary" type="button">دکمه</button>
+              <select aria-label="به عنوان مثال انتخاب با افزونه دکمه" class="form-select" id="inputGroupSelect03">
+                <option selected>انتخاب کنید...</option>
+                <option value="1">یکی</option>
+                <option value="2">دو</option>
+                <option value="3">سه</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <select aria-label="به عنوان مثال انتخاب با افزونه دکمه" class="form-select" id="inputGroupSelect04">
+                <option selected>انتخاب کنید...</option>
+                <option value="1">یکی</option>
+                <option value="2">دو</option>
+                <option value="3">سه</option>
+              </select>
+              <button class="btn btn-outline-primary" type="button">دکمه</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Custom file input -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">انتخاب فایل سفارشی</h5>
+      <div class="card-body demo-vertical-spacing demo-only-element">
+        <div class="input-group">
+          <label class="input-group-text" for="inputGroupFile01">پروفایل</label>
+          <input class="form-control" id="inputGroupFile01" type="file"/>
+        </div>
+        <div class="input-group">
+          <input class="form-control" id="inputGroupFile02" type="file"/>
+          <label class="input-group-text" for="inputGroupFile02">محصول</label>
+        </div>
+        <div class="input-group">
+          <button class="btn btn-outline-primary" id="inputGroupFileAddon03" type="button">آپلود</button>
+          <input aria-describedby="inputGroupFileAddon03" aria-label="بارگذاری" class="form-control" id="inputGroupFile03" type="file"/>
+        </div>
+        <div class="input-group">
+          <input aria-describedby="inputGroupFileAddon04" aria-label="" class="form-control" id="inputGroupFile04" type="file"/>
+          <button class="btn btn-outline-primary" id="inputGroupFileAddon04" type="button">آپلود</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

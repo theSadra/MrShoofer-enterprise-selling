@@ -1,0 +1,565 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - جزئیات مشتری - آدرس و صورتحساب";
+}
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+@section PageScripts {
+<script src="~/js/modal-edit-user.js"></script>
+<script src="~/js/modal-edit-cc.js"></script>
+<script src="~/js/modal-add-new-cc.js"></script>
+<script src="~/js/modal-add-new-address.js"></script>
+<script src="~/js/app-ecommerce-customer-detail.js"></script>
+}
+
+@* ************** Content ************** *@
+  <h4 class="py-3 mb-2">
+    <span class="text-muted fw-light">تجارت الکترونیک / نمایش مشتری /</span>
+    آدرس و صورتحساب
+  </h4>
+
+<div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">
+  <div class="mb-2 mb-sm-0">
+    <h4 class="mb-1">شناسه مشتری #634759</h4>
+    <p class="mb-0">17 آبان 1399، 5:48</p>
+  </div>
+  <button class="btn btn-label-danger delete-customer" type="button">حذف مشتری</button>
+</div>
+
+
+<div class="row">
+  <!-- Customer-detail Sidebar -->
+  <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+    <!-- Customer-detail Card -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="customer-avatar-section">
+          <div class="d-flex align-items-center flex-column">
+            <img class="img-fluid rounded my-3" src="~/img/avatars/15.png" height="110" width="110" alt="User avatar" />
+            <div class="customer-info text-center">
+              <h4 class="mb-1">مهتاب کرامتی</h4>
+              <small>شناسه مشتری #634759</small>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-around flex-wrap my-4">
+          <div class="d-flex align-items-center gap-2">
+            <div class="avatar">
+              <div class="avatar-initial rounded bg-label-primary">
+                <i class='ti ti-shopping-cart ti-md'></i>
+              </div>
+            </div>
+            <div class="gap-0 d-flex flex-column">
+              <p class="mb-0 fw-medium">184</p>
+              <small>سفارشات</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="avatar">
+              <div class="avatar-initial rounded bg-label-primary">
+                <i class='ti ti-currency-dollar ti-md'></i>
+              </div>
+            </div>
+            <div class="gap-0 d-flex flex-column">
+              <p class="mb-0 fw-medium">
+                <bdi><svg class="toman" width="1rem" height="1rem">
+                    <use xlink:href="#toman">
+                      <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                      </symbol>
+                    </use>
+                  </svg>12,378</bdi>
+              </p>
+              <small>پرداخت</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-container">
+          <small class="d-block pt-4 border-top fw-normal text-uppercase text-muted my-3">جزئیات</small>
+          <ul class="list-unstyled">
+            <li class="mb-3">
+              <span class="fw-medium me-2">نام کاربری:</span>
+              <span>lorine.hischke</span>
+            </li>
+            <li class="mb-3">
+              <span class="fw-medium me-2">ایمیل:</span>
+              <span>vafgot@vultukir.org</span>
+            </li>
+            <li class="mb-3">
+              <span class="fw-medium me-2">وضعیت:</span>
+              <span class="badge bg-label-success">فعال</span>
+            </li>
+            <li class="mb-3">
+              <span class="fw-medium me-2">شماره موبایل:</span>
+              <span>
+                <bdi>0900 000 0000</bdi>
+              </span>
+            </li>
+
+            <li class="mb-3">
+              <span class="fw-medium me-2">کشور:</span>
+              <span>ایران</span>
+            </li>
+          </ul>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal" href="javascript:">ویرایش پروفایل</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Customer-detail Card -->
+
+    <!-- Plan Card -->
+    <div class="card mb-4 bg-gradient-primary">
+      <div class="card-body">
+        <div class="row justify-content-between mb-3">
+          <div class="col-md-12 col-lg-7 col-xl-12 col-xxl-7 text-center text-lg-start text-xl-center text-xxl-start order-1 order-lg-0 order-xl-1 order-xxl-0">
+            <h4 class="card-title text-white text-nowrap">سطح حرفه ای</h4>
+            <p class="card-text text-white justify-text"> برای دسترسی به همه امکانات سامانه، مشتری را به سطح حرفه ای ارتقا دهید.</p>
+          </div>
+          <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2">
+            <img alt="3dRocket" class="w-px-75 m-2" src="~/img/illustrations/rocket.png"/>
+          </span>
+        </div>
+        <button class="btn btn-white text-primary w-100 fw-medium shadow-md" data-bs-target="#upgradePlanModal" data-bs-toggle="modal">
+          ارتقا دادن به سطح حرفه ای
+        </button>
+      </div>
+    </div>
+    <!-- /Plan Card -->
+  </div>
+  <!--/ Customer Sidebar -->
+
+
+  <!-- Customer Content -->
+  <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+    <!-- Customer Pills -->
+    <ul class="nav nav-pills flex-column flex-md-row mb-3">
+      <li class="nav-item"><a class="nav-link py-2" href="CustomerDetailsOverview"><i class="ti ti-user me-1"></i>حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link py-2" href="CustomerDetailsSecurity"><i class="ti ti-lock me-1"></i>امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link active py-2" href="javascript:void(0);"><i class="ti ti-file-text me-1"></i>آدرس و صورتحساب</a></li>
+      <li class="nav-item"><a class="nav-link py-2" href="CustomerDetailsNotifications"><i class="ti ti-bell me-1"></i>نوتیفیکیشن</a></li>
+    </ul>
+    <!--/ Customer Pills -->
+
+    <!-- Address accordion -->
+
+    <div class="card card-action mb-4">
+      <div class="card-header align-items-center py-4">
+        <h5 class="card-action-title mb-0">آدرس ها</h5>
+        <div class="card-action-element">
+          <button class="btn btn-label-primary" data-bs-target="#addNewAddress" data-bs-toggle="modal" type="button"> افزودن آدرس</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="accordion accordion-flush accordion-arrow-left" id="ecommerceBillingAccordionAddress">
+
+          <div class="accordion-item border-bottom">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingHome">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingAddressHome" aria-expanded="false" aria-controls="headingHome" role="button">
+                <span>
+                  <span class="d-flex gap-2 align-items-baseline">
+                    <span class="h6 mb-1">خانه</span>
+                    <span class="badge bg-label-success">آدرس پیشفرض</span>
+                  </span>
+                  <span class="mb-0 text-muted">ایران ، اصفهان ، میدان نقش جهان ، پلاک 1</span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به پیشفرض</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingAddressHome" class="accordion-collapse collapse" data-bs-parent="#ecommerceBillingAccordionAddress">
+              <div class="accordion-body ps-4 ms-2">
+                <h6 class="mb-1">منزل آقای محمدزاده</h6>
+                <p class="mb-1">ایران ، اصفهان</p>
+                <p class="mb-1">میدان نقش جهان ، بازار ایران زمین ،</p>
+                <p class="mb-1">پلاک 1 ، واحد 2</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-bottom border-top-0">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingOffice">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingAddressOffice" aria-expanded="false" aria-controls="headingOffice" role="button">
+                <span class="d-flex flex-column">
+                  <span class="h6 mb-0">دفتر</span>
+                  <span class="mb-0 text-muted">ایران ، اصفهان ، کاشان ، خیابان امیرکبیر</span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به پیشفرض</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingAddressOffice" class="accordion-collapse collapse" aria-labelledby="headingOffice" data-bs-parent="#ecommerceBillingAccordionAddress">
+              <div class="accordion-body ps-4 ms-2">
+                <h6 class="mb-1">دفتر تجاری آرمان کویر</h6>
+                <p class="mb-1">ایران ، اصفهان ، کاشان</p>
+                <p class="mb-1">خیابان امیرکبیر ، باغ فین ،</p>
+                <p class="mb-1">پلاک 1 ، واحد 2</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-top-0">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingFamily">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingAddressFamily" aria-expanded="false" aria-controls="headingFamily" role="button">
+                <span class="d-flex flex-column">
+                  <span class="h6 mb-0">دفتر خارج</span>
+                  <span class="mb-0 text-muted">قطر، دوحه، خیابان ابن محمود، پلاک 11</span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به پیشفرض</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingAddressFamily" class="accordion-collapse collapse" aria-labelledby="headingFamily" data-bs-parent="#ecommerceBillingAccordionAddress">
+              <div class="accordion-body ps-4 ms-2">
+                <h6 class="mb-1">آقای ابن محمود</h6>
+                <p class="mb-1">قطر، دوحه،</p>
+                <p class="mb-1">خیابان ابن محمود</p>
+                <p class="mb-1">پلاک 11</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Address accordion -->
+
+    <!-- payment accordion -->
+    <div class="card card-action mb-4">
+      <div class="card-header align-items-center py-4">
+        <h5 class="card-action-title mb-0">روش های پرداخت</h5>
+        <div class="card-action-element">
+          <button class="btn btn-label-primary" data-bs-target="#addNewCCModal" data-bs-toggle="modal" type="button"> افزودن کارت</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="accordion accordion-flush accordion-arrow-left" id="ecommerceBillingAccordionPayment">
+
+          <div class="accordion-item border-bottom">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingPaymentMaster">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingPaymentMaster" aria-expanded="false" aria-controls="headingPaymentMaster" role="button">
+                <span class="accordion-button-information d-flex align-items-center gap-3">
+                  <span class="accordion-button-image">
+                    <img src="~/img/icons/payments/master-light.png" class="img-fluid w-px-50 h-px-30" alt="master-card" data-app-light-img="icons/payments/master-light.png" data-app-dark-img="icons/payments/master-dark.png" />
+                  </span>
+                  <span class="d-flex flex-column">
+                    <span class="h6 mb-1">مستر کارت</span>
+                    <span class="mb-0 text-muted">آخرین پرداخت : 16 مهر 1402</span>
+                  </span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editCCModal"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به اصلی</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingPaymentMaster" class="accordion-collapse collapse" data-bs-parent="#ecommerceBillingAccordionPayment">
+              <div class="accordion-body d-flex align-items-baseline flex-wrap flex-xl-nowrap flex-sm-nowrap flex-md-wrap">
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">نام</td>
+                    <td class="fw-medium">نوید محمدزاده</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>**** 4487</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>منقضی</td>
+                    <td class="fw-medium">1402/04</td>
+                  </tr>
+                  <tr>
+                    <td>نوع</td>
+                    <td class="fw-medium">ویزا کارت اعتباری</td>
+                  </tr>
+                  <tr>
+                    <td>صادر کننده</td>
+                    <td class="fw-medium">VICBANK</td>
+                  </tr>
+                  <tr>
+                    <td>شناسه</td>
+                    <td class="fw-medium">id_w2r84jdy723</td>
+                  </tr>
+                </table>
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">آدرس</td>
+                    <td class="fw-medium">قطر، خیابان ابن محمود</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>+98 900 000 0000</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ایمیل</td>
+                    <td class="fw-medium">vafgot@vultukir.org</td>
+                  </tr>
+                  <tr>
+                    <td>کشور</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> ایران
+                      <i class="fis fi fi-ir rounded-circle me-2 fs-5"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CVC</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> فعال
+                      <span class="badge bg-label-success rounded-pill p-0">
+                        <i class="ti ti-check ti-xs"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-bottom border-top-0">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingPaymentExpress">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingPaymentExpress" aria-expanded="false" aria-controls="headingPaymentExpress" role="button">
+                <span class="accordion-button-information d-flex align-items-center gap-3">
+                  <span class="accordion-button-image">
+                    <img src="~/img/icons/payments/ae-light.png" class="img-fluid w-px-50 h-px-30" alt="american-express-card" data-app-light-img="icons/payments/ae-light.png" data-app-dark-img="icons/payments/ae-dark.png" />
+                  </span>
+                  <span>
+                    <span class="d-flex gap-2 flex-wrap align-items-baseline">
+                      <span class="h6 mb-1 text-nowrap">ایران اکسپرس</span>
+                      <span class="badge bg-label-success">اصلی</span>
+                    </span>
+                    <span class="mb-0 text-muted">آخرین پرداخت : 16 مهر 1402</span>
+                  </span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editCCModal"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به اصلی</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingPaymentExpress" class="accordion-collapse collapse" aria-labelledby="headingPaymentExpress" data-bs-parent="#ecommerceBillingAccordionPayment">
+              <div class="accordion-body d-flex align-items-baseline flex-wrap flex-xl-nowrap flex-sm-nowrap flex-md-wrap">
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">نام</td>
+                    <td class="fw-medium">نوید محمدزاده</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>**** 4487</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>منقضی</td>
+                    <td class="fw-medium">1402/04</td>
+                  </tr>
+                  <tr>
+                    <td>نوع</td>
+                    <td class="fw-medium">ویزا کارت اعتباری</td>
+                  </tr>
+                  <tr>
+                    <td>صادر کننده</td>
+                    <td class="fw-medium">VICBANK</td>
+                  </tr>
+                  <tr>
+                    <td>شناسه</td>
+                    <td class="fw-medium">id_w2r84jdy723</td>
+                  </tr>
+                </table>
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">آدرس</td>
+                    <td class="fw-medium">قطر، خیابان ابن محمود</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>+98 900 000 0000</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ایمیل</td>
+                    <td class="fw-medium">vafgot@vultukir.org</td>
+                  </tr>
+                  <tr>
+                    <td>کشور</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> ایران
+                      <i class="fis fi fi-ir rounded-circle me-2 fs-5"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CVC</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> فعال
+                      <span class="badge bg-label-success rounded-pill p-0">
+                        <i class="ti ti-check ti-xs"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="accordion-item border-top-0">
+            <div class="accordion-header d-flex justify-content-between align-items-center flex-wrap flex-sm-nowrap" id="headingPaymentVisa">
+              <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#ecommerceBillingPaymentVisa" aria-expanded="false" aria-controls="headingPaymentVisa" role="button">
+                <span class="accordion-button-information d-flex align-items-center gap-3">
+                  <span class="accordion-button-image">
+                    <img src="~/img/icons/payments/visa-light.png" class="img-fluid w-px-50 h-px-30" alt="visa-card" data-app-light-img="icons/payments/visa-light.png" data-app-dark-img="icons/payments/visa-dark.png" />
+                  </span>
+                  <span class="d-flex flex-column">
+                    <span class="h6 mb-1">مستر کارت</span>
+                    <span class="mb-0 text-muted">آخرین پرداخت : 16 مهر 1402</span>
+                  </span>
+                </span>
+              </a>
+              <div class="d-flex gap-3 p-4 p-sm-0 pt-0 ms-1 ms-sm-0">
+                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editCCModal"><i class="ti ti-pencil text-secondary ti-sm"></i></a>
+                <a href="javascript:void(0);"><i class="ti ti-trash text-secondary ti-sm"></i></a>
+                <button class="btn p-0" data-bs-toggle="dropdown" aria-expanded="false" role="button"><i class="ti ti-dots-vertical text-secondary ti-sm mt-1"></i></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="javascript:void(0);">تنظیم به اصلی</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="ecommerceBillingPaymentVisa" class="accordion-collapse collapse" aria-labelledby="headingPaymentVisa" data-bs-parent="#ecommerceBillingAccordionPayment">
+              <div class="accordion-body d-flex align-items-baseline flex-wrap flex-xl-nowrap flex-sm-nowrap flex-md-wrap">
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">نام</td>
+                    <td class="fw-medium">نوید محمدزاده</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>**** 4487</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>منقضی</td>
+                    <td class="fw-medium">1402/04</td>
+                  </tr>
+                  <tr>
+                    <td>نوع</td>
+                    <td class="fw-medium">ویزا کارت اعتباری</td>
+                  </tr>
+                  <tr>
+                    <td>صادر کننده</td>
+                    <td class="fw-medium">VICBANK</td>
+                  </tr>
+                  <tr>
+                    <td>شناسه</td>
+                    <td class="fw-medium">id_w2r84jdy723</td>
+                  </tr>
+                </table>
+                <table class="table table-sm table-borderless text-nowrap">
+                  <tr>
+                    <td class="w-50">آدرس</td>
+                    <td class="fw-medium">قطر، خیابان ابن محمود</td>
+                  </tr>
+                  <tr>
+                    <td>شماره</td>
+                    <td class="fw-medium">
+                      <bdi>+98 900 000 0000</bdi>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ایمیل</td>
+                    <td class="fw-medium">vafgot@vultukir.org</td>
+                  </tr>
+                  <tr>
+                    <td>کشور</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> ایران
+                      <i class="fis fi fi-ir rounded-circle me-2 fs-5"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CVC</td>
+                    <td class="fw-medium d-flex align-items-center gap-2"> فعال
+                      <span class="badge bg-label-success rounded-pill p-0">
+                        <i class="ti ti-check ti-xs"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <!--/ Customer Content -->
+</div>
+
+<!-- Modal -->
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditUser")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditCc")
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewAddress")
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewCc")
+@await Html.PartialAsync("../_Partials/_Modals/ModalUpgradePlan")
+<!-- /Modal -->

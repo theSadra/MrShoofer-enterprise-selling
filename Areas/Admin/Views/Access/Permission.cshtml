@@ -1,0 +1,50 @@
+@{
+  ViewData["Title"] = "دسترسی ها";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+  <script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+  <script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+  <script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+}
+
+@section PageScripts {
+  <script src="~/js/app-access-permission.js"></script>
+  <script src="~/js/modal-add-permission.js"></script>
+  <script src="~/js/modal-edit-permission.js"></script>
+}
+
+@* ************** Content ************** *@
+<h4 class="mb-4">لیست دسترسی‌ها</h4>
+<p class="mb-4"> لیست مجوزهایی که بعدا به نقش ها لینک می شود در زیر آمده است و میتوانید موارد جدید اضافه کنید.</p>
+<!-- Permission Table -->
+<div class="card">
+  <div class="card-datatable table-responsive">
+    <table class="datatables-permissions table border-top">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>نام</th>
+          <th>نقش</th>
+          <th>تاریخ ایجاد</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddPermission")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditPermission")
+<!-- /Modal -->

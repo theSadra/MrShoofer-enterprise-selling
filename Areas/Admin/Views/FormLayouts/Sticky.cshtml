@@ -1,0 +1,281 @@
+@{
+  ViewData["Title"] = "فرم ها - سربرگ چسبان";
+}
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+}
+@section VendorScripts {
+<script src="~/vendor/libs/jquery-sticky/jquery-sticky.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+}
+@section PageScripts {
+<script src="~/js/form-layouts.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم ها /</span>
+  سربرگ چسبان
+</h4>
+<!-- Sticky Actions -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
+        <h5 class="card-title mb-sm-0 me-2">سربرگ چسبان</h5>
+        <div class="action-btns">
+          <button class="btn btn-label-primary me-3">
+            <span class="align-middle"> بازگشت</span>
+          </button>
+          <button class="btn btn-primary">سفارش</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <!-- 1. Delivery Address -->
+            <h5 class="mb-4">1. آدرس تحویل</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="fullname">نام و نام خانوادگی</label>
+                <input class="form-control" id="fullname" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="email">ایمیل</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text" id="email3">
+                    <bdi>&#64;example.com</bdi>
+                  </span>
+                  <input aria-describedby="email3" aria-label="soheil.n" class="form-control" id="email" name="email" placeholder="soheil.n" type="text"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="phone">شماره تماس</label>
+                <input aria-label="658 799 8941" class="form-control phone-mask bdi" id="phone" placeholder="658 799 8941" type="text"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="alt-num">شماره جایگزین</label>
+                <input class="form-control phone-mask bdi" id="alt-num" placeholder="658 799 8941" type="text"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="address">آدرس</label>
+                <textarea class="form-control" id="address" name="address" placeholder="ایران ، اصفهان ، کاشان ، خیابان امیرکبیر" rows="2"></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="pincode">کد پستی</label>
+                <input class="form-control bdi" id="pincode" placeholder="658468" type="text"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="landmark">راهنما</label>
+                <input class="form-control bdi" id="landmark" placeholder="روبرو نانوایی" type="text"/>
+              </div>
+              <div class="col-md">
+                <label class="form-label" for="city">شهر</label>
+                <input class="form-control" id="city" placeholder="کاشان" type="text"/>
+              </div>
+              <div class="col-md">
+                <label class="form-label" for="state">استان</label>
+                <select class="select2 form-select" data-allow-clear="true" id="state">
+                  <option value="">انتخاب کنید</option>
+                  <option label="اذربایجان شرقی" value="2">اذربایجان شرقی</option>
+                  <option label="اذربایجان غربی" value="3">اذربایجان غربی</option>
+                  <option label="زنجان" value="4">زنجان</option>
+                  <option label="خراسان" value="5">خراسان</option>
+                  <option label="اردبیل" value="6">اردبیل</option>
+                  <option label="اصفهان" value="7">اصفهان</option>
+                  <option label="بوشهر" value="8">بوشهر</option>
+                  <option label="تهران" value="9">تهران</option>
+                  <option label="قزوین" value="10">قزوین</option>
+                  <option label="قم" value="11">قم</option>
+                  <option label="چهارمحال وبختیاری" value="12">چهارمحال وبختیاری</option>
+                  <option label="کهگیلویه وبویراحمد" value="13">کهگیلویه وبویراحمد</option>
+                  <option label="خوزستان" value="15">خوزستان</option>
+                  <option label="سمنان" value="16">سمنان</option>
+                  <option label="سیستان وبلوچستان" value="17">سیستان وبلوچستان</option>
+                  <option label="فارس" value="18">فارس</option>
+                  <option label="کردستان" value="19">کردستان</option>
+                  <option label="کرمان" value="20">کرمان</option>
+                  <option label="کرمانشاه" value="21">کرمانشاه</option>
+                  <option label="هرمزگان" value="22">هرمزگان</option>
+                  <option label="گیلان" value="23">گیلان</option>
+                  <option label="لرستان" value="24">لرستان</option>
+                  <option label="مازندران" value="25">مازندران</option>
+                  <option label="گلستان" value="26">گلستان</option>
+                  <option label="مرکزی" value="27">مرکزی</option>
+                  <option label="همدان" value="28">همدان</option>
+                  <option label="یزد" value="29">یزد</option>
+                  <option label="ایلام" value="30">ایلام</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input checked="" class="form-check-input" id="deliveryAdd" type="checkbox" value=""/>
+                  <label class="form-check-label" for="deliveryAdd"> آدرس پیشفرض</label>
+                </div>
+              </div>
+              <label class="form-check-label">نوع آدرس</label>
+              <div class="col mt-2">
+                <div class="form-check form-check-inline">
+                  <input checked="" class="form-check-input" id="collapsible-address-type-home" name="collapsible-address-type" type="radio" value=""/>
+                  <label class="form-check-label" for="collapsible-address-type-home">درب منزل (تحویل تمام روز)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" id="collapsible-address-type-office" name="collapsible-address-type" type="radio" value=""/>
+                  <label class="form-check-label" for="collapsible-address-type-office"> دفتر (تحویل بین 10 صبح تا 5 بعد از ظهر)</label>
+                </div>
+              </div>
+            </div>
+            <hr/>
+            <!-- 2. Delivery Type -->
+            <h5 class="my-4">2. نوع تحویل</h5>
+            <div class="row gy-3">
+              <div class="col-md">
+                <div class="form-check custom-option custom-option-icon">
+                  <label class="form-check-label custom-option-content" for="customRadioIcon1">
+                    <span class="custom-option-body">
+                      <i class="ti ti-briefcase"></i>
+                      <span class="custom-option-title"> عــادیءء</span>
+                      <small> در 3-5 روز.</small>
+                    </span>
+                    <input checked class="form-check-input" id="customRadioIcon1" name="customDeliveryRadioIcon" type="radio" value=""/>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-check custom-option custom-option-icon">
+                  <label class="form-check-label custom-option-content" for="customRadioIcon2">
+                    <span class="custom-option-body">
+                      <i class="ti ti-send"></i>
+                      <span class="custom-option-title"> پـیـشـتـاز</span>
+                      <small>ظرف 2 روز.</small>
+                    </span>
+                    <input class="form-check-input" id="customRadioIcon2" name="customDeliveryRadioIcon" type="radio" value=""/>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-check custom-option custom-option-icon">
+                  <label class="form-check-label custom-option-content" for="customRadioIcon3">
+                    <span class="custom-option-body">
+                      <i class="ti ti-crown"></i>
+                      <span class="custom-option-title"> فــوریءء</span>
+                      <small> در عرض یک روز.</small>
+                    </span>
+                    <input class="form-check-input" id="customRadioIcon3" name="customDeliveryRadioIcon" type="radio" value=""/>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr/>
+            <!-- 3. Apply Promo code -->
+            <h5 class="my-4">3. کد تخفیف</h5>
+            <div class="row g-3">
+              <div class="col-sm-10 col-8">
+                <input class="form-control" placeholder="IRAN" type="text"/>
+              </div>
+              <div class="col-sm-2 col-4 text-end">
+                <button class="btn btn-primary">اعمال کد</button>
+              </div>
+              <div class="divider divider-dashed">
+                <div class="divider-text">یا</div>
+              </div>
+              <div class="col-12">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between flex-column flex-sm-row">
+                    <div class="offer">
+                      <p class="mb-0 fw-medium">TAKEITALL</p>
+                      <span>برای دریافت 15% تخفیف سفارش های بالای 100٬000 ءتءءءء، این کد را اعمال کنید.</span>
+                    </div>
+                    <div class="apply mt-3 mt-sm-0">
+                      <button class="btn btn-outline-primary">ثبت کد</button>
+                    </div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between flex-column flex-sm-row">
+                    <div class="offer">
+                      <p class="mb-0 fw-medium">FESTIVE10</p>
+                      <span>با استفاده از این کد از 10% تخفیف در تمامی سفارشات بهره مند شوید.</span>
+                    </div>
+                    <div class="apply mt-3 mt-sm-0">
+                      <button class="btn btn-outline-primary">ثبت کد</button>
+                    </div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between flex-column flex-sm-row">
+                    <div class="offer">
+                      <p class="mb-0 fw-medium">MYSTERYDEAL</p>
+                      <span>برای دریافت تخفیف بین 10 تا 50 درصد این کد را اعمال کنید.</span>
+                    </div>
+                    <div class="apply mt-3 mt-sm-0">
+                      <button class="btn btn-outline-primary">ثبت کد</button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr/>
+            <!-- 4. Payment Method -->
+            <h5 class="my-4">4. روش پرداخت</h5>
+            <div class="row g-3">
+              <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input checked="" class="form-check-input form-check-input-payment" id="collapsible-payment-cc" name="collapsible-payment" type="radio" value="credit-card"/>
+                  <label class="form-check-label d-flex gap-1" for="collapsible-payment-cc"> کارت اعتباری / رسید / ATM
+                    <i class="ti ti-credit-card ti-xs"></i>
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input form-check-input-payment" id="collapsible-payment-cash" name="collapsible-payment" type="radio" value="cash"/>
+                  <label class="form-check-label d-flex gap-1" for="collapsible-payment-cash"> نقدی هنگام تحویل
+                    <i class="ti ti-help text-muted ti-xs" data-bs-placement="top" data-bs-toggle="tooltip" title="پس از دریافت محصول می توانید پرداخت کنید."></i>
+                  </label>
+                </div>
+              </div>
+              <div id="form-credit-card">
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label class="form-label w-100" for="creditCardMask">شماره کارت</label>
+                    <div class="input-group input-group-merge">
+                      <input aria-describedby="creditCardMask2" class="form-control credit-card-mask bdi" id="creditCardMask" name="creditCardMask" placeholder="1356 3215 6548 7898" type="text"/>
+                      <span class="input-group-text cursor-pointer p-1" id="creditCardMask2">
+                        <span class="card-type"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-name">نام</label>
+                        <input class="form-control" id="collapsible-payment-name" placeholder="نـوید" type="text"/>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-expiry-date">انقضا تاریخ</label>
+                        <input class="form-control expiry-date-mask" id="collapsible-payment-expiry-date" placeholder="MM/YY" type="text"/>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div class="mb-3">
+                        <label class="form-label" for="collapsible-payment-cvv">رمز دوم کارت اعتباری</label>
+                        <div class="input-group input-group-merge">
+                          <input class="form-control cvv-code-mask bdi" id="collapsible-payment-cvv" maxlength="3" placeholder="" type="text"/>
+                          <span class="input-group-text cursor-pointer" id="collapsible-payment-cvv2">
+                            <i class="ti ti-help ti-xs text-muted" data-bs-placement="top" data-bs-toggle="tooltip" title="ارزش تأیید کارت"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Sticky Actions -->

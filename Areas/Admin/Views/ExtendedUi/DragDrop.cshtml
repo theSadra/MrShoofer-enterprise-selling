@@ -1,0 +1,309 @@
+@{
+  ViewData["Title"] = "طراحی سفارشی - کشیدن و رها کردن";
+}
+@section VendorScripts{
+<script src="~/vendor/libs/sortablejs/sortable.js"></script>
+}
+@section PageScripts{
+<script src="~/js/extended-ui-drag-and-drop.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">طراحی سفارشی /</span>
+  کشیدن و رها کردن
+</h4>
+<!-- Cards Draggable -->
+<div class="row mb-4" id="sortable-cards">
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="card drag-item cursor-move mb-lg-0 mb-4">
+      <div class="card-body text-center">
+        <h2>
+          <i class="ti ti-shopping-cart text-success display-6"></i>
+        </h2>
+        <h4>فروش ماهانه</h4>
+        <h5>2362</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="card drag-item cursor-move mb-lg-0 mb-4">
+      <div class="card-body text-center">
+        <h2>
+          <i class="ti ti-world text-info display-6"></i>
+        </h2>
+        <h4>بازدید ماهانه</h4>
+        <h5>687,123</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="card drag-item cursor-move mb-lg-0 mb-4">
+      <div class="card-body text-center">
+        <h2>
+          <i class="ti ti-gift text-danger display-6"></i>
+        </h2>
+        <h4>محصولات</h4>
+        <h5>985</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="card drag-item cursor-move mb-lg-0 mb-4">
+      <div class="card-body text-center">
+        <h2>
+          <i class="ti ti-user text-primary display-6"></i>
+        </h2>
+        <h4>کاربران</h4>
+        <h5>105,652</h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Cards Draggable ends -->
+<!-- Images Rearrange Example-->
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">تصاویر قابل جابجایی</h5>
+      <div class="card-body">
+        <div class="d-flex flex-wrap mb-3 gap-2" id="image-list-1">
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/1.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/4.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/2.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/6.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/3.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/5.png" width="50"/>
+        </div>
+        <div class="d-flex flex-wrap gap-2" id="image-list-2">
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/7.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/10.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/8.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/12.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/9.png" width="50"/>
+          <img alt="" class="rounded-circle drag-item cursor-move" height="50" src="~/img/avatars/11.png" width="50"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Images Rearrange Example-->
+<!-- Multiple Lists Draggable -->
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card">
+      <h5 class="card-header">جابجایی بین لیست‌ها</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های درانتظار انجام</p>
+            <ul class="list-group list-group-flush" id="pending-tasks">
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های تکمیل شده</p>
+            <ul class="list-group list-group-flush" id="completed-tasks">
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Multiple Lists Draggable ends -->
+<!-- Cloning Example -->
+<div class="row mb-4">
+  <div class="col-sm-12">
+    <div class="card">
+      <h5 class="card-header">کپی کردن با جابجایی</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های درانتظار انجام</p>
+            <ul class="list-group list-group-flush" id="clone-source-1">
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های تکمیل شده</p>
+            <ul class="list-group list-group-flush" id="clone-source-2">
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center">
+                <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                <img alt="آواتار" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Cloning Example ends -->
+<!-- Handles Example -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <h5 class="card-header">جابجایی با آیکون</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های درانتظار انجام</p>
+            <ul class="list-group list-group-flush" id="handle-list-1">
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="اواتار" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <p>تسک‌های تکمیل شده</p>
+            <ul class="list-group list-group-flush" id="handle-list-2">
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/1.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="avatar" class="rounded-circle" height="32" src="~/img/avatars/2.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/3.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/4.png" width="32"/>
+              </li>
+              <li class="list-group-item lh-1 d-flex justify-content-between align-items-center">
+                <span class="d-flex justify-content-between align-items-center">
+                  <i class="drag-handle cursor-move ti ti-menu-2 align-text-bottom me-2"></i>
+                  <span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</span>
+                </span>
+                <img alt="" class="rounded-circle" height="32" src="~/img/avatars/5.png" width="32"/>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Handles Example ends -->

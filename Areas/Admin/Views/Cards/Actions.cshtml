@@ -1,0 +1,469 @@
+@{
+  ViewData["Title"] = "رابط کاربری - عملیات کارت";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/spinkit/spinkit.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/vendor/libs/sortablejs/sortable.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/cards-actions.js"></script>
+}
+@* ************** Content ************** *@
+
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">امکانات /</span>
+    عملیات کارت
+  </h4>
+  <!-- Cards Action -->
+  <div class="card card-action mb-5">
+    <div class="card-alert"></div>
+    <div class="card-header">
+      <div class="card-action-title">عملیات کارت</div>
+      <div class="card-action-element">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">
+            <a class="card-collapsible" href="javascript:void(0);">
+              <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="card-reload" href="javascript:void(0);">
+              <i class="tf-icons ti ti-rotate-clockwise-2 scaleX-n1-rtl ti-sm"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="card-expand" href="javascript:void(0);">
+              <i class="tf-icons ti ti-arrows-maximize ti-sm"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="card-close" href="javascript:void(0);">
+              <i class="tf-icons ti ti-x ti-sm"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="collapse show">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>عملیات</th>
+          <th class="text-center">آیکون</th>
+          <th>جزئیات</th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        <tr>
+          <td>جمع کردن</td>
+          <td class="text-center">
+            <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+          </td>
+          <td>محتوای کارت را با کلید بر روی آیکن ، جمع کنید.</td>
+        </tr>
+        <tr>
+          <td>تازه سازی</td>
+          <td class="text-center">
+            <i class="tf-icons ti ti-rotate-clockwise-2 scaleX-n1-rtl ti-sm"></i>
+          </td>
+          <td>محتوای کارت را با کلید بر روی آیکن ، تازه سازی کنید.</td>
+        </tr>
+        <tr>
+          <td>تمام صفحه</td>
+          <td class="text-center">
+            <i class="tf-icons ti ti-arrows-maximize ti-sm"></i>
+          </td>
+          <td> کارت را با کلید بر روی آیکن ، تمام صفحه کنید.</td>
+        </tr>
+        <tr>
+          <td>حذف کارت</td>
+          <td class="text-center">
+            <i class="tf-icons ti ti-x ti-sm"></i>
+          </td>
+          <td> کارت را با کلید بر روی آیکن ، حذف کنید.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h6 class="pb-1 mb-4 text-muted">مثال ها</h6>
+  <p> از کلاس
+    <code>.card-action</code>
+    با کلاس
+    <code>.card</code>
+    برای ایجاد کارت عملیات استفاده کنید. از
+    <code>.card-action-title</code>
+    برای عنوان اصلی و
+    <code>.card-action-element</code>
+    برای دربرگیرنده نماد ها و .. استفاده کنید.
+  </p>
+  <div class="row mb-5">
+    <div class="col-md">
+      <div class="card card-action mb-4">
+        <div class="card-header">
+          <div class="card-action-title">بروزرسانی کارت</div>
+          <div class="card-action-element">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="card-collapsible" href="javascript:void(0);">
+                  <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="collapse show">
+          <div class="card-body">
+            <p class="card-text"> برای ایجاد یک کارت جمع شونده یا تاشو، از
+              <code>.card-collapsible</code>
+              استفاده کنید. برای باز شدن از
+              <code>.show</code>
+              و جمع شدن از
+              <code>.collapse</code>
+              استفاده کنید.
+            </p>
+            <p class="card-text d-flex align-items-center gap-1"> کلیک کنید
+              <i class="tf-icons ti ti-chevron-right scaleX-n1-rtl"></i>
+              برای دیدن باز و بسته شدن کارت.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card card-action mb-4">
+        <div class="card-alert"></div>
+        <div class="card-header">
+          <div class="card-action-title">تازه سازی محتوا</div>
+          <div class="card-action-element">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="card-reload" href="javascript:void(0);">
+                  <i class="tf-icons ti ti-rotate-clockwise-2 scaleX-n1-rtl ti-sm"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text"> برای ایجاد کارتی با عملیات رفرش یا تازه سازی، از کلاس
+            <code>.card-reload</code>
+            استفاده کنید. از کلاس
+            <code>.card-alert</code>
+            برای نمایش پیام پاسخ سفارشی استفاده کنید.
+          </p>
+          <p class="card-text d-flex align-items-center gap-1"> برای مشاهده نحوه رفرش کارت بر روی
+            <i class="tf-icons ti ti-rotate-clockwise-2 scaleX-n1-rtl"></i>
+            کلیک کنید
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md">
+      <div class="card card-action mb-4">
+        <div class="card-header">
+          <div class="card-action-title">کارت تمام صفحه</div>
+          <div class="card-action-element">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="card-expand" href="javascript:void(0);">
+                  <i class="tf-icons ti ti-arrows-maximize ti-sm"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text"> برای ایجاد کارتی با عملکرد گسترش (تمام صفحه)، از
+            <code>.card-expand</code>
+            استفاده کنید. برای خروج از حالت تمام صفحه از کلید
+            <kbd>ESC</kbd>
+            استفاده کنید.
+          </p>
+          <p class="card-text d-flex align-items-center gap-1"> برای تمام صفحه شدن بر روی
+            <i class="tf-icons ti ti-arrows-maximize"></i>
+            کلیک کنید.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card card-action mb-4">
+        <div class="card-alert"></div>
+        <div class="card-header">
+          <div class="card-action-title">حذف کارت</div>
+          <div class="card-action-element">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="card-close" href="javascript:void(0);">
+                  <i class="tf-icons ti ti-x ti-sm"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text"> برای حذف کارت از کلاس
+            <code>.card-close</code>
+            و آیکن مناسب استفاده کنید.
+          </p>
+          <br/>
+          <p class="card-text d-flex align-items-center gap-1"> برای حذف کارت بر روی
+            <i class="tf-icons ti ti-x"></i>
+            کلیک کنید.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Cards Action -->
+  <!-- Header elements -->
+  <h5 class="pb-1 mb-4">سربرگ / هدر کارت</h5>
+  <div class="row mb-5">
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-header header-elements">
+          <span class="me-2">سربرگ کارت</span>
+          <div class="card-header-elements ms-auto">
+            <span class="badge bg-primary rounded-pill">جدید</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title header-elements">
+            <h5 class="m-0 me-2">عنوان کارت</h5>
+            <div class="card-title-elements ms-auto">
+              <span class="badge bg-primary rounded-pill">10</span>
+            </div>
+          </div>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-header header-elements">
+          <span class="me-2">سربرگ کارت</span>
+          <div class="card-header-elements ms-auto">
+            <button class="btn btn-xs btn-primary" type="button">
+              <span class="tf-icon ti ti-plus ti-xs me-1"></span>
+              دکمه
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title header-elements">
+            <h5 class="m-0 me-2">عنوان کارت</h5>
+            <div class="card-title-elements ms-auto">
+              <button class="btn btn-icon btn-sm btn-primary" type="button">
+                <span class="tf-icon ti-xs ti ti-brand-shopee"></span>
+              </button>
+            </div>
+          </div>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-header header-elements">
+          <span class="me-2">سربرگ کارت</span>
+          <div class="card-header-elements ms-auto">
+            <input class="form-control form-control-sm" placeholder="جستجو کردن" type="text"/>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title header-elements">
+            <h5 class="m-0 me-2">عنوان کارت</h5>
+            <div class="card-title-elements ms-auto">
+              <label class="switch switch-primary switch-sm me-0">
+                <input class="switch-input" type="checkbox"/>
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+                <span class="switch-label"></span>
+              </label>
+            </div>
+          </div>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-header header-elements">
+          <span class="me-2">سربرگ کارت</span>
+          <div class="card-header-elements ms-auto">
+            <span class="tf-icon ti-xs ti ti-bell"></span>
+            <span class="text text-muted d-flex">
+              <small>متن نمونه</small>
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title header-elements">
+            <h5 class="m-0 me-2">عنوان کارت</h5>
+            <div class="card-header-elements ms-auto">
+              <span class="tf-icon ti-xs ti ti-bell"></span>
+              <span class="text text-muted d-flex">
+                <small>متن نمونه</small>
+              </span>
+            </div>
+          </div>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-header header-elements">
+          <span class="me-2">سربرگ کارت</span>
+          <div class="card-header-elements">
+            <span class="badge bg-danger rounded-pill">سلام!</span>
+          </div>
+          <div class="card-header-elements ms-auto">
+            <div class="btn-group">
+              <button class="btn btn-primary" type="button">تست</button>
+              <button class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" type="button"></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0)">عملیات</a>
+                <a class="dropdown-item" href="javascript:void(0)">عملیات دیگر</a>
+                <a class="dropdown-item" href="javascript:void(0)">عملیات بعدی</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)">لینک جدا شده</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-title header-elements">
+            <h5 class="m-0 me-2">عنوان کارت</h5>
+            <div class="card-title-elements">
+              <label class="switch switch-primary switch-sm me-0">
+                <input class="switch-input" type="checkbox"/>
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+              </label>
+            </div>
+            <div class="card-title-elements ms-auto">
+              <select class="form-select form-select-sm w-auto">
+                <option selected="">انتخاب 1</option>
+                <option>گزینه 2</option>
+                <option>گزینه 3</option>
+              </select>
+              <button class="btn btn-sm btn-primary" type="button">برو</button>
+            </div>
+          </div>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ .</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Header elements -->
+  <!-- Draggable Cards -->
+  <h5 class="pb-1 mb-4">کارت های قابل جابجایی</h5>
+  <div class="row" id="sortable-4">
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-primary text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان اصلی</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-secondary text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان فرعی</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-success text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان موفق</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-danger text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان خطا</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-warning text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان هشدار</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card bg-info text-white mb-3">
+        <div class="card-header cursor-move">منو جابجا کن!</div>
+        <div class="card-body">
+          <h4 class="card-title text-white">عنوان راهنما</h4>
+          <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم .</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Draggable Cards -->

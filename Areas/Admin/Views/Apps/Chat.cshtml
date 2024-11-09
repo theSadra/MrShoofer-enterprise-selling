@@ -1,0 +1,616 @@
+@{
+  ViewData["Title"] = "پیامرسان";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="~/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/css/pages/app-chat.css">
+}
+
+@section PageScripts {
+  <script src="~/js/app-chat.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<div class="app-chat card overflow-hidden">
+  <div class="row g-0">
+    <!-- Sidebar Left -->
+    <div class="col app-chat-sidebar-left app-sidebar overflow-hidden" id="app-chat-sidebar-left">
+      <div
+        class="chat-sidebar-left-user sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap px-4 pt-5">
+        <div class="avatar avatar-xl avatar-online">
+          <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+        </div>
+        <h5 class="mt-2 mb-0">جواد عزتی</h5>
+        <span>Admin</span>
+        <i class="ti ti-x ti-sm cursor-pointer close-sidebar" data-bs-toggle="sidebar" data-overlay
+          data-target="#app-chat-sidebar-left"></i>
+      </div>
+      <div class="sidebar-body px-4 pb-4">
+        <div class="my-4">
+          <small class="text-muted text-uppercase">درباره</small>
+          <textarea class="form-control chat-sidebar-left-user-about mt-3" id="chat-sidebar-left-user-about"
+            maxlength="120"
+            rows="4"> علاقه‌مند به فناوری و نوآوری، همیشه در جستجوی چالش‌های جدید در علوم کامپیوتر و فناوری اطلاعات. با تجربه در توسعه نرم‌افزارهای متن‌باز و تحقیقات در حوزه‌های هوش مصنوعی و اینترنت اشیاء، به دنبال ارتقاء مهارت‌های فنی و مشارکت در پروژه‌های نوآورانه</textarea>
+        </div>
+        <div class="my-4">
+          <small class="text-muted text-uppercase">وضعیت</small>
+          <div class="d-grid gap-2 mt-3">
+            <div class="form-check form-check-success">
+              <input checked class="form-check-input" id="user-active" name="chat-user-status" type="radio"
+                value="active" />
+              <label class="form-check-label" for="user-active">فعال</label>
+            </div>
+            <div class="form-check form-check-danger">
+              <input class="form-check-input" id="user-busy" name="chat-user-status" type="radio" value="busy" />
+              <label class="form-check-label" for="user-busy">گرفتار</label>
+            </div>
+            <div class="form-check form-check-warning">
+              <input class="form-check-input" id="user-away" name="chat-user-status" type="radio" value="away" />
+              <label class="form-check-label" for="user-away">دور</label>
+            </div>
+            <div class="form-check form-check-secondary">
+              <input class="form-check-input" id="user-offline" name="chat-user-status" type="radio" value="offline" />
+              <label class="form-check-label" for="user-offline">آفلاین</label>
+            </div>
+          </div>
+        </div>
+        <div class="my-4">
+          <small class="text-muted text-uppercase">تنظیمات</small>
+          <ul class="list-unstyled d-grid gap-2 me-3 mt-3">
+            <li class="d-flex justify-content-between align-items-center">
+              <div>
+                <i class="ti ti-message me-1 ti-sm"></i>
+                <span class="align-middle">تایید دو مرحله ای</span>
+              </div>
+              <label class="switch switch-primary me-4 switch-sm">
+                <input checked="" class="switch-input" type="checkbox" />
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+              </label>
+            </li>
+            <li class="d-flex justify-content-between align-items-center">
+              <div>
+                <i class="ti ti-bell me-1 ti-sm"></i>
+                <span class="align-middle">اعلان</span>
+              </div>
+              <label class="switch switch-primary me-4 switch-sm">
+                <input class="switch-input" type="checkbox" />
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+              </label>
+            </li>
+            <li>
+              <i class="ti ti-user-plus me-1 ti-sm"></i>
+              <span class="align-middle">دعوت دوستان</span>
+            </li>
+            <li>
+              <i class="ti ti-trash me-1 ti-sm"></i>
+              <span class="align-middle">حذف حساب</span>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex mt-4">
+          <button class="btn btn-primary" data-bs-toggle="sidebar" data-overlay data-target="#app-chat-sidebar-left">
+            خروج</button>
+        </div>
+      </div>
+    </div>
+    <!-- /Sidebar Left-->
+
+    <!-- Chat & Contacts -->
+    <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
+      <div class="sidebar-header">
+        <div class="d-flex align-items-center me-3 me-lg-0">
+          <div class="flex-shrink-0 avatar avatar-online me-3" data-bs-toggle="sidebar" data-overlay="app-overlay-ex"
+            data-target="#app-chat-sidebar-left">
+            <img alt="آواتار" class="user-avatar rounded-circle cursor-pointer" src="~/img/avatars/1.png" />
+          </div>
+          <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+            <span class="input-group-text" id="basic-addon-search31">
+              <i class="ti ti-search h-mirror"></i>
+            </span>
+            <input aria-describedby="basic-addon-search31" aria-label="جستجو..." class="form-control chat-search-input"
+              placeholder="جستجو..." type="text" />
+          </div>
+        </div>
+        <i class="ti ti-x cursor-pointer d-lg-none d-block position-absolute mt-2 me-1 top-0 end-0"
+          data-bs-toggle="sidebar" data-overlay data-target="#app-chat-contacts"></i>
+      </div>
+      <hr class="container-m-nx m-0" />
+      <div class="sidebar-body">
+        <div class="chat-contact-list-item-title">
+          <h5 class="text-primary mb-0 px-4 pt-3 pb-2">چت</h5>
+        </div>
+        <!-- Chats -->
+        <ul class="list-unstyled chat-contact-list" id="chat-list">
+          <li class="chat-contact-list-item chat-list-item-0 d-none">
+            <h6 class="text-muted mb-0">هیچ گپی پیدا نشد</h6>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-online">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/13.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">بهرام رادان</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0"> دوستان را معرفی کنید. پاداش بگیرید.</p>
+              </div>
+              <small class="text-muted mb-auto">5 دقیقه</small>
+            </a>
+          </li>
+          <li class="chat-contact-list-item active">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-offline">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">مهتاب کرامتی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0"> حتما میخرم. 👍</p>
+              </div>
+              <small class="text-muted mb-auto">۳۰ دقیقه</small>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-busy">
+                <span class="avatar-initial rounded-circle bg-label-success">م‌ی</span>
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">مهران مدیری</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0"> اگر طول می کشد شما می توانید کاربر صندوق
+                  پستی الکترونیکی</p>
+              </div>
+              <small class="text-muted mb-auto">1 روز</small>
+            </a>
+          </li>
+        </ul>
+        <!-- Contacts -->
+        <ul class="list-unstyled chat-contact-list mb-0" id="contact-list">
+          <li class="chat-contact-list-item chat-contact-list-item-title">
+            <h5 class="text-primary mb-0">مخاطبین</h5>
+          </li>
+          <li class="chat-contact-list-item contact-list-item-0 d-none">
+            <h6 class="text-muted mb-0">هیچ اشنای یافت نشد</h6>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-offline">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/4.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">لیلا اوتادی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">طراح UI / UX</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-busy">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">سعید آقاخانی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">تحلیلگر کسب و کار</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="avatar d-block flex-shrink-0">
+                <span class="avatar-initial rounded-circle bg-label-primary">ب‌ن</span>
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">بهرام نورایی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">مدیر منابع</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-busy">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">علی سورنا</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">کسب و کار اجرایی</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-offline">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/8.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">پانته آ بهرام</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">بازاریابی نینجا</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="avatar d-block flex-shrink-0">
+                <span class="avatar-initial rounded-circle bg-label-success">م‌ی</span>
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">مهران مدیری</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">مهندس UX</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-busy">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/10.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">گلشیفته فراهانی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">بخش حساب</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-offline">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/13.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">بهرام رادان</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">پشتیبانی AWS</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="avatar d-block flex-shrink-0">
+                <span class="avatar-initial rounded-circle bg-label-danger">ش‌ف</span>
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">شبنم فرهنگیان</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">توسعه دهنده فرانت اند</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-offline">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">مهتاب کرامتی</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">مهندس ابر</p>
+              </div>
+            </a>
+          </li>
+          <li class="chat-contact-list-item">
+            <a class="d-flex align-items-center">
+              <div class="flex-shrink-0 avatar avatar-busy">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/11.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="chat-contact-name text-truncate m-0">رضا کیانیان</h6>
+                <p class="chat-contact-status text-muted text-truncate mb-0">توسعه دهنده بک اند</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /Chat contacts -->
+
+    <!-- Chat History -->
+    <div class="col app-chat-history bg-body">
+      <div class="chat-history-wrapper">
+        <div class="chat-history-header border-bottom">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex overflow-hidden align-items-center">
+              <i class="ti ti-menu-2 ti-sm cursor-pointer d-lg-none d-block me-2" data-bs-toggle="sidebar" data-overlay
+                data-target="#app-chat-contacts"></i>
+              <div class="flex-shrink-0 avatar">
+                <img alt="آواتار" class="rounded-circle" data-bs-toggle="sidebar" data-overlay
+                  data-target="#app-chat-sidebar-right" src="~/img/avatars/2.png" />
+              </div>
+              <div class="chat-contact-info flex-grow-1 ms-2">
+                <h6 class="m-0">مهتاب کرامتی</h6>
+                <small class="user-status text-muted">توسعه دهنده NextJS</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="ti ti-phone-call cursor-pointer d-sm-block d-none me-3"></i>
+              <i class="ti ti-video cursor-pointer d-sm-block d-none me-3"></i>
+              <i class="ti ti-search cursor-pointer d-sm-block d-none me-3"></i>
+              <div class="dropdown d-flex align-self-center">
+                <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown"
+                  id="chat-header-actions" type="button">
+                  <i class="ti ti-dots-vertical"></i>
+                </button>
+                <div aria-labelledby="chat-header-actions" class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="javascript:void(0);">نمایش مخاطب</a>
+                  <a class="dropdown-item" href="javascript:void(0);">بی‌صدایی اعلان‌ها</a>
+                  <a class="dropdown-item" href="javascript:void(0);">مسدودکردن</a>
+                  <a class="dropdown-item" href="javascript:void(0);">حذف پیام‌ها</a>
+                  <a class="dropdown-item" href="javascript:void(0);">گزارش</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-history-body bg-body">
+          <ul class="list-unstyled chat-history">
+            <li class="chat-message chat-message-right">
+              <div class="d-flex overflow-hidden">
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">سلام رفیق 👋 چطور می‌تونم کمکت کنم؟</p>
+                  </div>
+                  <div class="text-end text-muted mt-1">
+                    <i class="ti ti-checks ti-xs me-1 text-success"></i>
+                    <small>10:00 ق.ظ</small>
+                  </div>
+                </div>
+                <div class="user-avatar flex-shrink-0 ms-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message">
+              <div class="d-flex overflow-hidden">
+                <div class="user-avatar flex-shrink-0 me-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+                  </div>
+                </div>
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">هی نـوید، یه قالب مدیریت حرفه‌ای می‌خوام.</p>
+                    <p class="mb-0">میشه یکی بهم معرفی کنی؟ 🤔</p>
+                  </div>
+                  <div class="chat-message-text mt-2">
+                    <p class="mb-0">که سازگار با bootstrap5 باشه.</p>
+                  </div>
+                  <div class="text-muted mt-1">
+                    <small>10:02 ق.ظ</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message chat-message-right">
+              <div class="d-flex overflow-hidden">
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">قالب Vuexy هرچیزی بهش فکر کنی رو داره.</p>
+                  </div>
+                  <div class="text-end text-muted mt-1">
+                    <i class="ti ti-checks ti-xs me-1 text-success"></i>
+                    <small>10:03 ق.ظ</small>
+                  </div>
+                </div>
+                <div class="user-avatar flex-shrink-0 ms-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message">
+              <div class="d-flex overflow-hidden">
+                <div class="user-avatar flex-shrink-0 me-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+                  </div>
+                </div>
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">UI خیلی مدرن و تمیزی داره. 😃</p>
+                  </div>
+                  <div class="chat-message-text mt-2">
+                    <p class="mb-0">برای داشبورد مدیریت پروژم مناسبه.</p>
+                  </div>
+                  <div class="chat-message-text mt-2">
+                    <p class="mb-0">از کجا بخرم؟؟</p>
+                  </div>
+                  <div class="text-muted mt-1">
+                    <small>10:05 ق.ظ</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message chat-message-right">
+              <div class="d-flex overflow-hidden">
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">داخل سایت راستچین اسمشو سرچ کن.</p>
+                  </div>
+                  <div class="text-end text-muted mt-1">
+                    <i class="ti ti-checks ti-xs me-1 text-success"></i>
+                    <small>10:06 ق.ظ</small>
+                  </div>
+                </div>
+                <div class="user-avatar flex-shrink-0 ms-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message">
+              <div class="d-flex overflow-hidden">
+                <div class="user-avatar flex-shrink-0 me-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+                  </div>
+                </div>
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">حتما میخرم. 👍</p>
+                  </div>
+                  <div class="chat-message-text mt-2">
+                    <p class="mb-0">ممنون.</p>
+                  </div>
+                  <div class="text-muted mt-1">
+                    <small>10:08 ق.ظ</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message chat-message-right">
+              <div class="d-flex overflow-hidden">
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">خیلیم عالی . سوال دیگه ای نداری؟</p>
+                  </div>
+                  <div class="text-end text-muted mt-1">
+                    <i class="ti ti-checks ti-xs me-1 text-success"></i>
+                    <small>10:10 ق.ظ</small>
+                  </div>
+                </div>
+                <div class="user-avatar flex-shrink-0 ms-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message">
+              <div class="d-flex overflow-hidden">
+                <div class="user-avatar flex-shrink-0 me-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+                  </div>
+                </div>
+                <div class="chat-message-wrapper flex-grow-1">
+                  <div class="chat-message-text">
+                    <p class="mb-0">فایل های UI برای Vuexy رو داری؟</p>
+                  </div>
+                  <div class="text-muted mt-1">
+                    <small>10:15 ق.ظ</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="chat-message chat-message-right">
+              <div class="d-flex overflow-hidden">
+                <div class="chat-message-wrapper flex-grow-1 w-50">
+                  <div class="chat-message-text">
+                    <p class="mb-0"> بله داخل پکیجی که خریداری کنی هستش.</p>
+                  </div>
+                  <div class="text-end text-muted mt-1">
+                    <i class="ti ti-checks ti-xs me-1"></i>
+                    <small>10:15 ق.ظ</small>
+                  </div>
+                </div>
+                <div class="user-avatar flex-shrink-0 ms-3">
+                  <div class="avatar avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- Chat message form -->
+        <div class="chat-history-footer shadow-sm">
+          <form class="form-send-message d-flex justify-content-between align-items-center">
+            <input class="form-control message-input border-0 me-3 shadow-none"
+              placeholder="پیام خود را اینجا تایپ کنید" />
+            <div class="message-actions d-flex align-items-center">
+              <i class="speech-to-text ti ti-microphone ti-sm cursor-pointer"></i>
+              <label class="form-label mb-0" for="attach-doc">
+                <i class="ti ti-photo ti-sm cursor-pointer mx-3"></i>
+                <input hidden id="attach-doc" type="file" />
+              </label>
+              <button class="btn btn-primary d-flex send-msg-btn">
+                <span class="align-middle d-md-inline-block d-none">ارسال</span>
+                <i class="ti ti-send ms-md-1 ms-0 ic-mirror"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- /Chat History -->
+
+    <!-- Sidebar Right -->
+    <div class="col app-chat-sidebar-right app-sidebar overflow-hidden" id="app-chat-sidebar-right">
+      <div class="sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap px-4 pt-5">
+        <div class="avatar avatar-xl avatar-online">
+          <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+        </div>
+        <h6 class="mt-2 mb-0">مهتاب کرامتی</h6>
+        <span>توسعه دهنده NextJS</span>
+        <i class="ti ti-x ti-sm cursor-pointer close-sidebar d-block" data-bs-toggle="sidebar" data-overlay
+          data-target="#app-chat-sidebar-right"></i>
+      </div>
+      <div class="sidebar-body px-4 pb-4">
+        <div class="my-4">
+          <small class="text-muted text-uppercase">مورد</small>
+          <p class="mb-0 mt-3"> بعدی. توسعه دهنده js یک توسعه دهنده نرم افزار است که از Next استفاده می کند. چارچوب js
+            در کنار ReactJS برای ساخت برنامه های کاربردی وب.</p>
+        </div>
+        <div class="my-4">
+          <small class="text-muted text-uppercase">اطلاعات شخصی</small>
+          <ul class="list-unstyled d-grid gap-2 mt-3">
+            <li class="d-flex align-items-center">
+              <i class="ti ti-mail ti-sm"></i>
+              <span class="align-middle ms-2">josephGreen@email.com</span>
+            </li>
+            <li class="d-flex align-items-center">
+              <i class="ti ti-phone-call ti-sm"></i>
+              <span class="align-middle ms-2">
+                <bdi>+1(123) 456 - 7890</bdi>
+              </span>
+            </li>
+            <li class="d-flex align-items-center">
+              <i class="ti ti-clock ti-sm"></i>
+              <span class="align-middle ms-2">دوشنبه - جمعه 10AM - 8PM</span>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-4">
+          <small class="text-muted text-uppercase">گزینه</small>
+          <ul class="list-unstyled d-grid gap-2 mt-3">
+            <li class="cursor-pointer d-flex align-items-center">
+              <i class="ti ti-badge ti-sm"></i>
+              <span class="align-middle ms-2">افزودن برچسب</span>
+            </li>
+            <li class="cursor-pointer d-flex align-items-center">
+              <i class="ti ti-star ti-sm"></i>
+              <span class="align-middle ms-2">تماس مهم</span>
+            </li>
+            <li class="cursor-pointer d-flex align-items-center">
+              <i class="ti ti-photo ti-sm"></i>
+              <span class="align-middle ms-2">رسانه های اشتراکی</span>
+            </li>
+            <li class="cursor-pointer d-flex align-items-center">
+              <i class="ti ti-trash ti-sm"></i>
+              <span class="align-middle ms-2">حذف اشنا</span>
+            </li>
+            <li class="cursor-pointer d-flex align-items-center">
+              <i class="ti ti-ban ti-sm"></i>
+              <span class="align-middle ms-2">مسدود کردن مخاطب</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- /Sidebar Right -->
+
+    <div class="app-overlay"></div>
+  </div>
+</div>

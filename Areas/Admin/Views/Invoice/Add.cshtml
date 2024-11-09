@@ -1,0 +1,325 @@
+@{
+  ViewData["Title"] = "صورتحساب - افزودن";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css">
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/jdate/jdate.min.js"></script>
+<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/app-invoice.css" />
+}
+
+@section PageScripts {
+<script src="~/js/offcanvas-send-invoice.js"></script>
+<script src="~/js/app-invoice-add.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<div class="row invoice-add">
+  <!-- Invoice Add-->
+  <div class="col-lg-9 col-12 mb-lg-0 mb-4">
+    <div class="card invoice-preview-card">
+      <div class="card-body">
+        <div class="row m-sm-4 m-0">
+          <div class="col-md-7 mb-md-0 mb-4 ps-0">
+            <div class="d-flex svg-illustration mb-4 gap-2 align-items-center">
+              <div class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</div>
+              <span class="app-brand-text fw-bold fs-4">
+                @TempData.Peek("appName")
+              </span>
+            </div>
+            <p class="mb-2">دفتر مرکزی، تهران، نارمک، پلاک 4</p>
+            <p class="mb-2">ایـران، تهران، نیاوران، پلاک 1234</p>
+            <p class="mb-3">
+              <bdi>021 - 456 7891</bdi>
+              ,
+              <bdi>031 - 543 2198</bdi>
+            </p>
+          </div>
+          <div class="col-md-5">
+            <dl class="row mb-2">
+              <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
+                <span class="h4 text-capitalize mb-0 text-nowrap">صورتحساب</span>
+              </dt>
+              <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
+                <div class="input-group input-group-merge disabled w-px-150">
+                  <span class="input-group-text">#</span>
+                  <input type="text" class="form-control" disabled placeholder="3905" value="3905" id="invoiceId" />
+                </div>
+              </dd>
+              <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
+                <span class="fw-normal d-inline-block mt-2">تـاریـخ صــدور:</span>
+              </dt>
+              <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
+                <input type="text" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" />
+              </dd>
+              <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
+                <span class="fw-normal d-inline-block mt-2">تاریخ سررسید:</span>
+              </dt>
+              <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
+                <input type="text" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" />
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <hr class="my-3 mx-n4" />
+
+        <div class="row p-sm-4 p-0">
+          <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4">
+            <h6 class="mb-3">پرداخت کننده:</h6>
+            <p class="mb-1">امیر جدیدی</p>
+            <p class="mb-1">شرکت اسنپ با مسئولیت محدود</p>
+            <p class="mb-1">ایـران، تهران، نیاوران، پلاک 1234</p>
+            <p class="mb-1">
+              <bdi>718-986-6062</bdi>
+            </p>
+            <p class="mb-0">peakyFBlinders@gmail.com</p>
+          </div>
+          <div class="col-md-6 col-sm-7">
+            <h6 class="mb-3">جزئیات :</h6>
+            <table>
+              <tbody>
+              <tr>
+                <td class="pe-4">قابل پرداخت</td>
+                <td class="fw-medium">
+                  <bdi><svg class="toman" width="1rem" height="1rem">
+                      <use xlink:href="#toman">
+                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                        </symbol>
+                      </use>
+                    </svg>12,110.55</bdi>
+                </td>
+              </tr>
+              <tr>
+                <td class="pe-4">نام بانک:</td>
+                <td>بانک ملت</td>
+              </tr>
+              <tr>
+                <td class="pe-4">کشور:</td>
+                <td>ایران</td>
+              </tr>
+              <tr>
+                <td class="pe-4">IBAN:</td>
+                <td>ETD95476213874685</td>
+              </tr>
+              <tr>
+                <td class="pe-4">کد سوئیفت:</td>
+                <td>BR91905</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <hr class="my-3 mx-n4" />
+
+        <form class="source-item pt-4 px-0 px-sm-4">
+          <div class="mb-3" data-repeater-list="group-a">
+            <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
+              <div class="d-flex border rounded position-relative pe-0">
+                <div class="row w-100 p-3">
+                  <div class="col-md-6 col-12 mb-md-0 mb-3">
+                    <p class="mb-2 repeater-title">مورد</p>
+                    <select class="form-select item-details mb-3">
+                      <option disabled selected>مورد را انتخاب کنید</option>
+                      <option value="App Design">طراحی اپلیکیشن</option>
+                      <option value="App Customization">سفارشی سازی برنامه</option>
+                      <option value="ABC Template">قالب ABC</option>
+                      <option value="App Development">توسعه برنامه</option>
+                    </select>
+                    <textarea class="form-control" placeholder="اطلاعات مورد" rows="2"></textarea>
+                  </div>
+                  <div class="col-md-3 col-12 mb-md-0 mb-3">
+                    <p class="mb-2 repeater-title">هزینه</p>
+                    <input class="form-control invoice-item-price mb-3" min="12" placeholder="00" type="number"/>
+                    <div>
+                      <span>تخفیف:</span>
+                      <span class="discount me-2">0%</span>
+                      <span class="tax-1 me-2" data-bs-placement="top" data-bs-toggle="tooltip" title="مالیات 1">0%</span>
+                      <span class="tax-2" data-bs-placement="top" data-bs-toggle="tooltip" title="مالیات 2">0%</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-12 mb-md-0 mb-3">
+                    <p class="mb-2 repeater-title">تعداد</p>
+                    <input class="form-control invoice-item-qty" max="50" min="1" placeholder="1" type="number"/>
+                  </div>
+                  <div class="col-md-1 col-12 pe-0">
+                    <p class="mb-2 repeater-title">قیمت</p>
+                    <p class="mb-0">
+                      <bdi><svg class="toman" width="1rem" height="1rem">
+                          <use xlink:href="#toman">
+                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                              <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                            </symbol>
+                          </use>
+                        </svg>24.00</bdi>
+                    </p>
+                  </div>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                  <i class="ti ti-x cursor-pointer" data-repeater-delete></i>
+                  <div class="dropdown">
+                    <i aria-expanded="false" class="ti ti-settings ti-xs cursor-pointer more-options-dropdown" data-bs-auto-close="outside" data-bs-toggle="dropdown" id="dropdownMenuButton" role="button"></i>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-end w-px-300 p-3">
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label class="form-label" for="discountInput">تخفیف (%)</label>
+                          <input class="form-control" id="discountInput" max="100" min="0" type="number"/>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label" for="taxInput1">مالیات 1</label>
+                          <select class="form-select tax-select" id="taxInput1" name="tax-1-input">
+                            <option selected value="0%">0%</option>
+                            <option value="1%">1%</option>
+                            <option value="10%">10%</option>
+                            <option value="18%">18%</option>
+                            <option value="40%">40%</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label" for="taxInput2">مالیات 2</label>
+                          <select class="form-select tax-select" id="taxInput2" name="tax-2-input">
+                            <option selected value="0%">0%</option>
+                            <option value="1%">1%</option>
+                            <option value="10%">10%</option>
+                            <option value="18%">18%</option>
+                            <option value="40%">40%</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="dropdown-divider my-3"></div>
+                      <button class="btn btn-label-primary btn-apply-changes" type="button">ثبت و مشاهده</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pb-4">
+            <div class="col-12">
+              <button class="btn btn-primary" data-repeater-create type="button">افزودن آیتم</button>
+            </div>
+          </div>
+        </form>
+
+        <hr class="my-3 mx-n4" />
+
+        <div class="row p-0 p-sm-4">
+          <div class="col-md-6 mb-md-0 mb-3">
+            <div class="d-flex align-items-center mb-3">
+              <label class="form-label me-4 fw-medium" for="salesperson">فروشنده:</label>
+              <input class="form-control ms-3" id="salesperson" placeholder="علی صبوری ..." type="text"/>
+            </div>
+            <input class="form-control" id="invoiceMsg" placeholder="پیام .." type="text"/>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <div class="invoice-calculations">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="w-px-150">جمع سفارشات:</span>
+                <span class="fw-medium">00.00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="w-px-100">تخفیف:</span>
+                <span class="fw-medium">00.00 ءتء</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="w-px-100">مالیات:</span>
+                <span class="fw-medium">00.00 ءتء</span>
+              </div>
+              <hr/>
+              <div class="d-flex justify-content-between">
+                <span class="w-px-100">قابل پرداخت:</span>
+                <span class="fw-medium">00.00 ءتء</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-3 mx-n4" />
+
+        <div class="row px-0 px-sm-4">
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label fw-medium" for="note">توجه:</label>
+              <textarea class="form-control" id="note" placeholder="یادداشت فاکتور" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Invoice Add-->
+
+  <!-- Invoice Actions -->
+  <div class="col-lg-3 col-12 invoice-actions">
+    <div class="card mb-4">
+      <div class="card-body">
+        <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#sendInvoiceOffcanvas">
+          <span class="d-flex align-items-center justify-content-center text-nowrap"><i class="ti ti-send ti-xs me-2"></i>ارسال پیش نمایش</span>
+        </button>
+        <a href="/Invoice/Preview" class="btn btn-label-secondary d-grid w-100 mb-2">فاکتور</a>
+        <button type="button" class="btn btn-label-secondary d-grid w-100">ذخیره</button>
+      </div>
+    </div>
+    <div>
+      <p class="mb-2">روش پرداخت مورد پذیرش :</p>
+      <select class="form-select mb-4">
+        <option value="Bank Account">حساب بانکی</option>
+        <option value="Paypal">پی پال</option>
+        <option value="Card">کارت اعتباری/دبیت</option>
+        <option value="UPI Transfer">انتقال UPI</option>
+      </select>
+      <div class="d-flex justify-content-between mb-2">
+        <label class="mb-0" for="payment-terms">شرایط پرداخت</label>
+        <label class="switch switch-primary me-0">
+          <input checked class="switch-input" id="payment-terms" type="checkbox"/>
+          <span class="switch-toggle-slider">
+            <span class="switch-on"></span>
+            <span class="switch-off"></span>
+          </span>
+          <span class="switch-label"></span>
+        </label>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <label class="mb-0" for="client-notes">یادداشت های مشتری</label>
+        <label class="switch switch-primary me-0">
+          <input class="switch-input" id="client-notes" type="checkbox"/>
+          <span class="switch-toggle-slider">
+            <span class="switch-on"></span>
+            <span class="switch-off"></span>
+          </span>
+          <span class="switch-label"></span>
+        </label>
+      </div>
+      <div class="d-flex justify-content-between">
+        <label class="mb-0" for="payment-stub">پرداخت قسطی</label>
+        <label class="switch switch-primary me-0">
+          <input class="switch-input" id="payment-stub" type="checkbox"/>
+          <span class="switch-toggle-slider">
+            <span class="switch-on"></span>
+            <span class="switch-off"></span>
+          </span>
+          <span class="switch-label"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- /Invoice Actions -->
+</div>
+
+<!-- Offcanvas -->
+@await Html.PartialAsync("../_Partials/_Offcanvas/OffcanvasSendInvoice")
+<!-- /Offcanvas -->

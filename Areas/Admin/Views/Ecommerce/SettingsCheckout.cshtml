@@ -1,0 +1,166 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - تنظیمات - ثبت سفارش";
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-settings.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">تجارت الکترونیک /</span>
+  تنظیمات فروشگاه
+</h4>
+
+<div class="row g-4">
+
+  <!-- Navigation -->
+  <div class="col-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-column mb-3 mb-md-0">
+      <ul class="nav nav-align-left nav-pills flex-column">
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsStoreDetails">
+            <i class="ti ti-building-store me-2"></i>
+            <span class="align-middle">جزئیات فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsPayments">
+            <i class="ti ti-credit-card me-2"></i>
+            <span class="align-middle">سیستم پرداخت</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2 active" href="javascript:void(0);">
+            <i class="ti ti-shopping-cart me-2"></i>
+            <span class="align-middle">ثبت سفارش</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsShipping">
+            <i class="ti ti-discount-2 me-2"></i>
+            <span class="align-middle">ارسال و تحویل</span>
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link py-2" href="SettingsLocations">
+            <i class="ti ti-map-pin me-2"></i>
+            <span class="align-middle">آدرس فروشگاه</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-2" href="SettingsNotifications">
+            <i class="ti ti-bell-ringing me-2"></i>
+            <span class="align-middle">نوتیفیکیشن</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /Navigation -->
+
+  <!-- Options -->
+  <div class="col-12 col-lg-8 pt-4 pt-lg-0">
+    <div class="tab-content p-0">
+      <!-- Checkout Tab -->
+      <div class="tab-pane fade show active" id="checkout" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="card-title m-0">
+              <h5 class="m-0">روش تماس با مشتری</h5>
+              <p class="text-muted mb-0">برای ارتباط با مشتری سیستم از چه روشی استفاده کند.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check mb-3">
+              <input checked class="form-check-input" id="contactPhone" name="contactMethod" type="radio"/>
+              <label class="form-check-label" for="contactPhone"> تماس به موبایل</label>
+            </div>
+            <div class="form-check mb-4">
+              <input class="form-check-input" id="contactMail" name="contactMethod" type="radio"/>
+              <label class="form-check-label" for="contactMail"> ارسال ایمیل</label>
+            </div>
+            <div class="alert d-flex align-items-center bg-label-info mb-0" role="alert">
+              <span class="alert-icon text-info me-2 bg-label-light px-1 pb-1 rounded-2">
+                <i class="ti ti-info-circle ti-xs"></i>
+              </span>
+              برای ارسال SMS، شما باید از یک پنل پیامک استفاده کنید.
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">اطلاعات مشتری</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <p class="mb-2">نام کامل</p>
+              <div class="form-check mb-3">
+                <input checked class="form-check-input" id="last_name" name="fullName" type="radio"/>
+                <label class="form-check-label" for="last_name"> فقط نام خانوادگی</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" id="last_and_first_name" name="fullName" type="radio"/>
+                <label class="form-check-label" for="last_and_first_name"> نام و نام خانوادگی</label>
+              </div>
+            </div>
+            <div class="mb-4">
+              <p class="mb-2">نام شرکت</p>
+              <div class="form-check mb-3">
+                <input checked class="form-check-input" id="dont_include_name" name="companyName" type="radio"/>
+                <label class="form-check-label" for="dont_include_name"> غیرفعال</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" id="optional_name" name="companyName" type="radio"/>
+                <label class="form-check-label" for="optional_name"> اختیاری</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" id="required_name" name="companyName" type="radio"/>
+                <label class="form-check-label" for="required_name"> الزامی</label>
+              </div>
+            </div>
+            <div class="mb-4">
+              <p class="mb-2"> آدرس دوم (آپارتمان، واحد و غیره)</p>
+              <div class="form-check mb-3">
+                <input checked class="form-check-input" id="dont_include_address" name="addressLine" type="radio"/>
+                <label class="form-check-label" for="dont_include_address"> غیرفعال</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" id="optional_address" name="addressLine" type="radio"/>
+                <label class="form-check-label" for="optional_address"> اختیاری</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" id="required_address" name="addressLine" type="radio"/>
+                <label class="form-check-label" for="required_address"> الزامی</label>
+              </div>
+            </div>
+            <div class="mb-4">
+              <p class="mb-2">شماره تلفن محل دریافت</p>
+              <div class="form-check mb-3">
+                <input checked class="form-check-input" id="dont_include_ship_address" name="shippingAddress" type="radio"/>
+                <label class="form-check-label" for="dont_include_ship_address"> غیرفعال</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" id="optional_ship_address" name="shippingAddress" type="radio"/>
+                <label class="form-check-label" for="optional_ship_address"> اختیاری</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" id="required_ship_address" name="shippingAddress" type="radio"/>
+                <label class="form-check-label" for="required_ship_address"> الزامی</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-3">
+          <button class="btn btn-label-secondary waves-effect" type="reset">صرف نظر</button>
+          <a class="btn btn-primary" href="SettingsShipping">اعمال تغییرات</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- /Options-->
+</div>
+

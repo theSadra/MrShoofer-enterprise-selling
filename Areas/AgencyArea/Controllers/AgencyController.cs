@@ -30,9 +30,6 @@ namespace Application.Areas.AgencyArea
       _apiClient = apiClient;
     }
 
-
-
-
     // Main agency page, general info last tickets
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -104,12 +101,12 @@ namespace Application.Areas.AgencyArea
     public override void OnActionExecuting(ActionExecutingContext context)
     {
       base.OnActionExecuting(context);
-
+        
       var identityUser = _userManager.GetUserAsync(User).Result;
       agency = _context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
+
       _apiClient.SetSellerApiKey(agency.ORSAPI_token);
     }
-
   }
 }

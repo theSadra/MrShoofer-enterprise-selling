@@ -1,0 +1,694 @@
+@{
+  ViewData["Title"] = "رابط کاربری - نوار ناوبری";
+}
+@section VendorScripts {
+<script src="~/vendor/js/dropdown-hover.js"></script>
+<script src="~/vendor/js/mega-dropdown.js"></script>
+}
+@section PageScripts {
+<script src="~/js/ui-navbar.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">رابط کاربری /</span>
+  تولبار
+</h4>
+<!-- Basic -->
+<h5 class="pb-1 mt-5 mb-4">مثال</h5>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="وبری" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button"></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a aria-current="page" class="nav-link active" href="javascript:void(0)">خانه</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">لینک</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" id="navbarDropdown" role="button"> منو</a>
+          <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)">عملیات</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)">عملی دیگر</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider"/>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)">یک عمل دیگر</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1">غیرفعال</a>
+        </li>
+      </ul>
+      <form class="d-flex" onsubmit="return false">
+        <input aria-label="جستجو" class="form-control me-2" placeholder="جستجو" type="search"/>
+        <button class="btn btn-primary" type="submit">جستجو</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<!--/ Basic -->
+<!-- Supported content -->
+<h5 class="pb-1 mb-4">پشتیبانی از محتوا</h5>
+<div class="mb-5">
+  <h6 class="mt-2 mb-3 text-muted">متن</h6>
+  <nav class="navbar navbar-example navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button aria-controls="navbar-ex-2" aria-expanded="false" aria-label="وبری" class="navbar-toggler" data-bs-target="#navbar-ex-2" data-bs-toggle="collapse" type="button"></button>
+      <div class="collapse navbar-collapse" id="navbar-ex-2">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">خانه</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره‌ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس‌باما</a>
+        </div>
+        <span class="navbar-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</span>
+      </div>
+    </div>
+  </nav>
+  <h6 class="mt-4 mb-3 text-muted">گروه ورودی</h6>
+  <nav class="navbar navbar-example navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-4" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-4">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">خانه</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره‌ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس‌باما</a>
+        </div>
+        <form class="d-flex">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="tf-icons ti ti-search"></i>
+            </span>
+            <input class="form-control" placeholder="جستجو..." type="text"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <h6 class="mt-4 mb-3 text-muted">دکمه</h6>
+  <nav class="navbar navbar-example navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-3" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-3">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">خانه</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره‌ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس‌باما</a>
+        </div>
+        <form onsubmit="return false">
+          <button class="btn btn-primary" type="button">حمایت معنوی</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--/ Supported content -->
+<!-- Mega dropdown -->
+<h5 class="pb-1 mb-4">مگا منو</h5>
+<div class="mb-5">
+  <h6 class="mt-2 mb-3 text-muted">باز کردن با کلیک</h6>
+  <nav class="navbar navbar-example navbar-expand-lg bg-light" style="z-index: 21">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-14" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-14">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);">منو</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0)">اقدام</a>
+              <a class="dropdown-item" href="javascript:void(0)">یک عمل دیگر</a>
+              <a class="dropdown-item" href="javascript:void(0)">چیز دیگری اینجا</a>
+            </div>
+          </li>
+          <li class="nav-item mega-dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown" data-bs-toggle="mega-dropdown" href="javascript:void(0);">مگا منو</a>
+            <div class="dropdown-menu px-3 py-0">
+              <div class="row row-bordered">
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="m-2">برنامه های کاربردی</h6>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-mail ti-sm me-1"></i>
+                        ایمیل
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-messages ti-sm me-1"></i>
+                        پیام رسان
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-checklist ti-sm me-1"></i>
+                        لیست کارها
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-calendar ti-sm me-1"></i>
+                        تقویم
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link disabled" href="javascript:void(0)" tabindex="-1">
+                        <i class="tf-icons ti ti-ban ti-sm me-1"></i>
+                        غیرفعال
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="m-2">لینک های مفید</h6>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">فروش</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود کلی</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود ناخالص</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود خالص</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود سه ماهه</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="my-2">لیست گروه</h6>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">گزارش های ماهانه</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">اسناد رسمی</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">اکسل حقوق</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">لیست همکاران</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">گزارش سود خالص</a>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <form onsubmit="return false">
+                    <div class="mb-3">
+                      <label class="form-label" for="exampleDropdownFormEmail1">آدرس ایمیل
+                        <input class="form-control mt-2" id="exampleDropdownFormEmail1" placeholder="" type="email"/>
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="exampleDropdownFormPassword1">کلمه عبور
+                        <input class="form-control mt-2" id="exampleDropdownFormPassword1" placeholder="" type="password"/>
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" id="dropdownCheck" type="checkbox"/>
+                        <label class="form-check-label" for="dropdownCheck"> منو به یاد داشته باش</label>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" type="submit">ورود به سیستم</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h6 class="mt-4 mb-3 text-muted">باز کردن با اشاره گر موس</h6>
+  <nav class="navbar navbar-example navbar-expand-lg bg-light" style="z-index: 20">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-15" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-15">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-trigger="hover" href="javascript:void(0);">منو</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0)">اقدام</a>
+              <a class="dropdown-item" href="javascript:void(0)">یک عمل دیگر</a>
+              <a class="dropdown-item" href="javascript:void(0)">چیز دیگری اینجا</a>
+            </div>
+          </li>
+          <li class="nav-item mega-dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle navbar-ex-15-mega-dropdown mega-dropdown" data-bs-toggle="mega-dropdown" data-trigger="hover" href="javascript:void(0);">مگا منو</a>
+            <div class="dropdown-menu px-3 py-0">
+              <div class="row row-bordered">
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="m-2">برنامه های کاربردی</h6>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-mail ti-sm me-1"></i>
+                        ایمیل
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-messages ti-sm me-1"></i>
+                        پیام رسان
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-checklist ti-sm me-1"></i>
+                        لیست کارها
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">
+                        <i class="tf-icons ti ti-calendar ti-sm me-1"></i>
+                        تقویم
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link disabled" href="javascript:void(0)" tabindex="-1">
+                        <i class="tf-icons ti ti-ban ti-sm me-1"></i>
+                        غیرفعال
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="m-2">لینک های مفید</h6>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">فروش</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود کلی</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود ناخالص</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود خالص</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="javascript:void(0)">سود سه ماهه</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <h6 class="my-2">لیست گروه</h6>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">گزارش های ماهانه</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">اسناد رسمی</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">اکسل حقوق</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">لیست همکاران</a>
+                    <a class="list-group-item list-group-item-action mega-dropdown-link" href="javascript:void(0)">گزارش سود خالص</a>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg p-3">
+                  <form onsubmit="return false">
+                    <div class="mb-3">
+                      <label class="form-label" for="exampleDropdownFormPassword2">آدرس ایمیل
+                        <input class="form-control mt-2" id="exampleDropdownFormEmail2" placeholder="" type="email"/>
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="exampleDropdownFormPassword2">کلمه عبور
+                        <input class="form-control mt-2" id="exampleDropdownFormPassword2" placeholder="" type="password"/>
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" id="dropdownCheck1" type="checkbox"/>
+                        <label class="form-check-label" for="dropdownCheck1"> منو به یاد داشته باش</label>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" type="submit">ورود به سیستم</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--/ Mega dropdown -->
+<!-- Color schemes -->
+<h5 class="pb-1 mb-4">تولبار رنگی</h5>
+<div class="demo-vertical-spacing demo-only-element">
+  <!-- Primary navbar -->
+  <nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">اصلی</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-7" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-7">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Secondary navbar -->
+  <nav class="navbar navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">فرعی</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-8" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-8">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Success navbar -->
+  <nav class="navbar navbar-expand-lg bg-success">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">موفق</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-9" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-9">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Danger navbar -->
+  <nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">اخطار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-12" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-12">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Warning navbar -->
+  <nav class="navbar navbar-expand-lg bg-warning">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">هشدار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-11" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-11">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Info navbar -->
+  <nav class="navbar navbar-expand-lg bg-info">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">راهنما</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-10" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-10">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Dark navbar -->
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">دارک</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-13" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-13">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- White navbar -->
+  <nav class="navbar navbar-expand-lg bg-white">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">سفید</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-6" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-6">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Theme navbar -->
+  <h6 class="mt-4 mb-3 text-muted">تم ناوبار</h6>
+  <nav class="navbar navbar-expand-lg bg-navbar-theme">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)">تولبار</a>
+      <button class="navbar-toggler" data-bs-target="#navbar-ex-5" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-ex-5">
+        <div class="navbar-nav me-auto">
+          <a class="nav-item nav-link active" href="javascript:void(0)">صفحه اصلی</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">درباره ما</a>
+          <a class="nav-item nav-link" href="javascript:void(0)">تماس باما</a>
+          <a class="nav-item nav-link disabled" href="javascript:void(0)">غیرفعال</a>
+        </div>
+        <ul class="navbar-nav ms-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-user ti-xs me-1"></i>
+              مشخصات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-settings ti-xs me-1"></i>
+              تنظیمات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">
+              <i class="tf-icons navbar-icon ti ti-lock-open ti-xs me-1"></i>
+              خروج از سیستم
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--/ Color schemes -->

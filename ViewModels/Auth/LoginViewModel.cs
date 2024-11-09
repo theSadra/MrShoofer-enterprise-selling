@@ -4,7 +4,7 @@ namespace Application.ViewModels.Auth
 {
   public class LoginViewModel
   {
-    public string NumberPhone { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
     public bool RemmemberMe { get; set; }
   }

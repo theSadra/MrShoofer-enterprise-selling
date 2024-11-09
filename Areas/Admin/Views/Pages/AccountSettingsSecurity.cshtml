@@ -1,0 +1,318 @@
+@{
+  ViewData["Title"] = "تنظیمات حساب - امنیت حساب";
+}
+
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/pages-account-settings-security.js"></script>
+<script src="~/js/modal-enable-otp.js"></script>
+}
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/page-account-settings.css" />
+}
+
+@* ************** Content ************** *@
+  <h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">تنظیمات حساب/</span>
+    امنیت حساب
+  </h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-pills flex-column flex-md-row mb-4">
+      <li class="nav-item"><a class="nav-link" href="AccountSettings"><i class="ti-xs ti ti-users me-1"></i> حساب کاربری</a></li>
+      <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="ti-xs ti ti-lock me-1"></i> امنیت حساب</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsBilling"><i class="ti-xs ti ti-file-description me-1"></i> تراکنش‌ها و پرداخت</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsNotifications"><i class="ti-xs ti ti-bell me-1"></i> نوتیفیکیشن</a></li>
+      <li class="nav-item"><a class="nav-link" href="AccountSettingsConnections"><i class="ti-xs ti ti-link me-1"></i> اکانت‌های متصل</a></li>
+    </ul>
+    <!-- Change Password -->
+    <div class="card mb-4">
+      <h5 class="card-header">تغییر رمز عبور</h5>
+      <div class="card-body">
+        <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <div class="row">
+            <div class="mb-3 col-md-6 form-password-toggle">
+              <label class="form-label" for="currentPassword">رمز عبور فعلی</label>
+              <div class="input-group input-group-merge">
+                <input class="form-control" type="password" name="currentPassword" id="currentPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-md-6 form-password-toggle">
+              <label class="form-label" for="newPassword">رمز عبور جدید</label>
+              <div class="input-group input-group-merge">
+                <input class="form-control" type="password" id="newPassword" name="newPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3 col-md-6 form-password-toggle">
+              <label class="form-label" for="confirmPassword">تأیید رمز عبور جدید</label>
+              <div class="input-group input-group-merge">
+                <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+              </div>
+            </div>
+            <div class="col-12 mb-4">
+              <h6>الزامات رمز عبور:</h6>
+              <ul class="ps-3 mb-0">
+                <li class="mb-1">حداقل 8 کارکتر</li>
+                <li class="mb-1">حداقل یک حرف کوچک</li>
+                <li>حداقل یک عدد یا نماد خاص</li>
+              </ul>
+            </div>
+            <div>
+              <button class="btn btn-primary me-2" type="submit">بروزرسانی رمز</button>
+              <button class="btn btn-label-secondary" type="reset">لغو</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--/ Change Password -->
+
+    <!-- Two-steps verification -->
+    <div class="card mb-4">
+      <h5 class="card-header">تأیید دو مرحله ای</h5>
+      <div class="card-body">
+        <h5 class="mb-3">احراز هویت دو مرحله ای هنوز فعال نشده است.</h5>
+        <p class="w-75"> احراز هویت دو مرحله ای با نیاز به بیش از یک رمز عبور برای ورود، یک لایه امنیتی اضافی به حساب شما اضافه می کند.
+          <a href="javascript:void(0);">بیشتر بدانید.</a>
+        </p>
+        <button class="btn btn-primary mt-2" data-bs-target="#enableOTP" data-bs-toggle="modal"> فعال کردن احراز هویت دو مرحله ای</button>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    @await Html.PartialAsync("../_Partials/_Modals/ModalEnableOtp")
+    <!-- /Modal -->
+
+    <!--/ Two-steps verification -->
+
+    <!-- Create an API key -->
+    <div class="card mb-4">
+      <h5 class="card-header">کلید API</h5>
+      <div class="row">
+        <div class="col-md-5 order-md-0 order-1">
+          <div class="card-body">
+            <form id="formAccountSettingsApiKey" method="GET" onsubmit="return false">
+              <div class="row">
+                <div class="mb-3 col-12">
+                  <label class="form-label" for="apiAccess">نوع کلید Api را که می خواهید ایجاد کنید انتخاب کنید</label>
+                  <select class="select2 form-select" id="apiAccess">
+                    <option value="">نوع کلید را انتخاب کنید</option>
+                    <option value="full">دسترسی کامل</option>
+                    <option value="modify">ویرایش</option>
+                    <option value="read-execute">مشاهده و اجرا</option>
+                    <option value="folders">پوشه ها</option>
+                    <option value="read">فقط مشاهده</option>
+                    <option value="read-write">مشاهده و ویرایش</option>
+                  </select>
+                </div>
+                <div class="mb-3 col-12">
+                  <label class="form-label" for="apiKey">نام کلید API</label>
+                  <input class="form-control" id="apiKey" name="apiKey" placeholder="کلید سرور" type="text">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary me-2 d-grid w-100" type="submit">ایجاد کلید</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-7 order-md-1 order-0">
+          <div class="text-center mt-4 mx-3 mx-md-0">
+            <img alt="تصویر کلید API" class="img-fluid" src="~/img/illustrations/girl-with-laptop.png" width="202"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Create an API key -->
+
+    <!-- API Key List & Access -->
+    <div class="card mb-4">
+      <h5 class="card-header">لیست کلید API و دسترسی</h5>
+      <div class="card-body">
+        <p> یک کلید API یک رشته ساده و رمزنگاری شده است که یک برنامه را بدون هیچ اصلی مشخصی شناسایی می‌کند. این کلیدها برای دسترسی به داده‌های عمومی به صورت ناشناس مفید هستند و برای ارتباط درخواست‌های API با پروژه شما برای کوتا و صورتحساب استفاده می‌شوند.
+        </p>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="bg-lighter rounded p-3 mb-3 position-relative">
+              <div class="dropdown api-key-actions">
+                <a class="btn dropdown-toggle text-muted hide-arrow p-0" data-bs-toggle="dropdown">
+                  <i class="ti ti-dots-vertical ti-sm"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="javascript:">
+                    <i class="ti ti-pencil me-2"></i>
+                    ویرایش
+                  </a>
+                  <a class="dropdown-item" href="javascript:">
+                    <i class="ti ti-trash me-2"></i>
+                    حذف
+                  </a>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <h4 class="mb-0 me-3">کلید سرور 1</h4>
+                <span class="badge bg-label-primary">دسترسی کامل</span>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <p class="me-2 mb-0 fw-medium">23eaf7f0-f4f7-495e-8b86-fad3261282ac</p>
+                <span class="text-muted cursor-pointer">
+                  <i class="ti ti-copy ti-sm"></i>
+                </span>
+              </div>
+              <span class="text-muted">ایجاد شده در 28 بهمن 1400</span>
+            </div>
+            <div class="bg-lighter rounded p-3 position-relative mb-3">
+              <div class="dropdown api-key-actions">
+                <a class="btn dropdown-toggle text-muted hide-arrow p-0" data-bs-toggle="dropdown">
+                  <i class="ti ti-dots-vertical ti-sm"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="javascript:">
+                    <i class="ti ti-pencil me-2"></i>
+                    ویرایش
+                    <i class="ti ti-trash me-2"></i>
+                  </a>
+                  <a class="dropdown-item" href="javascript:">حذف</a>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <h4 class="mb-0 me-3">کلید سرور 2</h4>
+                <span class="badge bg-label-primary">فقط خواندن</span>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <p class="me-2 mb-0 fw-medium">bb98e571-a2e2-4de8-90a9-2e231b5e99</p>
+                <span class="text-muted cursor-pointer">
+                  <i class="ti ti-copy ti-sm"></i>
+                </span>
+              </div>
+              <span class="text-muted">ایجاد شده در 28 بهمن 1400</span>
+            </div>
+            <div class="bg-lighter rounded p-3 position-relative">
+              <div class="dropdown api-key-actions">
+                <a class="btn dropdown-toggle text-muted hide-arrow p-0" data-bs-toggle="dropdown">
+                  <i class="ti ti-dots-vertical ti-sm"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="javascript:">
+                    <i class="ti ti-pencil me-2"></i>
+                    ویرایش
+                    <i class="ti ti-trash me-2"></i>
+                  </a>
+                  <a class="dropdown-item" href="javascript:">حذف</a>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <h4 class="mb-0 me-3">کلید سرور 3</h4>
+                <span class="badge bg-label-primary">دسترسی کامل</span>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <p class="me-2 mb-0 fw-medium">2e915e59-3105-47f2-8838-6e46bf83b711</p>
+                <span class="text-muted cursor-pointer">
+                  <i class="ti ti-copy ti-sm"></i>
+                </span>
+              </div>
+              <span class="text-muted">ایجاد شده در 28 بهمن 1400</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ API Key List & Access -->
+
+    <!-- Recent Devices -->
+    <div class="card mb-4">
+      <h5 class="card-header">نشست های اخیر</h5>
+      <div class="table-responsive">
+        <table class="table border-top">
+          <thead>
+          <tr>
+            <th class="text-truncate">مرورگر</th>
+            <th class="text-truncate">دستگاه</th>
+            <th class="text-truncate">موقعیت</th>
+            <th class="text-truncate">آخرین فعالیت</th>
+          </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+          <tr>
+            <td class="text-truncate">
+              <i class="ti ti-brand-windows text-info me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (ویندوز)</span>
+            </td>
+            <td class="text-truncate">آیفون ایکس</td>
+            <td class="text-truncate">سوئیس</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          <tr>
+            <td class="text-truncate">
+              <i class="ti ti-device-mobile text-danger me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (آیفون)</span>
+            </td>
+            <td class="text-truncate">آیفون ۱۲ایکس</td>
+            <td class="text-truncate">استرالیا</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          <tr>
+            <td class="text-truncate">
+              <i class="ti ti-brand-android text-success me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (اندروید)</span>
+            </td>
+            <td class="text-truncate">سامسونگ s21</td>
+            <td class="text-truncate">دبی</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          <tr>
+            <td class="text-truncate">
+              <i class="ti ti-brand-apple me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (مکینتاش)</span>
+            </td>
+            <td class="text-truncate">مک بوک اپل</td>
+            <td class="text-truncate">هند</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          <tr>
+            <td class="text-truncate">
+              <i class="ti ti-brand-windows text-info me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (ویندوز)</span>
+            </td>
+            <td class="text-truncate">سامسونگ s21</td>
+            <td class="text-truncate">سوئیس</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          <tr class="border-transparent">
+            <td class="text-truncate">
+              <i class="ti ti-brand-android text-success me-2 ti-sm"></i>
+              <span class="fw-medium">گوگل کروم (اندروید)</span>
+            </td>
+            <td class="text-truncate">آیفون ایکس</td>
+            <td class="text-truncate">دبی</td>
+            <td class="text-truncate">12:00 - 12 مهر 1402</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Recent Devices -->
+
+  </div>
+</div>

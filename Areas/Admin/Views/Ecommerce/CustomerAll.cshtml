@@ -1,0 +1,149 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - لیست مشتریان";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css">
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/moment/moment.js"></script>
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-customer-all.js"></script>
+}
+
+<h4 class="py-3 mb-2">
+  <span class="text-muted fw-light">تجارت الکترونیک /</span>
+  همه مشتریان
+</h4>
+<!-- customers List Table -->
+<div class="card">
+  <div class="card-datatable table-responsive">
+    <table class="datatables-customers table border-top">
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>مشتری</th>
+        <th class="text-nowrap">شناسه مشتری</th>
+        <th>کشور</th>
+        <th>سفارش</th>
+        <th class="text-nowrap">جمع هزینه</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+  <!-- Offcanvas to add new customer -->
+  <div aria-labelledby="offcanvasEcommerceCustomerAddLabel" class="offcanvas offcanvas-end" id="offcanvasEcommerceCustomerAdd" tabindex="-1">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasEcommerceCustomerAddLabel">افزودن مشتری</h5>
+      <button aria-label="بستن" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0">
+      <form class="ecommerce-customer-add pt-0" id="eCommerceCustomerAddForm" onsubmit="return false">
+        <div class="ecommerce-customer-add-basic mb-3">
+          <h6 class="mb-3">اطلاعات اولیه</h6>
+          <div class="mb-3">
+            <label class="form-label" for="ecommerce-customer-add-name">نام*</label>
+            <input aria-label="نـوید" class="form-control" id="ecommerce-customer-add-name" name="customerName" placeholder="نـوید" type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="ecommerce-customer-add-email">ایمیل*</label>
+            <input aria-label="john.doe&#64;example.com" class="form-control" id="ecommerce-customer-add-email" name="customerEmail" placeholder="john.doe&#64;example.com" type="text"/>
+          </div>
+          <div>
+            <label class="form-label" for="ecommerce-customer-add-contact">موبایل</label>
+            <input aria-label="+(123) 456-7890" class="form-control phone-mask bdi" id="ecommerce-customer-add-contact" name="customerContact" placeholder="+(123) 456-7890" type="text"/>
+          </div>
+        </div>
+        <div class="ecommerce-customer-add-shiping mb-3 pt-3">
+          <h6 class="mb-3">اطلاعات حمل و نقل</h6>
+          <div class="mb-3">
+            <label class="form-label" for="ecommerce-customer-add-address">آدرس 1</label>
+            <input aria-label="45 روکر تراس" class="form-control" id="ecommerce-customer-add-address" name="customerAddress1" placeholder="" type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="ecommerce-customer-add-address-2">آدرس 2</label>
+            <input aria-label="آدرس 2" class="form-control" id="ecommerce-customer-add-address-2" name="customerAddress2" type="text"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="ecommerce-customer-add-town">شهر</label>
+            <input aria-label="نیویورک" class="form-control" id="ecommerce-customer-add-town" name="customerTown" placeholder="اصفهان" type="text"/>
+          </div>
+          <div class="row mb-3">
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="ecommerce-customer-add-state">ایالت / استان</label>
+              <input aria-label="نوک جنوبی" class="form-control" id="ecommerce-customer-add-state" name="customerState" placeholder="نوک جنوبی" type="text"/>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="ecommerce-customer-add-post-code">کد پستی</label>
+              <input aria-label="734990" class="form-control" id="ecommerce-customer-add-post-code" maxlength="8" name="pin" pattern="[0-9]{8}" placeholder="734990" type="text"/>
+            </div>
+          </div>
+          <div>
+            <label class="form-label" for="ecommerce-customer-add-country">کشور</label>
+            <select class="select2 form-select" id="ecommerce-customer-add-country">
+              <option value="">انتخاب کنید</option>
+              <option value="Australia">استرالیا</option>
+              <option value="Bangladesh">بنگلادش</option>
+              <option value="Belarus">بلاروس</option>
+              <option value="Brazil">برزیل</option>
+              <option value="Canada">کانادا</option>
+              <option value="China">چین</option>
+              <option value="France">فرانسه</option>
+              <option value="Germany">آلمان</option>
+              <option value="India">هندوستان</option>
+              <option value="Indonesia">اندونزی</option>
+              <option value="Israel">اسرائيل</option>
+              <option value="Italy">ایتالیا</option>
+              <option value="Japan">ژاپن</option>
+              <option value="Korea">جمهوری کره</option>
+              <option value="Mexico">مکزیک</option>
+              <option value="Philippines">فیلیپین</option>
+              <option value="Russia">فدراسیون روسیه</option>
+              <option value="South Africa">آفریقای جنوبی</option>
+              <option value="Thailand">تایلند</option>
+              <option value="Turkey">ترکیه</option>
+              <option value="Ukraine">اوکراین</option>
+              <option value="United Arab Emirates">امارات متحده عربی</option>
+              <option value="United Kingdom">انگلستان</option>
+              <option value="United States">ایالات متحده</option>
+            </select>
+          </div>
+        </div>
+        <div class="d-sm-flex mb-3 pt-3">
+          <div class="me-auto mb-2 mb-md-0">
+            <h6 class="mb-0">به عنوان آدرس اصلی استفاده شود؟</h6>
+            <small class="text-muted">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</small>
+          </div>
+          <label class="switch m-auto pe-2">
+            <input class="switch-input" type="checkbox"/>
+            <span class="switch-toggle-slider">
+              <span class="switch-on"></span>
+              <span class="switch-off"></span>
+            </span>
+          </label>
+        </div>
+        <div class="pt-3">
+          <button class="btn btn-label-danger" data-bs-dismiss="offcanvas" type="reset">لغو فرایند</button>
+          <button class="btn btn-primary me-sm-3 me-1 data-submit" type="submit">افزودن مشتری</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace Application.Areas.AgencyArea
 {
   [Area("AgencyArea")]
-  [Authorize(Policy = "Admin")]
+  [Authorize]
   public class HomeController : Controller
   {
     private readonly ILogger<HomeController> _logger;
@@ -33,16 +33,6 @@ namespace Application.Areas.AgencyArea
 
     public IActionResult Index()
     {
-      IdentityUser adminIdentity = userManager.FindByNameAsync("shooferadmin").Result;
-
-       var result =  signInManager.PasswordSignInAsync(adminIdentity,"ShooferGuy1403",true,true).Result;
-      
-
-      context.SaveChanges();
-
-
-
-
       return View();
     }
     public IActionResult Privacy()

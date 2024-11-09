@@ -44,11 +44,11 @@ namespace Application.Areas.AgencyArea
 
         // Without password hash logic
 
-        var user = await _usermanager.FindByNameAsync(viewmodel.NumberPhone);
-        if (user != null && user.PasswordHash == viewmodel.Password)
+        var user = await _usermanager.FindByNameAsync(viewmodel.Username);
+        
+        var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, false);
+        if (user != null && result.Succeeded)
         {
-
-          await _signInManager.SignInAsync(user, viewmodel.RemmemberMe);
           // Redirect or take further action
           if (!string.IsNullOrEmpty(ReturnUrl))
             return LocalRedirect(ReturnUrl);

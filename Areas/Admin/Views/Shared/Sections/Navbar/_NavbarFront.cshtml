@@ -1,0 +1,266 @@
+@{
+  TempData.Keep();
+  string? currentPage = ViewContext.HttpContext.Request.Path;
+}
+
+<!-- Navbar: Start -->
+<nav class="layout-navbar shadow-none py-0">
+<div class="container">
+  <div class="navbar navbar-expand-lg landing-navbar px-3 px-md-4">
+    <!-- Menu logo wrapper: Start -->
+    <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+      <!-- Mobile menu toggle: Start-->
+      <button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="ti ti-menu-2 ti-sm align-middle"></i>
+      </button>
+      <!-- Mobile menu toggle: End-->
+      <a href="/FrontPages/LandingPage" class="app-brand-link">
+        <span class="app-brand-logo demo">
+          @await Html.PartialAsync("../_Partials/_Macros")
+        </span>
+        <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1">@TempData.Peek("appName")</span>
+      </a>
+    </div>
+    <!-- Menu logo wrapper: End -->
+
+    <!-- Menu wrapper: Start -->
+    <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
+      <button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="ti ti-x ti-sm"></i>
+      </button>
+      <ul class="navbar-nav me-auto p-3 p-lg-0">
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingHero">صفحه اصلی</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingFeatures">امکانات</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingTeam">تیم ما</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingFAQ">سوالات متداول</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingContact">ارتباط با ما</a>
+        </li>
+        <li class='nav-item mega-dropdown@((currentPage.StartsWith("/FrontPages/Pricing") || currentPage.StartsWith("/FrontPages/Payment") || currentPage.StartsWith("/FrontPages/Checkout") || currentPage.StartsWith("/FrontPages/HelpCenter")) ? " active open" : "")'>
+          <a href="javascript:void(0);" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+            <span data-i18n="Pages">صفحات</span>
+          </a>
+          <div class="dropdown-menu p-4">
+            <div class="row gy-4">
+              <div class="col-12 col-lg">
+                <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                  <div class="avatar avatar-sm flex-shrink-0 me-2">
+                    <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-layout-grid'></i></span>
+                  </div>
+                  <span class="ps-1">صفحات سایت</span>
+                </div>
+                <ul class="nav flex-column">
+                  <li class='nav-item@(currentPage == "/FrontPages/PricingPage"  ? " active" : "")'>
+                    <a class="nav-link mega-dropdown-link" asp-controller="FrontPages" asp-action="PricingPage">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                      <span data-i18n="Pricing">قیمت گذاری</span>
+                    </a>
+                  </li>
+                  <li class='nav-item@(currentPage == "/FrontPages/PaymentPage"  ? " active" : "")'>
+                    <a class="nav-link mega-dropdown-link" asp-controller="FrontPages" asp-action="PaymentPage">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                      <span data-i18n="Payment">پرداخت</span>
+                    </a>
+                  </li>
+                  <li class='nav-item@(currentPage == "/FrontPages/CheckoutPage"  ? " active" : "")'>
+                    <a class="nav-link mega-dropdown-link" asp-controller="FrontPages" asp-action="CheckoutPage">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                      <span data-i18n="Checkout">ثبت سفارش</span>
+                    </a>
+                  </li>
+                  <li class='nav-item@(currentPage == "/FrontPages/HelpCenterLanding"  ? " active" : "")'>
+                    <a class="nav-link mega-dropdown-link" asp-controller="FrontPages" asp-action="HelpCenterLanding">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                      <span data-i18n="Help Center">مرکز پشتیبانی</span>
+                    </a>
+                  </li>
+                        <li class='nav-item@(currentPage == "/FrontPages/HelpCenterArticle"  ? " active" : "")'>
+                                      <a class="nav-link mega-dropdown-link" asp-controller="FrontPages" asp-action="HelpCenterArticle">
+                                        <i class='ti ti-circle me-1 mb-1'></i>
+                                        <span data-i18n="Help Center">صفحه آموزش</span>
+                                      </a>
+                                    </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg">
+                <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                  <div class="avatar avatar-sm flex-shrink-0 me-2">
+                    <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-lock-open'></i></span>
+                  </div>
+                    <span class="ps-1">احراز هویت</span>
+                </div>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="LoginBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ورود به سیستم (پایه)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="LoginCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ورود به سیستم (کاور)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="RegisterBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ثبت نام (پایه)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="RegisterCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ثبت نام (کاور)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="RegisterMultisteps" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ثبت نام (چند مرحله‌ای)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="ForgotPasswordBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        فراموشی رمز ورود (اصلی)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="ForgotPasswordCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        فراموشی رمز ورود (کاور)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="ResetPasswordBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ریست رمز ورود (اصلی)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="ResetPasswordCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        ریست رمز ورود (کاور)
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg">
+                <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                  <div class="avatar avatar-sm flex-shrink-0 me-2">
+                    <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-file-analytics'></i></span>
+                  </div>
+                  <span class="ps-1">دیگر صفحات</span>
+                </div>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Pages" asp-action="MiscError" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        خطای 404
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Pages" asp-action="MiscUnderMaintenance" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        دردست تعمیر
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Pages" asp-action="MiscComingSoon" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        به زودی
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Pages" asp-action="MiscNotAuthorized" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        عدم دسترسی
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="VerifyEmailBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        تأیید ایمیل (پایه)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="VerifyEmailCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        تأیید ایمیل (کاور)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="TwoStepsBasic" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        تأیید دومرحله (پایه)
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mega-dropdown-link" asp-controller="Auth" asp-action="TwoStepsCover" target="_blank">
+                      <i class='ti ti-circle me-1 mb-1'></i>
+                        تأیید دومرحله (کاور)
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-4 d-none d-lg-block">
+                <div class="bg-body nav-img-col p-2">
+                  <img src="~/img/front-pages/misc/nav-item-col-img.png" alt="nav item col image" class="w-100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-medium" asp-controller="Dashboards" asp-action="Index" target="_blank">ادمین</a>
+        </li>
+      </ul>
+    </div>
+    <div class="landing-menu-overlay d-lg-none"></div>
+    <!-- Menu wrapper: End -->
+    <!-- Toolbar: Start -->
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+      <!-- Style Switcher -->
+      <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <i class='ti ti-sm'></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+              <span class="align-middle"><i class='ti ti-sun me-2'></i>روز</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+              <span class="align-middle"><i class="ti ti-moon me-2"></i>شب</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
+              <span class="align-middle"><i class="ti ti-device-desktop me-2"></i>سیستم</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- / Style Switcher-->
+
+      <!-- navbar button: Start -->
+      <li>
+        <a href="/Auth/LoginCover" class="btn btn-primary" target="_blank"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">ورود / ثبت نام</span></a>
+      </li>
+      <!-- navbar button: End -->
+    </ul>
+  </div>
+  </div>
+</nav>

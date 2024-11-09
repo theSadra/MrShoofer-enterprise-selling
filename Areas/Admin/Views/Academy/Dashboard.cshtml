@@ -1,0 +1,515 @@
+@{
+  ViewData["Title"] = "آکادمی - داشبورد";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+  <link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/moment/moment.js"></script>
+  <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+  <script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
+}
+
+@section PageScripts {
+  <script src="~/js/app-academy-dashboard.js"></script>
+}
+
+
+@* ************** Content ************** *@
+<!-- Hour chart  -->
+<div class="card bg-transparent shadow-none my-4 border-0">
+  <div class="card-body row p-0 pb-3">
+    <div class="col-12 col-md-8 card-separator">
+      <h3>خوش آمدید، سهیل 👋🏻</h3>
+      <div class="col-12 col-lg-7">
+        <p>پیشرفت شما در این هفته عالی بوده. با همین فرمون ادامه بده تا به اهدافی که داری هرچه زودتر برسی!</p>
+      </div>
+      <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
+        <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
+          <span class="bg-label-primary p-2 rounded">
+            <i class="ti ti-device-laptop ti-xl"></i>
+          </span>
+          <div class="content-right">
+            <p class="mb-0">زمان صرف شده</p>
+            <h4 class="text-primary mb-0">34
+              <small class="text-muted">ساعت</small>
+            </h4>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="bg-label-info p-2 rounded">
+            <i class="ti ti-bulb ti-xl"></i>
+          </span>
+          <div class="content-right">
+            <p class="mb-0">نتایج آزمون</p>
+            <h4 class="text-info mb-0">82%</h4>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="bg-label-warning p-2 rounded">
+            <i class="ti ti-discount-check ti-xl"></i>
+          </span>
+          <div class="content-right">
+            <p class="mb-0">دوره تکمیل شده</p>
+            <h4 class="text-warning mb-0">14</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 ps-md-3 ps-lg-4 pt-3 pt-md-0">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div>
+            <h5 class="mb-2">وقتی که گذاشتی</h5>
+            <p class="mb-5">گزارش هفتگی</p>
+          </div>
+          <div class="time-spending-chart">
+            <h3 class="mb-2">231
+              <small class="text-muted">ساعت</small>
+              14
+              <small class="text-muted">دقیقه</small>
+            </h3>
+            <span class="badge bg-label-success">
+              <bdi>+18.4%</bdi>
+            </span>
+          </div>
+        </div>
+        <div id="leadsReportChart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Hour chart End  -->
+<!-- Topic and Instructors -->
+<div class="row mb-4 g-4">
+  <div class="col-12 col-xl-8">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="card-title m-0 me-2">موضوعات مورد علاقه شما</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="topic"
+            type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="topic" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">پربازدید ترین‌ها</a>
+            <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <div id="horizontalBarChart"></div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-around align-items-center">
+          <div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-primary me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">طراحی رابط کاربری</p>
+                <h5>35%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline my-3">
+              <span class="text-success me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">موسیقی</p>
+                <h5>14%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-danger me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">ری‌اکت نیتیو</p>
+                <h5>10%</h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-info me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">طراحی UX</p>
+                <h5>20%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline my-3">
+              <span class="text-secondary me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">انیمیشن</p>
+                <h5>12%</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <span class="text-warning me-2">
+                <i class="ti ti-circle-filled fs-6"></i>
+              </span>
+              <div>
+                <p class="mb-2">سئو</p>
+                <h5>9%</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">مربیان محبوب</h5>
+        </div>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown"
+            id="popularInstructors" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="popularInstructors" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">انتخاب همه</a>
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-borderless border-top">
+          <thead class="border-bottom">
+            <tr>
+              <th>مربیان</th>
+              <th class="text-end">دوره ها</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center mt-lg-2">
+                  <div class="avatar me-3 avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">دانیال رئیسی</h6>
+                    <small class="text-truncate text-muted">هوش کسب و کار</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end pt-2">
+                <div class="user-progress mt-lg-4">
+                  <p class="mb-0 fw-medium">33</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">رعنا آزادی ور</h6>
+                    <small class="text-truncate text-muted">بازاریابی دیجیتال</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <p class="mb-0 fw-medium">52</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/3.png" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">شایان خسروی‌نژاد</h6>
+                    <small class="text-truncate text-muted">طراحی UI/UX</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <p class="mb-0 fw-medium">12</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="avatar me-3 avatar-sm">
+                    <img alt="آواتار" class="rounded-circle" src="~/img/avatars/4.png" />
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0">آزاده صمدی</h6>
+                    <small class="text-truncate text-muted">ری‌اکت نیتیو</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="user-progress">
+                  <p class="mb-0 fw-medium">8</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="card-title m-0 me-2">دوره های برتر</h5>
+        <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn p-0" data-bs-toggle="dropdown" id="topCourses"
+            type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div aria-labelledby="topCourses" class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript:void(0);">تازه سازی</a>
+            <a class="dropdown-item" href="javascript:void(0);">دانلود</a>
+            <a class="dropdown-item" href="javascript:void(0);">مشاهده همه</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mb-0">
+          <li class="d-flex mb-4 pb-1 align-items-center">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-primary">
+                <i class="ti ti-video ti-md"></i>
+              </span>
+            </div>
+            <div class="row w-100 align-items-center">
+              <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                <p class="mb-0 fw-medium">دوره تدوین فیلم با پریمیر</p>
+              </div>
+              <div
+                class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end">
+                <div class="badge bg-label-secondary">1.2k نمایش</div>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1 align-items-center">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-info">
+                <i class="ti ti-code ti-md"></i>
+              </span>
+            </div>
+            <div class="row w-100 align-items-center">
+              <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                <p class="mb-0 fw-medium">دوره مبانی برنامه نویسی</p>
+              </div>
+              <div
+                class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end">
+                <div class="badge bg-label-secondary">834 مشاهده</div>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1 align-items-center">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-success">
+                <i class="ti ti-camera ti-md"></i>
+              </span>
+            </div>
+            <div class="row w-100 align-items-center">
+              <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                <p class="mb-0 fw-medium">دوره عکاسی حرفه‌ای با موبایل</p>
+              </div>
+              <div
+                class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end">
+                <div class="badge bg-label-secondary">3.7k نمایش</div>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-4 pb-1 align-items-center">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-warning">
+                <i class="ti ti-brand-dribbble ti-md"></i>
+              </span>
+            </div>
+            <div class="row w-100 align-items-center">
+              <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                <p class="mb-0 fw-medium">طراحی حرفه هویت بصری برند</p>
+              </div>
+              <div
+                class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end">
+                <div class="badge bg-label-secondary">2.5k نمایش</div>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex align-items-center">
+            <div class="avatar flex-shrink-0 me-3">
+              <span class="avatar-initial rounded bg-label-danger">
+                <i class="ti ti-microphone-2 ti-md"></i>
+              </span>
+            </div>
+            <div class="row w-100 align-items-center">
+              <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
+                <p class="mb-0 fw-medium">اولین موسیقی کلاسیک شما</p>
+              </div>
+              <div
+                class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end">
+                <div class="badge bg-label-secondary">948 مشاهده</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
+          <img alt="تصویر کارت دختر" class="img-fluid" src="~/img/illustrations/girl-with-laptop.png" width="140" />
+        </div>
+        <h4 class="mb-2 pb-1">وبینار آینده</h4>
+        <p class="small"> وبینار مسیر راه برنامه نویسی و طراحی وبسایت ؛ از شروع تا درآمد</p>
+        <div class="row mb-3 g-3">
+          <div class="col-6">
+            <div class="d-flex">
+              <div class="avatar flex-shrink-0 me-2">
+                <span class="avatar-initial rounded bg-label-primary">
+                  <i class="ti ti-calendar-event ti-md"></i>
+                </span>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">۱۷ بهمن ۲۳</h6>
+                <small>تاریخ</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex">
+              <div class="avatar flex-shrink-0 me-2">
+                <span class="avatar-initial rounded bg-label-primary">
+                  <i class="ti ti-clock ti-md"></i>
+                </span>
+              </div>
+              <div>
+                <h6 class="mb-0 text-nowrap">32 دقیقه</h6>
+                <small>مدت زمان</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn btn-primary w-100" href="javascript:void(0);">پیش ثبت نام</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="card-title m-0 me-2">پیشرفت دوره‌ها</h5>
+      </div>
+      <div class="card-body">
+        <ul class="p-0 m-0">
+          <li class="d-flex mb-3 pb-1">
+            <div class="chart-progress me-3" data-color="primary" data-progress_variant="true" data-series="72"></div>
+            <div class="row w-100 align-items-center">
+              <div class="col-9">
+                <div class="me-2">
+                  <h6 class="mb-2">طراحی UI/UX</h6>
+                  <small>120 تکلیف</small>
+                </div>
+              </div>
+              <div class="col-3 text-end">
+                <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                  <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-3 pb-1">
+            <div class="chart-progress me-3" data-color="success" data-progress_variant="true" data-series="48"></div>
+            <div class="row w-100 align-items-center">
+              <div class="col-9">
+                <div class="me-2">
+                  <h6 class="mb-2">فن بیان و سخنوری</h6>
+                  <small>32 تکلیف</small>
+                </div>
+              </div>
+              <div class="col-3 text-end">
+                <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                  <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex mb-3 pb-1">
+            <div class="chart-progress me-3" data-color="danger" data-progress_variant="true" data-series="15"></div>
+            <div class="row w-100 align-items-center">
+              <div class="col-9">
+                <div class="me-2">
+                  <h6 class="mb-2">برنامه نویسی React</h6>
+                  <small>182 تکلیف</small>
+                </div>
+              </div>
+              <div class="col-3 text-end">
+                <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                  <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex">
+            <div class="chart-progress me-3" data-color="info" data-progress_variant="true" data-series="24"></div>
+            <div class="row w-100 align-items-center">
+              <div class="col-9">
+                <div class="me-2">
+                  <h6 class="mb-2">یادگیری زبان با موسیقی</h6>
+                  <small>56 تکلیف</small>
+                </div>
+              </div>
+              <div class="col-3 text-end">
+                <button class="btn btn-sm btn-icon btn-label-secondary" type="button">
+                  <i class="ti ti-chevron-right scaleX-n1-rtl"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  Topic and Instructors  End-->
+<!-- Course datatable -->
+<div class="card mb-4">
+  <div class="table-responsive mb-3">
+    <table class="table datatables-academy-course">
+      <thead class="border-top">
+        <tr>
+          <th></th>
+          <th></th>
+          <th>نام دوره</th>
+          <th>زمان</th>
+          <th class="w-25">پیشرفت</th>
+          <th class="w-25">وضعیت</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<!-- Course datatable End -->
+
+<!-- Course datatable End -->

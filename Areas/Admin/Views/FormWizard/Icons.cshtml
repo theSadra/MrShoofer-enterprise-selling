@@ -1,0 +1,942 @@
+@{
+  ViewData["Title"] = "فرم ها - فرم مرحله‌ای - آیکون‌ها";
+}
+
+@section VendorStyles{
+<link rel="stylesheet" href="~/vendor/libs/bs-stepper/bs-stepper.css" />
+<link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+}
+
+@section VendorScripts{
+<script src="~/vendor/libs/bs-stepper/bs-stepper.js"></script>
+<script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/form-wizard-icons.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">فرم مرحله‌ای /</span>
+  آیکون‌ها
+</h4>
+<p class="mb-4"> آیکون های استفاده شده در این صفحه توسط
+  <a href="https://www.flaticon.com/authors/itim2101" target="_blank" title="itim2101">itim2101</a>
+  از
+  <a href="https://www.flaticon.com/" target="_blank" title="Flaticon">www.flaticon.com</a>
+  ساخته شده اند.
+</p>
+<!-- Default -->
+<div class="row">
+  <div class="col-12">
+    <h5>پیش فرض</h5>
+  </div>
+  <!-- Default Icons Wizard -->
+  <div class="col-12 mb-4">
+    <small class="text-light fw-medium">آیکون های پایه</small>
+    <div class="bs-stepper wizard-icons wizard-icons-example mt-2">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#account-details">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-account.svg#wizardAccount"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">جزئیات حساب</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#personal-info">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 58 54">
+                <use xlink:href="/svg/icons/form-wizard-personal.svg#wizardPersonal"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">اطلاعات شخصی</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#address">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-address.svg#wizardAddress"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">آدرس</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#social-links">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-social-link.svg#wizardSocialLink"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">شبکه‌های اجتماعی</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#review-submit">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-submit.svg#wizardSubmit"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">بررسی و ارسال</span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <form onSubmit="return false">
+          <!-- Account Details -->
+          <div class="content" id="account-details">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">جزئیات حساب</h6>
+              <small>جزئیات حساب خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="username">نام کاربری</label>
+                <input class="form-control" id="username" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="email">ایمیل</label>
+                <input aria-label="soheil.n" class="form-control" id="email" placeholder="john.doe@email.com" type="email"/>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="password">کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="password2" class="form-control" id="password" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="password2">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="confirm-password">تایید کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="confirm-password2" class="form-control" id="confirm-password" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="confirm-password2">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev" disabled>
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Personal Info -->
+          <div class="content" id="personal-info">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">اطلاعات شخصی</h6>
+              <small>اطلاعات شخصی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="first-name">نام کوچک</label>
+                <input class="form-control" id="first-name" placeholder="امیر" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="last-name">نام خانوادگی</label>
+                <input class="form-control" id="last-name" placeholder="مقصودلو" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="country">کشور</label>
+                <select class="select2" id="country">
+                  <option label=" "></option>
+                  <option>انگلستان</option>
+                  <option>ایران</option>
+                  <option>اسپانیا</option>
+                  <option>فرانسه</option>
+                  <option>ایتالیا</option>
+                  <option>استرالیا</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="language">زبان</label>
+                <select class="selectpicker w-auto" data-icon-base="ti" data-style="btn-transparent" data-tick-icon="ti-check text-white" id="language" multiple>
+                  <option>انگلیسی</option>
+                  <option>فرانسوی</option>
+                  <option>اسپانیایی</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Address -->
+          <div class="content" id="address">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">آدرس</h6>
+              <small>آدرس خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="address-input">آدرس</label>
+                <input class="form-control" id="address-input" placeholder="ایران ، اصفهان ، میدان نقش جهان ، پلاک 1" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="landmark">راهنما</label>
+                <input class="form-control" id="landmark" placeholder="روبرو نانوایی" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="pincode">کد پستی</label>
+                <input class="form-control" id="pincode" placeholder="658921" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="city">شهر</label>
+                <input class="form-control" id="city" placeholder="بابلسر" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Social Links -->
+          <div class="content" id="social-links">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">شبکه‌های اجتماعی</h6>
+              <small>لینک های اجتماعی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="twitter">توییتر</label>
+                <input class="form-control ltr" id="twitter" placeholder="https://twitter.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="facebook">فیس بوک</label>
+                <input class="form-control ltr" id="facebook" placeholder="https://facebook.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="google">گوگل+</label>
+                <input class="form-control ltr" id="google" placeholder="https://plus.google.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="linkedin">لینکدین</label>
+                <input class="form-control ltr" id="linkedin" placeholder="https://linkedin.com/abc" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Review -->
+          <div class="content" id="review-submit">
+            <p class="fw-medium mb-2">حساب</p>
+            <ul class="list-unstyled fw-normal">
+              <li>نام کاربری : Soheil</li>
+              <li>ایمیل : exampl@email.com</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">اطلاعات شخصی</p>
+            <ul class="list-unstyled fw-normal">
+              <li>نام کوچک : یاسر</li>
+              <li>نام خانوادگی : بختیاری</li>
+              <li>کشور : ایران</li>
+              <li>زبان : فارسی</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">آدرس</p>
+            <ul class="list-unstyled fw-normal">
+              <li>آدرس : ایران ، اصفهان ، کاشان ، خیابان امیرکبیر</li>
+              <li>راهنما : روبرو باشگاه بدنسازی</li>
+              <li>کد پستی : 1234567890</li>
+              <li>شهر : کاشان</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">شبکه‌های اجتماعی</p>
+            <ul class="list-unstyled fw-normal">
+              <li>https://twitter.com/abc</li>
+              <li>https://facebook.com/abc</li>
+              <li>https://plus.google.com/abc</li>
+              <li>https://linkedin.com/abc</li>
+            </ul>
+            <div class="col-12 d-flex justify-content-between">
+              <button class="btn btn-label-secondary btn-prev">
+                <i class="ti ti-arrow-left me-sm-1"></i>
+                <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+              </button>
+              <button class="btn btn-success btn-submit">ارسال</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Default Icons Wizard -->
+  <!-- Vertical Icons Wizard -->
+  <div class="col-12 mb-4">
+    <small class="text-light fw-medium">آیکون های عمودی</small>
+    <div class="bs-stepper vertical wizard-vertical-icons-example mt-2">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#account-details-vertical">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-file-description"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">جزئیات حساب</span>
+              <span class="bs-stepper-subtitle">راه اندازی حساب کاربری</span>
+            </span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#personal-info-vertical">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-user"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">اطلاعات شخصی</span>
+              <span class="bs-stepper-subtitle">اطلاعات شخصی پروفایل شما</span>
+            </span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#social-links-vertical">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-brand-instagram"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">شبکه‌های اجتماعی</span>
+              <span class="bs-stepper-subtitle">شبکه‌های اجتماعی و راه ارتباطی</span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <form onSubmit="return false">
+          <!-- Account Details -->
+          <div class="content" id="account-details-vertical">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">جزئیات حساب</h6>
+              <small>جزئیات حساب خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="username1">نام کاربری</label>
+                <input class="form-control" id="username1" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="email1">ایمیل</label>
+                <input aria-label="mymail@gmail.com" class="form-control" id="email1" placeholder="mymail@gmail.com" type="text"/>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="password60">کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="password6" class="form-control" id="password60" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="password6">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="confirm-password61">تایید کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="confirm-password7" class="form-control" id="confirm-password61" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="confirm-password7">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev" disabled>
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Personal Info -->
+          <div class="content" id="personal-info-vertical">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">اطلاعات شخصی</h6>
+              <small>اطلاعات شخصی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="first-name1">نام کوچک</label>
+                <input class="form-control" id="first-name1" placeholder="امیر" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="last-name1">نام خانوادگی</label>
+                <input class="form-control" id="last-name1" placeholder="مقصودلو" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="country1">کشور</label>
+                <select class="select2" id="country1">
+                  <option label=" "></option>
+                  <option>انگلستان</option>
+                  <option>ایران</option>
+                  <option>اسپانیا</option>
+                  <option>فرانسه</option>
+                  <option>ایتالیا</option>
+                  <option>استرالیا</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="language1">زبان</label>
+                <select class="selectpicker w-auto" data-icon-base="ti" data-style="btn-default" data-tick-icon="ti-check text-white" id="language1" multiple>
+                  <option>انگلیسی</option>
+                  <option>فرانسوی</option>
+                  <option>اسپانیایی</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Social Links -->
+          <div class="content" id="social-links-vertical">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">شبکه‌های اجتماعی</h6>
+              <small>لینک های اجتماعی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="twitter1">توییتر</label>
+                <input class="form-control ltr" id="twitter1" placeholder="https://twitter.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="facebook1">فیس بوک</label>
+                <input class="form-control ltr" id="facebook1" placeholder="https://facebook.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="google1">گوگل+</label>
+                <input class="form-control ltr" id="google1" placeholder="https://plus.google.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="linkedin1">لینکدین</label>
+                <input class="form-control ltr" id="linkedin1" placeholder="https://linkedin.com/abc" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-success btn-submit">ارسال</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Vertical Icons Wizard -->
+</div>
+<hr class="container-m-nx mb-5"/>
+<!-- Modern -->
+<div class="row">
+  <div class="col-12">
+    <h5>مدرن</h5>
+  </div>
+  <!-- Modern Icons Wizard -->
+  <div class="col-12 mb-4">
+    <small class="text-light fw-medium">فرم مرحله ای سبک مدرن با ایکن</small>
+    <div class="bs-stepper wizard-icons wizard-modern wizard-modern-icons-example mt-2">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#account-details-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-account.svg#wizardAccount"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">جزئیات حساب</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#personal-info-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 58 54">
+                <use xlink:href="/svg/icons/form-wizard-personal.svg#wizardPersonal"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">اطلاعات شخصی</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#address-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-address.svg#wizardAddress"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">آدرس</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#social-links-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-social-link.svg#wizardSocialLink"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">شبکه‌های اجتماعی</span>
+          </button>
+        </div>
+        <div class="line">
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="step" data-target="#review-submit-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-icon">
+              <svg viewBox="0 0 54 54">
+                <use xlink:href="/svg/icons/form-wizard-submit.svg#wizardSubmit"></use>
+              </svg>
+            </span>
+            <span class="bs-stepper-label">بررسی و ارسال</span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <form onSubmit="return false">
+          <!-- Account Details -->
+          <div class="content" id="account-details-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">جزئیات حساب</h6>
+              <small>جزئیات حساب خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="username-modern">نام کاربری</label>
+                <input class="form-control" id="username-modern" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="email-modern">ایمیل</label>
+                <input aria-label="soheil.n" class="form-control" id="email-modern" placeholder="john.doe@email.com" type="email"/>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="password-modern">کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="password2-modern" class="form-control" id="password-modern" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="password2-modern">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="confirm-password-modern">تایید کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="confirm-password2-modern" class="form-control" id="confirm-password-modern" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="confirm-password2-modern">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev" disabled>
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Personal Info -->
+          <div class="content" id="personal-info-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">اطلاعات شخصی</h6>
+              <small>اطلاعات شخصی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="first-name-modern">نام کوچک</label>
+                <input class="form-control" id="first-name-modern" placeholder="امیر" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="last-name-modern">نام خانوادگی</label>
+                <input class="form-control" id="last-name-modern" placeholder="مقصودلو" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="country-modern">کشور</label>
+                <select class="select2" id="country-modern">
+                  <option label=" "></option>
+                  <option>انگلستان</option>
+                  <option>ایران</option>
+                  <option>اسپانیا</option>
+                  <option>فرانسه</option>
+                  <option>ایتالیا</option>
+                  <option>استرالیا</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="language-modern">زبان</label>
+                <select class="selectpicker w-auto" data-icon-base="ti" data-style="btn-transparent" data-tick-icon="ti-check text-white" id="language-modern" multiple>
+                  <option>انگلیسی</option>
+                  <option>فرانسوی</option>
+                  <option>اسپانیایی</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Address -->
+          <div class="content" id="address-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">آدرس</h6>
+              <small>آدرس خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="address-modern-input">آدرس</label>
+                <input class="form-control" id="address-modern-input" placeholder="ایران ، اصفهان ، میدان نقش جهان ، پلاک 1" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="landmark-modern">راهنما</label>
+                <input class="form-control" id="landmark-modern" placeholder="روبرو نانوایی" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="pincode-modern">کد پستی</label>
+                <input class="form-control" id="pincode-modern" placeholder="658921" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="city-modern">شهر</label>
+                <input class="form-control" id="city-modern" placeholder="بابلسر" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Social Links -->
+          <div class="content" id="social-links-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">شبکه‌های اجتماعی</h6>
+              <small>لینک های اجتماعی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="twitter-modern">توییتر</label>
+                <input class="form-control ltr" id="twitter-modern" placeholder="https://twitter.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="facebook-modern">فیس بوک</label>
+                <input class="form-control ltr" id="facebook-modern" placeholder="https://facebook.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="google-modern">گوگل+</label>
+                <input class="form-control ltr" id="google-modern" placeholder="https://plus.google.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="linkedin-modern">لینکدین</label>
+                <input class="form-control ltr" id="linkedin-modern" placeholder="https://linkedin.com/abc" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Review -->
+          <div class="content" id="review-submit-modern">
+            <p class="fw-medium mb-2">حساب</p>
+            <ul class="list-unstyled fw-normal">
+              <li>نام کاربری : Soheil</li>
+              <li>ایمیل : exampl@email.com</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">اطلاعات شخصی</p>
+            <ul class="list-unstyled fw-normal">
+              <li>نام کوچک : یاسر</li>
+              <li>نام خانوادگی : بختیاری</li>
+              <li>کشور : ایران</li>
+              <li>زبان : فارسی</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">آدرس</p>
+            <ul class="list-unstyled fw-normal">
+              <li>آدرس : ایران ، اصفهان ، کاشان ، خیابان امیرکبیر</li>
+              <li>راهنما : روبرو باشگاه بدنسازی</li>
+              <li>کد پستی : 1234567890</li>
+              <li>شهر : کاشان</li>
+            </ul>
+            <hr/>
+            <p class="fw-medium mb-2">شبکه‌های اجتماعی</p>
+            <ul class="list-unstyled fw-normal">
+              <li>https://twitter.com/abc</li>
+              <li>https://facebook.com/abc</li>
+              <li>https://plus.google.com/abc</li>
+              <li>https://linkedin.com/abc</li>
+            </ul>
+            <div class="col-12 d-flex justify-content-between">
+              <button class="btn btn-label-secondary btn-prev">
+                <i class="ti ti-arrow-left me-sm-1"></i>
+                <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+              </button>
+              <button class="btn btn-success btn-submit">ارسال</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Modern Icons Wizard -->
+  <!-- Modern Vertical Icons Wizard -->
+  <div class="col-12">
+    <small class="text-light fw-medium">آیکون های عمودی</small>
+    <div class="bs-stepper vertical wizard-modern wizard-modern-vertical-icons-example mt-2">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#account-details-vertical-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-file-description"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">جزئیات حساب</span>
+              <span class="bs-stepper-subtitle">راه اندازی حساب کاربری</span>
+            </span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#personal-info-vertical-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-user"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">اطلاعات شخصی</span>
+              <span class="bs-stepper-subtitle">اطلاعات شخصی پروفایل شما</span>
+            </span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#social-links-vertical-modern">
+          <button class="step-trigger" type="button">
+            <span class="bs-stepper-circle">
+              <i class="ti ti-brand-instagram"></i>
+            </span>
+            <span class="bs-stepper-label">
+              <span class="bs-stepper-title">شبکه‌های اجتماعی</span>
+              <span class="bs-stepper-subtitle">شبکه‌های اجتماعی و راه ارتباطی</span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <form onSubmit="return false">
+          <!-- Account Details -->
+          <div class="content" id="account-details-vertical-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">جزئیات حساب</h6>
+              <small>جزئیات حساب خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="username-modern-vertical">نام کاربری</label>
+                <input class="form-control" id="username-modern-vertical" placeholder="نـوید" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="email-modern-vertical">ایمیل</label>
+                <input aria-label="mail@gmail.com" class="form-control" id="email-modern-vertical" placeholder="mail@gmail.com" type="text"/>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="password-modern-vertical">کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="password-modern-vertical1" class="form-control" id="password-modern-vertical" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="password-modern-vertical1">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6 form-password-toggle">
+                <label class="form-label" for="confirm-password-modern-vertical2">تایید کلمه عبور</label>
+                <div class="input-group input-group-merge">
+                  <input aria-describedby="confirm-password-modern-vertical3" class="form-control" id="confirm-password-modern-vertical2" placeholder="············" type="password"/>
+                  <span class="input-group-text cursor-pointer" id="confirm-password-modern-vertical3">
+                    <i class="ti ti-eye-off"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev" disabled>
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Personal Info -->
+          <div class="content" id="personal-info-vertical-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">اطلاعات شخصی</h6>
+              <small>اطلاعات شخصی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="first-name-modern-vertical">نام کوچک</label>
+                <input class="form-control" id="first-name-modern-vertical" placeholder="امیر" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="last-name-modern-vertical">نام خانوادگی</label>
+                <input class="form-control" id="last-name-modern-vertical" placeholder="مقصودلو" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="country-vertical-modern">کشور</label>
+                <select class="select2" id="country-vertical-modern">
+                  <option>انگلستان</option>
+                  <option>ایران</option>
+                  <option>اسپانیا</option>
+                  <option>فرانسه</option>
+                  <option>ایتالیا</option>
+                  <option>استرالیا</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="language-vertical-modern">زبان</label>
+                <select class="selectpicker w-auto" data-icon-base="ti" data-style="btn-default" data-tick-icon="ti-check text-white" id="language-vertical-modern" multiple>
+                  <option>انگلیسی</option>
+                  <option>فرانسوی</option>
+                  <option>اسپانیایی</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-primary btn-next">
+                  <span class="align-middle d-sm-inline-block d-none me-sm-1">بعدی</span>
+                  <i class="ti ti-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Social Links -->
+          <div class="content" id="social-links-vertical-modern">
+            <div class="content-header mb-3">
+              <h6 class="mb-0">شبکه‌های اجتماعی</h6>
+              <small>لینک های اجتماعی خود را وارد کنید</small>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="twitter-vertical-modern">توییتر</label>
+                <input class="form-control ltr" id="twitter-vertical-modern" placeholder="https://twitter.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="facebook-vertical-modern">فیس بوک</label>
+                <input class="form-control ltr" id="facebook-vertical-modern" placeholder="https://facebook.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="google-vertical-modern">گوگل+</label>
+                <input class="form-control ltr" id="google-vertical-modern" placeholder="https://plus.google.com/abc" type="text"/>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="linkedin-vertical-modern">لینکدین</label>
+                <input class="form-control ltr" id="linkedin-vertical-modern" placeholder="https://linkedin.com/abc" type="text"/>
+              </div>
+              <div class="col-12 d-flex justify-content-between">
+                <button class="btn btn-label-secondary btn-prev">
+                  <i class="ti ti-arrow-left me-sm-1"></i>
+                  <span class="align-middle d-sm-inline-block d-none">قبلی</span>
+                </button>
+                <button class="btn btn-success btn-submit">ارسال</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /Modern Vertical Icons Wizard -->
+</div>

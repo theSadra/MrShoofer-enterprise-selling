@@ -1,0 +1,32 @@
+@{
+  Layout = "_BlankLayout";
+  ViewData["Title"] = "صفحات - به زودی";
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/page-misc.css">
+}
+
+@* ************** Content ************** *@
+<!-- Coming soon -->
+<div class="container-xxl container-p-y">
+  <div class="misc-wrapper">
+    <h2 class="mb-3 mx-2">به‌زودی راه‌اندازی می‌شود</h2>
+    <p class="mb-4 mx-2">تیم ما درحال آماده سازی سایت می باشد و اگر میخواهد بعد از انتشار مطلع شوید ایمیل خود را وارد کنید!</p>
+    <form onsubmit="return false" class="mb-4">
+      <div class="mb-0">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="ایمیل" autofocus>
+          <button type="submit" class="btn btn-primary">ثبت</button>
+        </div>
+      </div>
+    </form>
+    <div class="mt-4">
+      <img src="~/img/illustrations/page-misc-launching-soon.png" alt="page-misc-launching-soon" width="263" class="img-fluid">
+    </div>
+  </div>
+</div>
+<div class="container-fluid misc-bg-wrapper">
+  <img src="~/img/illustrations/bg-shape-image-light.png" alt="page-misc-coming-soon" data-app-light-img="illustrations/bg-shape-image-light.png" data-app-dark-img="illustrations/bg-shape-image-dark.png">
+</div>
+<!-- /Coming soon -->

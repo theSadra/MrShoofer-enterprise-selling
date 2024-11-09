@@ -1,0 +1,287 @@
+@{
+  ViewData["Title"] = "کانبان";
+}
+
+@section VendorStyles {
+  <link rel="stylesheet" href="~/vendor/libs/jkanban/jkanban.css" />
+  <link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="~/vendor/libs/quill/typography.css" />
+  <link rel="stylesheet" href="~/vendor/libs/quill/katex.css" />
+  <link rel="stylesheet" href="~/vendor/libs/quill/editor.css" />
+}
+
+@section VendorScripts {
+  <script src="~/vendor/libs/moment/moment.js"></script>
+  <script src="~/vendor/libs/jdate/jdate.min.js"></script>
+  <script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+  <script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+  <script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+  <script src="~/vendor/libs/jkanban/jkanban.js"></script>
+  <script src="~/vendor/libs/quill/katex.js"></script>
+  <script src="~/vendor/libs/quill/quill.js"></script>
+}
+
+@section PageStyles {
+  <link rel="stylesheet" href="~/vendor/css/pages/app-kanban.css" />
+}
+
+@section PageScripts {
+  <script src="~/js/app-kanban.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<div class="app-kanban">
+  <!-- Add new board -->
+  <div class="row">
+    <div class="col-12">
+      <form class="kanban-add-new-board">
+        <label class="kanban-add-board-btn" for="kanban-add-board-input">
+          <i class="ti ti-plus ti-xs"></i>
+          <span class="align-middle">مورد جدید</span>
+        </label>
+        <input class="form-control w-px-250 kanban-add-board-input mb-2 d-none" id="kanban-add-board-input"
+          placeholder="عنوان تک را وارد کنید" required type="text" />
+        <div class="mb-3 kanban-add-board-input d-none">
+          <button class="btn btn-label-secondary btn-sm kanban-add-board-cancel-btn" type="button"> لغو</button>
+          <button class="btn btn-primary btn-sm me-2">اضافه کنید</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Kanban Wrapper -->
+  <div class="kanban-wrapper"></div>
+  <!-- Edit Task & Activities -->
+  <div class="offcanvas offcanvas-end kanban-update-item-sidebar">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title">ویرایش</h5>
+      <button aria-label="بستن" class="btn-close" data-bs-dismiss="offcanvas" type="button"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav nav-tabs tabs-line">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-target="#tab-update" data-bs-toggle="tab">
+            <i class="ti ti-edit me-2"></i>
+            <span class="align-middle">ویرایش</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-target="#tab-activity" data-bs-toggle="tab">
+            <i class="ti ti-trending-up me-2"></i>
+            <span class="align-middle">فعالیت</span>
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content px-0 pb-0">
+        <!-- Update item/tasks -->
+        <div class="tab-pane fade show active" id="tab-update" role="tabpanel">
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="title">عنوان</label>
+              <input class="form-control" id="title" placeholder="عنوان را وارد کنید" type="text" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="due-date">سررسید</label>
+              <input class="form-control" id="due-date" placeholder="تاریخ سررسید را وارد کنید" type="text" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="label"> برچسب</label>
+              <select class="select2 select2-label form-select" id="label">
+                <option data-color="bg-label-success" value="UX">UX</option>
+                <option data-color="bg-label-warning" value="Images">تصاویر</option>
+                <option data-color="bg-label-info" value="Info">راهنما</option>
+                <option data-color="bg-label-danger" value="Code Review">بررسی کد</option>
+                <option data-color="bg-label-secondary" value="App">برنامه</option>
+                <option data-color="bg-label-primary" value="Charts & Maps">نمودارها و نقشه ها</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">اختصاص داده</label>
+              <div class="assigned d-flex flex-wrap"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="attachments">پیوست ها</label>
+              <input class="form-control" id="attachments" type="file" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label">کامنت</label>
+              <div class="comment-editor border-bottom-0"></div>
+              <div class="d-flex justify-content-end">
+                <div class="comment-toolbar">
+                  <span class="ql-formats me-0">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-link"></button>
+                    <button class="ql-image"></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap">
+              <button class="btn btn-primary me-3" data-bs-dismiss="offcanvas" type="button"> به روزرسانی</button>
+              <button class="btn btn-label-danger" data-bs-dismiss="offcanvas" type="button"> حذف</button>
+            </div>
+          </form>
+        </div>
+        <!-- Activities -->
+        <div class="tab-pane fade" id="tab-activity" role="tabpanel">
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-success rounded-circle">س‌ع</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">یاسر</span>
+                هیئت مدیره را ترک کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 11 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">دایانا</span>
+                در یک نظر به
+                                <span class="text-primary">&#64;bruce</span>
+                اشاره کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 10:20 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/2.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">پریناز</span>
+                کار جابجایی نمودارها و نقشه ها را به تابلوی انجام شده اضافه کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 10 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">سعید</span>
+                در مورد وظیفه بررسی برنامه نظر داد.
+              </p>
+              <small class="text-muted">امروز ساعت 8:32 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-secondary rounded-circle">ع‌س</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">به سورنا</span>
+                وظیفه بررسی کد داده شد.
+              </p>
+              <small class="text-muted">امروز ساعت 20:30</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-danger rounded-circle">ک‌ا</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">کامران</span>
+                وظیفه UX Research را به
+                                <span class="text-primary">&#64;martian</span>
+                محول کرد
+              </p>
+              <small class="text-muted">امروز ساعت 8 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/4.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">گندم</span>
+                کار
+                <span class="fw-medium">اپ</span>
+                را از در حال انجام به انجام منتقل کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 7:45 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">سعید</span>
+                تمام وظایف محول شده به او را کامل کنید.
+              </p>
+              <small class="text-muted">امروز ساعت 7:17 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-success rounded-circle">س‌ع</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">یاسر</span>
+                تسک به روزرسانی تصاویر جدید را اضافه کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 7 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png" />
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">دایانا</span>
+                وظایف را از در حال انجام به صفحه انجام شده منتقل کرد.
+              </p>
+              <small class="text-muted">امروز ساعت 7 صبح</small>
+            </div>
+          </div>
+          <div class="media mb-4 d-flex align-items-start">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-danger rounded-circle">ک‌ا</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">کامران</span>
+                برد جدیدی با وضعیت
+                <span class="fw-medium">انجام شد</span>
+                اضافه کرد.
+              </p>
+              <small class="text-muted">دیروز ساعت 15:00</small>
+            </div>
+          </div>
+          <div class="media d-flex align-items-center">
+            <div class="avatar me-2 flex-shrink-0 mt-1">
+              <span class="avatar-initial bg-label-secondary rounded-circle">ع‌س</span>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">
+                <span class="fw-medium">سورنا</span>
+                وظیفه جدیدی را اضافه کرد.
+              </p>
+              <small class="text-muted">دیروز ساعت 12:00 ظهر</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

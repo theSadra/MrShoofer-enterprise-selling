@@ -1,0 +1,2674 @@
+@{
+  ViewData["Title"] = "جداول - جداول پایه";
+}
+
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">جداول /</span>
+  جداول پایه
+</h4>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+  <h5 class="card-header">جدول پایه</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-2"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-2"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-2"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-2"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-2"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-2"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Basic Bootstrap Table -->
+<hr class="my-5"/>
+<!-- Bootstrap Dark Table -->
+<div class="card">
+  <h5 class="card-header">جدول با تم مخالف</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-dark">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="rounded-start-bottom">
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td class="rounded-end-bottom">
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Bootstrap Dark Table -->
+<hr class="my-5"/>
+<!-- Bootstrap Table with Header - Dark -->
+<div class="card">
+  <h5 class="card-header">جدول با سرتیتر مخالف</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-dark">
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Bootstrap Table with Header Dark -->
+<hr class="my-5"/>
+<!-- Bootstrap Table with Header - Light -->
+<div class="card">
+  <h5 class="card-header">سرتیتر کم رنگ</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-light">
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Bootstrap Table with Header - Light -->
+<hr class="my-5"/>
+<!-- Bootstrap Table with Header - Footer -->
+<div class="card">
+  <h5 class="card-header">جدول با سربرگ و پاورقی</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot class="table-border-bottom-0">
+      <tr>
+        <th class="rounded-start-bottom">پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th class="rounded-end-bottom">عملیات</th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<!-- Bootstrap Table with Header - Footer -->
+<hr class="my-5"/>
+<!-- Bootstrap Table with Caption -->
+<div class="card">
+  <h5 class="card-header">جدول با زیر عنوان</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <caption class="ms-4"> لیست پروژه ها</caption>
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Bootstrap Table with Caption -->
+<hr class="my-5"/>
+<!-- Striped Rows -->
+<div class="card">
+  <h5 class="card-header">ردیف های یک‌درمیان</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Striped Rows -->
+<hr class="my-5"/>
+<!-- Bordered Table -->
+<div class="card">
+  <h5 class="card-header">جدول حاشیه دار</h5>
+  <div class="card-body">
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>پروژه</th>
+          <th>مشتری</th>
+          <th>کاربران</th>
+          <th>وضعیت</th>
+          <th>عملیات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+            <span class="fw-medium">پروژه آنگولار</span>
+          </td>
+          <td>پارمیدا مقدسی</td>
+          <td>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <span class="badge bg-label-primary me-1">فعال</span>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                <i class="ti ti-dots-vertical"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-1"></i>
+                  ویرایش
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-trash me-1"></i>
+                  حذف
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+            <span class="fw-medium">پروژه ری‌اکت</span>
+          </td>
+          <td>پیمان حسنی</td>
+          <td>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <span class="badge bg-label-success me-1">تکمیل شد</span>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                <i class="ti ti-dots-vertical"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-1"></i>
+                  ویرایش
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-trash me-1"></i>
+                  حذف
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+            <span class="fw-medium">پروژه VueJs</span>
+          </td>
+          <td>تارا محمدی</td>
+          <td>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <span class="badge bg-label-info me-1">درحال انجام</span>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                <i class="ti ti-dots-vertical"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-1"></i>
+                  ویرایش
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-trash me-1"></i>
+                  حذف
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+            <span class="fw-medium">پروژه بوت استرپ</span>
+          </td>
+          <td>کیومرث افشاری</td>
+          <td>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+              </li>
+              <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+                <i class="ti ti-dots-vertical"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-pencil me-1"></i>
+                  ویرایش
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);">
+                  <i class="ti ti-trash me-1"></i>
+                  حذف
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!--/ Bordered Table -->
+<hr class="my-5"/>
+<!-- Borderless Table -->
+<div class="card">
+  <h5 class="card-header">جدول بدون حاشیه</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-borderless">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Borderless Table -->
+<hr class="my-5"/>
+<!-- Hoverable Table rows -->
+<div class="card">
+  <h5 class="card-header">سطرهای دارای هاور</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Hoverable Table rows -->
+<hr class="my-5"/>
+<!-- Small table -->
+<div class="card">
+  <h5 class="card-header">جدول کوچک</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-sm">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Small table -->
+<hr class="my-5"/>
+<!-- Contextual Classes -->
+<div class="card">
+  <h5 class="card-header">کلاس های سفارشی</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>پروژه</th>
+        <th>مشتری</th>
+        <th>کاربران</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr class="table-default">
+        <td>
+          <i class="ti ti-brand-sketch ti-lg text-warning me-3"></i>
+          <span class="fw-medium">پروژه Sketch</span>
+        </td>
+        <td>لیلا شاهسون</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-active">
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">پروژه ری‌اکت</span>
+        </td>
+        <td>پیمان حسنی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-primary">
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پارمیدا مقدسی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-secondary">
+        <td>
+          <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+          <span class="fw-medium">پروژه VueJs</span>
+        </td>
+        <td>تارا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-success">
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-danger">
+        <td>
+          <i class="ti ti-brand-sketch ti-lg text-warning me-3"></i>
+          <span class="fw-medium">پروژه Sketch</span>
+        </td>
+        <td>آرش نظری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-primary me-1">فعال</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-warning">
+        <td>
+          <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+          <span class="fw-medium">واکنش ری‌اکت</span>
+        </td>
+        <td>آریا محمدی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-info me-1">درحال انجام</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-info">
+        <td>
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>شهرزاد رحمانی</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-light">
+        <td>
+          <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+          <span class="fw-medium">پروژه آنگولار</span>
+        </td>
+        <td>پیمان پورمحمد</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-dark">
+        <td class="rounded-start-bottom">
+          <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+          <span class="fw-medium">پروژه بوت استرپ</span>
+        </td>
+        <td>کیومرث افشاری</td>
+        <td>
+          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+            </li>
+            <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+              <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <span class="badge bg-label-success me-1">تکمیل شد</span>
+        </td>
+        <td class="rounded-end-bottom">
+          <div class="dropdown">
+            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+              <i class="ti ti-dots-vertical"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-pencil me-1"></i>
+                ویرایش
+              </a>
+              <a class="dropdown-item" href="javascript:void(0);">
+                <i class="ti ti-trash me-1"></i>
+                حذف
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Contextual Classes -->
+<hr class="my-5"/>
+<!-- Table without card -->
+<h5 class="mb-4">جدول بدون کادر</h5>
+<div class="table-responsive text-nowrap">
+  <table class="table card-table">
+    <thead>
+    <tr>
+      <th>پروژه</th>
+      <th>مشتری</th>
+      <th>کاربران</th>
+      <th>وضعیت</th>
+      <th>عملیات</th>
+    </tr>
+    </thead>
+    <tbody class="table-border-bottom-0">
+    <tr>
+      <td>
+        <i class="ti ti-brand-angular ti-lg text-danger me-3"></i>
+        <span class="fw-medium">پروژه آنگولار</span>
+      </td>
+      <td>پارمیدا مقدسی</td>
+      <td>
+        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <span class="badge bg-label-primary me-1">فعال</span>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-pencil me-1"></i>
+              ویرایش
+            </a>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-trash me-1"></i>
+              حذف
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <i class="ti ti-brand-react-native ti-lg text-info me-3"></i>
+        <span class="fw-medium">پروژه ری‌اکت</span>
+      </td>
+      <td>پیمان حسنی</td>
+      <td>
+        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <span class="badge bg-label-success me-1">تکمیل شد</span>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-pencil me-1"></i>
+              ویرایش
+            </a>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-trash me-1"></i>
+              حذف
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <i class="ti ti-brand-vue ti-lg text-success me-3"></i>
+        <span class="fw-medium">پروژه VueJs</span>
+      </td>
+      <td>تارا محمدی</td>
+      <td>
+        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <span class="badge bg-label-info me-1">درحال انجام</span>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-pencil me-1"></i>
+              ویرایش
+            </a>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-trash me-1"></i>
+              حذف
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <i class="ti ti-brand-bootstrap ti-lg text-primary me-3"></i>
+        <span class="fw-medium">پروژه بوت استرپ</span>
+      </td>
+      <td>کیومرث افشاری</td>
+      <td>
+        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="آرمین رضایی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/5.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="مهسا کریمی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/6.png"/>
+          </li>
+          <li class="avatar avatar-xs pull-up" data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="پارسا حسینی">
+            <img alt="آواتار" class="rounded-circle" src="~/img/avatars/7.png"/>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <span class="badge bg-label-warning me-1">درانتظار بررسی</span>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" type="button">
+            <i class="ti ti-dots-vertical"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-pencil me-1"></i>
+              ویرایش
+            </a>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="ti ti-trash me-1"></i>
+              حذف
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!--/ Table without card -->
+<hr class="my-5"/>
+<!-- Responsive Table -->
+<div class="card">
+  <h5 class="card-header">جدول رسسپانسیو و واکنشگرا</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+      <tr class="text-nowrap">
+        <th>#</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+        <th>عنوان جدول</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      <tr>
+        <th scope="row">1</th>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+        <td>سلول جدول</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Responsive Table -->

@@ -1,0 +1,480 @@
+@{
+  ViewData["Title"] = "رابط کاربری - توئستر";
+}
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/toastr/toastr.css" />
+<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css">
+}
+@section VendorScripts {
+<script src="~/vendor/libs/toastr/toastr.js"></script>
+}
+@section PageScripts {
+<script src="~/js/ui-toasts.js"></script>
+}
+@* ************** Content ************** *@
+
+<h4 class="py-3 mb-4">
+  <span class="text-muted fw-light">رابط کاربری /</span>
+  توئستر
+</h4>
+<!-- Toast with Animation -->
+<div aria-atomic="true" aria-live="assertive" class="bs-toast toast toast-ex animate__animated my-2" data-bs-delay="2000" role="alert">
+  <div class="toast-header">
+    <i class="ti ti-bell ti-xs me-2"></i>
+    <div class="me-auto fw-medium">بوت استرپ</div>
+    <small class="text-muted">11 دقیقه قبل</small>
+    <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+  </div>
+  <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+</div>
+<!--/ Toast with Animation -->
+<!-- Toast with Placements -->
+<div aria-atomic="true" aria-live="assertive" class="bs-toast toast toast-placement-ex m-2" data-bs-delay="2000" role="alert">
+  <div class="toast-header">
+    <i class="ti ti-bell ti-xs me-2"></i>
+    <div class="me-auto fw-medium">بوت استرپ</div>
+    <small class="text-muted">11 دقیقه قبل</small>
+    <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+  </div>
+  <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+</div>
+<!-- Toast with Placements -->
+<!-- Bootstrap Toasts with Animation -->
+<div class="card mb-4">
+  <h5 class="card-header">نمونه توست‌های bootstrap با انیمیشن</h5>
+  <div class="card-body">
+    <div class="row gx-3 gy-2 align-items-center">
+      <div class="col-md-3">
+        <label class="form-label" for="selectType">رنگ</label>
+        <select class="form-select color-dropdown" id="selectType">
+          <option selected value="text-primary">اصلی</option>
+          <option value="text-secondary">فرعی</option>
+          <option value="text-success">موفق</option>
+          <option value="text-danger">اخطار</option>
+          <option value="text-warning">هشدار</option>
+          <option value="text-info">راهنما</option>
+          <option value="text-dark">تاریک</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label" for="selectAnimation">انیمیشن</label>
+        <select class="form-select animation-dropdown" id="selectAnimation">
+          <optgroup label="Attention Seekers">
+            <option value="animate__fade">fade</option>
+            <option value="animate__bounce">bounce</option>
+            <option value="animate__flash">flash</option>
+            <option value="animate__pulse">pulse</option>
+            <option value="animate__rubberBand">rubberBand</option>
+            <option value="animate__shakeX">shake</option>
+            <option value="animate__swing">swing</option>
+            <option selected="" value="animate__tada">tada</option>
+            <option value="animate__wobble">wobble</option>
+            <option value="animate__jello">jello</option>
+            <option value="animate__heartBeat">heartBeat</option>
+          </optgroup>
+          <optgroup label="Bouncing Entrances">
+            <option value="animate__bounceIn">bounceIn</option>
+            <option value="animate__bounceInDown">bounceInDown</option>
+            <option value="animate__bounceInLeft">bounceInLeft</option>
+            <option value="animate__bounceInRight">bounceInRight</option>
+            <option value="animate__bounceInUp">bounceInUp</option>
+          </optgroup>
+          <optgroup label="Fading Entrances">
+            <option value="animate__fadeIn">fadeIn</option>
+            <option value="animate__fadeInDown">fadeInDown</option>
+            <option value="animate__fadeInDownBig">fadeInDownBig</option>
+            <option value="animate__fadeInLeft">fadeInLeft</option>
+            <option value="animate__fadeInLeftBig">fadeInLeftBig</option>
+            <option value="animate__fadeInRight">fadeInRight</option>
+            <option value="animate__fadeInRightBig">fadeInRightBig</option>
+            <option value="animate__fadeInUp">fadeInUp</option>
+            <option value="animate__fadeInUpBig">fadeInUpBig</option>
+          </optgroup>
+          <optgroup label="Flippers">
+            <option value="animate__flip">flip</option>
+            <option value="animate__flipInX">flipInX</option>
+            <option value="animate__flipInY">flipInY</option>
+          </optgroup>
+          <optgroup label="Lightspeed">
+            <option value="animate__lightSpeedInRight">lightSpeedIn</option>
+          </optgroup>
+          <optgroup label="Rotating Entrances">
+            <option value="animate__rotateIn">rotateIn</option>
+            <option value="animate__rotateInDownLeft">rotateInDownLeft</option>
+            <option value="animate__rotateInDownRight">rotateInDownRight</option>
+            <option value="animate__rotateInUpLeft">rotateInUpLeft</option>
+            <option value="animate__rotateInUpRight">rotateInUpRight</option>
+          </optgroup>
+          <optgroup label="Sliding Entrances">
+            <option value="animate__slideInUp">slideInUp</option>
+            <option value="animate__slideInDown">slideInDown</option>
+            <option value="animate__slideInLeft">slideInLeft</option>
+            <option value="animate__slideInRight">slideInRight</option>
+          </optgroup>
+          <optgroup label="Zoom Entrances">
+            <option value="animate__zoomIn">zoomIn</option>
+            <option value="animate__zoomInDown">zoomInDown</option>
+            <option value="animate__zoomInLeft">zoomInLeft</option>
+            <option value="animate__zoomInRight">zoomInRight</option>
+            <option value="animate__zoomInUp">zoomInUp</option>
+          </optgroup>
+          <optgroup label="Specials">
+            <option value="animate__jackInTheBox">jackInTheBox</option>
+            <option value="animate__rollIn">rollIn</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label" for="showToastPlacement"> </label>
+        <button class="btn btn-primary d-block" id="showToastAnimation">نمایش اعلان</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Bootstrap Toasts with Animation -->
+<!-- Bootstrap Toasts with Placement -->
+<div class="card mb-4">
+  <h5 class="card-header">نمونه توست‌های bootstrap با انتخاب موقعیت</h5>
+  <div class="card-body">
+    <div class="row gx-3 gy-2 align-items-center">
+      <div class="col-md-3">
+        <label class="form-label" for="selectTypeOpt">رنگ</label>
+        <select class="form-select color-dropdown" id="selectTypeOpt">
+          <option selected value="text-primary">اصلی</option>
+          <option value="text-secondary">فرعی</option>
+          <option value="text-success">موفق</option>
+          <option value="text-danger">اخطار</option>
+          <option value="text-warning">هشدار</option>
+          <option value="text-info">راهنما</option>
+          <option value="text-dark">تاریک</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label" for="selectPlacement">تعیین موقعیت</label>
+        <select class="form-select placement-dropdown" id="selectPlacement">
+          <option value="top-0 start-0">بالا راست</option>
+          <option value="top-0 start-50 translate-middle-x">وسط بالا</option>
+          <option value="top-0 end-0">بالا چپ</option>
+          <option value="top-50 start-0 translate-middle-y">وسط راست</option>
+          <option value="top-50 start-50 translate-middle">وسط صفحه</option>
+          <option value="top-50 end-0 translate-middle-y">وسط چپ</option>
+          <option value="bottom-0 start-0">پایین راست</option>
+          <option value="bottom-0 start-50 translate-middle-x">وسط پایین</option>
+          <option value="bottom-0 end-0">چپ پایین</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label" for="showToastPlacement"> </label>
+        <button class="btn btn-primary d-block" id="showToastPlacement">نمایش اعلان</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Bootstrap Toasts with Placement -->
+<!-- Bootstrap Toasts Styles -->
+<div class="card mb-4">
+  <h5 class="card-header">تم‌های توست bootstrap</h5>
+  <div class="row g-0">
+    <div class="col-md-6 p-4">
+      <div class="text-light small fw-medium mb-3">پیش فرض</div>
+      <div class="toast-container position-relative">
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-primary"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-secondary"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-success"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-danger"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-warning"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-info"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-dark"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 ui-bg-overlay-container p-4">
+      <div class="ui-bg-overlay bg-dark rounded-end-bottom"></div>
+      <div class="text-white small fw-medium mb-3">نیمه شفاف</div>
+      <div class="toast-container position-relative">
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-primary"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-secondary"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-success"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-danger"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-warning"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-info"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+        <div aria-atomic="true" aria-live="assertive" class="bs-toast toast fade show" role="alert">
+          <div class="toast-header">
+            <i class="ti ti-bell ti-xs me-2 text-dark"></i>
+            <div class="me-auto fw-medium">اعلان جدید</div>
+            <small class="text-muted">11 دقیقه قبل</small>
+            <button aria-label="بستن" class="btn-close" data-bs-dismiss="toast" type="button"></button>
+          </div>
+          <div class="toast-body">سلام دنیا! این یک پیام توست است.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Bootstrap Toasts Styles -->
+<!-- Toastr Demo -->
+<div class="card">
+  <h5 class="card-header">توست‌های Toastr</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6 col-xl-3">
+        <div class="mb-3">
+          <label class="form-label" for="title">عنوان</label>
+          <input class="form-control" id="title" placeholder="عنوانی را وارد کنید..." type="text"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="message">پیام</label>
+          <textarea class="form-control" id="message" placeholder="وارد کردن پیام ..." rows="3" spellcheck="false"></textarea>
+        </div>
+        <div class="mb-3">
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="closeButton" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="closeButton">دکمه بستن</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="addBehaviorOnToastClick" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="addBehaviorOnToastClick">رویداد کلیک در دکمه</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="debugInfo" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="debugInfo">دیباگ</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="progressBar" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="progressBar">نوار پیشرفت (progressBar)</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="preventDuplicates" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="preventDuplicates">جلوگیری از تکرار</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="addClear" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="addClear">دکمه برای عدم نمایش</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="newestOnTop" type="checkbox" value="checked"/>
+            <label class="form-check-label" for="newestOnTop">آخرین در بالا</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xl-3">
+        <div class="mb-3" id="toastTypeGroup">
+          <label class="form-label">نوع توست</label>
+          <div class="form-check mb-2">
+            <input checked class="form-check-input" id="successRadio" name="toastsRadio" type="radio" value="success"/>
+            <label class="form-check-label" for="successRadio">موفق</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="infoRadio" name="toastsRadio" type="radio" value="info"/>
+            <label class="form-check-label" for="infoRadio">راهنما</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="warningRadio" name="toastsRadio" type="radio" value="warning"/>
+            <label class="form-check-label" for="warningRadio">هشدار</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="errorRadio" name="toastsRadio" type="radio" value="error"/>
+            <label class="form-check-label" for="errorRadio">خطا</label>
+          </div>
+        </div>
+        <div class="mb-3" id="positionGroup">
+          <label class="form-label">موقعیت</label>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="topRightRadio" name="positionsRadio" type="radio" value="toast-top-right"/>
+            <label class="form-check-label" for="topRightRadio">بالا چپ</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="bottomRightRadio" name="positionsRadio" type="radio" value="toast-bottom-right"/>
+            <label class="form-check-label" for="bottomRightRadio">چپ پایین</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="bottomLeftRadio" name="positionsRadio" type="radio" value="toast-bottom-left"/>
+            <label class="form-check-label" for="bottomLeftRadio">پایین راست</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="topLeftRadio" name="positionsRadio" type="radio" value="toast-top-left"/>
+            <label class="form-check-label" for="topLeftRadio">بالا راست</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="topFullWidthRadio" name="positionsRadio" type="radio" value="toast-top-full-width"/>
+            <label class="form-check-label" for="topFullWidthRadio">عرض کامل بالا</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="bottomFullWidthRadio" name="positionsRadio" type="radio" value="toast-bottom-full-width"/>
+            <label class="form-check-label" for="bottomFullWidthRadio">عرض کامل پایین</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="topCenterRadio" name="positionsRadio" type="radio" value="toast-top-center"/>
+            <label class="form-check-label" for="topCenterRadio">مرکز صفحه</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" id="bottomCenterRadio" name="positionsRadio" type="radio" value="toast-bottom-center"/>
+            <label class="form-check-label" for="bottomCenterRadio">وسط پایین</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xl-3">
+        <div class="mb-3">
+          <label class="form-label" for="showEasing">نمایش Easing</label>
+          <input class="form-control" id="showEasing" placeholder="swing, linear" type="text" value="swing"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="hideEasing">پنهان کردن Easing</label>
+          <input class="form-control" id="hideEasing" placeholder="swing, linear" type="text" value="linear"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="showMethod">انیمیشن نمایش</label>
+          <input class="form-control" id="showMethod" placeholder="show, fadeIn, slideDown" type="text" value="fadeIn"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="hideMethod">انیمیشن پنهان شدن</label>
+          <input class="form-control" id="hideMethod" placeholder="hide, fadeOut, slideUp" type="text" value="fadeOut"/>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xl-3">
+        <div class="mb-3 kt-form__grou">
+          <label class="form-label" for="showDuration">زمان شروع نمایش</label>
+          <input class="form-control" id="showDuration" placeholder="ms" type="text" value="300"/>
+        </div>
+        <div class="mb-3 kt-form__grou">
+          <label class="form-label" for="hideDuration">زمان پنهان شدن</label>
+          <input class="form-control" id="hideDuration" placeholder="ms" type="text" value="1000"/>
+        </div>
+        <div class="mb-3 kt-form__grou">
+          <label class="form-label" for="timeOut">زمان نمایش</label>
+          <input class="form-control" id="timeOut" placeholder="ms" type="text" value="5000"/>
+        </div>
+        <div class="mb-3 kt-form__grou">
+          <label class="form-label" for="extendedTimeOut">زمان تمدید شده</label>
+          <input class="form-control" id="extendedTimeOut" placeholder="ms" type="text" value="1000"/>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <a class="btn btn-primary mb-1" href="javascript:" id="showtoast">نمایش اعلان</a>
+    <a class="btn btn-danger mb-1" href="javascript:" id="cleartoasts">پاک کردن همه</a>
+    <a class="btn btn-danger mb-1" href="javascript:" id="clearlasttoast">پاک کردن آخرین</a>
+  </div>
+</div>
+<!--/ Toastr Demo -->

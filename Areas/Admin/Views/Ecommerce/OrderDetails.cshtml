@@ -1,0 +1,276 @@
+@{
+  ViewData["Title"] = "تجارت الکترونیک - جزئیات سفارش";
+}
+
+@section VendorStyles {
+<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+<link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+<link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+}
+
+@section VendorScripts {
+<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave.js"></script>
+<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+<script src="~/vendor/libs/select2/select2.js"></script>
+<script src="~/vendor/libs/select2/i18n/fa.js"></script>
+}
+
+@section PageScripts {
+<script src="~/js/app-ecommerce-order-details.js"></script>
+<script src="~/js/modal-add-new-address.js"></script>
+<script src="~/js/modal-edit-user.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-2">
+      <span class="text-muted fw-light">تجارت الکترونیک /</span>
+      جزئیات سفارش
+    </h4>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+      <div class="d-flex flex-column justify-content-center gap-2 gap-sm-0">
+        <h5 class="mb-1 mt-3 d-flex flex-wrap gap-2 align-items-end">
+          سفارش شماره 32543
+          <span class="badge bg-label-success">پرداخت شده</span>
+          <span class="badge bg-label-info">آماده تحویل</span>
+        </h5>
+        <p class="text-body">5:48 ، 17 شهریور 1402</p>
+      </div>
+      <div class="d-flex align-content-center flex-wrap gap-2">
+        <button class="btn btn-label-danger delete-order">حذف سفارش</button>
+      </div>
+    </div>
+    <!-- Order Details Table -->
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title m-0">سبد خرید</h5>
+            <h6 class="m-0">
+              <a href=" javascript:void(0)">ویرایش</a>
+            </h6>
+          </div>
+          <div class="card-datatable table-responsive">
+            <table class="datatables-order-details table border-top">
+              <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th class="w-50">محصولات</th>
+                <th class="w-25">قیمت</th>
+                <th class="w-25">تعداد</th>
+                <th>جمع</th>
+              </tr>
+              </thead>
+            </table>
+            <div class="d-flex justify-content-end align-items-center m-3 mb-2 p-1">
+              <div class="order-calculations">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="w-px-100 text-heading">جمع سفارشات:</span>
+                  <h6 class="mb-0">
+                    <bdi><svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>6398</bdi>
+                  </h6>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="w-px-100 text-heading">تخفیف:</span>
+                  <h6 class="mb-0">
+                    <bdi><svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>22</bdi>
+                  </h6>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="w-px-100 text-heading">مالیات:</span>
+                  <h6 class="mb-0">
+                    <bdi><svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>30</bdi>
+                  </h6>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <h6 class="w-px-100 mb-0">جمع:</h6>
+                  <h6 class="mb-0">
+                    <bdi><svg class="toman" width="1rem" height="1rem">
+                        <use xlink:href="#toman">
+                          <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                          </symbol>
+                        </use>
+                      </svg>6450</bdi>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">فعالیت حمل و نقل</h5>
+          </div>
+          <div class="card-body">
+            <ul class="timeline pb-0 mb-0">
+              <li class="timeline-item timeline-item-transparent border-primary">
+                <span class="timeline-point timeline-point-primary"></span>
+                <div class="timeline-event">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">سفارش ثبت شد (شناسه سفارش: #32543)</h6>
+                    <span class="text-muted">سه شنبه 11:29 صبح</span>
+                  </div>
+                  <p class="mt-2">سفارش شما با موفقیت ثبت شد</p>
+                </div>
+              </li>
+              <li class="timeline-item timeline-item-transparent border-primary">
+                <span class="timeline-point timeline-point-primary"></span>
+                <div class="timeline-event">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">بارگیری</h6>
+                    <span class="text-muted">چهارشنبه 11:29 صبح</span>
+                  </div>
+                  <p class="mt-2">تحویل به پیک ارسال کالاها انجام شد</p>
+                </div>
+              </li>
+              <li class="timeline-item timeline-item-transparent border-primary">
+                <span class="timeline-point timeline-point-primary"></span>
+                <div class="timeline-event">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">درحال ارسال</h6>
+                    <span class="text-muted">پنجشنبه 11:29 صبح</span>
+                  </div>
+                  <p class="mt-2">پیک شروه به ارسال کالا کرد</p>
+                </div>
+              </li>
+              <li class="timeline-item timeline-item-transparent border-primary">
+                <span class="timeline-point timeline-point-primary"></span>
+                <div class="timeline-event">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">تحویل داده شد</h6>
+                    <span class="text-muted">شنبه 15:20 صبح</span>
+                  </div>
+                  <p class="mt-2">بسته به یک مرکز پردازش ، تهران رسید</p>
+                </div>
+              </li>
+              <li class="timeline-item timeline-item-transparent border-left-dashed">
+                <span class="timeline-point timeline-point-primary"></span>
+                <div class="timeline-event">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">برای تحویل ارسال شد</h6>
+                    <span class="text-muted">امروز 14:12 عصر</span>
+                  </div>
+                  <p class="mt-2">بسته به ماشین ارسال کالا تحویل داده شد</p>
+                </div>
+              </li>
+              <li class="timeline-item timeline-item-transparent border-transparent pb-0">
+                <span class="timeline-point timeline-point-secondary"></span>
+                <div class="timeline-event pb-0">
+                  <div class="timeline-header">
+                    <h6 class="mb-0">تحویل داده شد</h6>
+                  </div>
+                  <p class="mt-2 mb-0">بسته با موفقیت به دست مشتری رسید</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h6 class="card-title m-0">اطلاعات مشتری</h6>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-start align-items-center mb-4">
+              <div class="avatar me-2">
+                <img alt="آواتار" class="rounded-circle" src="~/img/avatars/1.png"/>
+              </div>
+              <div class="d-flex flex-column">
+                <a class="text-body text-nowrap" href="/Apps/Users/View/Account">
+                  <h6 class="mb-0">نوید محمدزاده</h6>
+                </a>
+                <small class="text-muted">شناسه مشتری: #58909</small>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center mb-4">
+              <span class="avatar rounded-circle bg-label-success me-2 d-flex align-items-center justify-content-center">
+                <i class="ti ti-shopping-cart ti-sm"></i>
+              </span>
+              <h6 class="text-body text-nowrap mb-0">12 سفارش</h6>
+            </div>
+            <div class="d-flex justify-content-between">
+              <h6>اطلاعات تماس</h6>
+              <h6>
+                <a data-bs-target="#editUser" data-bs-toggle="modal" href=" javascript:void(0)">ویرایش</a>
+              </h6>
+            </div>
+            <p class="mb-1">ایمیل: Shamus889@yahoo.com</p>
+            <p class="mb-0">تلفن همراه:
+              <bdi>+1 (609) 972-22-22</bdi>
+            </p>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between">
+            <h6 class="card-title m-0">آدرس سفارش</h6>
+            <h6 class="m-0">
+              <a data-bs-target="#addNewAddress" data-bs-toggle="modal" href=" javascript:void(0)">ویرایش</a>
+            </h6>
+          </div>
+          <div class="card-body">
+            <p class="mb-0">ایران ، اصفهان ، کاشان
+              <br/>
+              خیابان امیر کبیر
+              <br/>
+              کوچه ایکس ، پلاک 12345
+            </p>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between">
+            <h6 class="card-title m-0">آدرس پرداخت</h6>
+            <h6 class="m-0">
+              <a data-bs-target="#addNewAddress" data-bs-toggle="modal" href=" javascript:void(0)">ویرایش</a>
+            </h6>
+          </div>
+          <div class="card-body">
+            <p class="mb-4">ایران ، اصفهان ، کاشان
+              <br/>
+              خیابان امیر کبیر
+              <br/>
+              کوچه ایکس ، پلاک 12345
+            </p>
+            <h6 class="mb-0 pb-2">بلوبانک کارت</h6>
+            <p class="mb-0">شماره کارت:
+              <bdi>******4291</bdi>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@await Html.PartialAsync("../_Partials/_Modals/ModalAddNewAddress")
+@await Html.PartialAsync("../_Partials/_Modals/ModalEditUser")

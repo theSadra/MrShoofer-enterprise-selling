@@ -1,0 +1,24 @@
+﻿@{
+  ViewData["Title"] = "طرح فشرده";
+}
+@* ************** Content ************** *@
+
+<div class="layout-demo-wrapper">
+  <div class='layout-demo-placeholder'>
+    @if (Convert.ToBoolean(@TempData.Peek("menuHorizontal")).ToString() == "True")
+    {
+      <img src="~/img/layouts/layout-horizontal-container-light.png" class="img-fluid" alt="Layout container" data-app-light-img="layouts/layout-horizontal-container-light.png" data-app-dark-img="layouts/layout-horizontal-container-dark.png">
+    }
+    else
+    {
+      <img src="~/img/layouts/layout-container-light.png" class="img-fluid" alt="Layout container" data-app-light-img="layouts/layout-container-light.png" data-app-dark-img="layouts/layout-container-dark.png">
+    }
+  </div>
+  <div class="layout-demo-info">
+    <h4>طرح فشرده</h4>
+    <p>طرح فشرده یک
+      <code>max-width</code>
+      در هر نقطه شکست واکنش‌گرا تنظیم می‌کند.
+    </p>
+  </div>
+</div>

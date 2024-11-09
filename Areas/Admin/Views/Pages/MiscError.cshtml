@@ -1,0 +1,25 @@
+@{
+  Layout = "_BlankLayout";
+  ViewData["Title"] = "صفحات - خطا";
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/page-misc.css">
+}
+
+@* ************** Content ************** *@
+<!-- Error -->
+<div class="container-xxl container-p-y">
+  <div class="misc-wrapper">
+    <h2 class="mb-3 mt-4">صفحه یافت نشد :(</h2>
+    <p class="mb-4 mx-2">اوه! 😖 URL درخواست شده در این سرور یافت نشد.</p>
+    <a href="/" class="btn btn-primary mb-4">بازگشت به خانه</a>
+    <div class="mt-4">
+      <img src="~/img/illustrations/page-misc-error.png" alt="page-misc-error" width="225" class="img-fluid">
+    </div>
+  </div>
+</div>
+<div class="container-fluid misc-bg-wrapper">
+  <img src="~/img/illustrations/bg-shape-image-light.png" alt="page-misc-error" data-app-light-img="illustrations/bg-shape-image-light.png" data-app-dark-img="illustrations/bg-shape-image-dark.png">
+</div>
+<!-- /Error -->
