@@ -1,5 +1,7 @@
 using Application.Data;
 using Application.Models;
+using Application.Services.MrShooferORS;
+using Application.ViewModels;
 using Application.ViewModels.Admin.AgecyManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +17,11 @@ namespace Application.Areas.Admin.Controllers
   {
     private readonly AppDbContext context;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly MrShooferAPIClient apiClient;
 
-
-    public AgencyManagement(AppDbContext context, UserManager<IdentityUser> userManager)
+    public AgencyManagement(AppDbContext context, UserManager<IdentityUser> userManager, MrShooferAPIClient client)
     {
+      this.apiClient = client;
       this.context = context;
       this._userManager = userManager;
     }
@@ -42,8 +45,11 @@ namespace Application.Areas.Admin.Controllers
 
       if (!ModelState.IsValid)
       {
-        return View(viewModel);
+        ViewBag.status = "error";
+        ViewBag.message = "ورودی ها را دوباره برسی کنید";
+        return View("Index", viewModel);
       }
+
 
       // Creating an identityUser for new Agency
 
@@ -53,12 +59,43 @@ namespace Application.Areas.Admin.Controllers
         PhoneNumber = viewModel.AdminMobile
       };
 
-      var result = await _userManager.CreateAsync(identityuser,viewModel.Password);
+      // Registering agency as OTASeller in ORS
+
+      apiClient.SetSellerApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE3IiwianRpIjoiN2E4OWFkYzMtN2VhMC00YWE4LTg1YWUtZjg5M2RkZmI4MjVmIiwiZXhwIjoxODg4OTg2ODEzLCJpc3MiOiJtcnNob29mZXIuaXIiLCJhdWQiOiJtcnNob29mZXIuaXIifQ.uGHR7bq5eQQ6HPTW2ooskdaHdAwumfw_Rxx411NLqw4");
+
+      var createOTADTO = new RegisterOTADTO()
+      {
+        Username = viewModel.Username,
+        Password = viewModel.Password,
+        BackupNumberPhone = viewModel.PhoneNumber,
+        BaseCommission = viewModel.Commission,
+        EmailAdress = "",
+        CompanyAddress = viewModel.Address,
+        CompanyName = viewModel.Name,
+        NumberPhone = viewModel.AdminMobile
+      };
+      string apikey;
+      try
+      {
+
+        apikey = await apiClient.RegisterOTA(createOTADTO);
+
+      }
+      catch (Exception ex)
+      {
+        ViewBag.status = "error";
+        ViewBag.message = "در طی فرایند مشکلی پیش آمد";
+        return View("Index", viewModel);
+      }
+
+      var result = await _userManager.CreateAsync(identityuser, viewModel.Password);
 
 
       if (!result.Succeeded)
       {
-        return View(viewModel);
+        ViewBag.status = "error";
+        ViewBag.message = "در طی فرایند مشکلی وجود دارد";
+        return View("Index",viewModel);
       }
 
 
@@ -75,14 +112,18 @@ namespace Application.Areas.Admin.Controllers
         Commission = viewModel.Commission,
         PhoneNumber = viewModel.PhoneNumber,
         IdentityUser = identityuser,
-        ORSAPI_token = "TestToken"
+        ORSAPI_token = apikey
       };
 
 
       context.Agencies.Add(agency);
       await context.SaveChangesAsync();
 
-      return View();
+
+      ViewBag.status = "success";
+      ViewBag.message = "فروشنده با موفقیت ثبت شد";
+
+      return View("Index");
     }
   }
 }

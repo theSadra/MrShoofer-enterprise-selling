@@ -1,3 +1,4 @@
+using Application.ViewModels;
 using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -129,6 +130,23 @@ namespace Application.Services.MrShooferORS
       var confirmationmodel = JsonSerializer.Deserialize<TicketConfirmationResponse>(jsonresponse);
 
       return confirmationmodel;
+    }
+
+
+    public async Task<string> RegisterOTA(RegisterOTADTO registerOTADTO)
+    {
+      string url = "https://mrbilit.mrshoofer.ir/OTAManagement/RegisterNewOTA";
+
+
+
+
+      var result = await _client.PostAsJsonAsync(url, registerOTADTO);
+      if (!result.IsSuccessStatusCode)
+      {
+        throw new Exception();
+      }
+
+      return await result.Content.ReadAsStringAsync();
     }
   }
 }

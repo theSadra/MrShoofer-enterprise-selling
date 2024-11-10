@@ -1,133 +1,177 @@
 @model Application.ViewModels.Admin.AgecyManagement.CreateAgencyViewModel
 
 @{
-	ViewData["Title"] = "مدیریت فروشندگان - لیست فروشندگان";
+    ViewData["Title"] = "مدیریت فروشندگان - لیست فروشندگان";
 }
 
 @section VendorStyles {
-	<link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
-	<link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
-	<link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
-	<link rel="stylesheet" href="~/vendor/libs/select2/select2.css">
-	<link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+    <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/umd/styles/index.min.css" />
+    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
 }
 
 @section VendorScripts {
-	<script src="~/vendor/libs/moment/moment.js"></script>
-	<script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-	<script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
-	<script src="~/vendor/libs/select2/select2.js"></script>
-	<script src="~/vendor/libs/select2/i18n/fa.js"></script>
-	<script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
-	<script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
-	<script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
-	<script src="~/vendor/libs/cleavejs/cleave.js"></script>
-	<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
-	<script src="~/libs/validation/jquery.validate.min.js"></script>
-	<script src="~/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/vendor/libs/moment/moment.js"></script>
+    <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
+    <script src="~/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <script src="~/libs/validation/jquery.validate.min.js"></script>
+    <script src="~/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
 
 
 }
 
 @section PageScripts {
-	<script src="~/js/app-ecommerce-customer-all.js"></script>
+    <script src="~/js/app-ecommerce-customer-all.js"></script>
 }
 
+
+<script>
+
+    @if (!string.IsNullOrEmpty(ViewBag.status))
+    {
+        if (ViewBag.status == "success")
+        {
+            @:SuccessAlert(@ViewBag.message);
+        }
+        else
+        {
+            @:ErrorAlert(@ViewBag.message)
+        }
+    }
+
+        function ErrorAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'خطا...',
+                text: message,
+                confirmButtonText: 'باشه',
+                customClass: {
+                    confirmButton: 'btn btn-primary waves-effect waves-light'
+                },
+                buttonsStyling: false
+            }
+
+
+                function SuccessAlert(message) {
+                    Swal.fire({
+                        title: 'موفقیت آمیز',
+                        text: message,
+                        confirmButtonText: 'باشه',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary waves-effect waves-light'
+                        },
+                        buttonsStyling: false
+                    }
+</script>
+
 <h4 class="py-3 mb-2">
-	<span class="text-muted fw-light">فروشندگان /</span>
-	همه فروشندگان
+    <span class="text-muted fw-light">فروشندگان /</span>
+    همه فروشندگان
 </h4>
 <!-- customers List Table -->
 <div class="card">
-	<div class="card-datatable table-responsive">
-		<table class="datatables-customers table border-top">
-			<thead>
-				<tr>
-					<th></th>
-					<th></th>
-					<th>مشتری</th>
-					<th class="text-nowrap">شناسه مشتری</th>
-					<th>کشور</th>
-					<th>سفارش</th>
-					<th class="text-nowrap">جمع هزینه</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-	<!-- Offcanvas to add new customer -->
-	<div aria-labelledby="offcanvasEcommerceCustomerAddLabel" class="offcanvas offcanvas-start" id="offcanvasEcommerceCustomerAdd" tabindex="-1">
-		<div class="offcanvas-header">
-			<h5 class="offcanvas-title" id="offcanvasEcommerceCustomerAddLabel">
-				<i class="ti ti-circle-plus me-1 ti-lg"></i>
-				افزودن فروشنده
-			</h5>
-			<button aria-label="بستن" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
-		</div>
+    <div class="card-datatable table-responsive">
+        <table class="datatables-customers table border-top">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>مشتری</th>
+                    <th class="text-nowrap">شناسه مشتری</th>
+                    <th>کشور</th>
+                    <th>سفارش</th>
+                    <th class="text-nowrap">جمع هزینه</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Offcanvas to add new customer -->
+    <div aria-labelledby="offcanvasEcommerceCustomerAddLabel" class="offcanvas offcanvas-start" id="offcanvasEcommerceCustomerAdd" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasEcommerceCustomerAddLabel">
+                <i class="ti ti-circle-plus me-1 ti-lg"></i>
+                افزودن فروشنده
+            </h5>
+            <button aria-label="بستن" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
+        </div>
 
-		<div class="offcanvas-body mx-0 flex-grow-0">
-			<form autocomplete="off" asp-action="Create" method="post" class="ecommerce-customer-add pt-0">
-				<div class="ecommerce-customer-add-basic mb-3">
-					<h6 class="mb-3">
-						<i class="ti ti-file-info"></i>
-						اطلاعات اولیه
-					</h6>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-name">نام فروشنده*</label>
-						<input class="form-control" id="ecommerce-customer-add-name" asp-for="Name" placeholder="عنوان آژانس" type="text" />
-						<span asp-validation-for="Name" class="text-danger"></span>
-					</div>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-email">تلفن ثابت</label>
-						<input class="form-control" id="ecommerce-customer-add-email" asp-for="PhoneNumber" placeholder="تلقن ثابت با کد شهر" type="text" />
-					</div>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-contact">تلفن همراه مدیر*</label>
-						<input class="form-control phone-mask" id="ecommerce-customer-add-contact" asp-for="AdminMobile" placeholder="مثل : 091277771012" type="text" />
-						<span asp-validation-for="AdminMobile" class="text-danger"></span>
-					</div>
-					<div class="mb-3">
-						<label class="form-label">کمیسیون پایه فروش*</label>
-						<input class="form-control" asp-for="Commission" value="5" type="number" />
-						<span asp-validation-for="Commission" class="text-danger"></span>
-					</div>
-					<div class="mb-3">
-						<label class="form-label mt-1">آدرس*</label>
-						<input class="form-control" asp-for="Address" />
-						<span asp-validation-for="Address" class="text-danger"></span>
-					</div>
-				</div>
-				<div class="ecommerce-customer-add-shiping mb-3 pt-3">
-					<h6 class="mb-3">
-						<i class="ti ti-lock-access"></i>
-						اطلاعت احراز هویت
-					</h6>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-address">نام کاربری*</label>
-						<input class="form-control" asp-for="Username" placeholder="" type="text" />
-						<span asp-validation-for="Username" class="text-danger"></span>
-					</div>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-address-2">رمز عبور*</label>
-						<input aria-describedby="password" class="form-control" asp-for="Password" placeholder="············" type="password" />
-						<span asp-validation-for="Password" class="text-danger"></span>
-					</div>
-					<div class="mb-3">
-						<label class="form-label" for="ecommerce-customer-add-address-2">تکرار رمزعبور*</label>
-						<input aria-describedby="password" class="form-control" asp-for="RetypePassword" placeholder="············" type="password" />
-						<span asp-validation-for="RetypePassword" class="text-danger"></span>
-					</div>
-					<small>
-						<i class="ti ti-info-circle"></i>
-						از نام کاربری و رمز عبور وارد شده برای احراز هویت و ورود کاربر آژانس به پنل فروش، استفاده خواهد شد.
-					</small>
-				</div>
-				<div class="pt-3">
-					<button class="btn btn-label-danger" data-bs-dismiss="offcanvas" type="reset">لغو فرایند</button>
-					<button class="btn btn-primary me-sm-3 me-1 data-submit" type="submit">افزودن فروشنده</button>
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="offcanvas-body mx-0 flex-grow-0">
+            <form autocomplete="off" asp-action="Create" method="post" class="ecommerce-customer-add pt-0">
+                <div class="ecommerce-customer-add-basic mb-3">
+                    <h6 class="mb-3">
+                        <i class="ti ti-file-info"></i>
+                        اطلاعات اولیه
+                    </h6>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-name">نام فروشنده*</label>
+                        <input class="form-control" id="ecommerce-customer-add-name" asp-for="Name" placeholder="عنوان آژانس" type="text" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-email">تلفن ثابت</label>
+                        <input class="form-control" id="ecommerce-customer-add-email" asp-for="PhoneNumber" placeholder="تلقن ثابت با کد شهر" type="text" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-contact">تلفن همراه مدیر*</label>
+                        <input class="form-control phone-mask" id="ecommerce-customer-add-contact" asp-for="AdminMobile" placeholder="مثل : 091277771012" type="text" />
+                        <span asp-validation-for="AdminMobile" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">کمیسیون پایه فروش*</label>
+                        <input class="form-control" asp-for="Commission" value="5" type="number" />
+                        <span asp-validation-for="Commission" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label mt-1">آدرس*</label>
+                        <input class="form-control" asp-for="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="ecommerce-customer-add-shiping mb-3 pt-3">
+                    <h6 class="mb-3">
+                        <i class="ti ti-lock-access"></i>
+                        اطلاعت احراز هویت
+                    </h6>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-address">نام کاربری*</label>
+                        <input class="form-control" asp-for="Username" placeholder="" type="text" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-address-2">رمز عبور*</label>
+                        <input aria-describedby="password" class="form-control" asp-for="Password" placeholder="············" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-customer-add-address-2">تکرار رمزعبور*</label>
+                        <input aria-describedby="password" class="form-control" asp-for="RetypePassword" placeholder="············" type="password" />
+                        <span asp-validation-for="RetypePassword" class="text-danger"></span>
+                    </div>
+                    <small>
+                        <i class="ti ti-info-circle"></i>
+                        از نام کاربری و رمز عبور وارد شده برای احراز هویت و ورود کاربر آژانس به پنل فروش، استفاده خواهد شد.
+                    </small>
+                </div>
+                <div class="pt-3">
+                    <button class="btn btn-label-danger" data-bs-dismiss="offcanvas" type="reset">لغو فرایند</button>
+                    <button class="btn btn-primary me-sm-3 me-1 data-submit" type="submit">افزودن فروشنده</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 
