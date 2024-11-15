@@ -20,9 +20,10 @@ namespace Application.Models
     public DateTime RegisteredAt { get; set; }
     public bool IsCancelled { get; set; }
 
+    public string ServiceName { set; get; }
+    public string CarName { get; set; }
+
 
     public Agency Agency { get; set; }
   }
-
-
 }
