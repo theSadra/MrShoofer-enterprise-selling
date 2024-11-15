@@ -23,7 +23,7 @@ namespace Application.Models
     public string ServiceName { set; get; }
     public string CarName { get; set; }
 
-
+    // nav prop
     public Agency Agency { get; set; }
   }
 }

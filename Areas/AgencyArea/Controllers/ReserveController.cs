@@ -148,7 +148,9 @@ namespace Application.Areas.AgencyArea
         TripDestination = trip.destinationCityName,
         RegisteredAt = DateTime.Now,
         TicketCode = reserve_response.ticketCode,
-        Tripcode = trip.tripPlanCode
+        Tripcode = trip.tripPlanCode,
+        ServiceName = trip.taxiSupervisorName,
+        CarName = trip.carModelName
       };
 
       // Registering to database
