@@ -1,15 +1,17 @@
 using Application.Data;
 using Application.Models;
+using Application.Services;
 using Application.Services.MrShooferORS;
 using Application.ViewModels;
 using Application.ViewModels.Admin.AgecyManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects.DataClasses;
 
 namespace Application.Areas.Admin.Controllers
 {
-
   [Area("Admin")]
   [Route("[area]/Agency/[action]")]
   //[Authorize(Policy = "Admin")]
@@ -25,7 +27,6 @@ namespace Application.Areas.Admin.Controllers
       this.context = context;
       this._userManager = userManager;
     }
-
 
     [Route("/Admin/")]
     public IActionResult Index()
@@ -49,7 +50,6 @@ namespace Application.Areas.Admin.Controllers
         ViewBag.message = "ورودی ها را دوباره برسی کنید";
         return View("Index", viewModel);
       }
-
 
       // Creating an identityUser for new Agency
 
@@ -77,9 +77,7 @@ namespace Application.Areas.Admin.Controllers
       string apikey;
       try
       {
-
         apikey = await apiClient.RegisterOTA(createOTADTO);
-
       }
       catch (Exception ex)
       {
@@ -95,13 +93,12 @@ namespace Application.Areas.Admin.Controllers
       {
         ViewBag.status = "error";
         ViewBag.message = "در طی فرایند مشکلی وجود دارد";
-        return View("Index",viewModel);
+        return View("Index", viewModel);
       }
 
 
       // Adding Agency claim to Agency identity user
       await _userManager.AddClaimAsync(identityuser, new System.Security.Claims.Claim("Role", "Agency"));
-
 
       Agency agency = new Agency()
       {
@@ -115,15 +112,106 @@ namespace Application.Areas.Admin.Controllers
         ORSAPI_token = apikey
       };
 
-
       context.Agencies.Add(agency);
       await context.SaveChangesAsync();
-
 
       ViewBag.status = "success";
       ViewBag.message = "فروشنده با موفقیت ثبت شد";
 
       return View("Index");
     }
+
+    // Get DetailOverview
+    public async Task<IActionResult> DetailOverview([FromQuery] int id)
+    {
+      var agency = context.Agencies.Where(a => a.Id == id)
+        .FirstOrDefault();
+
+
+      if (agency == null)
+      {
+        return NotFound();
+      }
+
+      await context.Entry(agency)
+         .Reference(a => a.IdentityUser)
+         .LoadAsync();
+
+      // Filling viewbags
+
+      ViewBag.totalsoled = context.Tickets
+    .Where(t => t.Agency == agency)
+    .Count();
+
+      ViewBag.balance = (await GetAgencyBalance(agency.ORSAPI_token)).ToString("N0");
+
+      return View(agency);
+    }
+
+    public async Task<IActionResult> GetAgenciesJson()
+    {
+      var agecyResult = context.Agencies
+        .AsNoTracking()
+        .Select(a => new
+        {
+          id = a.Id,
+          name = a.Name,
+          admin_phone = a.AdminMobile,
+          allsoled = a.SoldTickets.Count(),
+          address = a.Address
+        }).ToList();
+
+      return Json(new { data = agecyResult });
+    }
+
+    [NonAction]
+    private async Task<int> GetAgencyBalance(string api_token)
+    {
+      apiClient.SetSellerApiKey(api_token);
+
+      return (int)Convert.ToDouble(await apiClient.GetAccountBalance());
+    }
+
+    public async Task<IActionResult> GetAgencyTickets(int id)
+    {
+      var tickets = context.Tickets.Where(t => t.Agency.Id == id)
+        .OrderByDescending(t => t.RegisteredAt)
+        .Select(t => new
+        {
+          id = t.Id,
+          code = t.TicketCode,
+          firstname = t.Firstname,
+          lastname = t.Lastname,
+          price = t.TicketFinalPrice.ToString("N0"),
+          registeredAt_date = t.RegisteredAt.ToPersianDate().Day + " " + t.RegisteredAt.ToPersianDate().MonthName + " " + t.RegisteredAt.ToPersianDate().Year,
+          registeredAt_time = t.RegisteredAt.ToString("HH:mm:ss"),
+          phonenumber = t.PhoneNumber,
+          origin = t.TripOrigin,
+          dest = t.TripDestination,
+          cancelled = t.IsCancelled
+        }).ToList();
+
+      return Json(new { data = tickets });
+    }
+
+
+
+    //public async Task<IActionResult> ChargeAgencyBalance(ChargeAgencyBalanceViewModel viewmodel)
+    //{
+    //  if (!ModelState.IsValid)
+    //  {
+    //    return RedirectToAction("DetailOverview", new { id = viewmodel.AgencyId });
+    //  }
+
+
+    //  var agency = context.Agencies.Where(a => a.Id ==  viewmodel.AgencyId).FirstOrDefault();
+
+
+    //  if (agency == null)
+    //    return BadRequest();
+
+
+
+    //}
   }
 }

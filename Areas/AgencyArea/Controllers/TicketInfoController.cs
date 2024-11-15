@@ -24,7 +24,7 @@ namespace Application.Areas.AgencyArea
     {
 
       var agency = context.Agencies
-        .Where(a => a.IdentityUser.NormalizedUserName == User.Identity.Name)
+        .Where(a => a.IdentityUser.UserName == User.Identity.Name)
         .Include(a => a.SoldTickets)
         .First();
 
@@ -58,7 +58,7 @@ namespace Application.Areas.AgencyArea
 
 
       var agency = context.Agencies
-        .Where(a => a.IdentityUser.NormalizedUserName == User.Identity.Name)
+        .Where(a => a.IdentityUser.UserName == User.Identity.Name)
         .Include(a => a.SoldTickets)
         .First();
 

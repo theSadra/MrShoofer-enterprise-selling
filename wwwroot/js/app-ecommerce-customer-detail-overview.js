@@ -6,6 +6,8 @@
 
 // Datatable (jquery)
 $(function () {
+
+  var agency_id = $("#agencyid").val();
   // Variable declaration for table
   var dt_customer_order = $('.datatables-customer-order'),
     order_details = '/Ecommerce/OrderDetails',
@@ -19,15 +21,15 @@ $(function () {
   // orders datatable
   if (dt_customer_order.length) {
     var dt_order = dt_customer_order.DataTable({
-      ajax: assetsPath + 'json/ecommerce-customer-order.json', // JSON file to add data
+      ajax: "/Admin/Agency/GetAgencyTickets?id="+ agency_id, // JSON file to add data
       columns: [
         // columns according to JSON
         { data: '' },
         { data: 'id' },
-        { data: 'order' },
-        { data: 'date' },
-        { data: 'status' },
-        { data: 'spent' },
+        { data: 'origin' },
+        { data: 'firstname' },
+        { data: 'code' },
+        { data: 'price' },
         { data: ' ' }
       ],
       columnDefs: [
@@ -45,15 +47,10 @@ $(function () {
         {
           // For Checkboxes
           targets: 1,
-          orderable: false,
-          searchable: false,
           responsivePriority: 3,
-          checkboxes: true,
-          render: function () {
-            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-          },
-          checkboxes: {
-            selectAllRender: '<input type="checkbox" class="form-check-input">'
+          render: function (data, type, full, meta) {
+            var $code = full["code"];
+            return '<a> '+ $code + "</a>";
           }
         },
         {
@@ -61,42 +58,41 @@ $(function () {
           targets: 2,
           responsivePriority: 4,
           render: function (data, type, full, meta) {
-            var $id = full['order'];
+            var $origin = full['origin'];
+            var $dest = full['dest'];
 
-            return "<a href='" + order_details + "' class='fw-medium'><span>#" + $id + '</span></a>';
+
+            return "<p class='fw-medium'><span>" + $origin + "<span class='text-muted'> به </span> " + $dest + '</span></a>';
           }
         },
         {
           // date
           targets: 3,
           render: function (data, type, full, meta) {
-            var date = new Date(full.date); // convert the date string to a Date object
-            var formattedDate = date.toLocaleDateString('fa-IR', { month: 'short', day: 'numeric'});
-            return '<span class="text-nowrap">' + formattedDate + ' ' + date.getFullYear() + '</span > ';
+            var $firstname = full["firstname"];
+            var $lastname = full["lastname"];
+            var $phone = full["phonenumber"];
+            
+            return '<div><label>' + $firstname +' ' + $lastname + '</label><a class="d-block" href="tel:'+$phone+ '">' +$phone + '</a></div>';
           }
         },
         {
           // status
           targets: 4,
           render: function (data, type, full, meta) {
-            var $status = full['status'];
+            var $date = full['registeredAt_date'];
+            var $time = full['registeredAt_time'];
 
-            return (
-              '<span class="badge ' +
-              statusObj[$status].class +
-              '" text-capitalized>' +
-              statusObj[$status].title +
-              '</span>'
-            );
+            return '<div><label>' + $date + '</label><lable class="d-block text-muted">' + $time  + '</lable></div>';
           }
         },
         {
           // spent
           targets: 5,
           render: function (data, type, full, meta) {
-            var $spent = full['spent'];
+            var $price = full['price'];
 
-            return '<span >' + $spent + '</span>';
+            return '<span>' +$price + '</span>';
           }
         },
         {
@@ -118,7 +114,7 @@ $(function () {
           }
         }
       ],
-      order: [[2, 'desc']],
+/*      order: [[2, 'desc']],*/
       dom:
         '<"card-header flex-column flex-md-row py-2"<"head-label text-center pt-2 pt-md-0">f' +
         '>t' +
@@ -130,7 +126,7 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'جستجو سفارش'
+        searchPlaceholder: 'جستجو سفر'
       },
       // Buttons with Dropdown
 
@@ -168,7 +164,7 @@ $(function () {
         }
       }
     });
-    $('div.head-label').html('<h5 class="card-title mb-0 text-nowrap">سفارشات</h5>');
+    $('div.head-label').html('<h5 class="card-title mb-0 text-nowrap text-start"><i class="ti ti-ticket ti-md"></i> سفرهای ثبت‌شده</h5>');
   }
 
   // Delete Record
@@ -183,5 +179,3 @@ $(function () {
     $('.dataTables_length .form-select').removeClass('form-select-sm');
   }, 300);
 });
-
-// Validation & Phone mask

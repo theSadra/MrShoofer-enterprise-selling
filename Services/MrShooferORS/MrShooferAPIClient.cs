@@ -139,7 +139,6 @@ namespace Application.Services.MrShooferORS
 
 
 
-
       var result = await _client.PostAsJsonAsync(url, registerOTADTO);
       if (!result.IsSuccessStatusCode)
       {

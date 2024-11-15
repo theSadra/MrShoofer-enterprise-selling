@@ -6,6 +6,9 @@
 
 // Datatable (jquery)
 $(function () {
+
+
+
   let borderColor, bodyBg, headingColor;
 
   if (isDarkStyle) {
@@ -31,18 +34,17 @@ $(function () {
   }
 
   // customers datatable
+
   if (dt_customer_table.length) {
     var dt_customer = dt_customer_table.DataTable({
-      ajax: assetsPath + 'json/ecommerce-customer-all.json', // JSON file to add data
+      ajax: '/Admin/Agency/GetAgenciesJson', // JSON file to add data
       columns: [
         // columns according to JSON
-        { data: '' },
+        { data: null, defaultContent: '' },
         { data: 'id' },
-        { data: 'customer' },
-        { data: 'customer_id' },
-        { data: 'country' },
-        { data: 'order' },
-        { data: 'total_spent' }
+        { data: 'name' },
+        { data: 'admin_phone' },
+        { data: 'allsoled' }
       ],
       columnDefs: [
         {
@@ -52,7 +54,7 @@ $(function () {
           orderable: false,
           responsivePriority: 2,
           targets: 0,
-          render: function (data, type, full, meta) {
+          render: function () {
             return '';
           }
         },
@@ -75,24 +77,29 @@ $(function () {
           targets: 2,
           responsivePriority: 1,
           render: function (data, type, full, meta) {
-            var $name = full['customer'],
-              $email = full['email'],
-              $image = full['image'];
+            var $name = full['name'];
 
-            if ($image) {
-              // For Avatar image
-              var $output =
-                '<img src="' + assetsPath + 'img/avatars/' + $image + '" alt="Avatar" class="rounded-circle">';
-            } else {
               // For Avatar badge
               var stateNum = Math.floor(Math.random() * 6);
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum];
-                $name = full['customer'];
+              $name = full['name'];
               let nameParts = $name.split(" ");
-              let $initials = nameParts[0].charAt(0) + "‌" + nameParts[1].charAt(0);
-              $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
+
+            let $initials = "";
+            if (nameParts.length > 1) {
+
+              $initials = nameParts[0].charAt(0) + "‌" + nameParts[1].charAt(0);
             }
+            else {
+              $initials = nameParts[0].charAt(0);
+            }
+              var $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
+
+
+            var $detail_address = "/Admin/Agency/DetailOverview?id="+ full["id"];
+
+            var $address = full["address"];
             // Creates full output for row
             var $row_output =
               '<div class="d-flex justify-content-start align-items-center customer-name">' +
@@ -103,12 +110,12 @@ $(function () {
               '</div>' +
               '<div class="d-flex flex-column ms-1">' +
               '<a href="' +
-              customerView +
+              $detail_address +
               '" ><span class="fw-medium">' +
               $name +
               '</span></a>' +
               '<small class="text-muted">' +
-              $email +
+              $address +
               '</small>' +
               '</div>' +
               '</div>';
@@ -118,60 +125,38 @@ $(function () {
         {
           // customer Role
           targets: 3,
-          render: function (data, type, full, meta) {
-            var $id = full['customer_id'];
 
-            return "<span class='h6 mb-0'>#" + $id + '</span>';
+          render: function (data, type, full, meta) {
+
+            var $phone= full['admin_phone'];
+
+            return "<span class='h6 mb-0'>" + $phone + '</span>';
           }
         },
         {
           // Plans
           targets: 4,
           render: function (data, type, full, meta) {
-            var $plan = full['country'];
-            var $code = full['country_code'];
+            var $allsoled= full['allsoled'];
 
-            if ($code) {
-              var $output_code = `<i class ="fis fi fi-${$code} rounded-circle me-2 fs-3"></i>`;
-            } else {
-              // For Avatar badge
-              var $output_code = `<i class ="fis fi fi-xx rounded-circle me-2 fs-3"></i>`;
-            }
 
+            var $output_code = $allsoled;
+           
             var $row_output =
               '<div class="d-flex justify-content-start align-items-center customer-country">' +
-              '<div>' +
-              $output_code +
-              '</div>' +
+             
               '<div>' +
               '<span>' +
-              $plan +
+              $output_code +
               '</span>' +
               '</div>' +
               '</div>';
             return $row_output;
           }
-        },
-        {
-          // customer Status
-          targets: 5,
-          render: function (data, type, full, meta) {
-            var $status = full['order'];
-
-            return '<span>' + $status + '</span>';
-          }
-        },
-        {
-          // customer Spent
-          targets: 6,
-          render: function (data, type, full, meta) {
-            var $spent = full['total_spent'];
-
-            return '<span class="h6 mb-0">' + $spent + '</span>';
-          }
         }
+        
       ],
-      order: [[2, 'desc']],
+      order: [[4, 'desc']],
       dom:
         '<"card-header d-flex flex-wrap pb-md-2"' +
         '<"d-flex align-items-center me-5"f>' +
@@ -339,36 +324,36 @@ $(function () {
       ],
       // For responsive popup
       responsive: {
-        details: {
-          display: $.fn.dataTable.Responsive.display.modal({
-            header: function (row) {
-              var data = row.data();
-              return 'جزئیات ' + data['customer'];
-            }
-          }),
-          type: 'column',
-          renderer: function (api, rowIdx, columns) {
-            var data = $.map(columns, function (col, i) {
-              return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
-                ? '<tr data-dt-row="' +
-                    col.rowIndex +
-                    '" data-dt-column="' +
-                    col.columnIndex +
-                    '">' +
-                    '<td>' +
-                    col.title +
-                    ':' +
-                    '</td> ' +
-                    '<td>' +
-                    col.data +
-                    '</td>' +
-                    '</tr>'
-                : '';
-            }).join('');
+        //details: {
+        //  display: $.fn.dataTable.Responsive.display.modal({
+        //    header: function (row) {
+        //      var data = row.data();
+        //      return 'جزئیات ' + data['name'];
+        //    }
+        //  }),
+        //  type: 'column',
+        //  renderer: function (api, rowIdx, columns) {
+        //    var data = $.map(columns, function (col, i) {
+        //      return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+        //        ? '<tr data-dt-row="' +
+        //            col.rowIndex +
+        //            '" data-dt-column="' +
+        //            col.columnIndex +
+        //            '">' +
+        //            '<td>' +
+        //            col.title +
+        //            ':' +
+        //            '</td> ' +
+        //            '<td>' +
+        //            col.data +
+        //            '</td>' +
+        //            '</tr>'
+        //        : '';
+        //    }).join('');
 
-            return data ? $('<table class="table"/><tbody />').append(data) : false;
-          }
-        }
+        //    return data ? $('<table class="table"/><tbody />').append(data) : false;
+        //  }
+        //}
       }
     });
     $('.dataTables_length').addClass('ms-n2 mt-0 mt-md-3 me-2');
@@ -390,55 +375,3 @@ $(function () {
   }, 300);
 });
 
-// Validation & Phone mask
-(function () {
-  const phoneMaskList = document.querySelectorAll('.phone-mask'),
-    eCommerceCustomerAddForm = document.getElementById('eCommerceCustomerAddForm');
-
-  // Phone Number
-  if (phoneMaskList) {
-    phoneMaskList.forEach(function (phoneMask) {
-      new Cleave(phoneMask, {
-        phone: true,
-        phoneRegionCode: 'US'
-      });
-    });
-  }
-  // Add New customer Form Validation
-  const fv = FormValidation.formValidation(eCommerceCustomerAddForm, {
-    fields: {
-      customerName: {
-        validators: {
-          notEmpty: {
-            message: 'لطفا اسم خود را وارد کنید '
-          }
-        }
-      },
-      customerEmail: {
-        validators: {
-          notEmpty: {
-            message: 'لطفا ایمیل را وارد کنید'
-          },
-          emailAddress: {
-            message: 'فرمت ایمیل صحیح نیست'
-          }
-        }
-      }
-    },
-    plugins: {
-      trigger: new FormValidation.plugins.Trigger(),
-      bootstrap5: new FormValidation.plugins.Bootstrap5({
-        // Use this for enabling/changing valid/invalid class
-        eleValidClass: '',
-        rowSelector: function (field, ele) {
-          // field is the field name & ele is the field element
-          return '.mb-3';
-        }
-      }),
-      submitButton: new FormValidation.plugins.SubmitButton(),
-      // Submit the form when all fields are valid
-      // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-      autoFocus: new FormValidation.plugins.AutoFocus()
-    }
-  });
-})();
