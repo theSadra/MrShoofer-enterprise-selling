@@ -188,7 +188,9 @@ namespace Application.Areas.Admin.Controllers
           phonenumber = t.PhoneNumber,
           origin = t.TripOrigin,
           dest = t.TripDestination,
-          cancelled = t.IsCancelled
+          cancelled = t.IsCancelled,
+          carname = t.CarName,
+          servicename = t.ServiceName
         }).ToList();
 
       return Json(new { data = tickets });

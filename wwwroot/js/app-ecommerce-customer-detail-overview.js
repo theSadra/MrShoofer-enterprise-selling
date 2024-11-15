@@ -62,7 +62,23 @@ $(function () {
             var $dest = full['dest'];
 
 
-            return "<p class='fw-medium'><span>" + $origin + "<span class='text-muted'> به </span> " + $dest + '</span></a>';
+            var $servicename = full['servicename'];
+            var $carname = full['carname'];
+
+            return (
+              "<div>"
+              + "<small class='d-block badge bg-label-dark rounded-pill py-0'>"
+              + $servicename
+              + "</small>"
+
+              + "<p class='fw-medium mb-0 text-center'><span>" + $origin + "<span class='text-muted'> به </span> " + $dest + '</span></p>'
+              
+              + "<small class='d-block text-center badge bg-label-warning rounded-pill py-0 text-black'>"
+              + $carname
+              + "</small>"
+
+              + "</div>"
+            );
           }
         },
         {
@@ -92,7 +108,7 @@ $(function () {
           render: function (data, type, full, meta) {
             var $price = full['price'];
 
-            return '<span>' +$price + '</span>';
+            return '<span>' + $price + '</span>';
           }
         },
         {
