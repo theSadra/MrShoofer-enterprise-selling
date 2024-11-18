@@ -33,6 +33,10 @@
 	<script src="~/libs/validation/jquery.validate.min.js"></script>
 	<script src="~/libs/validation/jquery.validate.unobtrusive.min.js"></script>
 
+
+	<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+
+
 	<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
 	<script src="~/vendor/libs/cleavejs/cleave.js"></script>
 	<script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
@@ -59,6 +63,47 @@
 </h4>
 
 <input id="agencyid" type="hidden" value="@Model.Id" />
+
+
+@if (TempData["status"] != null)
+{
+	@if (TempData["status"].ToString() == "success")
+	{
+		<script>
+			$(document).ready(function () {
+				Swal.fire({
+					title: 'موفقیت آمیز',
+					text: "@Html.Raw(TempData["message"])",  // Ensure the message is correctly rendered
+					confirmButtonText: 'باشه',
+					icon: 'success',
+					customClass: {
+						confirmButton: 'btn btn-primary waves-effect waves-light'
+					},
+					buttonsStyling: false
+				});
+			});
+
+		</script>
+	}
+	@if (TempData["status"].ToString() == "error")
+	{
+		<script>
+			$(document).ready(function () {
+				Swal.fire(
+					{
+						icon: 'error',
+						title: 'خطا...',
+						text: "@Html.Raw(TempData["tempdata"])",
+						confirmButtonText: 'باشه',
+						customClass: {
+							confirmButton: 'btn btn-primary waves-effect waves-light'
+						},
+						buttonsStyling: false
+					});
+			});
+		</script>
+	}
+}
 
 <div class="row">
 	<!-- Customer-detail Sidebar -->
@@ -206,7 +251,7 @@
 								</h4>
 								<p class="mb-0">قابل استفاده</p>
 							</div>
-							<a data-bs-toggle="offcanvas" data-bs-target="#addPaymentOffcanvas" class="link mb-0 text-truncate text-end">
+							<a data-bs-toggle="offcanvas" data-bs-target="#addPaymentOffcanvas" class="link mb-0 text-truncate text-end text-primary">
 								<i class="ti ti-square-rounded-plus"></i>
 								افزایش موجودی</a>
 						</div>

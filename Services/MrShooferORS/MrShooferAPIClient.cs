@@ -1,5 +1,6 @@
 using Application.ViewModels;
 using System.Security.Policy;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -17,7 +18,6 @@ namespace Application.Services.MrShooferORS
 
       _client.BaseAddress = new Uri(baseurl);
     }
-
 
 
     public void SetSellerApiKey(string apikey)
@@ -146,6 +146,19 @@ namespace Application.Services.MrShooferORS
       }
 
       return await result.Content.ReadAsStringAsync();
+    }
+
+
+    public async Task ChargeOTABalanceAsync(int amount)
+    {
+      var content = new StringContent($"charge_amount={amount}", Encoding.UTF8, "application/x-www-form-urlencoded");
+
+      // Make the POST request
+      var response = await _client.PostAsync("https://mrbilit.mrshoofer.ir/OTAManagement/ChargeOTA", content);
+      if (!response.IsSuccessStatusCode)
+      {
+        throw new Exception();
+      }
     }
   }
 }

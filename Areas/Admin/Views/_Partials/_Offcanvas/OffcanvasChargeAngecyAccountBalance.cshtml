@@ -6,9 +6,9 @@
 		<button aria-label="بستن" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
 	</div>
 	<div class="offcanvas-body flex-grow-1">
-		<div class="d-flex justify-content-between bg-lighter p-2 mb-3">
+		@* <div class="d-flex justify-content-between bg-lighter p-2 mb-3">
 			<p class="mb-0">مبلغ افزایش موجودی : </p>
-			@* <p class="fw-medium mb-0">
+			<p class="fw-medium mb-0">
 				<bdi>
 					<svg class="toman" width="1rem" height="1rem">
 						<use xlink:href="#toman">
@@ -18,16 +18,16 @@
 						</use>
 					</svg>5000
 				</bdi>
-			</p> *@
-		</div>
-		<form>
+			</p> 
+		</div> *@
+		<form method="post" asp-action="ChargeAgencyBalance">
 
 
 			<input type="hidden" asp-for="AgencyId" value="@Model.AgencyId" />
 			<div class="mb-3">
 				<label class="form-label" for="invoiceAmount">مبلغ افزایش موجودی</label>
 				<div class="input-group">
-					<input asp-for="Amount" class="form-control invoice-amount ltr" id="invoiceAmount" name="invoiceAmount" placeholder="5,000,000" type="text" />
+					<input asp-for="Amount" class="form-control invoice-amount ltr" id="invoiceAmount" placeholder="5,000,000" type="text" />
 					<span class="input-group-text">ءتء</span>
 				</div>
 				<span asp-validation-for="Amount" class="text-danger"></span>
@@ -53,7 +53,7 @@
 				<textarea asp-for="Description" class="form-control" id="payment-note" rows="3"></textarea>
 			</div>
 			<div class="mb-3 d-flex flex-wrap">
-				<button class="btn btn-primary me-3" data-bs-dismiss="offcanvas" type="button">ارسال</button>
+				<button class="btn btn-primary me-3" type="submit">ثبت پرداخت و افزایش موجودی</button>
 				<button class="btn btn-label-secondary" data-bs-dismiss="offcanvas" type="button">لغو</button>
 			</div>
 		</form>

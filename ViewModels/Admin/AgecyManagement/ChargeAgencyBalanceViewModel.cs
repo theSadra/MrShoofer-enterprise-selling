@@ -8,7 +8,7 @@ namespace Application.ViewModels.Admin.AgecyManagement
     [Required]
     public int AgencyId { get; set; }
     [Required(ErrorMessage = "میزان شارژ حتما باید وارد شود")]
-    public int Amount { get; set; }
+    public string Amount { get; set; }
 
     [Required(ErrorMessage = "وارد کردن این مورد الزامی است")]
     public string PayemntId { get; set; }

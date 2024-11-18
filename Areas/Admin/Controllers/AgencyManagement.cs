@@ -7,6 +7,7 @@ using Application.ViewModels.Admin.AgecyManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Cms.Ecc;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
 
@@ -197,23 +198,55 @@ namespace Application.Areas.Admin.Controllers
     }
 
 
-
-    //public async Task<IActionResult> ChargeAgencyBalance(ChargeAgencyBalanceViewModel viewmodel)
-    //{
-    //  if (!ModelState.IsValid)
-    //  {
-    //    return RedirectToAction("DetailOverview", new { id = viewmodel.AgencyId });
-    //  }
-
-
-    //  var agency = context.Agencies.Where(a => a.Id ==  viewmodel.AgencyId).FirstOrDefault();
+    [HttpPost]
+    public async Task<IActionResult> ChargeAgencyBalance(ChargeAgencyBalanceViewModel viewmodel)
+    {
+      if (!ModelState.IsValid)
+      {
+        return RedirectToAction("DetailOverview", new { id = viewmodel.AgencyId });
+      }
 
 
-    //  if (agency == null)
-    //    return BadRequest();
+      var agency = context.Agencies.Where(a => a.Id == viewmodel.AgencyId).FirstOrDefault();
+
+
+      if (agency == null)
+        return BadRequest();
+
+
+      var amount = int.Parse(viewmodel.Amount.Replace(",", ""));
+      try
+      {
+        apiClient.SetSellerApiKey(agency.ORSAPI_token);
+        await apiClient.ChargeOTABalanceAsync(amount);
+      }
+
+
+      catch (Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
+
+      AgencyBalanceCharge abc = new AgencyBalanceCharge
+      {
+        Agency = agency,
+        ChargedAt = DateTime.Now,
+        Description = viewmodel.Description,
+        Amount = amount,
+        PaymentID = viewmodel.PayemntId
+      };
+
+      context.AgencyBalanceCharges.Add(abc);
+
+
+      await context.SaveChangesAsync();
 
 
 
-    //}
+      TempData["status"] = "success";
+      TempData["message"] = "حساب اعتبار فروشنده‌ی" + $" {agency.Name} " + "با موفقیت به مبلغ" + $" {amount.ToString("N0")} ، شارژ گردید";
+
+      return RedirectToAction("DetailOverview", new {id = agency.Id});
+    }
   }
 }
