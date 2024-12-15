@@ -45,7 +45,13 @@ namespace Application.Areas.AgencyArea
         // Without password hash logic
 
         var user = await _usermanager.FindByNameAsync(viewmodel.Username);
-        
+
+        if(user == null)
+        {
+          ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
+          return View(viewmodel);
+        }
+
         var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, false);
         if (user != null && result.Succeeded)
         {

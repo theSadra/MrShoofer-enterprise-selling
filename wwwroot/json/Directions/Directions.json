@@ -1,0 +1,98 @@
+[
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "اصفهان",
+        "TravelTime_mins"  : 270,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "رشت",
+        "TravelTime_mins"  : 240,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "لاهیجان",
+        "TravelTime_mins"  : 270,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "چالوس",
+        "TravelTime_mins"  : 160,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "نوشهر",
+        "TravelTime_mins"  : 170,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "رامسر",
+        "TravelTime_mins"  : 265,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "ساری",
+        "TravelTime_mins"  : 280,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "کاشان",
+        "TravelTime_mins"  : 164,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "همدان",
+        "TravelTime_mins"  : 220,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "زنجان",
+        "TravelTime_mins"  : 220,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "اردبیل",
+        "TravelTime_mins"  : 420,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "تبریز",
+        "TravelTime_mins"  : 405,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "قم",
+        "TravelTime_mins"  : 105,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "شهرکرد",
+        "TravelTime_mins"  : 360,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "کرمانشاه",
+        "TravelTime_mins"  : 380,
+        "IsAvailable" : true
+    },
+    {
+        "Cityone" : "تهران",
+        "Citytwo" : "سنندج",
+        "TravelTime_mins"  : 360,
+        "IsAvailable" : true
+    }
+]

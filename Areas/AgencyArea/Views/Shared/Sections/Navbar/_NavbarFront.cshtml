@@ -1,200 +1,204 @@
 @{
-    TempData.Keep();
-    string? currentPage = ViewContext.HttpContext.Request.Path;
+	TempData.Keep();
+
+	string? currentPage = ViewContext.HttpContext.Request.Path;
 }
 
 <style>
-    [dir=rtl] .dropdown-menu-end[data-bs-popper] {
-        left: 0 !important;
-        right: auto !important;
-    }
+	[dir=rtl] .dropdown-menu-end[data-bs-popper] {
+		left: 0 !important;
+		right: auto !important;
+	}
 
-    @@media (max-width: 767.98px) {
-        .layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
-            left: 0.9rem !important;
-        }
-    }
+	@@media (max-width: 767.98px) {
+		.layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
+			left: 0.9rem !important;
+		}
+	}
 </style>
 
 <!-- Navbar: Start -->
 <nav class="layout-navbar shadow-none py-0 d-block">
-    <div class="container">
-        <div class="navbar navbar-expand-lg landing-navbar px-md-3 shadow p-0 px-1 p-md-2 ">
-            <!-- Menu logo wrapper: Start -->
-            <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
-                <!-- Mobile menu toggle: Start-->
-                <button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="ti ti-menu-2 ti-sm align-middle"></i>
-                </button>
-                <!-- Mobile menu toggle: End-->
-                <a asp-controller="Home" asp-action="Index" class="app-brand-link">
-                    <span class="app-brand-logo demo" style="width:unset; height: unset;">
-                        <img src="~/logo_full_b.png" height="29px" alt="مسترشوفر" />
-                    </span>
-                </a>
-            </div>
-            <!-- Menu logo wrapper: End -->
-            <!-- Menu wrapper: Start -->
-            <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
-                <button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="ti ti-x ti-sm"></i>
-                </button>
-                <ul class="navbar-nav me-auto p-3 p-lg-0">
+	<div class="container">
+		<div class="navbar navbar-expand-lg landing-navbar px-md-3 shadow p-0 px-1 p-md-2 ">
+			<!-- Menu logo wrapper: Start -->
+			<div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+				<!-- Mobile menu toggle: Start-->
+				<button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="ti ti-menu-2 ti-sm align-middle"></i>
+				</button>
+				<!-- Mobile menu toggle: End-->
+				<a asp-controller="Home" asp-action="Index" class="app-brand-link">
+					<span class="app-brand-logo demo" style="width:unset; height: unset;">
+						<img src="~/logo_full_b.png" height="29px" alt="مسترشوفر" />
+					</span>
+				</a>
+			</div>
+			<!-- Menu logo wrapper: End -->
+			<!-- Menu wrapper: Start -->
+			<div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
+				<button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="ti ti-x ti-sm"></i>
+				</button>
+				<ul class="navbar-nav me-auto p-3 p-lg-0">
 
-                    <li class="nav-item">
-                        <a class="fw-medium btn btn-primary " asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingFeatures">
-                            <span>
+					<li class="nav-item">
+						<a class="fw-medium btn btn-primary " asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingFeatures">
+							<span>
 
-                                <i class="ti ti-ticket"></i>
-                                سفر جدید
-                            </span>
-                        </a>
-                    </li>
+								<i class="ti ti-ticket"></i>
+								سفر جدید
+							</span>
+						</a>
+					</li>
 
-                    <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-fragment="landingHero">
 
-                            <span>
+							<span>
 
-                                <i class="ti ti-home"></i>
-                                پروفایل آژانس
-                            </span>
+								<i class="ti ti-home"></i>
+								پروفایل آژانس
+							</span>
 
-                        </a>
-                    </li>
+						</a>
+					</li>
 
-                    <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="TicketInfo" asp-action="Index">
 
-                            <span>
-                                <i class="ti ti-certificate-2"></i>
-                                بلیط‌ ها
-                            </span>
+							<span>
+								<i class="ti ti-certificate-2"></i>
+								بلیط‌ ها
+							</span>
 
-                        </a>
-                    </li>
-                    <li class="nav-item">
+						</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingFAQ">
 
-                            <span>
-                                <i class="ti ti-heart-handshake"></i>
-                                پشتیبانی 24/7
+							<span>
+								<i class="ti ti-heart-handshake"></i>
+								پشتیبانی 24/7
 
-                            </span>
+							</span>
 
-                        </a>
-                    </li>
-                    <li class="nav-item">
+						</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingContact">ارتباط با ما</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="landing-menu-overlay d-lg-none"></div>
-            <!-- Menu wrapper: End -->
-            <!-- Toolbar: Start -->
-            <ul class="navbar-nav flex-row align-items-center ms-auto">
+					</li>
+				</ul>
+			</div>
+			<div class="landing-menu-overlay d-lg-none"></div>
+			<!-- Menu wrapper: End -->
+			<!-- Toolbar: Start -->
+			<ul class="navbar-nav flex-row align-items-center ms-auto">
 
-                <!-- Style Switcher -->
-                @* <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                <i class='ti ti-sm'></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
-                <li>
-                <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
-                <span class="align-middle"><i class='ti ti-sun me-2'></i>روز</span>
-                </a>
-                </li>
-                <li>
-                <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
-                <span class="align-middle"><i class="ti ti-moon me-2"></i>شب</span>
-                </a>
-                </li>
-                <li>
-                <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
-                <span class="align-middle"><i class="ti ti-device-desktop me-2"></i>سیستم</span>
-                </a>
-                </li>
-                </ul>
-                </li> *@
-                <!-- / Style Switcher-->
-                <!-- navbar button: Start -->
-                <li>
+				<!-- Style Switcher -->
+				@* <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+				<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+				<i class='ti ti-sm'></i>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+				<li>
+				<a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+				<span class="align-middle"><i class='ti ti-sun me-2'></i>روز</span>
+				</a>
+				</li>
+				<li>
+				<a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+				<span class="align-middle"><i class="ti ti-moon me-2"></i>شب</span>
+				</a>
+				</li>
+				<li>
+				<a class="dropdown-item" href="javascript:void(0);" data-theme="system">
+				<span class="align-middle"><i class="ti ti-device-desktop me-2"></i>سیستم</span>
+				</a>
+				</li>
+				</ul>
+				</li> *@
+				<!-- / Style Switcher-->
+				<!-- navbar button: Start -->
+				<li>
 
-                    @{
-                        if (User.Identity.IsAuthenticated)
-                        {
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow show" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="true">
-                                <img src="~/store.png" height="32" />
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="static">
-                                
-                                <li>
-                                    <a class="dropdown-item" href="pages-profile-user.html">
-                                        <i class="ti ti-user-check me-2 ti-sm"></i>
-                                        <span class="align-middle">پروفایل آژانس</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-billing.html">
-                                        <span class="d-flex align-items-center align-middle">
-                                            <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                                            <span class="flex-grow-1 align-middle">خریدها</span>
-                                            
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-pricing.html">
-                                        <i class="ti ti-currency-dollar me-2 ti-sm"></i>
-                                        <span class="align-middle">شارژ حساب</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html">
-                                        <i class="ti ti-settings me-2 ti-sm"></i>
-                                        <span class="align-middle">تنظیمات</span>
-                                    </a>
-                                </li>
+					@{
+						if (User.Identity.IsAuthenticated)
 
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
+						{
+						<li class="nav-item navbar-dropdown dropdown-user dropdown">
+							<a class="nav-link dropdown-toggle hide-arrow show" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="true">
+								<img src="~/store.png" height="32" />
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end" data-bs-popper="static">
 
-                              
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-billing.html">
-                                        <span class="d-flex align-items-center align-middle">
-                                            <i class="flex-shrink-0 ti ti-heart-handshake me-2 ti-sm"></i>
-                                            <span class="flex-grow-1 align-middle">پشتیبانی 24/7</span>
+								<li>
+									<a class="dropdown-item" href="pages-profile-user.html">
+										<i class="ti ti-user-check me-2 ti-sm"></i>
+										<span class="align-middle">پروفایل آژانس</span>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="pages-account-settings-billing.html">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">خریدها</span>
 
-                                        </span>
-                                    </a>
-                                </li>
+										</span>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="pages-pricing.html">
+										<i class="ti ti-currency-dollar me-2 ti-sm"></i>
+										<span class="align-middle">شارژ حساب</span>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="pages-account-settings-account.html">
+										<i class="ti ti-settings me-2 ti-sm"></i>
+										<span class="align-middle">تنظیمات</span>
+									</a>
+								</li>
 
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
-                                        <i class="ti ti-logout me-2 ti-sm"></i>
-                                        <span class="align-middle text-danger">خروج از حساب</span>
-                                    </a>
-                                </li> 
-                            </ul>
-                        </li>
+								<li>
+									<div class="dropdown-divider"></div>
+								</li>
 
-                        }
-                        else
-                        {
-                            <a href="/Auth/LoginCover" class="btn btn-primary" target="_blank"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">ورود / ثبت نام</span></a>
-                        }
-                    }
-                </li>
 
-                <!-- navbar button: End -->
-            </ul>
-        </div>
-    </div>
+								<li>
+									<a class="dropdown-item" href="pages-account-settings-billing.html">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-heart-handshake me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">پشتیبانی 24/7</span>
+
+										</span>
+									</a>
+								</li>
+
+								<li>
+									<div class="dropdown-divider"></div>
+								</li>
+								<li>
+									<a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+										<i class="ti ti-logout me-2 ti-sm"></i>
+										<span class="align-middle text-danger">خروج از حساب</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						}
+
+						else
+
+						{
+						<a href="/Auth/LoginCover" class="btn btn-primary" target="_blank"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">ورود / ثبت نام</span></a>
+						}
+					}
+				</li>
+
+				<!-- navbar button: End -->
+			</ul>
+		</div>
+	</div>
 </nav>
