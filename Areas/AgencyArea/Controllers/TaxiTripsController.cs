@@ -62,9 +62,20 @@ namespace Application.Areas.AgencyArea
       ViewBag.dest_city_text = destinationstring;
       ViewBag.searchdate = searchdate;
       ViewBag.selecteddate = searchedDatetime;
+      ViewBag.searchpdate = pd;
 
-      return View(response
-        .OrderBy(t => t.startingDateTime).ToList());
+
+      var end_result = response
+          .OrderBy(t => t.startingDateTime)
+          .ThenBy(t => t.afterdiscticketprice)
+          .ToList();
+
+      end_result.RemoveAll(t => t.startingDateTime <= DateTime.Now.AddMinutes(45));
+
+
+
+
+      return View(end_result);
     }
 
 
