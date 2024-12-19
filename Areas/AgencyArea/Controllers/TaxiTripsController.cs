@@ -22,16 +22,18 @@ namespace Application.Areas.AgencyArea
     private readonly MrShooferAPIClient _mrShooferAPIClient;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly AppDbContext context;
+    private readonly DirectionsTravelTimeCalculator _travelTimeCalculator;
 
     private Agency agency;
 
 
-    public TaxiTripsController(DirectionsRepository directionsRepository, MrShooferAPIClient mrShooferAPIClient, UserManager<IdentityUser> userManager, AppDbContext context)
+    public TaxiTripsController(DirectionsRepository directionsRepository, MrShooferAPIClient mrShooferAPIClient, UserManager<IdentityUser> userManager, AppDbContext context, DirectionsTravelTimeCalculator calculator)
     {
       this.context = context;
       _userManager = userManager;
       _mrShooferAPIClient = mrShooferAPIClient;
       this.directionsRepository = directionsRepository;
+      this._travelTimeCalculator = calculator;
 
     }
 
@@ -63,6 +65,7 @@ namespace Application.Areas.AgencyArea
       ViewBag.searchdate = searchdate;
       ViewBag.selecteddate = searchedDatetime;
       ViewBag.searchpdate = pd;
+      ViewBag.traveltime_mins = _travelTimeCalculator.GetTravelMins(originstring, destinationstring); 
 
 
       var end_result = response
