@@ -28,7 +28,7 @@ $(function () {
   // Date
   if (flatpickrDate) {
     flatpickrDate.flatpickr({
-      disableMobile: "false",
+      disableMobile: true,
       locale: {
         weekdays: {
           shorthand: ["شنبه", "یکشنبه", "د", "س", "چ", "پ", "ج"], // Custom short weekdays
@@ -54,7 +54,7 @@ $(function () {
   // Time
   if (flatpickrTime) {
     flatpickrTime.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       enableTime: true,
       noCalendar: true,
       locale: 'fa',
@@ -66,7 +66,7 @@ $(function () {
   // Datetime
   if (flatpickrDateTime) {
     flatpickrDateTime.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       enableTime: true,
       dateFormat: 'Y/m/d H:i',
       locale: 'fa',
@@ -76,7 +76,7 @@ $(function () {
   // Multi Date Select
   if (flatpickrMulti) {
     flatpickrMulti.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       weekNumbers: true,
       enableTime: true,
       locale: 'fa',
@@ -89,7 +89,7 @@ $(function () {
   // Range
   if (typeof flatpickrRange != undefined) {
     flatpickrRange.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       mode: 'range',
       locale: 'fa',
       dateFormat: 'Y/m/d',
@@ -99,7 +99,7 @@ $(function () {
   // Inline
   if (flatpickrInline) {
     flatpickrInline.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       inline: true,
       allowInput: false,
       dateFormat: 'Y/m/d',
@@ -111,7 +111,7 @@ $(function () {
   // Human Friendly
   if (flatpickrFriendly) {
     flatpickrFriendly.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       altInput: true,
       altFormat: 'j F Y',
       dateFormat: 'Y/m/d',
@@ -125,7 +125,7 @@ $(function () {
     const toDate = new JDate(Date.now() + 3600 * 1000 * 48);
 
     flatpickrDisabledRange.flatpickr({
-      disableMobile: "true",
+      disableMobile: "flase",
       dateFormat: 'Y/m/d',
       locale: 'fa',
       disable: [

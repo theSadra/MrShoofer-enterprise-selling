@@ -26,13 +26,9 @@ function FetchDirections() {
 }
 
 
-
 var most_used_origins = ["تهران", "اصفهان", "رشت", "چالوس", "کرمانشاه", "نوشهر"];
 
-
-
-
-
+  
 function SetDestinations(origin) {
 
   var destinations = [];
@@ -58,8 +54,6 @@ function LoadMostUsedOrigins() {
   AddResultLocations_origin(most_used_origins);
 }
 
-
-
 function AddStaredLocationDiv_origin() {
   var spanElement = $('.origin_location');
   var starredLocationsHTML = `
@@ -78,16 +72,38 @@ function AddStaredLocationDiv_origin() {
 }
 
 
+
+function FillTheDestinationWithPreSelectedOrigin(origin_location) {
+  SetDestinations(origin_location);
+
+}
+
 $(document).ready(async function () {
+
+
+
+ 
   try {
     // Await the FetchDirections call
     await FetchDirections();
 
 
+    var origin_value = $('#origin_input').val();
+
+    // if the value of origin is pre filled by the server 
+    if (origin_value != null || origin_value != "") {
+      LoadMostUsedOrigins();
+      FillTheDestinationWithPreSelectedOrigin(origin_value);
+
+    }
+    else {
+
     // Call dependent functions
     LoadMostUsedOrigins()
     AddStaredLocationDiv_desti();
     AddStaredLocations_dest();
+    }
+
   } catch (error) {
     console.error('An error occurred:', error);
   }
@@ -131,6 +147,7 @@ $(document).ready(async function () {
 
 
 });
+
 
 function AddResultLocations_origin(result_locations) {
 
