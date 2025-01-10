@@ -108,78 +108,111 @@ namespace Application.Areas.AgencyArea
       // Issuing ticket in ORS
       // TempReserve
 
-      TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
+
+
+        TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
+        {
+          isPrivate = true,
+          tripCode = viewModel.TripCode
+        };
+
+        var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
+
+
+        // final reserve
+
+        ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
+        {
+          passengerFirstName = viewModel.Firstname,
+          passengerLastName = viewModel.Lastname,
+          reservationCode = reservecode,
+          passengerNationalCode = viewModel.Nacode,
+          passengerNumberPhone = viewModel.Numberphone
+        };
+
+
+      TicketConfirmationResponse reserve_response = null;
+
+        try
+        {
+           reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
+        }
+        catch (Exception e)
+        {
+          return RedirectToAction("Index", "Home");
+        }
+
+
+        // Getting trip_info
+
+        var trip = await apiclient.GetTripInfo(viewModel.TripCode);
+
+        //Creating ticket object
+        Ticket newticket = new Ticket()
+        {
+          Firstname = viewModel.Firstname,
+          Lastname = viewModel.Lastname,
+          PhoneNumber = viewModel.Numberphone,
+          NaCode = viewModel.Nacode,
+          TicketFinalPrice = reserve_response.paid_total_fee_tomans,
+          Gender = viewModel.Gender,
+          TicketOriginalPrice = trip.originalTicketprice,
+          TripOrigin = trip.originCityName,
+          TripDestination = trip.destinationCityName,
+          RegisteredAt = DateTime.Now,
+          TicketCode = reserve_response.ticketCode,
+          Tripcode = trip.tripPlanCode,
+          ServiceName = trip.taxiSupervisorName,
+          CarName = trip.carModelName
+        };
+
+        // Registering to database
+
+
+        var identity_user = await _userManager.GetUserAsync(User);
+
+        var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
+        newticket.Agency = agancy;
+
+
+        context.Tickets.Add(newticket);
+
+        await context.SaveChangesAsync();
+
+
+
+        //Sending SMS for customer
+
+
+        var service_url = configuration["serivce_url"];
+        var trip_link = newticket.TicketCode;
+
+
+      try
       {
-        isPrivate = true,
-        tripCode = viewModel.TripCode
-      };
 
-      var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
-
-
-      // final reserve
-
-      ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
+        await customerSmsSender.SendCustomerTicket_issued(newticket.Firstname, newticket.Lastname, newticket.TicketCode, trip_link, newticket.PhoneNumber);
+      }
+      catch
       {
-        passengerFirstName = viewModel.Firstname,
-        passengerLastName = viewModel.Lastname,
-        reservationCode = reservecode,
-        passengerNationalCode = viewModel.Nacode,
-        passengerNumberPhone = viewModel.Numberphone
-      };
 
-      var reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
-
-      // Getting trip_info
-
-      var trip = await apiclient.GetTripInfo(viewModel.TripCode);
-
-      //Creating ticket object
-      Ticket newticket = new Ticket()
-      {
-        Firstname = viewModel.Firstname,
-        Lastname = viewModel.Lastname,
-        PhoneNumber = viewModel.Numberphone,
-        NaCode = viewModel.Nacode,
-        TicketFinalPrice = reserve_response.paid_total_fee_tomans,
-        Gender = viewModel.Gender,
-        TicketOriginalPrice = trip.originalTicketprice,
-        TripOrigin = trip.originCityName,
-        TripDestination = trip.destinationCityName,
-        RegisteredAt = DateTime.Now,
-        TicketCode = reserve_response.ticketCode,
-        Tripcode = trip.tripPlanCode,
-        ServiceName = trip.taxiSupervisorName,
-        CarName = trip.carModelName
-      };
-
-      // Registering to database
-
-
-      var identity_user = await _userManager.GetUserAsync(User);
-
-      var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
-      newticket.Agency = agancy;
-
-
-      context.Tickets.Add(newticket);
-
-      await context.SaveChangesAsync();
+      }
 
 
 
-      //Sending SMS for customer
-
-
-      var service_url = configuration["serivce_url"];
-      var trip_link = service_url + "/ReserveInfo" + "?reference=" + newticket.TicketCode;
-
-      await customerSmsSender.SendCustomerTicket_issued(newticket.Firstname.Replace(' ', '\u200C'), newticket.Lastname.Replace(' ', '\u200C'), newticket.TicketCode, trip_link, newticket.PhoneNumber);
+        return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
+      }
 
 
 
-      return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
+
+
+    private async Task DoConfirmResreve()
+    {
+
     }
+
+
 
     public async Task<IActionResult> ReserveConfirmed(string ticketcode)
     {

@@ -27,7 +27,6 @@ builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new MrShooferAPIClient(new HttpClient(), "https://mrbilit.mrshoofer.ir"));
 
 
-builder.Services.AddTransient<KavenegarApi>(k => new KavenegarApi(builder.Configuration["kavehnegar_key"]));
 builder.Services.AddTransient<CustomerServiceSmsSender>();
 
 builder.Services.AddControllersWithViews();

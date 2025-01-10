@@ -1,3 +1,6 @@
+using IPE.SmsIrClient;
+using IPE.SmsIrClient.Models.Requests;
+using IPE.SmsIrClient.Models.Results;
 using Kavenegar;
 using Kavenegar.Core.Models.Enums;
 
@@ -5,30 +8,27 @@ namespace Application.Services
 {
   public class CustomerServiceSmsSender
   {
-    private readonly KavenegarApi kavenegarApi;
+    private readonly SmsIr smsIr;
 
-    public CustomerServiceSmsSender(KavenegarApi kavenegarApi)
+    public CustomerServiceSmsSender(IConfiguration configuration)
     {
-      this.kavenegarApi = kavenegarApi;
+      this.smsIr = new SmsIr(configuration["smsirapikey"]);
     }
-
 
 
     public async Task SendCustomerTicket_issued(string firstname, string lastname, string reference, string link, string numberphone)
     {
+      int templateId = 200000;
+      VerifySendParameter[] verifySendParameters = {
+           new VerifySendParameter("FIRSTNAME",firstname),
+           new VerifySendParameter("LASTNAME", lastname),
+           new VerifySendParameter("TRIP", link),
+           new VerifySendParameter("REFERENCE", reference),
 
-      char spacechar = '\u0020';
+        };
 
-      var result = await kavenegarApi.VerifyLookup(
-        receptor: numberphone,
-        token: firstname,
-        token2: lastname,
-        token3: link,
-        token10: reference,
-        "Mrshoofer-org-customer-ticket-issued",
-        VerifyLookupType.Sms
-        );
+      var response = await smsIr.VerifySendAsync(numberphone, 782252, verifySendParameters);
+
     }
-
   }
 }
