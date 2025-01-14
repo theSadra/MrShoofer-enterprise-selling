@@ -22,6 +22,7 @@
     <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
 
 	<link href="~/css/TaxiTripsIndex.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/vendor/libs/spinkit/spinkit.css">
     
 }
 @section VendorScripts {
@@ -38,9 +39,13 @@
 
     <script src="~/js/front-page-landing.js"></script>
     <script src="~/js/forms-pickers-jalali.js"></script>
+
+
     <script src="~/js/searchpage.js"></script>
 
 	<script src="~/js/IndexPage.js"> </script>
+    <script src="~/js/Trips.js"> </script>
+
 
 
 }
@@ -265,12 +270,12 @@
 			<div class="row col-12 col-lg-8 p-0">
 				<div class="px-4 px-md-0 pe-0">
 					<form asp-controller="TaxiTrips" method="get" asp-action="Index">
-						<div class="card-body row p-4 pt-md-2">
+						<div class="card-body row mx-0  p-4 pt-md-2">
 							<div class="col-md-3 col-12 inputcel">
 
 								<small class="ms-3">مبدا</small>
 								<div class="input-container">
-									<input name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
+                                        <input id="origin_input" name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
 									<i class="ti ti-location mb-2 icon"></i>
 									<span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
 
@@ -300,7 +305,7 @@
 								<small class="ms-3">مقصد</small>
 
 								<div class="input-container">
-									<input name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
+                                        <input id="destination_input" name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
 									<i class="ti ti-map-pin mb-2 icon"></i>
 										<span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important; min-width:230px;">
 
@@ -370,7 +375,7 @@
 <div id="" style="padding-top: 1.7rem; background-color: none !important;" class="position-relative">
 	<div class="px-lg-5 mx-lg-2">
 
-		<div class="container">
+		<div class="container-lg">
 			<div class="px-lg-6 px-0">
 			
 				<div class="row ">
@@ -378,7 +383,6 @@
 						<div class="card">
 							<div class=" py-3 pe-4 ps-3" style="">
 								<lable class="direction-text mt-2 fw-normal" style="font-weight: normal !important;">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Car-Taxi-1--Streamline-Core" height="14" width="14"><desc>Car Taxi 1 Streamline Icon: https://streamlinehq.com</desc><g id="car-taxi-1--transportation-travel-taxi-transport-cab-car"><path id="Vector 4630" fill="#fddc5c" d="M0.625 8v2c0 0.5523 0.44772 1 1 1h10.75c0.5523 0 1 -0.4477 1 -1V8c0 -0.55228 -0.4477 -1 -1 -1H10L8.75975 4.10608C8.60217 3.7384 8.24063 3.5 7.8406 3.5H4.1594c-0.40003 0 -0.76157 0.2384 -0.91915 0.60608L2 7h-0.375c-0.55228 0 -1 0.44772 -1 1Z" stroke-width="1"></path><path id="Union" fill="#0c098c" fill-rule="evenodd" d="M6 0.875c-0.34518 0 -0.625 0.27982 -0.625 0.625v1.375H4.1594c-0.65005 0 -1.23755 0.3874 -1.49361 0.98488L1.5877 6.37542C0.707464 6.39525 0 7.115 0 8v2c0 0.8884 0.712839 1.6102 1.59772 1.6248 0.26276 0.7986 1.01466 1.3751 1.90122 1.3751 0.88648 0 1.63832 -0.5764 1.90115 -1.3749H8.5978c0.26283 0.7985 1.01467 1.3749 1.9011 1.3749 0.8866 0 1.6385 -0.5765 1.9012 -1.3751C13.286 11.6114 14 10.8891 14 10V8c0 -0.89746 -0.7275 -1.625 -1.625 -1.625h-1.9629L9.33421 3.85988C9.07815 3.26239 8.49065 2.875 7.8406 2.875H6.625V1.5c0 -0.34518 -0.27982 -0.625 -0.625 -0.625Zm-1.8406 3.25h3.6812c0.15001 0 0.28559 0.0894 0.34468 0.22728L9.42553 7.2462c0.09849 0.2298 0.32445 0.3788 0.57447 0.3788h2.375c0.2071 0 0.375 0.16789 0.375 0.375v2c0 0.1985 -0.1543 0.361 -0.3494 0.3741 -0.2625 -0.79918 -1.0147 -1.3763 -1.9017 -1.3763 -0.88728 0 -1.6397 0.57753 -1.90185 1.3772H5.40083c-0.26214 -0.79967 -1.01457 -1.3772 -1.90189 -1.3772 -0.88695 0 -1.63912 0.57705 -1.90157 1.3762 -0.1942 -0.0141 -0.34737 -0.1762 -0.34737 -0.374V8c0 -0.20711 0.16789 -0.375 0.375 -0.375H2c0.25002 0 0.47598 -0.149 0.57447 -0.3788l1.24025 -2.89392c0.05909 -0.13788 0.19467 -0.22728 0.34468 -0.22728Zm0.23495 3.5c-0.35896 0 -0.60098 -0.36703 -0.45958 -0.69696l0.58929 -1.375c0.07879 -0.18384 0.25956 -0.30304 0.45957 -0.30304h2.03272c0.20001 0 0.38078 0.1192 0.45957 0.30304l0.58929 1.375c0.1414 0.32993 -0.10062 0.69696 -0.45957 0.69696H4.39435Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
 									سفرهای سواری
 
 									<strong class="fs-5">
@@ -403,7 +407,9 @@
 						</div>
 						<div class="card card-action mt-2">
 							<div class="card-header">
-								<div class="card-action-title oredring-title">ترتیب بر اساس</div>
+								<div class="card-action-title oredring-title">
+                                    <i class="ti ti-filter"></i>
+                                  ترتیب بر اساس</div>
 								<div class="card-action-element">
 									<ul class="list-inline mb-0">
 										<li class="list-inline-item">
@@ -417,16 +423,16 @@
 							<div class="collapse show" style="">
 								<div class="card-body pt-0">
 									<div class="form-check ">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
-										<label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked onclick="orderFilterSelected(0)">
+										<label class="form-check-label" for="defaultRadio1">پیشنهاد مسترشوفر</label>
 									</div>
 									<div class="form-check mt-2">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-										<label class="form-check-label" for="defaultRadio1"> زود ترین</label>
+                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(2)">
+										<label class="form-check-label fw-light" for="defaultRadio1">ارزان ترین</label>
 									</div>
 									<div class="form-check mt-2">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-										<label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
+                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(1)">
+                                        <label class="form-check-label fw-light " for="defaultRadio1">گران ترین</label>
 									</div>
 								</div>
 							</div>
@@ -435,7 +441,9 @@
 
 						<div class="card card-action mt-2">
 							<div class="card-header">
-								<div class="card-action-title oredring-title">خودرو</div>
+								<div class="card-action-title oredring-title">
+                                    <i class="ti ti-car"></i>
+                                  خودرو</div>
 								<div class="card-action-element">
 									<ul class="list-inline mb-0">
 										<li class="list-inline-item">
@@ -447,63 +455,56 @@
 								</div>
 							</div>
 							<div class="collapse show" style="">
-								<div class="card-body pt-0">
-									<div class="form-check ">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked>
-										<label class="form-check-label" for="defaultRadio1"> پیشنهاد مسترشوفر</label>
+								<div class="card-body pt-0" id="carmodelsfilter">
+									<div class="form-check">
+                                        <input class="form-check-input" id="defaultRadio2" name="default-radio-2" type="radio" value="" onclick="carFilterSelectes('default')" checked >
+                                        <label class="form-check-label fw-bold" for="defaultRadio2" > همه</label>
 									</div>
-									<div class="form-check mt-2">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-										<label class="form-check-label" for="defaultRadio1"> زود ترین</label>
-									</div>
-									<div class="form-check mt-2">
-										<input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="">
-										<label class="form-check-label" for="defaultRadio1"> ارزان ترین</label>
-									</div>
+									
 								</div>
 							</div>
 
 						</div>
 					</div>
 
-					@{
-						if (Model.Count == 0)
-						{
-							<div class="d-flex col-md-9 col-12" style="flex-direction: column; align-items: center; justify-content: start;">
-								@await Html.PartialAsync("TimelinePartial", DateTime.Now)
+						
+							
 
-							<label class="fs-4 fw-bold mt-4 pt-3">
-							  ســفری یافت نشـد
-							</label>
-							<small>
-							  در بازه ای که شما جست و جو کردید، سفری یافت نشد
-							</small>
-							</div>
-						}
+                            <div class="col-12 col-md-9 px-1">
 
-						else
-						{
-							<div class="col-12 col-md-9 px-1">
-
+                                @await Html.PartialAsync("TimelinePartial", DateTime.Now)
 
 							  
 								<div class="trips-container">
+                                
+                                   <div class="d-flex justify-content-center align-items-center mt-5 pt-3">
+                                        <div class="sk-chase sk-primary">
+                                            <div class="sk-chase-dot"></div>
+                                            <div class="sk-chase-dot"></div>
+                                            <div class="sk-chase-dot"></div>
+                                            <div class="sk-chase-dot"></div>
+                                            <div class="sk-chase-dot"></div>
+                                            <div class="sk-chase-dot"></div>
 
-									@foreach (var trip in Model)
+                                        </div>
 
-									{
-										@await Html.PartialAsync("Partials/PrivateTripCardPartial", trip)
-									}
+
+                                        <label class="fw-bold fs-5 ms-3">
+                                            در حال بارگزازی سفر ها
+                                        </label>
+                                   </div>
+
 
 								</div>
 							</div>
-						}
-					}
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 
 

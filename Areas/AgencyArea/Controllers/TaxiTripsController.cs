@@ -10,6 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Globalization;
 using Application.Models;
 using Microsoft.AspNetCore.Authorization;
+using Application.ViewModels.TaxiTrips;
 
 
 namespace Application.Areas.AgencyArea
@@ -65,7 +66,33 @@ namespace Application.Areas.AgencyArea
       ViewBag.searchdate = searchdate;
       ViewBag.selecteddate = searchedDatetime;
       ViewBag.searchpdate = pd;
-      ViewBag.traveltime_mins = _travelTimeCalculator.GetTravelMins(originstring, destinationstring); 
+
+
+      return View();
+    }
+
+
+    [Route("/TaxiTrips/SearchJson")]
+    public async Task<IActionResult> SearchTripsJson(string originstring, string destinationstring, string searchdate)
+    {
+
+      // Getting origin and destination ID 
+      int origin_id = directionsRepository.GetDirections()[originstring];
+      int destination_id = directionsRepository.GetDirections()[destinationstring];
+
+
+      // Translating entered SHAMSI search date to DateTime object
+      PersianDate pd = new PersianDate(searchdate.Replace('-', '/'));
+      DateTime searchedDatetime = pd.ToDateTime();
+
+
+
+      // Fetching trips based on search parameters from ORS
+
+      var response = await _mrShooferAPIClient.SearchTrips(searchedDatetime, searchedDatetime.AddDays(1), origin_id, destination_id);
+
+
+      int traveltime_mins = _travelTimeCalculator.GetTravelMins(originstring, destinationstring);
 
 
       var end_result = response
@@ -73,13 +100,29 @@ namespace Application.Areas.AgencyArea
           .ThenBy(t => t.afterdiscticketprice)
           .ToList();
 
+      // Removing outdated trips
       end_result.RemoveAll(t => t.startingDateTime <= DateTime.Now.AddMinutes(45));
 
+      // Generating respose viewmodels
+      var searchedTripViewModels = end_result.Select(t => new SearchedTripViewModel()
+      {
+        startingDateTime = t.startingDateTime.ToString("HH:mm"),
+        arrivalDateTime = t.startingDateTime.AddMinutes(traveltime_mins).ToString("HH:mm"),
+        origin = $"{t.originCityName}({t.oringinLocationName})",
+        destination = $"{t.destinationCityName}({t.destinationLocationName})",
+        originalPrice = t.originalTicketprice.ToString("N0"),
+        afterdiscount = t.afterdiscticketprice.ToString("N0"),
+        taxiSupervisorName = t.taxiSupervisorName,
+        taxiSupervisorID = t.taxiSupervisorID,
+        tripcode = t.tripPlanCode,
+        carModelName = t.carModelName
+      })
+       .ToList();
 
 
-
-      return View(end_result);
+      return Json(searchedTripViewModels);
     }
+
 
 
 

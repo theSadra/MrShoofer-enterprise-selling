@@ -78,75 +78,7 @@ function FillTheDestinationWithPreSelectedOrigin(origin_location) {
 
 }
 
-$(document).ready(async function () {
 
-
-
- 
-  try {
-    // Await the FetchDirections call
-    await FetchDirections();
-
-
-    var origin_value = $('#origin_input').val();
-
-    // if the value of origin is pre filled by the server 
-    if (origin_value != null || origin_value != "") {
-      LoadMostUsedOrigins();
-      FillTheDestinationWithPreSelectedOrigin(origin_value);
-
-    }
-    else {
-
-    // Call dependent functions
-    LoadMostUsedOrigins()
-    AddStaredLocationDiv_desti();
-    AddStaredLocations_dest();
-    }
-
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-
-  $('#origin_input').on('input', function () {
-    const inputText = $(this).val(); // Get the current input valu
-    // Filter cities that include the input texte
-
-    if (inputText === "") {
-      LoadMostUsedOrigins();
-    }
-    else {
-
-      $('#origin_most_lable').css('display', 'none');
-      const filteredCities = originCities.filter(city =>
-        city.includes(inputText) // Check if city contains the input text
-      );
-
-      AddResultLocations_origin(filteredCities);
-    }
-  });
-
-
-
-  $('#destination_input').on('input', function () {
-    const inputText = $(this).val(); // Get the current input valu
-    // Filter cities that include the input texte
-
-    if (inputText === "") {
-     
-    }
-    else {
-
-      const filteredCities = _destinations.filter(city =>
-        city.includes(inputText) // Check if city contains the input text
-      );
-
-      AddResultLocations_destination(filteredCities);
-    }
-  });
-
-
-});
 
 
 function AddResultLocations_origin(result_locations) {
@@ -263,12 +195,116 @@ function AddStaredLocationDiv_desti() {
 
 function OriginSelected(id, name) {
   $('#origin_input').val(name).attr("value", id);
+
+  EnableDestination();
+
   SetDestinations(name);
 }
 
 function DestSelected(id, name) {
   $('#destination_input').val(name).attr("value", id);
 }
+
+
+
+
+
+
+
+function DisableDestination() {
+  $("#destination_input").removeAttr("data-bs-toggle")
+    .prop("disabled", true);
+
+}
+
+function EnableDestination() {
+  $("#destination_input").attr("data-bs-toggle", "dropdown")
+    .prop("disabled", false);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(async function () {
+
+  try {
+    // Await the FetchDirections call
+    await FetchDirections();
+
+
+
+    var origin_value = $('#origin_input').val();
+
+  
+    // if the value of origin is pre filled by the server 
+    if (origin_value!= "") {
+      LoadMostUsedOrigins();
+      FillTheDestinationWithPreSelectedOrigin(origin_value);
+
+      EnableDestination();   
+    }
+    else {
+
+      // Call dependent functions
+      LoadMostUsedOrigins()
+      AddStaredLocationDiv_desti();
+      AddStaredLocations_dest();
+
+
+      DisableDestination();
+    }
+
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+
+  $('#origin_input').on('input', function () {
+    const inputText = $(this).val(); // Get the current input valu
+    // Filter cities that include the input texte
+
+    if (inputText === "") {
+      LoadMostUsedOrigins();
+    }
+    else {
+
+      $('#origin_most_lable').css('display', 'none');
+      const filteredCities = originCities.filter(city =>
+        city.includes(inputText) // Check if city contains the input text
+      );
+
+      AddResultLocations_origin(filteredCities);
+    }
+  });
+
+
+
+  $('#destination_input').on('input', function () {
+    const inputText = $(this).val(); // Get the current input valu
+    // Filter cities that include the input texte
+
+    if (inputText === "") {
+
+    }
+    else {
+
+      const filteredCities = _destinations.filter(city =>
+        city.includes(inputText) // Check if city contains the input text
+      );
+
+      AddResultLocations_destination(filteredCities);
+    }
+  });
+
+
+});
 
 
 
