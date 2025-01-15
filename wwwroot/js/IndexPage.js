@@ -8,7 +8,26 @@
 window.Date = window.JDate;
 
 
+$(document).ready(function () {
+  $('#tripForm').on('submit', function (e) {
+    let isValid = true;
 
+    // Check each required field
+    $(this).find('input').each(function () {
+      if ($(this).val().trim() === '') {
+        isValid = false;
+
+        $(this).focus(); // Focus on the empty input field
+        return false; // Exit the loop
+      }
+    });
+
+    // If not valid, prevent the form from submitting
+    if (!isValid) {
+      e.preventDefault();
+    }
+  });
+});
 
 
 

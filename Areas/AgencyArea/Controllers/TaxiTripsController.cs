@@ -56,9 +56,6 @@ namespace Application.Areas.AgencyArea
       DateTime searchedDatetime = pd.ToDateTime();
 
 
-
-      // Fetching trips based on search parameters from ORS
-      var response = await _mrShooferAPIClient.SearchTrips(searchedDatetime, searchedDatetime.AddDays(1), origin_id, destination_id);
       // Filling viewbags
 
       ViewBag.origin_city_text = originstring;

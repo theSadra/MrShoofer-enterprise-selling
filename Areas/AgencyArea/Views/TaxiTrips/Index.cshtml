@@ -269,13 +269,13 @@
 			<div class="col-lg-2 col-0"></div>
 			<div class="row col-12 col-lg-8 p-0">
 				<div class="px-4 px-md-0 pe-0">
-					<form asp-controller="TaxiTrips" method="get" asp-action="Index">
+                        <form asp-controller="TaxiTrips" method="get" asp-action="Index" id="tripForm">
 						<div class="card-body row mx-0  p-4 pt-md-2">
 							<div class="col-md-3 col-12 inputcel">
 
 								<small class="ms-3">مبدا</small>
 								<div class="input-container">
-                                        <input id="origin_input" name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
+                                        <input required id="origin_input" name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
 									<i class="ti ti-location mb-2 icon"></i>
 									<span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
 
@@ -305,7 +305,7 @@
 								<small class="ms-3">مقصد</small>
 
 								<div class="input-container">
-                                        <input id="destination_input" name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
+                                        <input required id="destination_input" name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
 									<i class="ti ti-map-pin mb-2 icon"></i>
 										<span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important; min-width:230px;">
 
@@ -340,7 +340,7 @@
 								<!-- Disabled Range-->
 
 								<div class="input-container">
-										<input name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="starttime" placeholder="تاریخ سفر" type="text" />
+                                        <input required name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="starttime" placeholder="تاریخ سفر" type="text" />
 									<i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
 								</div>
 								@* <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div> *@
@@ -428,11 +428,11 @@
 									</div>
 									<div class="form-check mt-2">
                                         <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(2)">
-										<label class="form-check-label fw-light" for="defaultRadio1">ارزان ترین</label>
+										<label class="form-check-label fw-light" for="defaultRadio1">کمترین قیمت</label>
 									</div>
 									<div class="form-check mt-2">
                                         <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(1)">
-                                        <label class="form-check-label fw-light " for="defaultRadio1">گران ترین</label>
+                                        <label class="form-check-label fw-light " for="defaultRadio1">بیشترین قیمت</label>
 									</div>
 								</div>
 							</div>

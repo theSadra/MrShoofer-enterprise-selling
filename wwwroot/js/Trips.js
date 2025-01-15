@@ -232,7 +232,6 @@ $(function () {
     .catch(function (error) {
       console.error('Error fetching data:', error); // Handle the error here
     });
-
 });
 
 function renderTrips(input_trips) {
@@ -245,7 +244,7 @@ function orderFilterSelected(number) {
 
   if (number == 0) {
     renderTrips(trips);
-
+      
   }
 
   // Filter by price high to low
