@@ -3,6 +3,7 @@ using System;
 using Application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250117132947_AddingRegisterdDateTimeToMessage")]
+    partial class AddingRegisterdDateTimeToMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -104,36 +107,6 @@ namespace Application.Migrations
                     b.HasIndex("AgencyId");
 
                     b.ToTable("AgencyBalanceCharges");
-                });
-
-            modelBuilder.Entity("Application.Models.ChargePaymentRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AgencyId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Amout")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("RequestedOn")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgencyId");
-
-                    b.ToTable("ChargePaymentRequests");
                 });
 
             modelBuilder.Entity("Application.Models.ContactUsMessage", b =>
@@ -450,17 +423,6 @@ namespace Application.Migrations
                 });
 
             modelBuilder.Entity("Application.Models.AgencyBalanceCharge", b =>
-                {
-                    b.HasOne("Application.Models.Agency", "Agency")
-                        .WithMany()
-                        .HasForeignKey("AgencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agency");
-                });
-
-            modelBuilder.Entity("Application.Models.ChargePaymentRequest", b =>
                 {
                     b.HasOne("Application.Models.Agency", "Agency")
                         .WithMany()

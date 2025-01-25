@@ -149,6 +149,61 @@ namespace Application.Areas.Admin.Controllers
       return View(agency);
     }
 
+    public async Task<IActionResult> Security([FromQuery] int id)
+    {
+      var agency = context.Agencies.Where(a => a.Id == id)
+        .FirstOrDefault();
+      if (agency == null)
+      {
+        return NotFound();
+      }
+      await context.Entry(agency)
+         .Reference(a => a.IdentityUser)
+         .LoadAsync();
+      return View(agency);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangePassword(int id, string newPassword)
+    {
+      var agency = context.Agencies
+          .Include(a => a.IdentityUser)
+          .FirstOrDefault(a => a.Id == id);
+
+
+
+      context.Attach(agency).Reference(a => a.IdentityUser).Load();
+
+      if (agency == null)
+      {
+        return NotFound();
+      }
+
+      var user = agency.IdentityUser;
+
+      // Remove the existing password
+      var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+      if (!removePasswordResult.Succeeded)
+      {
+        TempData["status"] = "error";
+        TempData["message"] = "در طی فرایند حذف رمز عبور مشکلی پیش آمد";
+        return RedirectToAction("Security", new { id = agency.Id });
+      }
+
+      // Add the new password
+      var addPasswordResult = await _userManager.AddPasswordAsync(user, newPassword);
+      if (!addPasswordResult.Succeeded)
+      {
+        TempData["status"] = "error";
+        TempData["message"] = "در طی فرایند تغییر رمز عبور مشکلی پیش آمد";
+        return RedirectToAction("Security", new { id = agency.Id });
+      }
+
+      TempData["status"] = "success";
+      TempData["message"] = "رمز عبور با موفقیت تغییر یافت";
+      return RedirectToAction("Security", new { id = agency.Id });
+    }
+
     public async Task<IActionResult> GetAgenciesJson()
     {
       var agecyResult = context.Agencies

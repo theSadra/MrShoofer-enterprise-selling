@@ -218,8 +218,8 @@
 	<div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
 		<!-- Customer Pills -->
 		<ul class="nav nav-pills flex-column flex-md-row mb-3">
-			<li class="nav-item"><a class="nav-link active py-2" href="javascript:void(0);"><i class="ti ti-user me-1"></i>حساب کاربری</a></li>
-			<li class="nav-item"><a class="nav-link py-2" href="CustomerDetailsSecurity"><i class="ti ti-lock me-1"></i>امنیت حساب</a></li>
+            <li class="nav-item"><a class="nav-link active py-2" asp-route-id="@Model.Id" asp-action="DetailOverview"><i class="ti ti-user me-1"></i>حساب کاربری</a></li>
+            <li class="nav-item"><a class="nav-link py-2" asp-route-id="@Model.Id" asp-action="Security"><i class="ti ti-lock me-1"></i>امنیت حساب</a></li>
 			<li class="nav-item"><a class="nav-link py-2" href="CustomerDetailsBilling"><i class="ti ti-file-invoice me-1"></i>آدرس و صورتحساب</a></li>
 		</ul>
 		<!--/ Customer Pills -->

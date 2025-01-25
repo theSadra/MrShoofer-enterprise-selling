@@ -7,14 +7,19 @@
 @section VendorStyles {
     <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
-	<link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-	<link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-	<link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-	<link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+    <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
 
-	<link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
-	<link href="~/css/IndexPage.css" rel="stylesheet" />
+    <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
+    <link href="~/css/IndexPage.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+
 }
 
 @section VendorScripts {
@@ -23,22 +28,23 @@
     <script src="~/vendor/js/dropdown-hover.js"></script>
     <script src="~/vendor/js/dropdown-hover.js"></script>
 
-	<script src="~/libs/jquery.js"> </script>
-	<script src="~/vendor/libs/moment/moment.js"></script>
-	<script src="~/vendor/libs/jdate/jdate.min.js"></script>
-	<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
-	<script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
-	<script src="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-	<script src="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-	<script src="~/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-	<script src="~/vendor/libs/pickr/pickr.js"></script>
-	<script src="~/js/IndexPage.js"> </script>
-	<script src="~/js/searchpage.js"></script>
+    <script src="~/libs/jquery.js"> </script>
+    <script src="~/vendor/libs/moment/moment.js"></script>
+    <script src="~/vendor/libs/jdate/jdate.min.js"></script>
+    <script src="~/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+    <script src="~/vendor/libs/flatpickr/l10n/fa.js"></script>
+    <script src="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="~/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="~/vendor/libs/pickr/pickr.js"></script>
+    <script src="~/js/IndexPage.js"> </script>
+    <script src="~/js/searchpage.js"></script>
+
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="~/js/extended-ui-sweetalert2.js"></script>
 }
 
 @section PageScripts {
-
-
 
 }
 
@@ -87,23 +93,23 @@
                         <div class="card mb-3">
                             <div class="card-body row pb-4">
                                 <div class="card-header d-flex justify-content-between p-0 mb-4" style="">
-                                  <div class="d-flex justify-content-between align-items-start" style="flex-direction: column;">
+                                    <div class="d-flex justify-content-between align-items-start" style="flex-direction: column;">
 
-                                    <h4 class="mb-0 ">
-                                        <img class="pe-1 image" src="/caronraod.png" width="80px" />
-                                        جستجوی ‌سواری
-                                    </h4>
+                                        <h4 class="mb-0 ">
+                                            <img class="pe-1 image" src="/caronraod.png" width="80px" />
+                                            جستجوی ‌سواری
+                                        </h4>
 
-                                    <lable class="mt-2 ms-md-2 lh-base">
-                                       مسترشوفر، ارائه دهنده سفرهای بین شهری و ترانسفر فرودگاهی
-                                       <br />
-                                       <span class="fw-light mt-1">
-                                       با بالاترین کیفیت سرویس و بهترین خودروها
+                                        <lable class="mt-2 ms-md-2 lh-base">
+                                            مسترشوفر، ارائه دهنده سفرهای بین شهری و ترانسفر فرودگاهی
+                                            <br />
+                                            <span class="fw-light mt-1">
+                                                با بالاترین کیفیت سرویس و بهترین خودروها
                                                 <i class="ti ti-circle-check" style="color: blue;"></i>
                                                 @* <img src="/vip_badge.png" style="height:29px;" class="ms-1" /> *@
                                             </span>
-                                    </lable>
-                                  </div>
+                                        </lable>
+                                    </div>
 
                                     <img src="/mrshoofer_cars_banner.png" class="me-2" height="90px" />
 
@@ -117,7 +123,7 @@
                                             <input autocomplete="off" aria-describedby="defaultFormControlHelp" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" name="originstring" />
                                             <i class="ti ti-location mb-2 icon"></i>
 
-											<span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
+                                            <span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
 
 
 
@@ -147,9 +153,9 @@
                                         <div class="form-text d-block d-md-none" id="defaultFormControlHelp">شهر مقصد سفر</div>
 
                                         <div class="input-container">
-                                            <input  data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
+                                            <input data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
                                             <i class="ti ti-map-pin mb-2 icon"></i>
-											<span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;  min-width:230px;">
+                                            <span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;  min-width:230px;">
 
                                                 @*  <div class="city">
                                                 <a class="dropdown-item" href="javascript:void(0);">
@@ -182,7 +188,7 @@
                                         <!-- Disabled Range-->
 
                                         <div class="input-container">
-                                            <input  autocomplete="off" class="form-control bdi starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
+                                            <input autocomplete="off" class="form-control bdi starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
                                             <i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
                                         </div>
                                         <div class="form-text d-none d-md-block" id="defaultFormControlHelp">انتخاب تاریخ</div>
@@ -244,11 +250,12 @@
                 سفرهای سواری بین شهری و ترانسفر فرودگاهی
             </h3>
 
-            <p class="text-center">سریعترین و راحت ترین راه حل نبود بلیط هواپیما. VIP، سریع، راحت
+            <p class="text-center">
+                سریعترین و راحت ترین راه حل نبود بلیط هواپیما. VIP، سریع، راحت
             </p>
 
             <p class="text-center mb-3 mb-md-5 pb-3 fw-lighter">
-                آماده خدمت رسانی به شما و مشتریان‌ارجمندتان   
+                آماده خدمت رسانی به شما و مشتریان‌ارجمندتان
             </p>
             <div class="features-icon-wrapper row gx-0 gy-4 g-sm-5">
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
@@ -264,7 +271,7 @@
                     </div>
                     <h5 class="mb-2">ناوگان وسیع و آماده</h5>
                     <p class="features-icon-description">
-                      خدمات گسترده مسترشوفر با موجودی کامل و ناوگان با ظرفیت بالا، همیشه آماده خدمت‌رسانی و تامین 
+                        خدمات گسترده مسترشوفر با موجودی کامل و ناوگان با ظرفیت بالا، همیشه آماده خدمت‌رسانی و تامین
                     </p>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
@@ -280,8 +287,8 @@
                     </div>
                     <h5 class="mb-2">رانندگان و خودرو‌های تایید شده</h5>
                     <p class="features-icon-description">
-                       ارائه با کیفیت ترین خدمات سفر بین‌شهری و ترانسفر اختصاصی با راننده‌ی در اختیار
-                       برای بهترین تجربه 
+                        ارائه با کیفیت ترین خدمات سفر بین‌شهری و ترانسفر اختصاصی با راننده‌ی در اختیار
+                        برای بهترین تجربه
                     </p>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
@@ -1105,16 +1112,16 @@
             </div>
             <h3 class="text-center mb-3 fw-medium">
                 <span class="position-relative fw-bold z-1 section-title">
-                    ارتباط مستقیم با تیم ما
+                    ارتباط مستقیم با مسترشوفر
                 </span>
 
             </h3>
-            <p class="text-center mb-4 mb-lg-5 pb-md-3">هر سوال یا نکته ای؟ فقط برای ما این پایین بنویس</p>
+            <p class="text-center mb-4 mb-lg-5 pb-md-3">برای ارتباط مستقیم با مستر شوفر، از قسمت زیر استفاده کنید</p>
             <div class="row gy-4">
                 <div class="col-lg-5">
                     <div class="contact-img-box position-relative border p-2 h-100">
                         <img src="~/img/front-pages/icons/contact-border.png" alt="contact border" class="contact-border-img position-absolute d-none d-md-block scaleX-n1-rtl" />
-                        <img src="~/img/front-pages/landing-page/contact-customer-service.png" alt="contact customer service" class="contact-img w-100 scaleX-n1-rtl" />
+                        <img src="/callcenter.jpg " alt="contact customer service" class="contact-img w-100 scaleX-n1-rtl" />
                         <div class="pt-3 px-4 pb-1">
                             <div class="row gy-3 gx-md-4">
                                 <div class="col-md-6 col-lg-12 col-xl-6">
@@ -1135,7 +1142,7 @@
                                         </div>
                                         <div>
                                             <p class="mb-1">تلفن</p>
-                                            <h5 class="mb-0"><a href="tel:+989902063015" class="text-heading">+98 990 206 3015</a></h5>
+                                            <h5 class="mb-0" dir="ltr"><a href="tel:+989902063015" class="text-heading">09902063015</a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -1150,21 +1157,31 @@
                             <p class="mb-4">
                                 اگر صحبتی با ما دارید لطفا در باکس زیر بنویسید مثل انتقادات و پیشنهادات ، همکاری،
                                 <br class="d-none d-lg-block" />
-                              و ... ما در خدمت شما هستیم.
+                                و ... ما در خدمت شما هستیم.
                             </p>
-                            <form>
+                            <form id="contact-us">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label" for="contact-form-fullname">نام و نام خانوادگی</label>
-                                        <input class="form-control" id="contact-form-fullname" placeholder="امیر" type="text" />
+                                        <input name="name" class="form-control" id="name" placeholder="نام خود را وارد کنید" type="text" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="contact-form-email">ایمیل</label>
-                                        <input class="form-control" id="contact-form-email" placeholder="johndoe@gmail.com" type="text" />
+                                        <label class="form-label" for="contact-form-email">
+                                            شماره تلفن
+
+                                            <span class="text-danger">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input required name="number" class="form-control" id="number" type="text" />
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" for="contact-form-message">پیام</label>
-                                        <textarea class="form-control" id="contact-form-message" placeholder="پیام خود را بنویسید" rows="8"></textarea>
+                                        <label class="form-label" for="contact-form-message">پیام
+                                            <span class="text-danger">
+                                                *
+                                            </span>
+                                        </label>
+                                        <textarea required name="message" class="form-control" id="message" placeholder="پیام خود را بنویسید" rows="8"></textarea>
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary" type="submit">ارسال پیام</button>
@@ -1179,3 +1196,50 @@
     </section>
     <!-- Contact Us: End -->
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#contact-us').on('submit', function (event) {
+            event.preventDefault();
+
+            var name = $('#name').val();
+            var number = $('#number').val();
+            var message = $('#message').val();
+
+
+
+            $.ajax({
+                url: '/Message',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ name: name, number: number, message: message }),
+
+                success: function (response) {
+                    Swal.fire({
+                        title: 'پیام شما ثبت شد',
+                        text: 'با تشکر از شما، پیام شما در اسرع وقت و با ارجعیت، توسط کارشناسان ما برسی خواهد شد.',
+                        confirmButtonText: 'باشه',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary waves-effect waves-light'
+                        },
+                        buttonsStyling: false
+                    });
+                    // Optionally, clear the form fields
+                    $('#contact-us')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    $('#contact-us')[0].reset();
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "پیام شما ثبت نشد",
+                        text: "پیام شما در سیستم ثبت نشد",
+                    });
+                }
+            });
+            
+        });
+    });
+</script>

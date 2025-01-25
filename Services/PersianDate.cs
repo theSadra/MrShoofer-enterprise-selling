@@ -25,7 +25,6 @@ namespace Application.Services
     {12, "اسفند" }
     };
 
-
     public PersianDate(DateTime dateTime)
     {
       this._datetime = dateTime;
@@ -111,7 +110,7 @@ namespace Application.Services
     {
       get
       {
-        return monthNames[Month]; 
+        return monthNames[Month];
       }
     }
 

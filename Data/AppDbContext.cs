@@ -11,6 +11,9 @@ namespace Application.Data
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<AdminUser> AdminUsers { get; set; }
     public DbSet<AgencyBalanceCharge> AgencyBalanceCharges { get; set; }
+    public DbSet<ChargePaymentRequest> ChargePaymentRequests { get; set; }
+
+    public DbSet<ContactUsMessage> ContactMessages { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)

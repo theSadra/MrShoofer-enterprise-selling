@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Threading.RateLimiting;
 
 
 
@@ -82,7 +83,27 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 
+
+// Configure rate limiting
+builder.Services.AddRateLimiter(options =>
+{
+  options.AddPolicy("ContactUsPolicy", context =>
+      RateLimitPartition.GetFixedWindowLimiter(
+          partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
+          factory: partition => new FixedWindowRateLimiterOptions
+          {
+            PermitLimit = 5,
+            Window = TimeSpan.FromMinutes(1),
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 2
+          }));
+});
+
+
 var app = builder.Build();
+
+app.UseRateLimiter();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
