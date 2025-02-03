@@ -75,7 +75,7 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.AccessDeniedPath = "/Auth/AccessDenied";
   options.Cookie.Name = "YourAppCookieName";
   options.Cookie.HttpOnly = true;
-  options.ExpireTimeSpan = TimeSpan.FromDays(2);
+  options.ExpireTimeSpan = TimeSpan.FromDays(75);
   options.LoginPath = "/Auth/Login";
 
   options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;

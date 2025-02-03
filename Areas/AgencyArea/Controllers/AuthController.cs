@@ -51,8 +51,8 @@ namespace Application.Areas.AgencyArea
           ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
           return View(viewmodel);
         }
-
-        var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, false);
+       
+        var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe,viewmodel.RemmemberMe);
         if (user != null && result.Succeeded)
         {
           // Redirect or take further action
