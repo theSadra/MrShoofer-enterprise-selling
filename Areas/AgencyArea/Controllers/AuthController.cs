@@ -22,7 +22,6 @@ namespace Application.Areas.AgencyArea
       _usermanager = usermanager;
     }
 
-
     [HttpGet]
     public IActionResult Login()
     {

@@ -1,4 +1,5 @@
 @model Application.ViewModels.Reserve.ReserveInfoViewModel
+
 @{
     Layout = "_AgencySideLayout";
 
@@ -850,9 +851,87 @@
 
 </style>
 
-<script src="/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-<script src="/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
 
+
+@section PageScripts {
+    <script src="~/libs/jquery.js"></script>
+
+
+    <script src="~/js/forms-selects.js"></script>
+    <script src="~/js/forms-tagify.js"></script>
+    <script src="~/js/forms-typeahead.js"></script>
+
+
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+    <script src="/libs/validation/jquery.validate.min.js"></script>
+    <script src="/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("form").validate({
+                rules: {
+                    Firstname: {
+                        required: true
+                    },
+                    Lastname: {
+                        required: true
+                    },
+                    Gender: {
+                        required: true
+                    },
+                    NaCode: {
+                        required: true,
+                        regex: /^\d{10}$/
+                    },
+                    NumebrPhone: {
+                        required: true,
+                        regex: /((0?9)|(\+?989))\d{9}/
+                    },
+                    Email: {
+                        email: true
+                    }
+                },
+                messages: {
+                    Firstname: {
+                        required: "لطفا نام خود را وارد کنید"
+                    },
+                    Lastname: {
+                        required: "لطفا نام خانوادگی خود را وارد کنید"
+                    },
+                    Gender: {
+                        required: "لطفا جنسیت خود را انتخاب کنید"
+                    },
+                    NaCode: {
+                        required: "لطفا کد ملی خود را وارد کنید",
+                        regex: "کد ملی باید 10 رقم باشد"
+                    },
+                    NumebrPhone: {
+                        required: "لطفا شماره موبایل خود را وارد کنید",
+                        regex: "شماره موبایل باید معتبر باشد"
+                    },
+                    Email: {
+                        email: "لطفا یک ایمیل معتبر وارد کنید"
+                    }
+                },
+                errorClass: "text-danger validation-message",
+                validClass: "is-valid",
+                errorElement: "span",
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                }
+            });
+        });
+    </script>
+}
 
 @section VendorStyles {
     <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
@@ -861,43 +940,13 @@
 }
 
 @section VendorScripts {
-    <script src="~/vendor/libs/select2/select2.js"></script>
-
-    <script src="~/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="~/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
-
-    <script src="/libs/validation/jquery.validate.min.js"></script>
-    <script src="/libs/validation/jquery.validate.unobtrusive.min.js"></script>
-
-    <script src="~/libs/jquery.js"></script>
+   
 
 
 }
 
-@section PageScripts {
-    <script src="~/js/forms-selects.js"></script>
-    <script src="~/js/forms-tagify.js"></script>
-    <script src="~/js/forms-typeahead.js"></script>
-}
+<script src="/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
 
-
-<style>
-
-    @@media only screen and (max-width: 600px) {
-
-    .px-14 {
-        padding-left: .2rem !important;
-        padding-right: .2rem !important;
-    }
-
-    .step-title {
-        font-size: .75rem !important;
-    }
-}
-
-
-</style>
 
 
 
@@ -1381,3 +1430,19 @@
 </div>
 
 
+<style>
+
+    @@media only screen and (max-width: 600px) {
+
+    .px-14 {
+        padding-left: .2rem !important;
+        padding-right: .2rem !important;
+    }
+
+    .step-title {
+        font-size: .75rem !important;
+    }
+}
+
+
+</style>
