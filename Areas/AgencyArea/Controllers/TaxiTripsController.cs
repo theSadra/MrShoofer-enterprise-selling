@@ -27,7 +27,7 @@ namespace Application.Areas.AgencyArea
     private readonly IConfiguration _configuration;
     private readonly IWebHostEnvironment _env;
 
-    private Agency agency;
+    private Agency? agency;
 
     // Clean single constructor
     public TaxiTripsController(
@@ -80,11 +80,11 @@ namespace Application.Areas.AgencyArea
       var destKey = NormalizeCity(destinationstring);
 
       int origin_id = 0, destination_id = 0;
-      
+
       // First try static map
       normMap.TryGetValue(originKey, out origin_id);
       normMap.TryGetValue(destKey, out destination_id);
-      
+
       // If either ID is missing, try the dynamic API map
       if (origin_id == 0 || destination_id == 0)
       {
@@ -107,7 +107,7 @@ namespace Application.Areas.AgencyArea
           {
             var dirOriginKey = NormalizeCity(dir.Cityone);
             var dirDestKey = NormalizeCity(dir.Citytwo);
-            
+
             if (origin_id == 0 && dirOriginKey == originKey && dir.CityoneId.HasValue)
               origin_id = dir.CityoneId.Value;
             if (origin_id == 0 && dirDestKey == originKey && dir.CitytwoId.HasValue)
@@ -116,7 +116,7 @@ namespace Application.Areas.AgencyArea
               destination_id = dir.CityoneId.Value;
             if (destination_id == 0 && dirDestKey == destKey && dir.CitytwoId.HasValue)
               destination_id = dir.CitytwoId.Value;
-              
+
             if (origin_id != 0 && destination_id != 0) break;
           }
         }
@@ -133,7 +133,20 @@ namespace Application.Areas.AgencyArea
         return View();
       }
 
-      PersianDate pd = new PersianDate(searchdate?.Replace('-', '/') ?? string.Empty);
+      PersianDate pd;
+      try
+      {
+        pd = new PersianDate(searchdate?.Replace('-', '/') ?? string.Empty);
+      }
+      catch
+      {
+        ModelState.AddModelError(nameof(searchdate), "تاریخ نامعتبر است.");
+        ViewBag.origin_city_text = originstring;
+        ViewBag.dest_city_text = destinationstring;
+        ViewBag.searchdate = searchdate;
+        return View();
+      }
+
       DateTime searchedDatetime = pd.ToDateTime();
 
       ViewBag.origin_city_text = originstring;
@@ -188,22 +201,25 @@ namespace Application.Areas.AgencyArea
     public override void OnActionExecuting(ActionExecutingContext context)
     {
       base.OnActionExecuting(context);
-      string tokenToUse = null;
-      
+      string? tokenToUse = null;
+
       // Use agency token if authenticated, otherwise use guest/default token
       if (User?.Identity?.IsAuthenticated == true)
       {
-        var identityUser = _userManager.GetUserAsync(User).Result;
-        agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
-        if (agency != null && !string.IsNullOrWhiteSpace(agency.ORSAPI_token)) 
+        var currentUserId = _userManager.GetUserId(User);
+        if (!string.IsNullOrWhiteSpace(currentUserId))
+        {
+          agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser != null && a.IdentityUser.Id == currentUserId);
+        }
+        if (agency != null && !string.IsNullOrWhiteSpace(agency.ORSAPI_token))
           tokenToUse = agency.ORSAPI_token;
       }
-      
+
       // Fallback to guest token from configuration
-      if (string.IsNullOrWhiteSpace(tokenToUse)) 
+      if (string.IsNullOrWhiteSpace(tokenToUse))
         tokenToUse = _configuration["MrShoofer:SellerToken"];
-        
-      if (!string.IsNullOrWhiteSpace(tokenToUse)) 
+
+      if (!string.IsNullOrWhiteSpace(tokenToUse))
         _mrShooferAPIClient.SetSellerApiKey(tokenToUse);
     }
 
@@ -221,11 +237,11 @@ namespace Application.Areas.AgencyArea
       var destKey = NormalizeCity(destinationstring);
 
       int origin_id = 0, destination_id = 0;
-      
+
       // First try static map
       normMap.TryGetValue(originKey, out origin_id);
       normMap.TryGetValue(destKey, out destination_id);
-      
+
       // If either ID is missing, try the dynamic API map
       if (origin_id == 0 || destination_id == 0)
       {
@@ -252,7 +268,7 @@ namespace Application.Areas.AgencyArea
           {
             var dirOriginKey = NormalizeCity(dir.Cityone);
             var dirDestKey = NormalizeCity(dir.Citytwo);
-            
+
             if (origin_id == 0 && dirOriginKey == originKey && dir.CityoneId.HasValue)
               origin_id = dir.CityoneId.Value;
             if (origin_id == 0 && dirDestKey == originKey && dir.CitytwoId.HasValue)
@@ -261,7 +277,7 @@ namespace Application.Areas.AgencyArea
               destination_id = dir.CityoneId.Value;
             if (destination_id == 0 && dirDestKey == destKey && dir.CitytwoId.HasValue)
               destination_id = dir.CitytwoId.Value;
-              
+
             if (origin_id != 0 && destination_id != 0) break;
           }
         }

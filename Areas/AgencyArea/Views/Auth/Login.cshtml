@@ -2,6 +2,7 @@
 @{
     Layout = "_BlankLayout";
     ViewData["Title"] = "ورود";
+    var loginAction = ViewBag.LoginAction as string ?? "Login";
 }
 
 @section VendorStyles {
@@ -44,7 +45,7 @@
                         <div class="mt-1 mb-1 text-danger">@ViewBag.errormessage</div>
                     }
 
-                    <form id="formAuthentication" class="mb-3" method="POST" asp-action="Login">
+                    <form id="formAuthentication" class="mb-3" method="POST" asp-action="@loginAction">
                         @if (!string.IsNullOrEmpty(ViewBag.ReturnUrl as string))
                         {
                             <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />

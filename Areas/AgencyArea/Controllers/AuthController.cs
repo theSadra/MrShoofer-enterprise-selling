@@ -1,5 +1,6 @@
 using Application.Services.Auth;
 using Application.ViewModels.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Policy;
@@ -38,7 +39,29 @@ namespace Application.Areas.AgencyArea
 
       // Pass ReturnUrl to the view via ViewBag
       ViewBag.ReturnUrl = ReturnUrl;
+      ViewBag.LoginAction = "Login";
       return View();
+    }
+
+    [HttpGet("/Admin/Login")]
+    [AllowAnonymous]
+    public IActionResult AdminLogin(string? ReturnUrl)
+    {
+      var adminReturnUrl = string.IsNullOrWhiteSpace(ReturnUrl) ? "/Admin" : ReturnUrl;
+
+      if (_signInManager.IsSignedIn(User))
+      {
+        if (Url.IsLocalUrl(adminReturnUrl))
+        {
+          return LocalRedirect(adminReturnUrl);
+        }
+
+        return Redirect("/Admin");
+      }
+
+      ViewBag.ReturnUrl = adminReturnUrl;
+      ViewBag.LoginAction = "AdminLoginPost";
+      return View("Login");
     }
 
     [HttpPost]
@@ -56,10 +79,11 @@ namespace Application.Areas.AgencyArea
         {
           ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
           ViewBag.ReturnUrl = ReturnUrl;
+          ViewBag.LoginAction = "Login";
           return View(viewmodel);
         }
        
-        var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe,viewmodel.RemmemberMe);
+        var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, lockoutOnFailure: false);
         if (user != null && result.Succeeded)
         {
           // Redirect or take further action
@@ -74,6 +98,7 @@ namespace Application.Areas.AgencyArea
         {
           ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
           ViewBag.ReturnUrl = ReturnUrl;
+          ViewBag.LoginAction = "Login";
           return View(viewmodel);
         }
 
@@ -109,7 +134,63 @@ namespace Application.Areas.AgencyArea
 
       }
       ViewBag.ReturnUrl = ReturnUrl;
+      ViewBag.LoginAction = "Login";
       return View(viewmodel);
+    }
+
+    [HttpPost("/Admin/Login")]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AdminLoginPost(LoginViewModel viewmodel, string? ReturnUrl)
+    {
+      var adminReturnUrl = string.IsNullOrWhiteSpace(ReturnUrl) ? "/Admin" : ReturnUrl;
+
+      if (!ModelState.IsValid)
+      {
+        ViewBag.ReturnUrl = adminReturnUrl;
+        ViewBag.LoginAction = "AdminLoginPost";
+        return View("Login", viewmodel);
+      }
+
+      var user = await _usermanager.FindByNameAsync(viewmodel.Username);
+
+      if (user == null)
+      {
+        ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
+        ViewBag.ReturnUrl = adminReturnUrl;
+        ViewBag.LoginAction = "AdminLoginPost";
+        return View("Login", viewmodel);
+      }
+
+      var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, lockoutOnFailure: false);
+
+      if (!result.Succeeded)
+      {
+        ViewBag.errormessage = "نام کاربری یا رمز عبور اشتباه است";
+        ViewBag.ReturnUrl = adminReturnUrl;
+        ViewBag.LoginAction = "AdminLoginPost";
+        return View("Login", viewmodel);
+      }
+
+      var claims = await _usermanager.GetClaimsAsync(user);
+      var isAdminByClaim = claims.Any(c => c.Type == "Role" && c.Value == "Admin");
+      var isAdminByRole = await _usermanager.IsInRoleAsync(user, "Admin");
+
+      if (!isAdminByClaim && !isAdminByRole)
+      {
+        await _signInManager.SignOutAsync();
+        ViewBag.errormessage = "شما به پنل مدیریت دسترسی ندارید";
+        ViewBag.ReturnUrl = adminReturnUrl;
+        ViewBag.LoginAction = "AdminLoginPost";
+        return View("Login", viewmodel);
+      }
+
+      if (Url.IsLocalUrl(adminReturnUrl))
+      {
+        return LocalRedirect(adminReturnUrl);
+      }
+
+      return Redirect("/Admin");
     }
 
     [HttpGet]

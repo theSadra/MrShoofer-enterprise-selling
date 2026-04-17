@@ -92,11 +92,11 @@ namespace Application.Areas.AgencyArea
           try
           {
             var savedData = JsonConvert.DeserializeObject<ReserveInfoViewModel>(savedDataJson);
-            
+
             // IMPORTANT: Remove the data from TempData after reading it
             // This ensures it's only used once and won't persist on page refresh
             TempData.Remove("SavedReserveData");
-            
+
             // Pass the saved data to the view
             return View(savedData);
           }
@@ -122,7 +122,7 @@ namespace Application.Areas.AgencyArea
         // TempData will survive ONE redirect - perfect for our use case
         TempData["SavedReserveData"] = JsonConvert.SerializeObject(viewmodel);
         // NOTE: We don't use TempData.Keep() because we want it to be used only once
-        
+
         // Return JSON to trigger modal on client side
         var returnUrl = Url.Action("Reservetrip", "Reserve", new { tripcode = viewmodel.TripCode, area = "AgencyArea" });
         return Json(new { requiresAuth = true, returnUrl = returnUrl });
@@ -130,7 +130,25 @@ namespace Application.Areas.AgencyArea
 
       if (!ModelState.IsValid)
       {
-        return RedirectToAction("Reservetrip", new { tripcode = viewmodel.TripCode });
+        ViewData["ReservationId"] = viewmodel.TripCode;
+
+        var invalidTrip = await apiclient.GetTripInfo(viewmodel.TripCode);
+        ViewBag.trip = invalidTrip;
+
+        if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+          var invalidViewAgencyBalance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
+          ViewBag.agancy_balance = invalidViewAgencyBalance;
+          ViewBag.canbuy = invalidViewAgencyBalance >= invalidTrip.afterdiscticketprice;
+        }
+        else
+        {
+          ViewBag.agancy_balance = 0;
+          ViewBag.canbuy = false;
+          ViewBag.isGuest = true;
+        }
+
+        return View(viewmodel);
       }
 
       // Get trip info and check balance
@@ -170,82 +188,82 @@ namespace Application.Areas.AgencyArea
 
 
 
-        TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
-        {
-          isPrivate = true,
-          tripCode = viewModel.TripCode
-        };
+      TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
+      {
+        isPrivate = true,
+        tripCode = viewModel.TripCode
+      };
 
-        var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
+      var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
 
 
-        // final reserve
+      // final reserve
 
-        ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
-        {
-          passengerFirstName = viewModel.Firstname,
-          passengerLastName = viewModel.Lastname,
-          reservationCode = reservecode,
-          passengerNationalCode = viewModel.Nacode,
-          passengerNumberPhone = viewModel.Numberphone
-        };
+      ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
+      {
+        passengerFirstName = viewModel.Firstname,
+        passengerLastName = viewModel.Lastname,
+        reservationCode = reservecode,
+        passengerNationalCode = viewModel.Nacode,
+        passengerNumberPhone = viewModel.Numberphone
+      };
 
 
       TicketConfirmationResponse reserve_response = null;
 
-        try
-        {
-           reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
-        }
-        catch (Exception e)
-        {
-          return RedirectToAction("Index", "Home");
-        }
+      try
+      {
+        reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
+      }
+      catch (Exception e)
+      {
+        return RedirectToAction("Index", "Home");
+      }
 
 
-        // Getting trip_info
+      // Getting trip_info
 
-        var trip = await apiclient.GetTripInfo(viewModel.TripCode);
+      var trip = await apiclient.GetTripInfo(viewModel.TripCode);
 
-        //Creating ticket object
-        Ticket newticket = new Ticket()
-        {
-          Firstname = viewModel.Firstname,
-          Lastname = viewModel.Lastname,
-          PhoneNumber = viewModel.Numberphone,
-          NaCode = viewModel.Nacode,
-          TicketFinalPrice = reserve_response.paid_total_fee_tomans,
-          Gender = viewModel.Gender,
-          TicketOriginalPrice = trip.originalTicketprice,
-          TripOrigin = trip.originCityName,
-          TripDestination = trip.destinationCityName,
-          RegisteredAt = DateTime.Now,
-          TicketCode = reserve_response.ticketCode,
-          Tripcode = trip.tripPlanCode,
-          ServiceName = trip.taxiSupervisorName,
-          CarName = trip.carModelName
-        };
+      //Creating ticket object
+      Ticket newticket = new Ticket()
+      {
+        Firstname = viewModel.Firstname,
+        Lastname = viewModel.Lastname,
+        PhoneNumber = viewModel.Numberphone,
+        NaCode = viewModel.Nacode,
+        TicketFinalPrice = reserve_response.paid_total_fee_tomans,
+        Gender = viewModel.Gender,
+        TicketOriginalPrice = trip.originalTicketprice,
+        TripOrigin = trip.originCityName,
+        TripDestination = trip.destinationCityName,
+        RegisteredAt = DateTime.Now,
+        TicketCode = reserve_response.ticketCode,
+        Tripcode = trip.tripPlanCode,
+        ServiceName = trip.taxiSupervisorName,
+        CarName = trip.carModelName
+      };
 
-        // Registering to database
-
-
-        var identity_user = await _userManager.GetUserAsync(User);
-
-        var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
-        newticket.Agency = agancy;
+      // Registering to database
 
 
-        context.Tickets.Add(newticket);
+      var identity_user = await _userManager.GetUserAsync(User);
 
-        await context.SaveChangesAsync();
-
-
-
-        //Sending SMS for customer
+      var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
+      newticket.Agency = agancy;
 
 
-        var service_url = configuration["serivce_url"];
-        var trip_link = newticket.TicketCode;
+      context.Tickets.Add(newticket);
+
+      await context.SaveChangesAsync();
+
+
+
+      //Sending SMS for customer
+
+
+      var service_url = configuration["serivce_url"];
+      var trip_link = newticket.TicketCode;
 
 
       try
@@ -260,8 +278,8 @@ namespace Application.Areas.AgencyArea
 
 
 
-        return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
-      }
+      return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
+    }
 
 
 

@@ -36,8 +36,8 @@
                 }
             });
 
-            // Handle form submission with authentication check
-            $("form").on("submit", function(e) {
+            // Handle reserve form submission with authentication check
+            $("#reserveTripForm").on("submit", function(e) {
                 e.preventDefault();
 
                 // Use unobtrusive validation
@@ -52,21 +52,43 @@
                     url: $(this).attr('action'),
                     type: 'POST',
                     data: formData,
-                    success: function(response) {
+                    success: function(response, textStatus, xhr) {
                         // Check if authentication is required
                         if (response && response.requiresAuth) {
                             showLoginModal(response.returnUrl);
+                            return;
                         }
                         // Check if insufficient funds
                         else if (response && response.insufficientFunds) {
                             showInsufficientFundsModal();
+                            return;
                         }
                         else {
-                            // If response is HTML (redirect happened), navigate to it
+                            // For successful reservation submit, server returns the ConfirmInfo HTML view.
+                            // Render it directly instead of reloading current page.
+                            if (typeof response === 'string' && response.trim().length > 0) {
+                                document.open();
+                                document.write(response);
+                                document.close();
+                                return;
+                            }
+
+                            if (xhr && xhr.responseURL) {
+                                window.location.href = xhr.responseURL;
+                                return;
+                            }
+
                             window.location.reload();
                         }
                     },
-                    error: function() {
+                    error: function(xhr) {
+                        if (xhr && xhr.responseText) {
+                            document.open();
+                            document.write(xhr.responseText);
+                            document.close();
+                            return;
+                        }
+
                         window.location.reload();
                     }
                 });
@@ -165,7 +187,7 @@
 
 @section VendorStyles {
     <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
-    <link rel="stylesheet" href="~/css/Reservetrip.css/">
+    <link rel="stylesheet" href="~/css/Reservetrip.css">
 }
 
 <style>
@@ -1007,7 +1029,7 @@
 
 <div class="main_container px-lg-6 px-0">
     <!-- Steps indicator -->
-    <div class="bg-white rounded-5 border-1 border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 ">
+    <div class="bg-white rounded-5 border border-divider w-full rounded-3xl py-7.5 px-14 shadow-1__2__gray/75 ">
         <div class="d-flex steps">
             <div class="step-container">
                 <div class="step selected">
@@ -1060,7 +1082,7 @@
         </div>
 
         <aside class="col-md-4 col-12">
-            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 ">
+            <div class="trip_info bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 ">
                 <!-- ...existing trip info HTML... -->
                 <div class="headline d-flex justify-between">
                     <span class="badge bg-dark rounded-pill py-2" style="font-size: .875rem!important">
@@ -1220,7 +1242,7 @@
             </div>
 
             <!-- Trip rules section -->
-            <div class="trip_info bg-white rounded-5 border-1 border-divider shadow-7.5__13__5__gray30 p-3 mt-3 ">
+            <div class="trip_info bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 mt-3 ">
                 @*  <div class="headline d-flex justify-between">
                 <span class="badge bg-primary rounded-pill py-2" style="font-size: .875rem!important">
                 قوانین سفر
@@ -1268,7 +1290,7 @@
                     </div>
                 </div>
 
-                <form class="input-forms row mt-2 px-0 px-md-3" method="post" asp-action="Reservetrip">
+                <form id="reserveTripForm" class="input-forms row mt-2 px-0 px-md-3" method="post" asp-action="Reservetrip">
                     <input type="hidden" asp-for="TripCode" value="@trip.tripPlanCode" />
 
                     <!-- Form fields remain the same -->

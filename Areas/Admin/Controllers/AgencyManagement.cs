@@ -15,7 +15,7 @@ namespace Application.Areas.Admin.Controllers
 {
   [Area("Admin")]
   [Route("[area]/Agency/[action]")]
-  //[Authorize(Policy = "Admin")]
+  [Authorize(Policy = "Admin")]
   public class AgencyManagement : Controller
   {
     private readonly AppDbContext context;

@@ -42,7 +42,7 @@ var pgsqlConnString = builder.Configuration.GetConnectionString(connStringName);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(pgsqlConnString);
+  options.UseNpgsql(pgsqlConnString);
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -60,10 +60,19 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 builder.Services.AddAuthorization(options =>
 {
   options.AddPolicy("Agency", policy =>
-      policy.RequireClaim("Role", "Agency"));
+      policy.RequireAssertion(context =>
+        context.User.HasClaim(c => c.Type == "Role" && c.Value == "Agency") ||
+        context.User.IsInRole("Agency")));
+
+  options.AddPolicy("Buyer", policy =>
+      policy.RequireAssertion(context =>
+        context.User.HasClaim(c => c.Type == "Role" && c.Value == "Buyer") ||
+        context.User.IsInRole("Buyer")));
 
   options.AddPolicy("Admin", policy =>
-      policy.RequireClaim("Role", "Admin"));
+      policy.RequireAssertion(context =>
+        context.User.HasClaim(c => c.Type == "Role" && c.Value == "Admin") ||
+        context.User.IsInRole("Admin")));
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -73,6 +82,33 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.Cookie.HttpOnly = true;
   options.ExpireTimeSpan = TimeSpan.FromDays(75);
   options.LoginPath = "/Auth/Login";
+  options.Events = new CookieAuthenticationEvents
+  {
+    OnRedirectToLogin = context =>
+    {
+      if (context.Request.Path.StartsWithSegments("/Admin", StringComparison.OrdinalIgnoreCase))
+      {
+        var returnUrl = Uri.EscapeDataString($"{context.Request.PathBase}{context.Request.Path}{context.Request.QueryString}");
+        context.Response.Redirect($"/Admin/Login?ReturnUrl={returnUrl}");
+        return Task.CompletedTask;
+      }
+
+      context.Response.Redirect(context.RedirectUri);
+      return Task.CompletedTask;
+    },
+    OnRedirectToAccessDenied = context =>
+    {
+      if (context.Request.Path.StartsWithSegments("/Admin", StringComparison.OrdinalIgnoreCase))
+      {
+        var returnUrl = Uri.EscapeDataString($"{context.Request.PathBase}{context.Request.Path}{context.Request.QueryString}");
+        context.Response.Redirect($"/Admin/Login?ReturnUrl={returnUrl}");
+        return Task.CompletedTask;
+      }
+
+      context.Response.Redirect(context.RedirectUri);
+      return Task.CompletedTask;
+    }
+  };
 
   options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
   options.SlidingExpiration = true;
@@ -96,6 +132,79 @@ builder.Services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
+// Ensure a default admin account exists for admin panel login.
+using (var scope = app.Services.CreateScope())
+{
+  var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+  var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+  const string adminUsername = "mrshoofer1405";
+  const string adminPassword = "qazwsx";
+
+  var adminUser = await userManager.FindByNameAsync(adminUsername);
+
+  if (adminUser == null)
+  {
+    adminUser = new IdentityUser
+    {
+      UserName = adminUsername
+    };
+
+    var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+    if (!createResult.Succeeded)
+    {
+      throw new Exception($"Failed to create default admin user '{adminUsername}'.");
+    }
+  }
+  else
+  {
+    var hasPassword = await userManager.HasPasswordAsync(adminUser);
+    if (hasPassword)
+    {
+      var removePasswordResult = await userManager.RemovePasswordAsync(adminUser);
+      if (!removePasswordResult.Succeeded)
+      {
+        throw new Exception($"Failed to reset password for default admin user '{adminUsername}'.");
+      }
+    }
+
+    var addPasswordResult = await userManager.AddPasswordAsync(adminUser, adminPassword);
+    if (!addPasswordResult.Succeeded)
+    {
+      throw new Exception($"Failed to set password for default admin user '{adminUsername}'.");
+    }
+  }
+
+  // Keep compatibility with both role-based and claim-based checks.
+  if (!await roleManager.RoleExistsAsync("Admin"))
+  {
+    var roleResult = await roleManager.CreateAsync(new IdentityRole("Admin"));
+    if (!roleResult.Succeeded)
+    {
+      throw new Exception("Failed to create Admin role.");
+    }
+  }
+
+  if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+  {
+    var addRoleResult = await userManager.AddToRoleAsync(adminUser, "Admin");
+    if (!addRoleResult.Succeeded)
+    {
+      throw new Exception($"Failed to assign Admin role to '{adminUsername}'.");
+    }
+  }
+
+  var claims = await userManager.GetClaimsAsync(adminUser);
+  if (!claims.Any(c => c.Type == "Role" && c.Value == "Admin"))
+  {
+    var claimResult = await userManager.AddClaimAsync(adminUser, new System.Security.Claims.Claim("Role", "Admin"));
+    if (!claimResult.Succeeded)
+    {
+      throw new Exception($"Failed to assign Admin claim to '{adminUsername}'.");
+    }
+  }
+}
+
 app.UseRateLimiter();
 
 if (app.Environment.IsDevelopment())
@@ -118,6 +227,31 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+  var user = context.User;
+  var isAuthenticated = user?.Identity?.IsAuthenticated == true;
+  var isAdmin = isAuthenticated &&
+                (user!.HasClaim(c => c.Type == "Role" && c.Value == "Admin") || user.IsInRole("Admin"));
+
+  if (isAdmin)
+  {
+    var path = context.Request.Path;
+    var isAdminPath = path.StartsWithSegments("/Admin", StringComparison.OrdinalIgnoreCase);
+    var isAllowedSharedPath =
+      path.StartsWithSegments("/Auth/Logout", StringComparison.OrdinalIgnoreCase) ||
+      path.StartsWithSegments("/Error", StringComparison.OrdinalIgnoreCase);
+
+    if (!isAdminPath && !isAllowedSharedPath)
+    {
+      context.Response.Redirect("/Admin");
+      return;
+    }
+  }
+
+  await next();
+});
 
 app.MapControllerRoute(
     name: "agency",
