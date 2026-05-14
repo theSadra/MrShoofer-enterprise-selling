@@ -11,7 +11,7 @@ namespace Application.Services.MrShooferORS
     string _apikey;
     readonly HttpClient _client;
     readonly string _sellerapikey;
-    
+
     // JSON serializer options with case-insensitive property matching
     private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     {
@@ -77,7 +77,7 @@ namespace Application.Services.MrShooferORS
 
       var response = await _client.GetAsync(searchurl);
       response.EnsureSuccessStatusCode();
-      
+
       var json = await response.Content.ReadAsStringAsync();
       var searchedtrips = JsonSerializer.Deserialize<List<SearchedTrip>>(json, _jsonOptions);
 
@@ -88,10 +88,10 @@ namespace Application.Services.MrShooferORS
     {
 
       string searchurl = $"https://mrbilit.mrshoofer.ir/Trips/getTripinfo?tripcode={tripcode}";
-      
+
       var response = await _client.GetAsync(searchurl);
       response.EnsureSuccessStatusCode();
-      
+
       var json = await response.Content.ReadAsStringAsync();
       var result = JsonSerializer.Deserialize<SearchedTrip>(json, _jsonOptions);
 
@@ -151,15 +151,83 @@ namespace Application.Services.MrShooferORS
     {
       string url = "https://mrbilit.mrshoofer.ir/OTAManagement/RegisterNewOTA";
 
-
-
-      var result = await _client.PostAsJsonAsync(url, registerOTADTO);
-      if (!result.IsSuccessStatusCode)
+      // Build payload explicitly to guarantee exact property names expected by OTA API.
+      var payload = new
       {
-        throw new Exception();
+        Username = registerOTADTO.Username,
+        Password = registerOTADTO.Password,
+        EmailAdress = registerOTADTO.EmailAdress,
+        CompanyName = registerOTADTO.CompanyName,
+        NumberPhone = registerOTADTO.NumberPhone,
+        BackupNumberPhone = registerOTADTO.BackupNumberPhone,
+        BaseCommission = registerOTADTO.BaseCommission,
+        CompanyAddress = registerOTADTO.CompanyAddress
+      };
+
+      var jsonBody = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+      {
+        PropertyNamingPolicy = null
+      });
+
+      using var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+      var result = await _client.PostAsync(url, content);
+      var responseBody = await result.Content.ReadAsStringAsync();
+
+      // Some OTA hosts bind this endpoint from form body instead of JSON.
+      // If JSON binding fails with "required field" validation, retry once as form-urlencoded.
+      if (!result.IsSuccessStatusCode && (int)result.StatusCode == 400 && responseBody.Contains("required", StringComparison.OrdinalIgnoreCase))
+      {
+        using var formContent = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+          ["Username"] = registerOTADTO.Username ?? string.Empty,
+          ["Password"] = registerOTADTO.Password ?? string.Empty,
+          ["EmailAdress"] = registerOTADTO.EmailAdress ?? string.Empty,
+          ["CompanyName"] = registerOTADTO.CompanyName ?? string.Empty,
+          ["NumberPhone"] = registerOTADTO.NumberPhone ?? string.Empty,
+          ["BackupNumberPhone"] = registerOTADTO.BackupNumberPhone ?? string.Empty,
+          ["BaseCommission"] = registerOTADTO.BaseCommission.ToString(System.Globalization.CultureInfo.InvariantCulture),
+          ["CompanyAddress"] = registerOTADTO.CompanyAddress ?? string.Empty
+        });
+
+        result = await _client.PostAsync(url, formContent);
+        responseBody = await result.Content.ReadAsStringAsync();
       }
 
-      return await result.Content.ReadAsStringAsync();
+      if (!result.IsSuccessStatusCode)
+      {
+        throw new Exception($"OTA API error {(int)result.StatusCode} {result.ReasonPhrase}: {responseBody}");
+      }
+
+      // API may return a raw token string, a JSON string token, or an object containing token/apikey.
+      if (string.IsNullOrWhiteSpace(responseBody))
+      {
+        throw new Exception("OTA API returned an empty response body.");
+      }
+
+      try
+      {
+        var parsedNode = JsonNode.Parse(responseBody);
+
+        if (parsedNode is JsonValue value && value.TryGetValue<string>(out var tokenAsString) && !string.IsNullOrWhiteSpace(tokenAsString))
+        {
+          return tokenAsString;
+        }
+
+        if (parsedNode is JsonObject obj)
+        {
+          var tokenNode = obj["token"] ?? obj["apiKey"] ?? obj["apikey"];
+          if (tokenNode is JsonValue tokenValue && tokenValue.TryGetValue<string>(out var extractedToken) && !string.IsNullOrWhiteSpace(extractedToken))
+          {
+            return extractedToken;
+          }
+        }
+      }
+      catch
+      {
+        // Not JSON, continue with raw body.
+      }
+
+      return responseBody.Trim().Trim('"');
     }
 
     //Get available OTA directions
@@ -283,13 +351,13 @@ namespace Application.Services.MrShooferORS
             "dest_city", "destination_city", "target", "destination_city_name", "destinationName");
 
           // Enhanced ID extraction with more property name candidates
-          var id1 = TryGetInt(obj, 
-            "CityoneId", "cityoneid", "cityOneId", "CityOneId", 
+          var id1 = TryGetInt(obj,
+            "CityoneId", "cityoneid", "cityOneId", "CityOneId",
             "originCityId", "fromCityId", "city_one_id", "origin_city_id",
             "originId", "origin_id", "fromId", "from_id", "startCityId", "start_city_id",
             "id1", "cityId1", "city_id_1");
-          var id2 = TryGetInt(obj, 
-            "CitytwoId", "citytwoid", "cityTwoId", "CityTwoId", 
+          var id2 = TryGetInt(obj,
+            "CitytwoId", "citytwoid", "cityTwoId", "CityTwoId",
             "destinationCityId", "toCityId", "city_two_id", "destination_city_id",
             "destinationId", "destination_id", "toId", "to_id", "endCityId", "end_city_id",
             "id2", "cityId2", "city_id_2");

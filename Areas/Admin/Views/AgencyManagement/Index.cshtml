@@ -40,15 +40,19 @@
 }
 
 
-@if (!string.IsNullOrEmpty(ViewBag.status))
+@{
+	var _alertStatus  = TempData["status"]  as string ?? ViewBag.status  as string;
+	var _alertMessage = TempData["message"] as string ?? ViewBag.message as string;
+}
+@if (!string.IsNullOrEmpty(_alertStatus))
 {
-	@if (ViewBag.status == "success")
+	@if (_alertStatus == "success")
 	{
 		<script>
 			$(document).ready(function () {
 				Swal.fire({
 					title: 'موفقیت آمیز',
-					text: "@Html.Raw(ViewBag.message)",  // Ensure the message is correctly rendered
+					text: "@Html.Raw(_alertMessage)",
 					confirmButtonText: 'باشه',
 					icon: 'success',
 					customClass: {
@@ -57,24 +61,22 @@
 					buttonsStyling: false
 				});
 			});
-
 		</script>
 	}
-	@if (ViewBag.status == "error")
+	@if (_alertStatus == "error")
 	{
 		<script>
 			$(document).ready(function () {
-				Swal.fire(
-					{
-						icon: 'error',
-						title: 'خطا...',
-						text: "@Html.Raw(ViewBag.message)",
-						confirmButtonText: 'باشه',
-						customClass: {
-							confirmButton: 'btn btn-primary waves-effect waves-light'
-						},
-						buttonsStyling: false
-					});
+				Swal.fire({
+					icon: 'error',
+					title: 'خطا...',
+					text: "@Html.Raw(_alertMessage)",
+					confirmButtonText: 'باشه',
+					customClass: {
+						confirmButton: 'btn btn-primary waves-effect waves-light'
+					},
+					buttonsStyling: false
+				});
 			});
 		</script>
 	}
@@ -104,7 +106,7 @@
 
 	<!-- Offcanvas to add new agency -->
 	<div aria-labelledby="offcanvasEcommerceCustomerAddLabel" class="offcanvas offcanvas-start
-		 @if (!string.IsNullOrEmpty(ViewBag.status) && ViewBag.status == "error"){
+		 @if (!string.IsNullOrEmpty(_alertStatus) && _alertStatus == "error"){
 		@:show
 }" id="offcanvasEcommerceCustomerAdd" tabindex="-1">
 		<div class="offcanvas-header">
@@ -180,6 +182,3 @@
 		</div>
 	</div>
 </div>
-
-
-

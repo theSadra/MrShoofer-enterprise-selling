@@ -7,9 +7,9 @@ using Application.ViewModels.Admin.AgecyManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Cms.Ecc;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects.DataClasses;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Areas.Admin.Controllers
 {
@@ -21,12 +21,21 @@ namespace Application.Areas.Admin.Controllers
     private readonly AppDbContext context;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly MrShooferAPIClient apiClient;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<AgencyManagement> _logger;
 
-    public AgencyManagement(AppDbContext context, UserManager<IdentityUser> userManager, MrShooferAPIClient client)
+    public AgencyManagement(
+      AppDbContext context,
+      UserManager<IdentityUser> userManager,
+      MrShooferAPIClient client,
+      IConfiguration configuration,
+      ILogger<AgencyManagement> logger)
     {
       this.apiClient = client;
       this.context = context;
       this._userManager = userManager;
+      this._configuration = configuration;
+      this._logger = logger;
     }
 
     [Route("/Admin/")]
@@ -62,7 +71,15 @@ namespace Application.Areas.Admin.Controllers
 
       // Registering agency as OTASeller in ORS
 
-      apiClient.SetSellerApiKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE3IiwianRpIjoiN2E4OWFkYzMtN2VhMC00YWE4LTg1YWUtZjg5M2RkZmI4MjVmIiwiZXhwIjoxODg4OTg2ODEzLCJpc3MiOiJtcnNob29mZXIuaXIiLCJhdWQiOiJtcnNob29mZXIuaXIifQ.uGHR7bq5eQQ6HPTW2ooskdaHdAwumfw_Rxx411NLqw4");
+      var sellerToken = _configuration["MrShoofer:SellerToken"];
+      if (string.IsNullOrWhiteSpace(sellerToken))
+      {
+        TempData["status"] = "error";
+        TempData["message"] = "توکن فروشنده برای ثبت OTA تنظیم نشده است";
+        return RedirectToAction("Index");
+      }
+
+      apiClient.SetSellerApiKey(sellerToken);
 
       var createOTADTO = new RegisterOTADTO()
       {
@@ -70,7 +87,7 @@ namespace Application.Areas.Admin.Controllers
         Password = viewModel.Password,
         BackupNumberPhone = viewModel.PhoneNumber,
         BaseCommission = viewModel.Commission,
-        EmailAdress = "",
+        EmailAdress = $"{viewModel.Username}@agency.local",
         CompanyAddress = viewModel.Address,
         CompanyName = viewModel.Name,
         NumberPhone = viewModel.AdminMobile
@@ -82,9 +99,10 @@ namespace Application.Areas.Admin.Controllers
       }
       catch (Exception ex)
       {
-        ViewBag.status = "error";
-        ViewBag.message = "در طی فرایند مشکلی پیش آمد";
-        return View("Index", viewModel);
+        _logger.LogError(ex, "Failed to register OTA for username {Username}", viewModel.Username);
+        TempData["status"] = "error";
+        TempData["message"] = "ثبت OTA ناموفق بود: " + ex.Message;
+        return RedirectToAction("Index");
       }
 
       var result = await _userManager.CreateAsync(identityuser, viewModel.Password);
@@ -92,9 +110,12 @@ namespace Application.Areas.Admin.Controllers
 
       if (!result.Succeeded)
       {
-        ViewBag.status = "error";
-        ViewBag.message = "در طی فرایند مشکلی وجود دارد";
-        return View("Index", viewModel);
+        var identityErrors = string.Join(" | ", result.Errors.Select(e => e.Description));
+        TempData["status"] = "error";
+        TempData["message"] = string.IsNullOrWhiteSpace(identityErrors)
+          ? "در طی فرایند مشکلی وجود دارد"
+          : identityErrors;
+        return RedirectToAction("Index");
       }
 
 
@@ -116,10 +137,10 @@ namespace Application.Areas.Admin.Controllers
       context.Agencies.Add(agency);
       await context.SaveChangesAsync();
 
-      ViewBag.status = "success";
-      ViewBag.message = "فروشنده با موفقیت ثبت شد";
+      TempData["status"] = "success";
+      TempData["message"] = "فروشنده با موفقیت ثبت شد";
 
-      return View("Index");
+      return RedirectToAction("Index");
     }
 
     // Get DetailOverview
@@ -170,16 +191,18 @@ namespace Application.Areas.Admin.Controllers
           .Include(a => a.IdentityUser)
           .FirstOrDefault(a => a.Id == id);
 
-
-
-      context.Attach(agency).Reference(a => a.IdentityUser).Load();
-
       if (agency == null)
       {
         return NotFound();
       }
 
       var user = agency.IdentityUser;
+      if (user == null)
+      {
+        TempData["status"] = "error";
+        TempData["message"] = "کاربر مربوط به فروشنده یافت نشد";
+        return RedirectToAction("Security", new { id = agency.Id });
+      }
 
       // Remove the existing password
       var removePasswordResult = await _userManager.RemovePasswordAsync(user);
@@ -301,7 +324,7 @@ namespace Application.Areas.Admin.Controllers
       TempData["status"] = "success";
       TempData["message"] = "حساب اعتبار فروشنده‌ی" + $" {agency.Name} " + "با موفقیت به مبلغ" + $" {amount.ToString("N0")} ، شارژ گردید";
 
-      return RedirectToAction("DetailOverview", new {id = agency.Id});
+      return RedirectToAction("DetailOverview", new { id = agency.Id });
     }
   }
 }
