@@ -38,7 +38,7 @@ namespace Application.Services.MrShooferORS
     {
 
       HttpClient loginclient = new HttpClient();
-      loginclient.BaseAddress = new Uri("https://mrbilit.mrshoofer.ir");
+      loginclient.BaseAddress = new Uri("http://localhost:5000");
 
 
       var result = await loginclient.GetAsync($"/Account/Login?adminnumberphone={username}&password={password}");
@@ -62,7 +62,7 @@ namespace Application.Services.MrShooferORS
 
     public async Task<IList<SearchedTrip>> SearchTrips(DateTime startspan, DateTime endspan, int originCityId, int destinationCityid, int? originterminalId = null, int? destinationterminalid = null)
     {
-      string searchurl = $"https://mrbilit.mrshoofer.ir/Trips/GetPlanedTripsbyCityID/{startspan:yyyy-MM-dd}/{endspan:yyyy-MM-dd}/{originCityId}/{destinationCityid}";
+      string searchurl = $"http://localhost:5000/Trips/GetPlanedTripsbyCityID/{startspan:yyyy-MM-dd}/{endspan:yyyy-MM-dd}/{originCityId}/{destinationCityid}";
 
 
       if (originterminalId != null)
@@ -87,7 +87,7 @@ namespace Application.Services.MrShooferORS
     public async Task<SearchedTrip> GetTripInfo(string tripcode)
     {
 
-      string searchurl = $"https://mrbilit.mrshoofer.ir/Trips/getTripinfo?tripcode={tripcode}";
+      string searchurl = $"http://localhost:5000/Trips/getTripinfo?tripcode={tripcode}";
 
       var response = await _client.GetAsync(searchurl);
       response.EnsureSuccessStatusCode();
@@ -129,7 +129,7 @@ namespace Application.Services.MrShooferORS
 
     public async Task<TicketConfirmationResponse> ConfirmReserve(ConfirmReserveRequestModel confirmreservemodel)
     {
-      var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("https://mrbilit.mrshoofer.ir/Tickets/confirmReserve", confirmreservemodel);
+      var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("http://localhost:5000/Tickets/confirmReserve", confirmreservemodel);
 
       // When error happend
       if ((int)response.StatusCode != 200)
@@ -149,7 +149,7 @@ namespace Application.Services.MrShooferORS
 
     public async Task<string> RegisterOTA(RegisterOTADTO registerOTADTO)
     {
-      string url = "https://mrbilit.mrshoofer.ir/OTAManagement/RegisterNewOTA";
+      string url = "http://localhost:5000/OTAManagement/RegisterNewOTA";
 
       // Build payload explicitly to guarantee exact property names expected by OTA API.
       var payload = new
@@ -322,7 +322,7 @@ namespace Application.Services.MrShooferORS
 
     public async Task<List<AvaiableDirection>> GetAvaiableOTADirectionsAsync()
     {
-      string url = "https://mrbilit.mrshoofer.ir/Directions/getAvailableDirections";
+      string url = "http://localhost:5000/Directions/getAvailableDirections";
       using var response = await _client.GetAsync(url);
       if (!response.IsSuccessStatusCode)
       {
@@ -443,7 +443,7 @@ namespace Application.Services.MrShooferORS
       var content = new StringContent($"charge_amount={amount}", Encoding.UTF8, "application/x-www-form-urlencoded");
 
       // Make the POST request
-      var response = await _client.PostAsync("https://mrbilit.mrshoofer.ir/OTAManagement/ChargeOTA", content);
+      var response = await _client.PostAsync("http://localhost:5000/OTAManagement/ChargeOTA", content);
       if (!response.IsSuccessStatusCode)
       {
         throw new Exception();

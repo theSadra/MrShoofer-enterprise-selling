@@ -20,7 +20,7 @@ function generateTripCard(Model) {
     // Prepend API base URL if the image path is relative
     const imagePath = imageValue.trim();
     if (imagePath.startsWith('/')) {
-      imageUrl = 'https://mrbilit.mrshoofer.ir' + imagePath;
+      imageUrl = 'http://localhost:5000' + imagePath;
     } else {
       imageUrl = imagePath;
     }
@@ -329,4 +329,3 @@ function orderFilterSelected(number) {
     renderTrips(accendingPrice_trips);
   }
 }
-

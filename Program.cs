@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
 builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 
-builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new MrShooferAPIClient(new HttpClient(), "https://mrbilit.mrshoofer.ir"));
+builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new MrShooferAPIClient(new HttpClient(), "http://localhost:5000"));
 
 builder.Services.AddTransient<CustomerServiceSmsSender>();
 
