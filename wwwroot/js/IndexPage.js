@@ -7,6 +7,40 @@
 /* important for jalali bootstrap date */
 window.Date = window.JDate;
 
+const jalaliDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+
+function isJalaliLeapYear(year) {
+  return (((year + 38) * 682) % 2816) < 682;
+}
+
+function applyJalaliMonthRules(pickerInstance) {
+  if (!pickerInstance) {
+    return;
+  }
+
+  if (window.flatpickr?.l10ns?.default) {
+    window.flatpickr.l10ns.default.daysInMonth = jalaliDaysInMonth.slice();
+  }
+
+  if (window.flatpickr?.l10ns?.fa) {
+    window.flatpickr.l10ns.fa.daysInMonth = jalaliDaysInMonth.slice();
+  }
+
+  pickerInstance.l10n.daysInMonth = jalaliDaysInMonth.slice();
+  pickerInstance.utils.getDaysInMonth = function (month, year) {
+    const targetMonth = month ?? pickerInstance.currentMonth;
+    const targetYear = year ?? pickerInstance.currentYear;
+
+    if (targetMonth === 11) {
+      return isJalaliLeapYear(targetYear) ? 30 : 29;
+    }
+
+    return jalaliDaysInMonth[targetMonth];
+  };
+
+  pickerInstance.redraw();
+}
+
 
 $(document).ready(function () {
   $('#tripForm').on('submit', function (e) {
@@ -46,7 +80,7 @@ $(function () {
 
   // Date
   if (flatpickrDate) {
-    flatpickrDate.flatpickr({
+    const searchDatePicker = flatpickrDate.flatpickr({
       disableMobile: true,
       locale: {
         weekdays: {
@@ -68,6 +102,8 @@ $(function () {
       altFormat: 'Y/m/d',
       minDate: "today"
     });
+
+    applyJalaliMonthRules(searchDatePicker);
   }
 
   // Time
