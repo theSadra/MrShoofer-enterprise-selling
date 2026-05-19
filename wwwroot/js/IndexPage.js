@@ -18,18 +18,18 @@ function applyJalaliMonthRules(pickerInstance) {
     return;
   }
 
-  if (window.flatpickr?.l10ns?.default) {
+  if (window.flatpickr && window.flatpickr.l10ns && window.flatpickr.l10ns.default) {
     window.flatpickr.l10ns.default.daysInMonth = jalaliDaysInMonth.slice();
   }
 
-  if (window.flatpickr?.l10ns?.fa) {
+  if (window.flatpickr && window.flatpickr.l10ns && window.flatpickr.l10ns.fa) {
     window.flatpickr.l10ns.fa.daysInMonth = jalaliDaysInMonth.slice();
   }
 
   pickerInstance.l10n.daysInMonth = jalaliDaysInMonth.slice();
   pickerInstance.utils.getDaysInMonth = function (month, year) {
-    const targetMonth = month ?? pickerInstance.currentMonth;
-    const targetYear = year ?? pickerInstance.currentYear;
+    var targetMonth = (typeof month === 'number') ? month : pickerInstance.currentMonth;
+    var targetYear = (typeof year === 'number') ? year : pickerInstance.currentYear;
 
     if (targetMonth === 11) {
       return isJalaliLeapYear(targetYear) ? 30 : 29;
@@ -71,6 +71,7 @@ $(function () {
   // Flat Picker
   // --------------------------------------------------------------------
   const flatpickrDate = document.querySelector('#starttime'),
+    flatpickrTime = document.querySelector('#flatpickr-time'),
     flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
     flatpickrMulti = document.querySelector('#flatpickr-multi'),
     flatpickrRange = document.querySelector('#flatpickr-range'),
@@ -142,7 +143,7 @@ $(function () {
   }
 
   // Range
-  if (typeof flatpickrRange != undefined) {
+  if (flatpickrRange) {
     flatpickrRange.flatpickr({
       disableMobile: "flase",
       mode: 'range',

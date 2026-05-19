@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="publish\**" />
+    <None Remove="publish\**" />
+    <EmbeddedResource Remove="publish\**" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy (2).js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy - Copy.js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy.js" />
