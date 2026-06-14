@@ -2,6 +2,7 @@ using Application.Data;
 using Application.Services;
 using Application.Services.Auth;
 using Application.Services.MrShooferORS;
+using Application.Services.Payment;
 using Kavenegar;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -11,8 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.IO.Compression;
 using System.Threading.RateLimiting;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +24,13 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<DirectionsRepository, DirectionsRepository>();
 builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 
-builder.Services.AddTransient<MrShooferAPIClient, MrShooferAPIClient>(c => new MrShooferAPIClient(new HttpClient(), "http://localhost:5000"));
+builder.Services.AddHttpClient<MrShooferAPIClient>((sp, client) =>
+{
+  var config = sp.GetRequiredService<IConfiguration>();
+  var serviceUrl = config["serivce_url"] ?? "https://mrshoofer.ir";
+  client.BaseAddress = new Uri(serviceUrl);
+  client.Timeout = TimeSpan.FromSeconds(30);
+});
 
 builder.Services.AddTransient<CustomerServiceSmsSender>();
 
@@ -35,6 +44,27 @@ builder.Services
 
 
 builder.Services.TryAddTransient<IOtpLogin, KavehNeagerOtp>();
+
+builder.Services.AddResponseCompression(options =>
+{
+  options.EnableForHttps = true;
+  options.Providers.Add<BrotliCompressionProvider>();
+  options.Providers.Add<GzipCompressionProvider>();
+  options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+  {
+    "application/json",
+    "text/javascript",
+    "application/javascript",
+    "image/svg+xml"
+  });
+});
+builder.Services.Configure<BrotliCompressionProviderOptions>(o => o.Level = CompressionLevel.Fastest);
+builder.Services.Configure<GzipCompressionProviderOptions>(o => o.Level = CompressionLevel.Fastest);
+
+builder.Services.AddHttpClient<IPaymentService, ZarinpalService>(client =>
+{
+  client.Timeout = TimeSpan.FromSeconds(15);
+});
 
 // Configure EF Core to use PostgreSQL via Npgsql and read the proper connection string per environment
 var connStringName = builder.Environment.IsDevelopment() ? "development" : "production";
@@ -205,6 +235,8 @@ using (var scope = app.Services.CreateScope())
   }
 }
 
+app.UseResponseCompression();
+
 app.UseRateLimiter();
 
 if (app.Environment.IsDevelopment())
@@ -219,9 +251,14 @@ else
 
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
-
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+  OnPrepareResponse = ctx =>
+  {
+    ctx.Context.Response.Headers.Append("Cache-Control", "public, max-age=604800"); // 7 days
+  }
+});
 
 app.UseRouting();
 

@@ -538,7 +538,7 @@
                             </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
-                                    <button class="btn btn-primary" type="submit">ثبت درخواست</button>
+                                    <button id="submitPaymentBtn" class="btn btn-primary" type="submit">ثبت درخواست</button>
                                 </div>
                             </div>
                         </form>
@@ -615,13 +615,41 @@
  <script>
    
     $(document).ready(function () {
+        // Show Zarinpal payment result alerts from TempData
+        @if (TempData["PaymentError"] != null)
+        {
+            <text>
+        Swal.fire({
+            icon: 'error',
+            title: 'خطا در پرداخت',
+            text: '@Html.Raw(TempData["PaymentError"])',
+            confirmButtonText: 'متوجه شدم',
+            buttonsStyling: false,
+            customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+        });
+            </text>
+        }
+        @if (TempData["PaymentSuccess"] != null)
+        {
+            <text>
+        Swal.fire({
+            icon: 'success',
+            title: 'پرداخت موفق',
+            text: '@Html.Raw(TempData["PaymentSuccess"])',
+            confirmButtonText: 'متوجه شدم',
+            buttonsStyling: false,
+            customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+        });
+            </text>
+        }
+
         // Check if there's a query parameter to open the modal automatically
         const urlParams = new URLSearchParams(window.location.search);
         const openChargeParam = urlParams.get('openChargeModal');
         if (openChargeParam && openChargeParam.toLowerCase() === 'true') {
             // Open the charge request modal automatically
             $('#referAndEarn').modal('show');
-            
+
             // Clean up URL without reloading (remove query parameter)
             if (window.history.replaceState) {
                 const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
@@ -629,9 +657,33 @@
             }
         }
 
+        // Change button text based on selected payment method
+        $('#paymentmethod').on('change', function () {
+            var isZarinpal = $(this).val() === 'اعتباری';
+            $('#submitPaymentBtn').text(isZarinpal ? 'انتقال به درگاه پرداخت' : 'ثبت درخواست');
+        });
+
         $('#paymentrequestform').on('submit', function (e) {
             e.preventDefault();
 
+            var method = $('#paymentmethod').val();
+
+            // Zarinpal online payment
+            if (method === 'اعتباری') {
+                var amountRaw = $('#amount').val().replace(/,/g, '');
+                var amount = parseInt(amountRaw, 10);
+                if (!amount || amount < 1000) {
+                    Swal.fire({ icon: 'warning', title: 'مبلغ نامعتبر', text: 'حداقل مبلغ شارژ ۱۰۰۰ تومان است.', confirmButtonText: 'متوجه شدم', buttonsStyling: false, customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' } });
+                    return;
+                }
+                var form = $('<form method="POST" action="/Payments/ZarinpalCharge"></form>');
+                form.append($('<input type="hidden" name="amountToman">').val(amount));
+                $('body').append(form);
+                form.submit();
+                return;
+            }
+
+            // Manual payment methods — existing AJAX flow
             var formData = $(this).serialize();
 
             $.ajax({
@@ -639,7 +691,6 @@
                 url: '/Payments/ChargeRequest',
                 data: formData,
                 success: function (response) {
-
                     Swal.fire({
                         title: 'درخواست شما با موفقیت ثبت شد',
                         text: 'همکاران ما در اسرع وقت به منظور تایید شارژ، با شما تماس خواهند گرفت. ',
@@ -650,13 +701,12 @@
                         },
                         buttonsStyling: false
                     });
-                    // Optionally, clear the form fields
                     $('#paymentrequestform')[0].reset();
+                    $('#submitPaymentBtn').text('ثبت درخواست');
                     $('#referAndEarn').modal('hide');
                 },
                 error: function (xhr, status, error) {
-
-                     $('#referAndEarn').modal('hide');
+                    $('#referAndEarn').modal('hide');
                     Swal.fire({
                         icon: "error",
                         title: "مشکلی پیش آمده",

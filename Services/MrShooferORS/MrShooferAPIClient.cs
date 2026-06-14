@@ -8,9 +8,9 @@ namespace Application.Services.MrShooferORS
 {
   public class MrShooferAPIClient
   {
-    string _apikey;
+    string? _apikey;
     readonly HttpClient _client;
-    readonly string _sellerapikey;
+    private static string _staticBaseUrl = "http://localhost:5000"; // updated by constructor for static login method
 
     // JSON serializer options with case-insensitive property matching
     private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
@@ -18,11 +18,11 @@ namespace Application.Services.MrShooferORS
       PropertyNameCaseInsensitive = true
     };
 
-    public MrShooferAPIClient(HttpClient client, string baseurl)
+    public MrShooferAPIClient(HttpClient client)
     {
       _client = client;
-
-      _client.BaseAddress = new Uri(baseurl);
+      if (client.BaseAddress != null)
+        _staticBaseUrl = client.BaseAddress.ToString();
     }
 
 
@@ -38,31 +38,35 @@ namespace Application.Services.MrShooferORS
     {
 
       HttpClient loginclient = new HttpClient();
-      loginclient.BaseAddress = new Uri("http://localhost:5000");
+      loginclient.BaseAddress = new Uri(_staticBaseUrl);
 
 
       var result = await loginclient.GetAsync($"/Account/Login?adminnumberphone={username}&password={password}");
       var node = JsonNode.Parse(await result.Content.ReadAsStringAsync());
 
-      return node["token"].ToString();
+      return node?["token"]?.ToString() ?? throw new Exception("Login failed: no token in response");
     }
 
 
-    public async Task<string> GetAccountBalance()
+    public async Task<string?> GetAccountBalance()
     {
-      var result = await _client.GetAsync("/Account/getAccountBalance");
-
-
-      var node = JsonNode.Parse(await result.Content.ReadAsStringAsync());
-
-      return node["accountBalance_tomans"].ToString();
-
+      try
+      {
+        var result = await _client.GetAsync("/Account/getAccountBalance");
+        var body = await result.Content.ReadAsStringAsync();
+        var node = JsonNode.Parse(body);
+        return node?["accountBalance_tomans"]?.ToString();
+      }
+      catch
+      {
+        return null;
+      }
     }
 
 
     public async Task<IList<SearchedTrip>> SearchTrips(DateTime startspan, DateTime endspan, int originCityId, int destinationCityid, int? originterminalId = null, int? destinationterminalid = null)
     {
-      string searchurl = $"http://localhost:5000/Trips/GetPlanedTripsbyCityID/{startspan:yyyy-MM-dd}/{endspan:yyyy-MM-dd}/{originCityId}/{destinationCityid}";
+      string searchurl = $"/Trips/GetPlanedTripsbyCityID/{startspan:yyyy-MM-dd}/{endspan:yyyy-MM-dd}/{originCityId}/{destinationCityid}";
 
 
       if (originterminalId != null)
@@ -79,15 +83,13 @@ namespace Application.Services.MrShooferORS
       response.EnsureSuccessStatusCode();
 
       var json = await response.Content.ReadAsStringAsync();
-      var searchedtrips = JsonSerializer.Deserialize<List<SearchedTrip>>(json, _jsonOptions);
-
-      return searchedtrips;
+      return JsonSerializer.Deserialize<List<SearchedTrip>>(json, _jsonOptions) ?? [];
     }
 
     public async Task<SearchedTrip> GetTripInfo(string tripcode)
     {
 
-      string searchurl = $"http://localhost:5000/Trips/getTripinfo?tripcode={tripcode}";
+      string searchurl = $"/Trips/getTripinfo?tripcode={tripcode}";
 
       var response = await _client.GetAsync(searchurl);
       response.EnsureSuccessStatusCode();
@@ -123,33 +125,32 @@ namespace Application.Services.MrShooferORS
       var node = JsonNode.Parse(jsonresult);
 
 
-      return node["ticketCode"].ToString();
+      return node?["ticketCode"]?.ToString() ?? throw new Exception("Reserve failed: no ticketCode in response");
 
     }
 
     public async Task<TicketConfirmationResponse> ConfirmReserve(ConfirmReserveRequestModel confirmreservemodel)
     {
-      var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("http://localhost:5000/Tickets/confirmReserve", confirmreservemodel);
+      var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("/Tickets/confirmReserve", confirmreservemodel);
 
       // When error happend
       if ((int)response.StatusCode != 200)
       {
         var jsonresult = JsonNode.Parse(await response.Content.ReadAsStringAsync());
-        throw new Exception(jsonresult["error"].ToString());
+        throw new Exception(jsonresult?["error"]?.ToString() ?? "ConfirmReserve failed");
       }
 
 
       var jsonresponse = JsonNode.Parse(await response.Content.ReadAsStringAsync());
 
-      var confirmationmodel = JsonSerializer.Deserialize<TicketConfirmationResponse>(jsonresponse);
-
-      return confirmationmodel;
+      return JsonSerializer.Deserialize<TicketConfirmationResponse>(jsonresponse)
+          ?? throw new Exception("ConfirmReserve: failed to deserialize response");
     }
 
 
     public async Task<string> RegisterOTA(RegisterOTADTO registerOTADTO)
     {
-      string url = "http://localhost:5000/OTAManagement/RegisterNewOTA";
+      string url = "/OTAManagement/RegisterNewOTA";
 
       // Build payload explicitly to guarantee exact property names expected by OTA API.
       var payload = new
@@ -322,7 +323,7 @@ namespace Application.Services.MrShooferORS
 
     public async Task<List<AvaiableDirection>> GetAvaiableOTADirectionsAsync()
     {
-      string url = "http://localhost:5000/Directions/getAvailableDirections";
+      string url = "/Directions/getAvailableDirections";
       using var response = await _client.GetAsync(url);
       if (!response.IsSuccessStatusCode)
       {
@@ -438,15 +439,17 @@ namespace Application.Services.MrShooferORS
       return map;
     }
 
-    public async Task ChargeOTABalanceAsync(int amount)
+    public async Task<bool> ChargeOTABalanceAsync(int amount)
     {
-      var content = new StringContent($"charge_amount={amount}", Encoding.UTF8, "application/x-www-form-urlencoded");
-
-      // Make the POST request
-      var response = await _client.PostAsync("http://localhost:5000/OTAManagement/ChargeOTA", content);
-      if (!response.IsSuccessStatusCode)
+      try
       {
-        throw new Exception();
+        var content = new StringContent($"charge_amount={amount}", Encoding.UTF8, "application/x-www-form-urlencoded");
+        var response = await _client.PostAsync("/OTAManagement/ChargeOTA", content);
+        return response.IsSuccessStatusCode;
+      }
+      catch
+      {
+        return false;
       }
     }
   }

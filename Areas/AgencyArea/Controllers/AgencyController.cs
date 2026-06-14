@@ -55,7 +55,8 @@ namespace Application.Areas.AgencyArea
       ViewBag.Last7weekprofit = analyzer.GetLast7DaysProfit();
 
 
-      ViewBag.agancy_balance = (long)Convert.ToDecimal(await _apiClient.GetAccountBalance());
+      var balanceStr = await _apiClient.GetAccountBalance();
+      ViewBag.agancy_balance = balanceStr != null ? (long)Convert.ToDecimal(balanceStr) : 0L;
 
       ViewBag.today_soldTickets = agency.SoldTickets
         .Where(t => t.RegisteredAt >= DateTime.Today && t.RegisteredAt < DateTime.Today.AddDays(1))
