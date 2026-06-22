@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sshpass -p 'i%u=%UCv2y' ssh -o StrictHostKeyChecking=no root@89.42.199.39 'sed -i \"s|http://localhost:5000|http://localhost:5001|g\" /root/InterpirceORS/publish/appsettings.json && grep \"serivce_url\" /root/InterpirceORS/publish/appsettings.json')"
+    ]
+  }
+}

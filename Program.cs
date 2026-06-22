@@ -27,7 +27,20 @@ builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 builder.Services.AddHttpClient<MrShooferAPIClient>((sp, client) =>
 {
   var config = sp.GetRequiredService<IConfiguration>();
-  var serviceUrl = config["serivce_url"] ?? "https://mrshoofer.ir";
+  var primary = config["serivce_url"] ?? "http://localhost:5001";
+  var fallback = config["serivce_url_fallback"] ?? "http://localhost:5000";
+
+  // Use primary; fall back if unreachable
+  var serviceUrl = primary;
+  try
+  {
+    using var tcp = new System.Net.Sockets.TcpClient();
+    var uri = new Uri(primary);
+    tcp.ConnectAsync(uri.Host, uri.Port).Wait(500);
+    if (!tcp.Connected) serviceUrl = fallback;
+  }
+  catch { serviceUrl = fallback; }
+
   client.BaseAddress = new Uri(serviceUrl);
   client.Timeout = TimeSpan.FromSeconds(30);
 });
