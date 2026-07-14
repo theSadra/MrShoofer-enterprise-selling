@@ -339,3 +339,136 @@
   animation: hero-gradient-animation 10s linear infinite alternate !important;
   background-blend-mode: normal, normal, normal, normal, normal !important;
 }
+
+/* ===================================================================
+   Hero redesign — "wayfinding" search hero
+   Scoped under #landingHero so nothing leaks to the rest of the page.
+   =================================================================== */
+#landingHero.landing-hero {
+  --brand: #7367f0;
+  --brand-deep: #5a4ede;
+  --ink: #2f2b3d;
+  --muted: #6f6b7d;
+  position: relative;
+  overflow: hidden;
+  padding-block: 5.5rem 4rem;
+  background-color: #f7f7fd !important;
+  background-image:
+    radial-gradient(120% 70% at 50% -20%, rgba(115, 103, 240, 0.20) 0%, rgba(115, 103, 240, 0) 60%),
+    radial-gradient(40% 40% at 88% 6%, rgba(255, 159, 67, 0.12) 0%, rgba(255, 159, 67, 0) 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%237367f0' fill-opacity='0.09'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat, no-repeat, repeat !important;
+  background-blend-mode: normal !important;
+  animation: none !important;
+}
+
+/* Eyebrow pill */
+#landingHero .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--brand-deep);
+  border: 1px solid rgba(115, 103, 240, 0.22);
+  box-shadow: 0 6px 18px -8px rgba(115, 103, 240, 0.5);
+  font-size: 0.82rem;
+}
+#landingHero .hero-eyebrow i { font-size: 1rem; }
+
+/* Headline + sub */
+#landingHero .hero-title {
+  font-size: clamp(1.55rem, 1.05rem + 2.4vw, 2.5rem);
+  line-height: 1.4 !important;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+#landingHero .hero-sub-title {
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+/* The itinerary search card — the signature element */
+#landingHero .hero-search-card {
+  border: 1px solid rgba(115, 103, 240, 0.14);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 30px 60px -22px rgba(47, 43, 61, 0.30),
+    0 10px 24px -14px rgba(115, 103, 240, 0.28);
+}
+#landingHero .hero-search-card .card-body { padding: 1.5rem; }
+#landingHero .hero-search-card .card-header label { color: var(--muted); }
+#landingHero .hero-route-illus { align-items: center; }
+#landingHero .hero-search-card #tripForm {
+  border-top: 1px solid rgba(115, 103, 240, 0.10);
+  padding-top: 1.25rem;
+}
+#landingHero .hero-search-card .card-header h4 { color: var(--ink); }
+
+/* Inputs styled as clean wayfinding fields */
+#landingHero .input-container .form-control {
+  height: calc(3rem + 2px);
+  border-radius: 1rem;
+  border: 1px solid #e7e7f1;
+  background: #fbfbfe;
+  padding-inline-end: 2.6rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+#landingHero .input-container .form-control:hover { border-color: #d3d1ea; }
+#landingHero .input-container .form-control:focus {
+  border-color: var(--brand) !important;
+  background: #fff;
+  box-shadow: 0 0 0 0.18rem rgba(115, 103, 240, 0.25) !important;
+}
+#landingHero .input-container .icon { color: var(--brand); }
+
+/* Submit */
+#landingHero .hero-search-card .btn-primary {
+  height: calc(3rem + 2px);
+  border-radius: 1rem !important;
+  box-shadow: 0 12px 24px -10px rgba(115, 103, 240, 0.7);
+}
+
+/* Trust row: stats + dividers + feature chips */
+#landingHero .hero-stats { gap: 0.5rem 1.75rem; }
+#landingHero .hero-stat { padding: 0 0.25rem; }
+#landingHero .hero-stat-num { display: block; font-size: 1.6rem; line-height: 1.2; }
+#landingHero .hero-stat-label { display: block; color: var(--muted); font-size: 0.9rem; }
+#landingHero .hero-divider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 2.2rem;
+  background: linear-gradient(rgba(115, 103, 240, 0) 0%, rgba(115, 103, 240, 0.28) 50%, rgba(115, 103, 240, 0) 100%);
+}
+#landingHero .hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(115, 103, 240, 0.16);
+  color: #55516a;
+  font-size: 0.82rem;
+}
+#landingHero .hero-chip i { color: var(--brand); font-size: 1rem; }
+
+/* One orchestrated load moment */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+#landingHero .hero-lead { animation: heroRise 0.55s ease both; }
+#landingHero .hero-search-card { animation: heroRise 0.55s ease 0.08s both; }
+#landingHero .hero-trust { animation: heroRise 0.55s ease 0.16s both; }
+
+@media (max-width: 575.98px) {
+  #landingHero .hero-divider { display: none; }
+  #landingHero .hero-stats { gap: 1.25rem 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #landingHero .hero-lead,
+  #landingHero .hero-search-card,
+  #landingHero .hero-trust { animation: none !important; }
+}
