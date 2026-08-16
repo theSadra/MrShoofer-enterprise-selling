@@ -96,19 +96,6 @@ if (typeof TemplateCustomizer !== 'undefined') {
     // defaultTheme: 2,
     // defaultStyle: 'system',
     defaultTextDir: 'rtl',
-    // defaultContentLayout: 'wide',
-    // defaultHeaderType: 'static',
-    // defaultMenuCollapsed: true,
-    // defaultNavbarType: 'sticky',
-    // defaultFooterFixed: false,
-    // defaultShowDropdownOnHover: false,
-    controls: ['rtl', 'style', 'headerType', 'contentLayout', 'layoutCollapsed', 'layoutNavbarOptions', 'themes']
+    controls: ['style', 'headerType', 'contentLayout', 'layoutCollapsed', 'layoutNavbarOptions', 'themes']
   });
 }
-
-var link = document.createElement('link');
-link.type = 'text/css';
-link.rel = 'stylesheet';
-link.href = assetsPath + "css/rtl.css";
-
-document.head.appendChild(link);

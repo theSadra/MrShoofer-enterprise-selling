@@ -417,3 +417,16 @@ ASALocalRun/
 # wal and shm files - SQLite
 *-wal
 *-shm
+
+# Local deploy config & staging
+deploy/deploy.env
+.deploy-publish/
+.deploy-artifacts.txt
+
+# local deploy secrets
+.env.deploy
+
+# keep shared VS Code terminal deploy help
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

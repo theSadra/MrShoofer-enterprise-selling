@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
 
     <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
-    <link href="~/css/IndexPage.css" rel="stylesheet" />
+    <link href="~/css/IndexPage.css" rel="stylesheet" asp-append-version="true" />
 
 
     <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -57,8 +57,8 @@
             <div class="container">
                 <div class="hero-lead text-center mb-4">
                     <span class="hero-eyebrow">
-                        <i class="ti ti-briefcase"></i>
-                        سامانه فروش سازمانی ویژه آژانس‌ها و همکاران
+                        <i class="ti ti-building-skyscraper"></i>
+                        سامانهٔ تخصصی فروش سازمانی سفرهای بین‌شهری، ویژهٔ آژانس‌ها و همکاران تجاری
                     </span>
                     <h1 class="hero-title fw-bold mt-3 mb-2">
                         راهی مطمئن به <span class="text-primary">همه‌ی مقاصد ایران</span>
@@ -111,11 +111,25 @@
                                     </div>
 
                                     <div class="hero-route-illus d-none d-sm-flex flex-shrink-0" aria-hidden="true">
-                                        <svg width="150" height="86" viewBox="0 0 150 86" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M132 64 C 98 68, 92 44, 62 42 S 34 42, 30 41" stroke="#7367f0" stroke-width="2.4" stroke-dasharray="1.5 7" stroke-linecap="round" fill="none" />
-                                            <circle cx="132" cy="64" r="6.5" fill="#fff" stroke="#7367f0" stroke-width="3" />
-                                            <path d="M30 10 c-7.2 0-13 5.8-13 13 0 9 13 20 13 20 s13-11 13-20 c0-7.2-5.8-13-13-13z" fill="#ff9f43" />
-                                            <circle cx="30" cy="23" r="4.3" fill="#fff" />
+                                        <svg class="route-illus" width="172" height="94" viewBox="0 0 172 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <!-- soft ground shadow under the pin -->
+                                            <ellipse class="route-pin-shadow" cx="150" cy="70" rx="11" ry="3.4" fill="#2f2b3d" fill-opacity="0.12" />
+                                            <!-- route base track -->
+                                            <path class="route-track" d="M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52"
+                                                  stroke="rgba(115,103,240,0.16)" stroke-width="3.2" stroke-linecap="round" fill="none" />
+                                            <!-- animated flowing dashes -->
+                                            <path class="route-dash" d="M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52"
+                                                  stroke="#7367f0" stroke-width="3.2" stroke-linecap="round" fill="none" stroke-dasharray="3 10" />
+                                            <!-- origin: pulsing ring + node -->
+                                            <circle class="route-origin-pulse" cx="20" cy="72" r="6" fill="rgba(115,103,240,0.30)" />
+                                            <circle cx="20" cy="72" r="5" fill="#fff" stroke="#7367f0" stroke-width="2.6" />
+                                            <!-- marker travelling along the route -->
+                                            <circle class="route-marker" r="3.4" fill="#5a4ede" />
+                                            <!-- destination map-pin (drops in, then gently bobs) -->
+                                            <g class="route-pin">
+                                                <path d="M150 12 c-8.3 0-15 6.7-15 15 0 10.3 15 22.5 15 22.5 s15-12.2 15-22.5 c0-8.3-6.7-15-15-15z" fill="#ff9f43" />
+                                                <circle cx="150" cy="27" r="5" fill="#fff" />
+                                            </g>
                                         </svg>
                                     </div>
 
@@ -125,11 +139,11 @@
                                     <div class="col-12 col-md-3 inputcel">
                                         <div class="form-text d-md-none d-block" id="defaultFormControlHelp">شهر مبدا سفر</div>
 
-                                        <div class="input-container">
-                                            <input autocomplete="off" aria-describedby="defaultFormControlHelp" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" name="originstring" />
+                                        <div class="input-container dropdown">
+                                            <input autocomplete="off" aria-describedby="defaultFormControlHelp" data-bs-toggle="dropdown" data-bs-display="static" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" name="originstring" />
                                             <i class="ti ti-location mb-2 icon"></i>
 
-                                            <span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
+                                            <span class="dropdown-menu origin_location">
 
 
 
@@ -158,10 +172,10 @@
                                     <div class="col-12 col-md-3 inputcel">
                                         <div class="form-text d-block d-md-none" id="defaultFormControlHelp">شهر مقصد سفر</div>
 
-                                        <div class="input-container">
-                                            <input data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
+                                        <div class="input-container dropdown">
+                                            <input data-bs-toggle="dropdown" data-bs-display="static" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
                                             <i class="ti ti-map-pin mb-2 icon"></i>
-                                            <span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important;  min-width:230px;">
+                                            <span class="dropdown-menu destination_location">
 
                                                 @*  <div class="city">
                                                 <a class="dropdown-item" href="javascript:void(0);">
@@ -194,8 +208,8 @@
                                         <!-- Disabled Range-->
 
                                         <div class="input-container">
-                                            <input autocomplete="off" class="form-control bdi starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
-                                            <i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
+                                            <input autocomplete="off" class="form-control starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
+                                            <i class="ti ti-calendar-stats icon"></i>
                                         </div>
                                         <div class="form-text d-none d-md-block" id="defaultFormControlHelp">انتخاب تاریخ</div>
 

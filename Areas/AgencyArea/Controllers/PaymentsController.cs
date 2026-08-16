@@ -1,5 +1,6 @@
 using Application.Data;
 using Application.Models;
+using Application.Services;
 using Application.Services.MrShooferORS;
 using Application.Services.Payment;
 using Microsoft.AspNetCore.Authorization;
@@ -19,14 +20,22 @@ namespace Application.Areas.AgencyArea.Controllers
     private readonly IPaymentService _payment;
     private readonly MrShooferAPIClient _apiClient;
     private readonly ILogger<PaymentsController> _logger;
+    private readonly CustomerServiceSmsSender _sms;
 
-    public PaymentsController(AppDbContext dbContext, UserManager<IdentityUser> usermanager, IPaymentService payment, MrShooferAPIClient apiClient, ILogger<PaymentsController> logger)
+    public PaymentsController(
+      AppDbContext dbContext,
+      UserManager<IdentityUser> usermanager,
+      IPaymentService payment,
+      MrShooferAPIClient apiClient,
+      ILogger<PaymentsController> logger,
+      CustomerServiceSmsSender sms)
     {
       _context = dbContext;
       _userManager = usermanager;
       _payment = payment;
       _apiClient = apiClient;
       _logger = logger;
+      _sms = sms;
     }
 
     [HttpPost("/Payments/ChargeRequest")]
@@ -163,7 +172,115 @@ namespace Application.Areas.AgencyArea.Controllers
       await _apiClient.ChargeOTABalanceAsync(zarinpalRequest.AmountToman);
 
       TempData["PaymentSuccess"] = $"حساب شما با موفقیت شارژ شد. کد پیگیری: {refId}";
+      TempData["PaymentRefId"] = refId.ToString();
       return RedirectToAction("Index", "Agency");
+    }
+
+    [AllowAnonymous]
+    [HttpGet("/Payments/ZarinpalTicketCallback")]
+    public async Task<IActionResult> ZarinpalTicketCallback(string Authority, string Status)
+    {
+      if (Status != "OK")
+      {
+        TempData["ErrorMessage"] = "پرداخت لغو شد یا ناموفق بود";
+        return RedirectToAction("Index", "Home", new { area = "AgencyArea" });
+      }
+
+      var pending = await _context.ZarinpalTicketPayments
+        .Include(z => z.Agency)
+        .FirstOrDefaultAsync(z => z.Authority == Authority);
+
+      if (pending == null)
+      {
+        TempData["ErrorMessage"] = "درخواست پرداخت بلیط یافت نشد";
+        return RedirectToAction("Index", "Home", new { area = "AgencyArea" });
+      }
+
+      if (pending.Status == "Success" && pending.TicketId is int existingId)
+      {
+        var existing = await _context.Tickets.FindAsync(existingId);
+        if (existing != null)
+          return RedirectToAction("ReserveConfirmed", "Reserve", new { area = "AgencyArea", ticketcode = existing.TicketCode });
+      }
+
+      int amountRials = pending.AmountToman * 10;
+      var (success, refId, cardPan, verifyMessage) = await _payment.VerifyPaymentAsync(Authority, amountRials);
+      if (!success)
+      {
+        pending.Status = "Failed";
+        await _context.SaveChangesAsync();
+        TempData["ErrorMessage"] = verifyMessage;
+        return RedirectToAction("Reservetrip", "Reserve", new { area = "AgencyArea", tripcode = pending.TripCode });
+      }
+
+      pending.Status = "Success";
+      pending.PaidAt = DateTime.Now;
+      pending.RefId = refId;
+      pending.CardPan = cardPan;
+
+      var seller = pending.Agency;
+      _apiClient.SetSellerApiKey(seller.ORSAPI_token);
+      await _apiClient.ChargeOTABalanceAsync(pending.AmountToman);
+
+      var tempreserve = new TicketTempReserveRequestModel { isPrivate = true, tripCode = pending.TripCode };
+      var reservecode = await _apiClient.ReserveTicketTemporarirly(tempreserve);
+      var confirm = new ConfirmReserveRequestModel
+      {
+        passengerFirstName = pending.Firstname,
+        passengerLastName = pending.Lastname,
+        reservationCode = reservecode,
+        passengerNationalCode = pending.Nacode,
+        passengerNumberPhone = pending.Numberphone
+      };
+
+      TicketConfirmationResponse reserveResponse;
+      try
+      {
+        reserveResponse = await _apiClient.ConfirmReserve(confirm);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "ORS confirm failed after ZarinPal ticket payment. Authority={Authority}", Authority);
+        await _context.SaveChangesAsync();
+        TempData["ErrorMessage"] = "پرداخت موفق بود اما صدور بلیط با خطا مواجه شد. با پشتیبانی تماس بگیرید.";
+        return RedirectToAction("Index", "Agency");
+      }
+
+      var trip = await _apiClient.GetTripInfo(pending.TripCode);
+      var ticket = new Ticket
+      {
+        Firstname = pending.Firstname,
+        Lastname = pending.Lastname,
+        PhoneNumber = pending.Numberphone,
+        NaCode = pending.Nacode,
+        TicketFinalPrice = reserveResponse.paid_total_fee_tomans,
+        Gender = pending.Gender,
+        TicketOriginalPrice = trip.originalTicketprice,
+        TripOrigin = trip.originCityName,
+        TripDestination = trip.destinationCityName,
+        RegisteredAt = DateTime.Now,
+        TicketCode = reserveResponse.ticketCode,
+        Tripcode = trip.tripPlanCode,
+        ServiceName = trip.taxiSupervisorName,
+        CarName = trip.carModelName,
+        Agency = seller
+      };
+
+      _context.Attach(seller);
+      _context.Tickets.Add(ticket);
+      await _context.SaveChangesAsync();
+      pending.TicketId = ticket.Id;
+      await _context.SaveChangesAsync();
+
+      try
+      {
+        await _sms.SendCustomerTicket_issued(ticket.Firstname, ticket.Lastname, ticket.TicketCode, ticket.TicketCode, ticket.PhoneNumber);
+      }
+      catch
+      {
+      }
+
+      return RedirectToAction("ReserveConfirmed", "Reserve", new { area = "AgencyArea", ticketcode = ticket.TicketCode });
     }
   }
 }

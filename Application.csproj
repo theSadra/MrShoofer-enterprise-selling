@@ -8,6 +8,10 @@
     <Content Remove="publish\**" />
     <None Remove="publish\**" />
     <EmbeddedResource Remove="publish\**" />
+    <Compile Remove="tests\**" />
+    <Content Remove="tests\**" />
+    <None Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy (2).js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy - Copy.js" />
     <Content Remove="wwwroot\js\app-academy-course-details - Copy.js" />

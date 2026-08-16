@@ -1,15 +1,12 @@
 using Application.Data;
 using Application.Services;
 using Application.Services.MrShooferORS;
+using Application.Services.Payment;
 using Application.ViewModels.Reserve;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Routing;
-using System.Data.Entity;
-using System.Diagnostics;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 using Application.Models;
 using Newtonsoft.Json;
 
@@ -25,17 +22,18 @@ namespace Application.Areas.AgencyArea
     private readonly AppDbContext context;
     private readonly CustomerServiceSmsSender customerSmsSender;
     private readonly IConfiguration configuration;
+    private readonly IPaymentService _payment;
     private Agency agency;
 
 
-    public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context, CustomerServiceSmsSender smssender, IConfiguration configuration)
+    public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context, CustomerServiceSmsSender smssender, IConfiguration configuration, IPaymentService payment)
     {
       this.configuration = configuration;
       customerSmsSender = smssender;
       this.context = context;
       _userManager = usermanager;
       this.apiclient = apiclient;
-
+      _payment = payment;
     }
 
     public IActionResult Index()
@@ -151,18 +149,12 @@ namespace Application.Areas.AgencyArea
         return View(viewmodel);
       }
 
-      // Get trip info and check balance
+      // Get trip info — ZarinPal is always available, so do not block on agency credit.
       var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
       var agancy_balance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
 
-      // Check if agency has sufficient funds
-      if (agancy_balance < trip.afterdiscticketprice)
-      {
-        // Return JSON to trigger insufficient funds modal
-        return Json(new { insufficientFunds = true, requiredAmount = trip.afterdiscticketprice, currentBalance = agancy_balance });
-      }
-
       ViewBag.agancy_balance = agancy_balance;
+      ViewBag.canbuy = agancy_balance >= trip.afterdiscticketprice;
 
       ViewBag.agancy = agency;
       ViewBag.trip = trip;
@@ -174,20 +166,76 @@ namespace Application.Areas.AgencyArea
     [HttpPost]
     public async Task<IActionResult> ConfirmInfo(ConfirmInfoViewModel viewModel)
     {
-      // Check if user is authenticated before confirming reservation
       if (!User.Identity.IsAuthenticated)
       {
         return Json(new { requiresAuth = true, returnUrl = Url.Action("Reservetrip", "Reserve", new { tripcode = viewModel.TripCode }) });
       }
 
-      // Registering the ticket
+      var trip = await apiclient.GetTripInfo(viewModel.TripCode);
+      var method = (viewModel.PaymentMethod ?? "zarinpal").Trim().ToLowerInvariant();
 
+      if (method == "zarinpal")
+        return await StartZarinpalTicketPayment(viewModel, trip);
 
-      // Issuing ticket in ORS
-      // TempReserve
+      var agencyBalance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
+      if (agencyBalance < trip.afterdiscticketprice)
+      {
+        TempData["ErrorMessage"] = "موجودی حساب آژانس کافی نیست. از درگاه زرین‌پال استفاده کنید.";
+        return RedirectToAction("Reservetrip", new { tripcode = viewModel.TripCode });
+      }
 
+      return await IssueTicketFromOrs(viewModel, trip);
+    }
 
+    private async Task<IActionResult> StartZarinpalTicketPayment(ConfirmInfoViewModel viewModel, SearchedTrip trip)
+    {
+      if (agency == null)
+      {
+        TempData["ErrorMessage"] = "حساب آژانس یافت نشد.";
+        return RedirectToAction("Reservetrip", new { tripcode = viewModel.TripCode });
+      }
 
+      var amountToman = trip.afterdiscticketprice;
+      var callback = configuration["Zarinpal:TicketCallbackUrl"];
+      if (string.IsNullOrWhiteSpace(callback) && Request.Host.HasValue)
+        callback = $"{Request.Scheme}://{Request.Host}/Payments/ZarinpalTicketCallback";
+      if (string.IsNullOrWhiteSpace(callback))
+        callback = configuration["Zarinpal:CallbackUrl"]?.Replace("ZarinpalCallback", "ZarinpalTicketCallback")
+                   ?? "http://localhost:5055/Payments/ZarinpalTicketCallback";
+
+      var (success, authority, message) = await _payment.RequestPaymentAsync(
+        amountToman * 10,
+        description: $"خرید بلیط سواری {trip.originCityName} به {trip.destinationCityName}",
+        mobile: viewModel.Numberphone,
+        callbackUrl: callback);
+
+      if (!success)
+      {
+        TempData["ErrorMessage"] = message;
+        return RedirectToAction("Reservetrip", new { tripcode = viewModel.TripCode });
+      }
+
+      context.ZarinpalTicketPayments.Add(new ZarinpalTicketPayment
+      {
+        Authority = authority,
+        AmountToman = amountToman,
+        Status = "Pending",
+        CreatedAt = DateTime.Now,
+        TripCode = viewModel.TripCode,
+        Firstname = viewModel.Firstname,
+        Lastname = viewModel.Lastname,
+        Numberphone = viewModel.Numberphone,
+        Nacode = viewModel.Nacode,
+        Gender = viewModel.Gender,
+        Agency = agency
+      });
+      await context.SaveChangesAsync();
+
+      return Redirect(_payment.GetPaymentGatewayUrl(authority));
+    }
+
+    private async Task<IActionResult> IssueTicketFromOrs(ConfirmInfoViewModel viewModel, SearchedTrip trip)
+    {
       TicketTempReserveRequestModel tempreserve_viewodel = new TicketTempReserveRequestModel()
       {
         isPrivate = true,
@@ -195,9 +243,6 @@ namespace Application.Areas.AgencyArea
       };
 
       var reservecode = await apiclient.ReserveTicketTemporarirly(tempreserve_viewodel);
-
-
-      // final reserve
 
       ConfirmReserveRequestModel confirmreserve_viewmodel = new ConfirmReserveRequestModel()
       {
@@ -208,24 +253,16 @@ namespace Application.Areas.AgencyArea
         passengerNumberPhone = viewModel.Numberphone
       };
 
-
-      TicketConfirmationResponse reserve_response = null;
-
+      TicketConfirmationResponse reserve_response;
       try
       {
         reserve_response = await apiclient.ConfirmReserve(confirmreserve_viewmodel);
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return RedirectToAction("Index", "Home");
       }
 
-
-      // Getting trip_info
-
-      var trip = await apiclient.GetTripInfo(viewModel.TripCode);
-
-      //Creating ticket object
       Ticket newticket = new Ticket()
       {
         Firstname = viewModel.Firstname,
@@ -244,55 +281,25 @@ namespace Application.Areas.AgencyArea
         CarName = trip.carModelName
       };
 
-      // Registering to database
-
-
       var identity_user = await _userManager.GetUserAsync(User);
-
       var agancy = context.Agencies.Where(a => a.IdentityUser == identity_user).FirstOrDefault();
       newticket.Agency = agancy;
 
-
       context.Tickets.Add(newticket);
-
       await context.SaveChangesAsync();
-
-
-
-      //Sending SMS for customer
-
-
-      var service_url = configuration["serivce_url"];
-      var trip_link = newticket.TicketCode;
-
 
       try
       {
-
-        await customerSmsSender.SendCustomerTicket_issued(newticket.Firstname, newticket.Lastname, newticket.TicketCode, trip_link, newticket.PhoneNumber);
+        await customerSmsSender.SendCustomerTicket_issued(newticket.Firstname, newticket.Lastname, newticket.TicketCode, newticket.TicketCode, newticket.PhoneNumber);
       }
       catch
       {
-
       }
-
-
 
       return RedirectToAction("ReserveConfirmed", new { ticketcode = newticket.TicketCode });
     }
 
-
-
-
-
-    private async Task DoConfirmResreve()
-    {
-
-    }
-
-
-
-    [Authorize] // This one requires authentication to view confirmation
+    [Authorize]
     public async Task<IActionResult> ReserveConfirmed(string ticketcode)
     {
       var ticket = context.Tickets.Where(t => t.TicketCode == ticketcode).FirstOrDefault();

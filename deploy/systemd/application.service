@@ -1,18 +1,20 @@
 [Unit]
-Description=ASP.NET Core Razor Pages App
-After=network.target
+Description=MrShoofer enterprise-selling ASP.NET Core app
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-WorkingDirectory=/var/www/application
-ExecStart=/usr/bin/dotnet /var/www/application/Application.dll
+# Must point at the blue/green symlink managed by deploy/zero-downtime-deploy.sh
+WorkingDirectory=/var/www/mrshoofer-enterprise/current
+ExecStart=/usr/bin/dotnet /var/www/mrshoofer-enterprise/current/Application.dll
 Restart=always
-# Environment
+RestartSec=3
+# Come back after VPS reboot (enabled via: systemctl enable application)
 Environment=ASPNETCORE_ENVIRONMENT=Production
-Environment=ASPNETCORE_URLS=http://0.0.0.0:5000
-# Logging
+Environment=ASPNETCORE_URLS=http://127.0.0.1:5000
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=application
+SyslogIdentifier=mrshoofer-enterprise
 User=www-data
 Group=www-data
 

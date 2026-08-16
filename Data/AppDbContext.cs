@@ -15,6 +15,7 @@ namespace Application.Data
 
     public DbSet<ContactUsMessage> ContactMessages { get; set; }
     public DbSet<ZarinpalChargeRequest> ZarinpalChargeRequests { get; set; }
+    public DbSet<ZarinpalTicketPayment> ZarinpalTicketPayments { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)

@@ -12,15 +12,15 @@
 .dropdown-menu {
   inset: unset !important;
   min-width: 250px;
-  transition: ease-out 300ms all;
+  transition: none;
 }
 
 /* Scrollable origin and destination dropdowns - limit to ~10 items */
 .dropdown-menu.origin_location,
 .dropdown-menu.destination_location {
-  max-height: 380px !important; /* Approximately 10 items at ~38px each */
+  max-height: 380px !important;
   overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow-x: visible !important;
 }
 
 /* Custom scrollbar styling for better UX */
@@ -93,14 +93,17 @@
 
 .input-container {
   position: relative;
-  display: flex;
+  display: block;
+  overflow: visible;
 }
 
   .input-container i {
     position: absolute;
     top: 50%;
-    left: 2px;
-    transform: translateY(-50%); /* Center icon vertically */
+    inset-inline-start: 2px;
+    inset-inline-end: auto;
+    left: auto;
+    transform: translateY(-50%);
   }
 
   .input-container input {
@@ -350,7 +353,7 @@
   --ink: #2f2b3d;
   --muted: #6f6b7d;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   padding-block: 5.5rem 4rem;
   background-color: #f7f7fd !important;
   background-image:
@@ -391,6 +394,9 @@
 
 /* The itinerary search card — the signature element */
 #landingHero .hero-search-card {
+  position: relative;
+  z-index: 5;
+  overflow: visible !important;
   border: 1px solid rgba(115, 103, 240, 0.14);
   border-radius: 1.5rem;
   box-shadow:
@@ -412,8 +418,23 @@
   border-radius: 1rem;
   border: 1px solid #e7e7f1;
   background: #fbfbfe;
-  padding-inline-end: 2.6rem;
+  direction: rtl;
+  text-align: start;
+  padding-inline-start: 0.95rem;
+  padding-inline-end: 2.55rem;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+#landingHero .input-container .icon {
+  color: var(--brand);
+  inset-inline-start: auto !important;
+  inset-inline-end: 0.7rem !important;
+  left: auto !important;
+  right: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+  line-height: 1;
+  pointer-events: none;
 }
 #landingHero .input-container .form-control:hover { border-color: #d3d1ea; }
 #landingHero .input-container .form-control:focus {
@@ -421,17 +442,17 @@
   background: #fff;
   box-shadow: 0 0 0 0.18rem rgba(115, 103, 240, 0.25) !important;
 }
-#landingHero .input-container .icon { color: var(--brand); }
-
-/* Submit */
+#landingHero .input-container .form-control:hover { border-color: #d3d1ea; }
 #landingHero .hero-search-card .btn-primary {
   height: calc(3rem + 2px);
   border-radius: 1rem !important;
   box-shadow: 0 12px 24px -10px rgba(115, 103, 240, 0.7);
 }
 
-/* Trust row: stats + dividers + feature chips */
-#landingHero .hero-stats { gap: 0.5rem 1.75rem; }
+#landingHero .hero-trust {
+  position: relative;
+  z-index: 1;
+}
 #landingHero .hero-stat { padding: 0 0.25rem; }
 #landingHero .hero-stat-num { display: block; font-size: 1.6rem; line-height: 1.2; }
 #landingHero .hero-stat-label { display: block; color: var(--muted); font-size: 0.9rem; }
@@ -456,8 +477,8 @@
 
 /* One orchestrated load moment */
 @keyframes heroRise {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 #landingHero .hero-lead { animation: heroRise 0.55s ease both; }
 #landingHero .hero-search-card { animation: heroRise 0.55s ease 0.08s both; }
@@ -471,4 +492,209 @@
   #landingHero .hero-lead,
   #landingHero .hero-search-card,
   #landingHero .hero-trust { animation: none !important; }
+}
+
+/* ============================================================
+   Landing hero — dropdown fix, illustration motion, typography,
+   and RTL-aware mobile hardening. Scoped under #landingHero /
+   #landingCTA so nothing leaks to the rest of the site.
+   ============================================================ */
+
+/* --- Hero title: strip the leaked vendor gradient-text (a banned
+   pattern) so the intended solid-ink headline + primary accent shows. */
+#landingHero .hero-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+  animation: none !important;
+  text-wrap: balance;
+}
+#landingHero .hero-title .text-primary {
+  color: var(--brand) !important;
+  -webkit-text-fill-color: var(--brand) !important;
+}
+#landingHero .hero-sub-title { text-wrap: pretty; }
+
+/* --- Eyebrow pill: wrap gracefully and stay centered on any width. */
+#landingHero .hero-eyebrow {
+  max-width: min(94%, 42rem);
+  margin-inline: auto;
+  line-height: 1.55;
+  text-align: center;
+  white-space: normal;
+}
+
+/* --- Location dropdowns -------------------------------------------------
+   Root cause of "opens above the field": the global
+   `.dropdown-menu{inset:unset!important}` (plus Popper) removed Bootstrap's
+   `top:100%` anchor, so the menu fell back to the container's static top,
+   overlapping the input. Pin it cleanly BELOW the field with logical
+   properties (correct in RTL) and give it a real surface. */
+#landingHero .hero-search-card,
+#landingHero .hero-search-card .card-body,
+#landingHero #tripForm,
+#landingHero .inputcel,
+#landingHero .input-container {
+  overflow: visible !important;
+}
+#landingHero .input-container.dropdown {
+  position: relative;
+  z-index: 2;
+}
+#landingHero .input-container.dropdown.show {
+  z-index: 40;
+}
+#landingHero .input-container > .dropdown-menu.origin_location,
+#landingHero .input-container > .dropdown-menu.destination_location {
+  position: absolute !important;
+  inset: auto !important;
+  inset-block-start: calc(100% + 0.5rem) !important;
+  inset-inline-start: 0 !important;
+  inset-inline-end: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  padding: 0.55rem 0.65rem !important;
+  text-align: start;
+  direction: rtl;
+  z-index: 1060 !important;
+  background: #fff !important;
+  background-color: #fff !important;
+  opacity: 1 !important;
+  isolation: isolate;
+  border: 1px solid rgba(115, 103, 240, 0.16) !important;
+  border-radius: 1rem !important;
+  box-shadow:
+    0 22px 48px -20px rgba(47, 43, 61, 0.30),
+    0 8px 20px -14px rgba(115, 103, 240, 0.26) !important;
+}
+#landingHero .input-container > .dropdown-menu.origin_location.show,
+#landingHero .input-container > .dropdown-menu.destination_location.show {
+  animation: heroDropIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes heroDropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Dropdown header label + items */
+#landingHero .staredlocation_title {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0.3rem 0.55rem 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+#landingHero .origin_location .dropdown-item,
+#landingHero .destination_location .dropdown-item {
+  border-radius: 0.625rem;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.95rem !important;
+  color: #45415c;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+#landingHero .origin_location .dropdown-item:hover,
+#landingHero .origin_location .dropdown-item:focus,
+#landingHero .destination_location .dropdown-item:hover,
+#landingHero .destination_location .dropdown-item:focus {
+  background-color: rgba(115, 103, 240, 0.10);
+  color: var(--brand-deep);
+}
+
+/* --- Route / wayfinding illustration: a live origin → destination trip. */
+#landingHero .route-illus { overflow: visible; }
+#landingHero .route-illus .route-dash { animation: routeFlow 1.5s linear infinite; }
+@keyframes routeFlow { to { stroke-dashoffset: -13; } }
+
+#landingHero .route-illus .route-origin-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: routePulse 2.4s ease-out infinite;
+}
+@keyframes routePulse {
+  0%        { transform: scale(0.7); opacity: 0.75; }
+  70%, 100% { transform: scale(2.1); opacity: 0; }
+}
+
+#landingHero .route-illus .route-marker {
+  offset-path: path("M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52");
+  offset-rotate: 0deg;
+  animation: routeMove 3.4s cubic-bezier(0.66, 0, 0.34, 1) infinite;
+}
+@keyframes routeMove {
+  0%        { offset-distance: 0%;   opacity: 0; }
+  8%        { opacity: 1; }
+  80%       { offset-distance: 100%; opacity: 1; }
+  88%, 100% { offset-distance: 100%; opacity: 0; }
+}
+
+#landingHero .route-illus .route-pin {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation:
+    routePinDrop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+    routePinBob 3s ease-in-out 0.8s infinite;
+}
+@keyframes routePinDrop {
+  from { transform: translateY(-12px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes routePinBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+#landingHero .route-illus .route-pin-shadow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: routeShadow 3s ease-in-out 0.8s infinite;
+}
+@keyframes routeShadow {
+  0%, 100% { transform: scale(1);    opacity: 0.12; }
+  50%      { transform: scale(0.82); opacity: 0.07; }
+}
+
+/* --- Mobile hardening --------------------------------------------------- */
+@media (max-width: 767.98px) {
+  #landingHero #tripForm .inputcel { margin-bottom: 0.75rem; }
+  #landingHero #tripForm .inputcel:last-child { margin-bottom: 0; }
+}
+@media (max-width: 575.98px) {
+  #landingHero.landing-hero { padding-block: 3.25rem 2.5rem; }
+  #landingHero .hero-title { font-size: clamp(1.35rem, 1.02rem + 3vw, 1.95rem); }
+  #landingHero .hero-eyebrow { font-size: 0.74rem; padding: 0.32rem 0.8rem; }
+  #landingHero .hero-search-card { border-radius: 1.15rem; }
+  #landingHero .hero-search-card .card-body { padding: 1.1rem; }
+  #landingHero .hero-stat-num { font-size: 1.35rem; }
+  #landingHero .input-container .form-control { height: calc(2.9rem + 2px); }
+  #landingHero .hero-search-card .btn-primary { height: calc(2.9rem + 2px); }
+}
+
+/* CTA: neutralise the inline width:80% that cramps phones/tablets. */
+@media (max-width: 991.98px) {
+  #landingCTA.landing-cta {
+    width: auto !important;
+    margin-inline: 1rem !important;
+    padding: 1.75rem 1.25rem !important;
+  }
+}
+
+/* --- Reduced motion: freeze the illustration + dropdown entrance. */
+@media (prefers-reduced-motion: reduce) {
+  #landingHero .route-illus .route-dash,
+  #landingHero .route-illus .route-origin-pulse,
+  #landingHero .route-illus .route-marker,
+  #landingHero .route-illus .route-pin,
+  #landingHero .route-illus .route-pin-shadow,
+  #landingHero .input-container > .dropdown-menu.origin_location.show,
+  #landingHero .input-container > .dropdown-menu.destination_location.show {
+    animation: none !important;
+  }
+  #landingHero .route-illus .route-marker { offset-distance: 60%; opacity: 1; }
 }

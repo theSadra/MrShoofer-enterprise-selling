@@ -20,5 +20,8 @@ namespace Application.ViewModels.Reserve
     public string Nacode { get; set; }
     [Required(ErrorMessage = "جنسیت مسافر را انتخاب کنید")]
     public string Gender { set; get; }
+
+    /// <summary>balance = ORS agency credit; zarinpal = online card payment then issue ticket.</summary>
+    public string? PaymentMethod { get; set; }
   }
 }

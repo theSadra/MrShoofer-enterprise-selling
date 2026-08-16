@@ -1,0 +1,19 @@
+[Unit]
+Description=MrShoofer Agency (enterprise-selling / InterpirceORS)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/root/InterpirceORS/publish
+ExecStart=/usr/bin/dotnet /root/InterpirceORS/publish/Application.dll
+Restart=always
+RestartSec=3
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://127.0.0.1:5005
+Environment=TZ=Asia/Tehran
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=agency
+
+[Install]
+WantedBy=multi-user.target

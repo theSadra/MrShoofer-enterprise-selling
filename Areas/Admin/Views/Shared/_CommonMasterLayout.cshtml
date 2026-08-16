@@ -32,6 +32,21 @@
 	<title>@title | پنل مدیریت</title>
 	<meta name="description" content="" />
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17843493402"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'AW-17843493402');
+	  @if (TempData["AgencyRegistered"] as string == "true")
+	  {
+	    <text>
+	  gtag('event', 'conversion', { 'send_to': 'AW-17843493402/WcYSCICR7s4cEJq0uLxC' });
+	    </text>
+	  }
+	</script>
+
 	<!-- Canonical SEO -->
 	<link rel="canonical" href='@productPage'>
 	<!-- Favicon -->

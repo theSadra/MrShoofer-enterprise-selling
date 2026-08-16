@@ -584,6 +584,11 @@
             buttonsStyling: false,
             customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
         });
+        // Google Ads conversion — Zarinpal payment success
+        gtag('event', 'conversion', {
+            'send_to': 'AW-17843493402/WcYSCICR7s4cEJq0uLxC',
+            'transaction_id': '@TempData["PaymentRefId"]'
+        });
             </text>
         }
 

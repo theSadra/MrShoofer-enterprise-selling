@@ -1,12 +1,13 @@
 version: '3.9'
 services:
   web:
-    container_name: dotnet-mvc-starter-app # Name your container
+    container_name: mrshoofer-enterprise
     build:
       context: .
-      dockerfile: Dockerfile # Path to your Dockerfile
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
-      - '5050:80' # Map container port 80 to host port 5050
+      - '127.0.0.1:5000:5000'
     environment:
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
       - ASPNETCORE_ENVIRONMENT=Production

@@ -106,7 +106,7 @@ function ensureOriginDropdown() {
   if ($('#origincontainer').length === 0) {
     spanElement.html(`
       <div class="staredlocations">
-        <label class="staredlocation_title ms-2 mt-2 text-muted pb-1" id="origin_most_lable">
+        <label class="staredlocation_title mt-2 text-muted pb-1" id="origin_most_lable">
           <i class="ti ti-map-pin-star icon locationicon p-1 pe-0"></i>
           شهرهای پرتردد
         </label>
@@ -120,7 +120,7 @@ function ensureDestinationDropdown() {
   if ($('#desticontainer').length === 0) {
     spanElement.html(`
       <div class="staredlocations">
-        <label class="staredlocation_title ms-2 mt-2 text-muted pb-1">
+        <label class="staredlocation_title mt-2 text-muted pb-1">
           <i class="ti ti-map-pin-star icon locationicon p-1 pe-0"></i>
           مقصد ها
         </label>

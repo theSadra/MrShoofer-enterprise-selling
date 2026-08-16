@@ -29,14 +29,6 @@ if (typeof TemplateCustomizer !== 'undefined') {
     themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
     displayCustomizer: false,
     defaultTextDir: 'rtl',
-    // defaultStyle: 'dark',
-    controls: ['rtl', 'style']
+    controls: ['style']
   });
 }
-
-var link = document.createElement('link');
-link.type = 'text/css';
-link.rel = 'stylesheet';
-link.href = assetsPath + "css/rtl.css";
-
-document.head.appendChild(link);

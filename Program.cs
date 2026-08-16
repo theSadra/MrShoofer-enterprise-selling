@@ -27,20 +27,7 @@ builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 builder.Services.AddHttpClient<MrShooferAPIClient>((sp, client) =>
 {
   var config = sp.GetRequiredService<IConfiguration>();
-  var primary = config["serivce_url"] ?? "http://localhost:5001";
-  var fallback = config["serivce_url_fallback"] ?? "http://localhost:5000";
-
-  // Use primary; fall back if unreachable
-  var serviceUrl = primary;
-  try
-  {
-    using var tcp = new System.Net.Sockets.TcpClient();
-    var uri = new Uri(primary);
-    tcp.ConnectAsync(uri.Host, uri.Port).Wait(500);
-    if (!tcp.Connected) serviceUrl = fallback;
-  }
-  catch { serviceUrl = fallback; }
-
+  var serviceUrl = config["serivce_url"] ?? "http://localhost:5001";
   client.BaseAddress = new Uri(serviceUrl);
   client.Timeout = TimeSpan.FromSeconds(30);
 });
@@ -81,7 +68,10 @@ builder.Services.AddHttpClient<IPaymentService, ZarinpalService>(client =>
 
 // Configure EF Core to use PostgreSQL via Npgsql and read the proper connection string per environment
 var connStringName = builder.Environment.IsDevelopment() ? "development" : "production";
-var pgsqlConnString = builder.Configuration.GetConnectionString(connStringName);
+var pgsqlConnString = builder.Configuration.GetConnectionString(connStringName)
+    ?? builder.Configuration[$"ConnectionStrings:{connStringName}"]
+    ?? builder.Configuration.GetConnectionString("production")
+    ?? builder.Configuration.GetConnectionString("development");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -178,6 +168,9 @@ var app = builder.Build();
 // Ensure a default admin account exists for admin panel login.
 using (var scope = app.Services.CreateScope())
 {
+  var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+  await db.Database.MigrateAsync();
+
   var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
   var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

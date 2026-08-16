@@ -139,6 +139,7 @@ namespace Application.Areas.Admin.Controllers
 
       TempData["status"] = "success";
       TempData["message"] = "فروشنده با موفقیت ثبت شد";
+      TempData["AgencyRegistered"] = "true";
 
       return RedirectToAction("Index");
     }

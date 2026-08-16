@@ -1,0 +1,26 @@
+# Production-oriented compose used as a reference / manual bootstrap.
+# The zero-downtime script manages blue/green containers directly; this file
+# is useful for a first boot or local prod-like run.
+#
+#   docker compose -f deploy/docker-compose.prod.yml up -d
+#
+# restart: unless-stopped → container comes back automatically after VPS reboot
+# (Docker itself must also be enabled: sudo systemctl enable --now docker)
+
+services:
+  web:
+    image: mcr.microsoft.com/dotnet/aspnet:8.0
+    container_name: mrshoofer-enterprise-current
+    restart: unless-stopped
+    working_dir: /app
+    command: ["dotnet", "Application.dll"]
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+    volumes:
+      # Published app (symlink or release dir on the host)
+      - /var/www/mrshoofer-enterprise/current:/app
+      # Keep production secrets outside the release tree
+      - /var/www/mrshoofer-enterprise/shared/appsettings.json:/app/appsettings.json:ro
