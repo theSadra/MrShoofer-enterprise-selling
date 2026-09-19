@@ -328,8 +328,10 @@ namespace Application.Areas.AgencyArea
       }
 
       int traveltime_mins = _travelTimeCalculator.GetTravelMins(originstring, destinationstring);
-      // Re-resolve in case this action was hit without a prior authenticated filter path.
-      agency ??= ResolveAgencyForUser();
+      // Guests always see 0% commission pricing (قبل/بعد تخفیف). Logged-in agencies use live ORS %.
+      agency = User?.Identity?.IsAuthenticated == true
+        ? (agency ?? ResolveAgencyForUser())
+        : null;
       var commissionPercent = await ResolveCommissionPercentAsync();
 
       var end_result = response
@@ -342,7 +344,7 @@ namespace Application.Areas.AgencyArea
       {
         // Recommended sale = ORS after-discount list price (charge passenger this).
         var recommendedSale = t.afterdiscticketprice;
-        // Payable = after-discount minus ORS/base commission.
+        // Payable = after-discount minus ORS/base commission (equals list price when commission is 0).
         var payable = AgencyCommissionPricing.NetPayableTomans(recommendedSale, commissionPercent);
         var hasCommission = commissionPercent > 0;
         return new SearchedTripViewModel
@@ -380,11 +382,12 @@ namespace Application.Areas.AgencyArea
 
     /// <summary>
     /// Prefer live ORS <c>baseCommission</c> so payable tracks ORS changes; fall back to local Agency.Commission.
-    /// Guests (no agency) get 0 — both prices show the ORS list amount.
+    /// Guests / unauthenticated users always get 0% — show ORS قبل/بعد تخفیف (same as zero-commission agencies).
     /// </summary>
     private async Task<int> ResolveCommissionPercentAsync()
     {
-      if (agency == null) return 0;
+      if (User?.Identity?.IsAuthenticated != true || agency == null)
+        return 0;
 
       try
       {

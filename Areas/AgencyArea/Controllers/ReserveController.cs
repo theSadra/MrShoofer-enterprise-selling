@@ -69,9 +69,11 @@ namespace Application.Areas.AgencyArea
       }
       else
       {
-        // Guest user - show they need to login
+        // Guest user — same price display as 0% commission (قبل/بعد تخفیف, full list payable).
         ViewBag.agancy_balance = 0;
         ViewBag.payablePrice = PayableTicketPrice(trip);
+        ViewBag.listPrice = trip.afterdiscticketprice;
+        ViewBag.commissionPercent = 0;
         ViewBag.canbuy = false;
         ViewBag.canPayHybrid = false;
         ViewBag.isGuest = true;
@@ -148,6 +150,8 @@ namespace Application.Areas.AgencyArea
         {
           ViewBag.agancy_balance = 0;
           ViewBag.payablePrice = PayableTicketPrice(invalidTrip);
+          ViewBag.listPrice = invalidTrip.afterdiscticketprice;
+          ViewBag.commissionPercent = 0;
           ViewBag.canbuy = false;
           ViewBag.canPayHybrid = false;
           ViewBag.isGuest = true;
@@ -621,11 +625,14 @@ namespace Application.Areas.AgencyArea
     private int PayableTicketPrice(SearchedTrip trip) =>
       AgencyCommissionPricing.NetPayableTomans(trip.afterdiscticketprice, GetCommissionPercent());
 
-    /// <summary>Live ORS baseCommission when available; otherwise local Agency.Commission.</summary>
+    /// <summary>
+    /// Live ORS baseCommission when available; otherwise local Agency.Commission.
+    /// Unauthenticated guests always 0% (قبل/بعد تخفیف UI, full list price payable).
+    /// </summary>
     private int GetCommissionPercent()
     {
       if (_commissionPercent.HasValue) return _commissionPercent.Value;
-      if (agency == null)
+      if (User?.Identity?.IsAuthenticated != true || agency == null)
       {
         _commissionPercent = 0;
         return 0;
