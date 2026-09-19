@@ -4,10 +4,7 @@
     ViewData["Title"] = "صدور فاکتور رسمی";
     var preview = ViewBag.SerialPreview as string ?? ViewData["SerialPreview"] as string ?? "";
     var line = Model.Lines.FirstOrDefault();
-    var needsLegal = ViewBag.NeedsLegalProfile as bool? == true || ViewData["NeedsLegalProfile"] as bool? == true;
-    var legalUrl = ViewBag.LegalProfileUrl as string
-        ?? ViewData["LegalProfileUrl"] as string
-        ?? Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
+    var legalUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
     string Cell(string? v) => string.IsNullOrWhiteSpace(v) ? "—" : v;
 }
 
@@ -27,7 +24,7 @@
     <div class="card mb-3">
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
             <span class="fw-bold">مشخصات مسافر (خریدار)</span>
-            <a class="btn btn-sm btn-outline-primary" href="@legalUrl">تکمیل / ویرایش اطلاعات مالی</a>
+            <a class="btn btn-sm btn-outline-primary" href="@legalUrl">ویرایش اطلاعات مالی</a>
         </div>
         <div class="card-body row g-3">
             <div class="col-md-4">
@@ -128,32 +125,3 @@
         @Application.Services.OfficialInvoices.OfficialInvoiceSeller.MoodianNote
     </p>
 </div>
-
-@if (needsLegal)
-{
-    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
-    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (typeof Swal === 'undefined') return;
-            Swal.fire({
-                icon: 'info',
-                title: 'اطلاعات مالی تکمیل نشده',
-                html: 'برای نمایش کامل مشخصات خریدار در فاکتور رسمی، لطفاً اطلاعات مالی آژانس را تکمیل کنید.',
-                showCancelButton: true,
-                confirmButtonText: 'تکمیل اطلاعات مالی',
-                cancelButtonText: 'بعداً',
-                reverseButtons: true,
-                buttonsStyling: false,
-                customClass: {
-                    confirmButton: 'btn btn-primary me-2',
-                    cancelButton: 'btn btn-outline-secondary'
-                }
-            }).then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(legalUrl));
-                }
-            });
-        });
-    </script>
-}

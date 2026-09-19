@@ -24,8 +24,23 @@
                 شماره فاکتور بعدی: <strong dir="ltr">@preview</strong>
             </p>
         </div>
-        <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">صدور از فهرست بلیط‌ها</a>
+        @if (ViewBag.HasInvoiceFinancialInfo as bool? == true)
+        {
+            <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">صدور از فهرست بلیط‌ها</a>
+        }
+        else
+        {
+            <a href="@(ViewBag.LegalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))" class="btn btn-warning">تکمیل اطلاعات مالی</a>
+        }
     </div>
+
+    @if (ViewBag.HasInvoiceFinancialInfo as bool? != true)
+    {
+        <div class="alert alert-warning d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span>تا تکمیل اطلاعات مالی (کد اقتصادی، شماره ثبت و شناسه ملی) امکان صدور فاکتور رسمی وجود ندارد.</span>
+            <a href="@(ViewBag.LegalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))" class="btn btn-sm btn-warning">تکمیل اطلاعات مالی</a>
+        </div>
+    }
 
     @if (!Model.Any())
     {

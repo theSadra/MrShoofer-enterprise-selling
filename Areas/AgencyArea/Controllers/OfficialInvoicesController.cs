@@ -39,6 +39,8 @@ namespace Application.Areas.AgencyArea.Controllers
                 .Take(200)
                 .ToListAsync(cancellationToken);
             ViewBag.SerialPreview = _invoices.GetSerialSettings().Preview;
+            ViewBag.HasInvoiceFinancialInfo = agency.HasInvoiceFinancialInfo;
+            ViewBag.LegalProfileUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
             return View(list);
         }
 
@@ -51,6 +53,15 @@ namespace Application.Areas.AgencyArea.Controllers
             {
                 TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
                 return RedirectToAction("Index", "TicketInfo");
+            }
+
+            if (!agency.HasInvoiceFinancialInfo)
+            {
+                TempData["InvoiceBlocked"] = true;
+                TempData["ErrorMessage"] = "برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.";
+                if (!string.IsNullOrWhiteSpace(ticketcode))
+                    TempData["PendingInvoiceTicketCode"] = ticketcode.Trim();
+                return RedirectToAction("LegalProfile", "Agency");
             }
 
             if (string.IsNullOrWhiteSpace(ticketcode))
@@ -73,8 +84,6 @@ namespace Application.Areas.AgencyArea.Controllers
 
             ViewData["Title"] = "صدور فاکتور رسمی";
             ViewData["SerialPreview"] = _invoices.GetSerialSettings().Preview;
-            ViewData["NeedsLegalProfile"] = !agency.HasInvoiceFinancialInfo;
-            ViewData["LegalProfileUrl"] = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
 
             var draft = new OfficialInvoice { AgencyId = agency.Id };
             await _invoices.PrefillFromTicketAsync(draft, ticket, agency.Id);
@@ -92,6 +101,15 @@ namespace Application.Areas.AgencyArea.Controllers
             {
                 TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
                 return RedirectToAction("Index", "TicketInfo");
+            }
+
+            if (!agency.HasInvoiceFinancialInfo)
+            {
+                TempData["InvoiceBlocked"] = true;
+                TempData["ErrorMessage"] = "برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.";
+                if (!string.IsNullOrWhiteSpace(ticketCode))
+                    TempData["PendingInvoiceTicketCode"] = ticketCode.Trim();
+                return RedirectToAction("LegalProfile", "Agency");
             }
 
             var (status, ticket, existing) = await _invoices.ResolveEligibleTicketAsync(ticketCode, agency.Id, cancellationToken);
@@ -136,11 +154,39 @@ namespace Application.Areas.AgencyArea.Controllers
                 .FirstOrDefaultAsync(i => i.Id == id && i.AgencyId == agency.Id, cancellationToken);
             if (invoice == null) return NotFound();
 
+            // Always show current agency legal/financial profile on print (buyer block).
+            ApplyAgencyBuyerProfile(invoice, agency);
+
             OfficialInvoiceService.HydrateLines(invoice);
             ViewBag.Template = _invoices.GetAssets();
             ViewBag.Seller = await _invoices.GetSellerProfileAsync(cancellationToken);
             ViewData["Title"] = "فاکتور " + invoice.SerialNumber;
             return View(invoice);
+        }
+
+        private static void ApplyAgencyBuyerProfile(OfficialInvoice invoice, Agency agency)
+        {
+            invoice.BuyerName = agency.Name;
+            if (!string.IsNullOrWhiteSpace(agency.NationalId))
+                invoice.BuyerNationalId = agency.NationalId.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.EconomicNo))
+                invoice.BuyerEconomicNo = agency.EconomicNo.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.RegistrationNo))
+                invoice.BuyerRegistrationNo = agency.RegistrationNo.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.Address))
+                invoice.BuyerAddress = agency.Address.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.PhoneNumber))
+                invoice.BuyerPhone = agency.PhoneNumber.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.Fax))
+                invoice.BuyerFax = agency.Fax.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.Province))
+                invoice.BuyerProvince = agency.Province.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.County))
+                invoice.BuyerCounty = agency.County.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.City))
+                invoice.BuyerCity = agency.City.Trim();
+            if (!string.IsNullOrWhiteSpace(agency.PostalCode))
+                invoice.BuyerPostalCode = agency.PostalCode.Trim();
         }
 
         private async Task<Agency?> ResolveAgencyAsync(CancellationToken cancellationToken)

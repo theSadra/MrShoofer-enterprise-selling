@@ -117,7 +117,19 @@ namespace Application.Areas.AgencyArea
       agency.PostalCode = string.IsNullOrWhiteSpace(model.PostalCode) ? null : model.PostalCode.Trim();
       await _context.SaveChangesAsync();
 
-      TempData["SuccessMessage"] = "اطلاعات مالی / حقوقی آژانس ذخیره شد";
+      var pendingTicket = TempData["PendingInvoiceTicketCode"] as string;
+      if (agency.HasInvoiceFinancialInfo)
+      {
+        TempData["SuccessMessage"] = "اطلاعات مالی / حقوقی آژانس ذخیره شد";
+        if (!string.IsNullOrWhiteSpace(pendingTicket))
+          return RedirectToAction("Create", "OfficialInvoices", new { area = "AgencyArea", ticketcode = pendingTicket });
+        return RedirectToAction(nameof(LegalProfile));
+      }
+
+      if (!string.IsNullOrWhiteSpace(pendingTicket))
+        TempData["PendingInvoiceTicketCode"] = pendingTicket;
+      TempData["InvoiceBlocked"] = true;
+      TempData["ErrorMessage"] = "برای صدور فاکتور رسمی، کد اقتصادی، شماره ثبت و شناسه ملی را وارد کنید.";
       return RedirectToAction(nameof(LegalProfile));
     }
 

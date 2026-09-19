@@ -20,11 +20,11 @@ namespace Application.Models
 
     public string? IdentityUserId { get; set; }
 
-    /// <summary>کد اقتصادی سازمان (اختیاری — برای فاکتور رسمی)</summary>
+    /// <summary>کد اقتصادی سازمان (برای صدور فاکتور رسمی لازم است)</summary>
     public string? EconomicNo { get; set; }
-    /// <summary>شماره ثبت سازمان (اختیاری)</summary>
+    /// <summary>شماره ثبت سازمان (برای صدور فاکتور رسمی لازم است)</summary>
     public string? RegistrationNo { get; set; }
-    /// <summary>شناسه ملی سازمان (اختیاری)</summary>
+    /// <summary>شناسه ملی سازمان (برای صدور فاکتور رسمی لازم است)</summary>
     public string? NationalId { get; set; }
     /// <summary>نمابر (اختیاری)</summary>
     public string? Fax { get; set; }
@@ -37,16 +37,11 @@ namespace Application.Models
     /// <summary>کد پستی (اختیاری)</summary>
     public string? PostalCode { get; set; }
 
-    /// <summary>True when org has filled at least one invoice buyer identifier.</summary>
+    /// <summary>True when core invoice buyer identifiers are filled (required before issuing official invoices).</summary>
     public bool HasInvoiceFinancialInfo =>
-      !string.IsNullOrWhiteSpace(EconomicNo) ||
-      !string.IsNullOrWhiteSpace(RegistrationNo) ||
-      !string.IsNullOrWhiteSpace(NationalId) ||
-      !string.IsNullOrWhiteSpace(Fax) ||
-      !string.IsNullOrWhiteSpace(Province) ||
-      !string.IsNullOrWhiteSpace(County) ||
-      !string.IsNullOrWhiteSpace(City) ||
-      !string.IsNullOrWhiteSpace(PostalCode);
+      !string.IsNullOrWhiteSpace(EconomicNo) &&
+      !string.IsNullOrWhiteSpace(RegistrationNo) &&
+      !string.IsNullOrWhiteSpace(NationalId);
 
     public IdentityUser IdentityUser { get; set; }
     public ICollection<Ticket> SoldTickets { get; set; }

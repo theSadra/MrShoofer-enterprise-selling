@@ -371,28 +371,10 @@ else
             <div class="d-flex col-6" style="flex-direction: column; align-items: center;">
                 <span class="fs-3 ms-1 font-bold d-block" style="line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">ثـبت موفقیت آمیز</span>
                 <small class="">سفر با موفقیت ثبت شد</small>
-                @if (canEditDisplayPrices)
-                {
-                <button type="button"
-                        class="btn btn-link p-0 mt-2 ticket-price-edit-link"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ticketPriceModal">
-                    تغییر قیمت نمایشی
-                </button>
-                }
             </div>
 
             <div class="col-3 d-flex justify-content-end">
               <div class="d-flex align-items-center gap-2">
-                    @if (canEditDisplayPrices)
-                    {
-                    <button type="button"
-                            class="btn btn-link p-0 ticket-price-edit-link d-none d-md-inline"
-                            data-bs-toggle="modal"
-                            data-bs-target="#ticketPriceModal">
-                        تغییر قیمت
-                    </button>
-                    }
                     <button type="button"
                             id="shareTicketBtn"
                             class="btn rounded-pill btn-icon btn-label-secondary waves-effect"
@@ -756,15 +738,6 @@ else
                                     </svg><span id="ticket-display-final">@shownFinal.ToString("N0")</span>
                                 </bdi>
                             </h4>
-                            @if (canEditDisplayPrices)
-                            {
-                            <button type="button"
-                                    class="btn btn-link p-0 mt-1 ticket-price-edit-link"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#ticketPriceModal">
-                                تغییر قیمت نمایشی
-                            </button>
-                            }
                         </div>
                     </div>
                 </div>

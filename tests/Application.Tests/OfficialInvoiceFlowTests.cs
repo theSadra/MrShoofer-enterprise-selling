@@ -98,6 +98,7 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
   [Fact]
   public async Task Agency_creates_invoice_from_uncancelled_ticket_with_autofill_and_pending_status()
   {
+    await SeedFinancialProfileAsync();
     var ticket = await SeedTicketAsync(cancelled: false, priceTomans: 75_000);
     var agencyCtrl = CreateAgencyController();
 
@@ -124,6 +125,23 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
     Assert.Equal("1-2209", invoice.SerialNumber);
     Assert.Contains("۵ روز کاری", OfficialInvoiceSeller.MoodianNote);
     Assert.Contains("سامانه مودیان", OfficialInvoiceSeller.MoodianNote);
+  }
+
+  [Fact]
+  public async Task Agency_cannot_create_invoice_without_financial_profile()
+  {
+    var ticket = await SeedTicketAsync(cancelled: false, priceTomans: 40_000);
+    var agencyCtrl = CreateAgencyController();
+
+    var get = await agencyCtrl.Create(ticket.TicketCode);
+    var getRedirect = Assert.IsType<RedirectToActionResult>(get);
+    Assert.Equal("LegalProfile", getRedirect.ActionName);
+    Assert.Equal("Agency", getRedirect.ControllerName);
+
+    var post = await agencyCtrl.CreateConfirm(ticket.TicketCode);
+    var postRedirect = Assert.IsType<RedirectToActionResult>(post);
+    Assert.Equal("LegalProfile", postRedirect.ActionName);
+    Assert.Equal(0, await NewDb().OfficialInvoices.CountAsync());
   }
 
   [Fact]
@@ -174,6 +192,7 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
   [Fact]
   public async Task Agency_cannot_create_invoice_for_cancelled_ticket()
   {
+    await SeedFinancialProfileAsync();
     var ticket = await SeedTicketAsync(cancelled: true, priceTomans: 40_000);
     var agencyCtrl = CreateAgencyController();
 
@@ -189,6 +208,7 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
   [Fact]
   public async Task Admin_can_mark_uploaded_and_agency_has_no_status_change_action()
   {
+    await SeedFinancialProfileAsync();
     var ticket = await SeedTicketAsync(cancelled: false, priceTomans: 10_000);
     await CreateAgencyController().CreateConfirm(ticket.TicketCode);
     var invoice = await NewDb().OfficialInvoices.SingleAsync();
@@ -223,6 +243,16 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
       BuyerName = "X",
       Lines = new List<OfficialInvoiceLine>()
     }));
+  }
+
+  private async Task SeedFinancialProfileAsync()
+  {
+    var db = NewDb();
+    var agency = await db.Agencies.SingleAsync(a => a.Id == _agency.Id);
+    agency.EconomicNo = "12345678901";
+    agency.RegistrationNo = "998877";
+    agency.NationalId = "14000000001";
+    await db.SaveChangesAsync();
   }
 
   private async Task<Ticket> SeedTicketAsync(bool cancelled, int priceTomans)

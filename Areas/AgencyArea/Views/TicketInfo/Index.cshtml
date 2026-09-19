@@ -463,11 +463,23 @@
 							<div class="d-flex col-12 col-md-2 P-0 align-self-center gap-2" style="flex-direction: column">
 								@if (!ticket.IsCancelled && ViewBag.isOrganization is bool isOrg && isOrg)
 								{
-									<a class="btn btn-outline-primary px-0" target="_blank" rel="noopener"
-									   asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Create" asp-route-ticketcode="@ticket.TicketCode">
-										<i class="ti ti-file-invoice"></i>
-										فاکتور رسمی
-									</a>
+									var hasFin = ViewBag.hasInvoiceFinancialInfo as bool? == true;
+									if (hasFin)
+									{
+										<a class="btn btn-outline-primary px-0" target="_blank" rel="noopener"
+										   asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Create" asp-route-ticketcode="@ticket.TicketCode">
+											<i class="ti ti-file-invoice"></i>
+											فاکتور رسمی
+										</a>
+									}
+									else
+									{
+										<a href="@(ViewBag.legalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))"
+										   class="btn btn-outline-warning px-0 js-invoice-need-legal">
+											<i class="ti ti-file-invoice"></i>
+											فاکتور رسمی
+										</a>
+									}
 								}
 								<a class="btn btn-secondary px-0" asp-area="AgencyArea" asp-controller="CustomerService" asp-action="TripReceiptPDF" asp-route-reference="@ticket.TicketCode">
 
@@ -550,5 +562,43 @@
 
 <div class="pb-5">
 </div>
+
+@{ var showNeedLegalSwal = ViewBag.isOrganization as bool? == true && ViewBag.hasInvoiceFinancialInfo as bool? != true; }
+@if (showNeedLegalSwal)
+{
+	<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+	<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			document.querySelectorAll('.js-invoice-need-legal').forEach(function (el) {
+				el.addEventListener('click', function (e) {
+					e.preventDefault();
+					var url = el.getAttribute('href');
+					if (typeof Swal === 'undefined') {
+						window.location.href = url;
+						return;
+					}
+					Swal.fire({
+						icon: 'warning',
+						title: 'اطلاعات مالی تکمیل نشده',
+						html: 'برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس را تکمیل کنید.',
+						showCancelButton: true,
+						confirmButtonText: 'تکمیل اطلاعات مالی',
+						cancelButtonText: 'انصراف',
+						reverseButtons: true,
+						allowOutsideClick: false,
+						buttonsStyling: false,
+						customClass: {
+							confirmButton: 'btn btn-primary me-2',
+							cancelButton: 'btn btn-outline-secondary'
+						}
+					}).then(function (result) {
+						if (result.isConfirmed) window.location.href = url;
+					});
+				});
+			});
+		});
+	</script>
+}
 
 
