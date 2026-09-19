@@ -1,0 +1,698 @@
+/* Mobile city drawer only — keep enterprise input styles unchanged.
+   ORG black/neutral theme */
+
+:root {
+  --ts-primary: var(--brand-ink, #000);
+  --ts-primary-hover: #1a1a1a;
+  --ts-primary-soft: rgba(0, 0, 0, 0.08);
+  --ts-ink: var(--brand-ink, #000);
+  --ts-muted: var(--brand-muted, #52525b);
+  --ts-border: var(--brand-border, #e5e5e5);
+  --ts-surface: #fff;
+  --ts-bg-muted: #f3f3f3;
+  --ts-radius: 0.75rem;
+}
+
+.city-picker__head,
+.city-picker__search {
+  display: none;
+}
+
+.city-picker__context-icon {
+  display: none;
+}
+
+body.city-picker-open {
+  overflow: hidden !important;
+}
+
+body.city-picker-open .layout-navbar,
+body.city-picker-open .landing-navbar {
+  z-index: 0 !important;
+  pointer-events: none;
+}
+
+@media (max-width: 767.98px) {
+  body > .dropdown-menu .city-picker__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  body > .dropdown-menu .city-picker__context-icon,
+  #tripForm .city-picker__context-icon,
+  #landingHero #tripForm .city-picker__context-icon {
+    display: inline-block;
+    font-size: 1.1rem;
+    color: var(--ts-primary);
+  }
+}
+
+@media (min-width: 768px) {
+  #tripForm .dropdown-menu.origin_location,
+  #tripForm .dropdown-menu.destination_location,
+  .searchbar .dropdown-menu.origin_location,
+  .searchbar .dropdown-menu.destination_location {
+    position: absolute !important;
+    top: calc(100% + 0.35rem) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset: auto 0 auto auto !important;
+    transform: none !important;
+    overflow: hidden !important;
+    padding: 0.35rem !important;
+    transition: none !important;
+    z-index: 60 !important;
+    min-width: 100% !important;
+    width: max(100%, 16rem) !important;
+    max-height: min(40dvh, 18rem) !important;
+    background: #fff !important;
+  }
+
+  #tripForm .dropdown-menu.origin_location:not(.show),
+  #tripForm .dropdown-menu.destination_location:not(.show),
+  .searchbar .dropdown-menu.origin_location:not(.show),
+  .searchbar .dropdown-menu.destination_location:not(.show) {
+    display: none !important;
+  }
+
+  #tripForm .dropdown-menu .city-picker,
+  .searchbar .dropdown-menu .city-picker {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(min(40dvh, 18rem) - 0.7rem);
+    overflow: hidden;
+  }
+
+  #tripForm .dropdown-menu .city-picker__head {
+    min-height: 1.9rem;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 0.3rem 0.55rem;
+    margin-bottom: 0.3rem;
+    background: var(--ts-bg-muted);
+    color: var(--ts-muted);
+    border-radius: 0.5rem;
+  }
+
+  #tripForm .dropdown-menu .city-picker__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    font-weight: 650;
+  }
+
+  #tripForm .dropdown-menu .city-picker__context-icon {
+    display: inline-block;
+    position: static;
+    transform: none;
+    min-width: auto;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1;
+    color: var(--ts-primary);
+  }
+
+  #tripForm .dropdown-menu .city-picker__close {
+    display: none;
+  }
+
+  #tripForm .dropdown-menu .city-picker .staredlocations {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+    border-radius: 0.55rem;
+    padding-inline: 0.2rem;
+  }
+}
+
+/* While drawer is open: hide the rest of the search chrome so nothing paints through */
+@media (max-width: 767.98px) {
+  body.city-picker-open #tripForm .od-swap-btn,
+  body.city-picker-open #tripForm .inputcel:not(:has(.dropdown-menu.show)),
+  body.city-picker-open #landingHero #tripForm .inputcel:not(:has(.dropdown-menu.show)) {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.city-picker-open #tripForm .inputcel:has(.dropdown-menu.show),
+  body.city-picker-open #landingHero #tripForm .inputcel:has(.dropdown-menu.show),
+  body.city-picker-open #tripForm .input-container:has(> .dropdown-menu.show) {
+    position: static !important;
+    z-index: auto !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  /* Portaled drawer (menu moved to body) */
+  body.city-picker-open > .dropdown-menu.origin_location,
+  body.city-picker-open > .dropdown-menu.destination_location,
+  body > .dropdown-menu.origin_location.show,
+  body > .dropdown-menu.destination_location.show {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    animation: none !important;
+    z-index: 1080 !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  body > .dropdown-menu.origin_location .city-picker,
+  body > .dropdown-menu.destination_location .city-picker {
+    --picker-inline: 1rem;
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100dvh;
+    background: #fff;
+  }
+
+  body > .dropdown-menu .city-picker__head,
+  body > .dropdown-menu .city-picker__search {
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 0;
+    padding-inline: var(--picker-inline, 1rem);
+  }
+
+  body > .dropdown-menu .city-picker__head {
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, #fff 100%);
+  }
+
+  body > .dropdown-menu .city-picker__close {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #000000;
+    border-radius: 0.65rem;
+  }
+
+  body > .dropdown-menu .city-picker__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2f2b3d;
+  }
+
+  body > .dropdown-menu .city-picker__search {
+    position: relative;
+    padding-block: 0.75rem;
+  }
+
+  body > .dropdown-menu .city-picker__search > .ti-search {
+    position: absolute !important;
+    inset-inline-start: calc(1rem + 0.7rem);
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+    pointer-events: none;
+  }
+
+  body > .dropdown-menu .city-picker__input {
+    min-height: 3.15rem;
+    height: 3.15rem;
+    padding-inline-start: 2.4rem;
+    padding-inline-end: 0.85rem;
+    background: #f3f3f3;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+  }
+
+  body > .dropdown-menu .city-picker .staredlocations {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-inline: 1rem;
+    padding-bottom: env(safe-area-inset-bottom, 0.75rem);
+  }
+
+  body > .dropdown-menu .city-picker .dropdown-item {
+    width: 100% !important;
+    min-height: 3.15rem;
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 0.15rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: #2f2b3d;
+  }
+
+  body > .dropdown-menu .city-picker i {
+    position: static !important;
+    transform: none !important;
+  }
+}
+
+/* Swap control — light chrome, does not restyle fields */
+#tripForm .od-pair-col {
+  position: relative;
+}
+
+#tripForm .od-swap-btn {
+  --od-swap-size: 2rem;
+  position: absolute;
+  z-index: 4;
+  width: var(--od-swap-size);
+  max-width: var(--od-swap-size);
+  height: var(--od-swap-size);
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ts-border);
+  background: var(--ts-surface);
+  color: var(--ts-primary);
+  border-radius: 0.65rem;
+  line-height: 1;
+  box-shadow: 0 0 0 3px var(--ts-surface), 0 2px 6px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+#tripForm .od-swap-btn:hover,
+#tripForm .od-swap-btn:focus-visible {
+  color: #fff;
+  background: var(--ts-primary);
+  border-color: var(--ts-primary);
+  outline: none;
+}
+
+#tripForm .od-swap-btn .ti {
+  font-size: 1rem;
+  line-height: 1;
+  margin: 0;
+}
+
+#tripForm .od-swap-btn.is-swapping .ti {
+  animation: ts-od-swap-spin 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes ts-od-swap-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+@media (min-width: 768px) {
+  #landingHero #tripForm .od-pair,
+  .searchbar .od-pair {
+    --od-swap-gutter: 2.75rem;
+  }
+
+  #landingHero #tripForm .od-pair > .inputcel:first-child,
+  .searchbar .od-pair > .inputcel:first-child {
+    padding-inline-end: calc(var(--od-swap-gutter) / 2) !important;
+  }
+
+  #landingHero #tripForm .od-pair > .inputcel:last-of-type,
+  .searchbar .od-pair > .inputcel:last-of-type {
+    padding-inline-start: calc(var(--od-swap-gutter) / 2) !important;
+  }
+
+  /* Homepage: pin to input row (labels sit below) */
+  #landingHero #tripForm .od-swap-btn {
+    left: 50%;
+    top: 0.25rem;
+    bottom: auto;
+    transform: translateX(-50%);
+  }
+
+  /* Trips searchbar: pin to input baseline (labels sit above) */
+  .searchbar .od-swap-btn {
+    left: 50%;
+    top: auto;
+    bottom: 0.5rem;
+    transform: translateX(-50%);
+  }
+
+  #tripForm .od-swap-btn:active {
+    transform: translateX(-50%) scale(0.94);
+  }
+}
+
+@media (max-width: 767.98px) {
+  /* Match ORG mobile search rail — stack fields, hide labels, muted inputs */
+  .trips-search-hero .searchbar-body {
+    padding: 0.9rem !important;
+  }
+
+  #tripForm.row,
+  #tripForm .row,
+  .searchbar-body > .row,
+  .searchbar-rail {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0.5rem;
+    margin: 0 !important;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  #tripForm .searchbar-field-label,
+  #tripForm label.form-text {
+    display: none !important;
+  }
+
+  #tripForm .inputcel {
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #tripForm .input-container input.form-control,
+  #tripForm .search-submit-btn,
+  #tripForm .searchbar-submit {
+    background: var(--ts-bg-muted);
+    border: 1px solid transparent;
+    border-radius: 0.85rem !important;
+    min-height: 3.15rem !important;
+    height: 3.15rem !important;
+    padding-block: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: none;
+  }
+
+  #tripForm .input-container input.form-control {
+    padding-inline-start: 2.65rem !important;
+    padding-inline-end: 2.75rem !important;
+    text-align: start;
+    direction: rtl;
+    unicode-bidi: isolate;
+  }
+
+  #tripForm .input-container input.form-control:focus {
+    background: var(--ts-bg-muted);
+    border-color: var(--ts-primary);
+    box-shadow: none;
+  }
+
+  #tripForm input.starttimeselector,
+  #tripForm input.bdi {
+    direction: rtl !important;
+    text-align: start !important;
+  }
+
+  #tripForm .input-container > i.icon {
+    left: auto !important;
+    right: auto !important;
+    inset-inline-start: 0.45rem;
+    inset-inline-end: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ts-muted);
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+  }
+
+  #tripForm .search-submit-btn,
+  #tripForm .searchbar-submit {
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .searchbar-rail .searchbar-date,
+  .searchbar-rail .searchbar-submit-cel,
+  .searchbar-rail .od-pair-col {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Layout only: stack OD + place swap between origin/destination */
+  #tripForm .od-pair-col {
+    position: relative;
+  }
+
+  #tripForm .od-pair {
+    --od-swap-gutter: 0 !important;
+    flex-direction: column !important;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  #tripForm .od-pair > .inputcel:first-child,
+  #tripForm .od-pair > .inputcel:last-of-type {
+    padding-inline: 0 !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #tripForm .od-pair-col > .od-swap-btn,
+  #tripForm .od-swap-btn {
+    position: absolute !important;
+    --od-swap-size: 2.35rem;
+    left: auto !important;
+    right: auto !important;
+    inset-inline-start: auto !important;
+    inset-inline-end: 0.75rem !important;
+    top: 50% !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    transform: translateY(-50%) !important;
+    border-radius: 50%;
+    z-index: 6;
+  }
+
+  #tripForm .od-swap-btn .ti {
+    transform: rotate(90deg);
+  }
+
+  #tripForm .od-swap-btn:hover,
+  #tripForm .od-swap-btn:focus-visible,
+  #tripForm .od-swap-btn:active {
+    transform: translateY(-50%) !important;
+  }
+
+  #tripForm .od-swap-btn:active {
+    transform: translateY(-50%) scale(0.94) !important;
+  }
+
+  #tripForm .origin.dropdown-toggle::after,
+  #tripForm .origin.dropdown-toggle::before,
+  #tripForm .destination.dropdown-toggle::after,
+  #tripForm .destination.dropdown-toggle::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Fullscreen city drawer — beat homepage absolute popover rules */
+  #landingHero #tripForm .input-container > .dropdown-menu.origin_location,
+  #landingHero #tripForm .input-container > .dropdown-menu.destination_location,
+  #landingHero #tripForm .input-container > .dropdown-menu.origin_location.show,
+  #landingHero #tripForm .input-container > .dropdown-menu.destination_location.show,
+  #tripForm .dropdown-menu.origin_location,
+  #tripForm .dropdown-menu.destination_location {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: var(--ts-surface) !important;
+    box-shadow: none !important;
+    animation: none !important;
+    z-index: 2000 !important;
+    overflow: hidden !important;
+  }
+
+  #tripForm .city-picker,
+  #landingHero #tripForm .city-picker {
+    --picker-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100dvh;
+    background: var(--ts-surface);
+  }
+
+  #tripForm .input-container .city-picker i,
+  #landingHero #tripForm .input-container .city-picker i {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  #tripForm .city-picker__head,
+  #tripForm .city-picker__search,
+  #landingHero #tripForm .city-picker__head,
+  #landingHero #tripForm .city-picker__search {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding-inline: var(--picker-inline);
+  }
+
+  #tripForm .city-picker__head {
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ts-border);
+    background: linear-gradient(180deg, var(--ts-primary-soft) 0%, transparent 100%);
+  }
+
+  #tripForm .city-picker__close {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ts-primary);
+    border-radius: 0.65rem;
+  }
+
+  #tripForm .city-picker__close:hover {
+    background: var(--ts-primary-soft);
+  }
+
+  #tripForm .city-picker__close .ti {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  #tripForm .city-picker__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ts-ink);
+  }
+
+  #tripForm .city-picker__search {
+    position: relative;
+    padding-block: 0.75rem;
+  }
+
+  #tripForm .city-picker__search > .ti-search {
+    position: absolute !important;
+    inset-inline-start: calc(var(--picker-inline) + 0.7rem);
+    inset-inline-end: auto;
+    top: 50%;
+    left: auto;
+    transform: translateY(-50%);
+    color: var(--ts-primary);
+    pointer-events: none;
+  }
+
+  #tripForm .city-picker #origincontainer,
+  #tripForm .city-picker #desticontainer,
+  #tripForm .city-picker .px-1 {
+    padding-inline: 0 !important;
+  }
+
+  #tripForm .city-picker__input {
+    min-height: 3.15rem;
+    height: 3.15rem;
+    padding-inline-start: 2.4rem;
+    padding-inline-end: 0.85rem;
+    background: var(--ts-bg-muted);
+    border: 1px solid transparent;
+    border-radius: var(--ts-radius);
+    color: var(--ts-ink);
+  }
+
+  #tripForm .city-picker__input:focus {
+    border-color: var(--ts-primary);
+    box-shadow: 0 0 0 0.15rem var(--ts-primary-soft);
+    background: var(--ts-bg-muted);
+  }
+
+  #tripForm .city-picker .staredlocations {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-inline: var(--picker-inline);
+    padding-bottom: env(safe-area-inset-bottom, 0.75rem);
+  }
+
+  #tripForm .city-picker .staredlocation_title {
+    display: block;
+    margin: 0.35rem 0 0.5rem;
+    padding: 0;
+    color: var(--ts-muted);
+  }
+
+  #tripForm .city-picker .dropdown-item {
+    width: 100% !important;
+    max-width: 100%;
+    margin: 0 !important;
+    min-height: 3.15rem;
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 0.15rem;
+    font-size: 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    color: var(--ts-ink);
+  }
+
+  #tripForm .city-picker .dropdown-item:hover,
+  #tripForm .city-picker .dropdown-item:active {
+    background: var(--ts-primary-soft);
+    color: var(--ts-primary);
+  }
+}
+
+@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+  #tripForm .od-swap-btn,
+  #tripForm .od-swap-btn .ti {
+    transition: none;
+    animation: none !important;
+  }
+
+  #tripForm .od-swap-btn .ti {
+    transform: rotate(90deg);
+  }
+}
