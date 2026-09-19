@@ -313,6 +313,7 @@ namespace Application.Areas.AgencyArea.Controllers
         PhoneNumber = pending.Numberphone,
         NaCode = pending.Nacode,
         CompanyName = pending.CompanyName,
+        HeadOfPassengers = pending.HeadOfPassengers,
         TicketFinalPrice = reserveResponse.paid_total_fee_tomans,
         Gender = pending.Gender,
         TicketOriginalPrice = trip.afterdiscticketprice,

@@ -23,6 +23,8 @@ namespace Application.Models
     public string Nacode { get; set; } = "";
     public string Gender { get; set; } = "";
     public string CompanyName { get; set; } = "";
+    /// <summary>Optional head-of-passengers (Organization panels).</summary>
+    public string? HeadOfPassengers { get; set; }
     public int? AgencyEmployeeId { get; set; }
 
     /// <summary>JSON array of companion passengers for hybrid/zarinpal pending payments.</summary>

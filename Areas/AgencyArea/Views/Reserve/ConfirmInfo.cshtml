@@ -1265,6 +1265,7 @@
                             <input name="Nacode" id="nacode" type="hidden" value="@reserve_viemodel.NaCode" />
                             <input name="Gender" id="gender" type="hidden" value="@reserve_viemodel.Gender" />
                             <input name="EmployeeId" id="employee-id" type="hidden" value="@(reserve_viemodel.EmployeeId?.ToString() ?? "")" />
+                            <input name="HeadOfPassengers" id="head-of-passengers" type="hidden" value="@(reserve_viemodel.HeadOfPassengers ?? "")" />
                             <input name="CompanionsJson" id="companions-json" type="hidden" value="@Newtonsoft.Json.JsonConvert.SerializeObject(reserve_viemodel.Companions ?? new List<Application.ViewModels.Reserve.CompanionPassengerViewModel>())" />
                             <input name="PaymentMethod" id="payment-method" type="hidden" value="@defaultPm" />
 

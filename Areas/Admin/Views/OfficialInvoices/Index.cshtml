@@ -1,0 +1,218 @@
+@model List<Application.Models.OfficialInvoice>
+@using Application.Models
+@using Application.Services
+@using Application.Services.OfficialInvoices
+@{
+    ViewData["Title"] = "فاکتورهای رسمی";
+    var filter = ViewBag.Filter as string ?? "all";
+    var pendingCount = (int)(ViewBag.PendingCount ?? 0);
+    var seller = ViewBag.Seller as InvoiceSellerProfile ?? new InvoiceSellerProfile();
+}
+
+<div dir="rtl">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="alert alert-primary" style="line-height:1.8">
+        <strong>راهنمای ثبت در سامانه مودیان:</strong>
+        ابتدا با دکمه <strong>رویت</strong> اطلاعات لازم برای ورود به سامانه را ببینید، سپس از ستون
+        <strong>وضعیت</strong> با منوی کشویی وضعیت را به «ثبت شده در سامانه مودیان» تغییر دهید.
+        مشخصات فروشنده را از
+        <a href="/Admin/OfficialInvoices/Seller" class="alert-link">تنظیمات فاکتور</a> ویرایش کنید.
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+        <div>
+            <h4 class="mb-1">فاکتورهای رسمی (سامانه مودیان)</h4>
+            <p class="text-muted mb-0" style="max-width:46rem;line-height:1.7">
+                فاکتورهای صادرشده توسط آژانس‌ها برای بارگذاری و امضا در سامانه مودیان.
+                در انتظار ثبت: <strong>@pendingCount</strong>
+            </p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/Admin/OfficialInvoices/Seller" class="btn btn-sm btn-outline-secondary">تنظیمات فاکتور</a>
+            <div class="btn-group">
+                <a href="/Admin/OfficialInvoices" class="btn btn-sm @(filter == "all" ? "btn-primary" : "btn-outline-primary")">همه</a>
+                <a href="/Admin/OfficialInvoices?status=pending" class="btn btn-sm @(filter == "pending" ? "btn-primary" : "btn-outline-primary")">درحال صدور</a>
+                <a href="/Admin/OfficialInvoices?status=uploaded" class="btn btn-sm @(filter == "uploaded" ? "btn-primary" : "btn-outline-primary")">ثبت‌شده در مودیان</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>شماره</th>
+                        <th>تاریخ</th>
+                        <th>آژانس</th>
+                        <th>مسافر</th>
+                        <th>بلیط</th>
+                        <th>مبلغ (ریال)</th>
+                        <th style="min-width:12rem">وضعیت</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-5">فاکتوری برای نمایش نیست.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var inv in Model)
+                    {
+                        var pdate = inv.InvoiceDate.ToPersianDate();
+                        var line = inv.Lines?.FirstOrDefault();
+                        <tr>
+                            <td><span dir="ltr">@inv.SerialNumber</span></td>
+                            <td><span dir="ltr">@($"{pdate.Year:0000}/{pdate.Month:00}/{pdate.Day:00}")</span></td>
+                            <td>@(inv.Agency?.Name ?? "—")</td>
+                            <td>@(string.IsNullOrWhiteSpace(inv.BuyerName) ? "—" : inv.BuyerName)</td>
+                            <td><span dir="ltr">@(string.IsNullOrWhiteSpace(inv.TicketCode) ? "—" : inv.TicketCode)</span></td>
+                            <td><span dir="ltr">@inv.PayableRials.ToString("N0")</span></td>
+                            <td>
+                                <form action="/Admin/OfficialInvoices/SetStatus" method="post" class="js-status-form">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@inv.Id" />
+                                    <select name="status" class="form-select form-select-sm"
+                                            onchange="if(confirm('وضعیت فاکتور @inv.SerialNumber تغییر کند؟')) this.form.submit(); else this.value='@((int)inv.UploadStatus)';">
+                                        @if (inv.UploadStatus == OfficialInvoiceUploadStatus.Pending)
+                                        {
+                                            <option value="0" selected>درحال صدور</option>
+                                            <option value="1">ثبت شده در سامانه مودیان</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">درحال صدور</option>
+                                            <option value="1" selected>ثبت شده در سامانه مودیان</option>
+                                        }
+                                    </select>
+                                </form>
+                            </td>
+                            <td class="text-nowrap">
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-primary js-moodian-view"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#moodianModal"
+                                        data-id="@inv.Id"
+                                        data-serial="@inv.SerialNumber"
+                                        data-date="@($"{pdate.Year:0000}/{pdate.Month:00}/{pdate.Day:00}")"
+                                        data-agency="@(inv.Agency?.Name ?? "")"
+                                        data-ticket="@(inv.TicketCode ?? "")"
+                                        data-buyer="@(inv.BuyerName ?? "")"
+                                        data-buyer-nid="@(inv.BuyerNationalId ?? "")"
+                                        data-buyer-eco="@(inv.BuyerEconomicNo ?? "")"
+                                        data-buyer-reg="@(inv.BuyerRegistrationNo ?? "")"
+                                        data-buyer-phone="@(inv.BuyerPhone ?? "")"
+                                        data-buyer-address="@(inv.BuyerAddress ?? "")"
+                                        data-amount="@inv.PayableRials.ToString("N0")"
+                                        data-desc="@(line?.Description ?? "")"
+                                        data-status="@inv.UploadStatusText"
+                                        data-note="@OfficialInvoiceSeller.MoodianNote"
+                                        data-seller-name="@seller.CompanyName"
+                                        data-seller-eco="@seller.EconomicNo"
+                                        data-seller-reg="@seller.RegistrationNo"
+                                        data-seller-nid="@seller.NationalId"
+                                        data-seller-phone="@seller.Phone"
+                                        data-seller-address="@seller.Address">
+                                    رویت
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="moodianModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" dir="rtl">
+            <div class="modal-header">
+                <h5 class="modal-title">اطلاعات ثبت در سامانه مودیان</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-3">این مقادیر را هنگام ثبت فاکتور در سامانه مودیان وارد کنید.</p>
+                <h6 class="fw-bold">فروشنده</h6>
+                <div class="row g-2 mb-3 small">
+                    <div class="col-md-6"><span class="text-muted">نام کامل:</span> <strong id="m-seller-name"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">کد اقتصادی:</span> <strong dir="ltr" id="m-seller-eco"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">شماره ثبت:</span> <strong dir="ltr" id="m-seller-reg"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">شناسه ملی:</span> <strong dir="ltr" id="m-seller-nid"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">تلفن:</span> <strong dir="ltr" id="m-seller-phone"></strong></div>
+                    <div class="col-12"><span class="text-muted">آدرس سازمان:</span> <strong id="m-seller-address"></strong></div>
+                </div>
+                <h6 class="fw-bold">فاکتور و خریدار / مسافر</h6>
+                <div class="row g-2 mb-3 small">
+                    <div class="col-md-4"><span class="text-muted">شماره سریال:</span> <strong dir="ltr" id="m-serial"></strong></div>
+                    <div class="col-md-4"><span class="text-muted">تاریخ:</span> <strong dir="ltr" id="m-date"></strong></div>
+                    <div class="col-md-4"><span class="text-muted">وضعیت:</span> <strong id="m-status"></strong></div>
+                    <div class="col-md-4"><span class="text-muted">آژانس:</span> <strong id="m-agency"></strong></div>
+                    <div class="col-md-4"><span class="text-muted">کد بلیط:</span> <strong dir="ltr" id="m-ticket"></strong></div>
+                    <div class="col-md-4"><span class="text-muted">مبلغ (ریال):</span> <strong dir="ltr" id="m-amount"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">نام:</span> <strong id="m-buyer"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">شناسه / کد ملی:</span> <strong dir="ltr" id="m-buyer-nid"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">کد اقتصادی:</span> <strong dir="ltr" id="m-buyer-eco"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">شماره ثبت:</span> <strong dir="ltr" id="m-buyer-reg"></strong></div>
+                    <div class="col-md-6"><span class="text-muted">تلفن:</span> <strong dir="ltr" id="m-buyer-phone"></strong></div>
+                    <div class="col-12"><span class="text-muted">آدرس:</span> <strong id="m-buyer-address"></strong></div>
+                    <div class="col-12"><span class="text-muted">شرح خدمت:</span> <div id="m-desc" class="mt-1"></div></div>
+                    <div class="col-12"><span class="text-muted">توضیحات فاکتور:</span> <div id="m-note" class="mt-1"></div></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="m-print-link" href="#" target="_blank" class="btn btn-outline-secondary">چاپ فاکتور</a>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    document.querySelectorAll('.js-moodian-view').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var d = btn.dataset;
+            function set(id, v) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = (v && String(v).trim()) ? v : '—';
+            }
+            set('m-seller-name', d.sellerName);
+            set('m-seller-eco', d.sellerEco);
+            set('m-seller-reg', d.sellerReg);
+            set('m-seller-nid', d.sellerNid);
+            set('m-seller-phone', d.sellerPhone);
+            set('m-seller-address', d.sellerAddress);
+            set('m-serial', d.serial);
+            set('m-date', d.date);
+            set('m-status', d.status);
+            set('m-agency', d.agency);
+            set('m-ticket', d.ticket);
+            set('m-amount', d.amount);
+            set('m-buyer', d.buyer);
+            set('m-buyer-nid', d.buyerNid);
+            set('m-buyer-eco', d.buyerEco);
+            set('m-buyer-reg', d.buyerReg);
+            set('m-buyer-phone', d.buyerPhone);
+            set('m-buyer-address', d.buyerAddress);
+            set('m-desc', d.desc);
+            set('m-note', d.note);
+            var print = document.getElementById('m-print-link');
+            if (print && d.id) print.href = '/Admin/OfficialInvoices/Print/' + d.id;
+        });
+    });
+})();
+</script>

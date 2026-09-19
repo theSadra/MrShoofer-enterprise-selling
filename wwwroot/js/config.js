@@ -10,7 +10,7 @@
 // JS global variables
 let config = {
   colors: {
-    primary: '#7367f0',
+    primary: '#000000',
     secondary: '#a8aaae',
     success: '#28c76f',
     info: '#00cfe8',
@@ -27,7 +27,7 @@ let config = {
     borderColor: '#dbdade'
   },
   colors_label: {
-    primary: '#7367f029',
+    primary: '#00000029',
     secondary: '#a8aaae29',
     success: '#28c76f29',
     info: '#00cfe829',
@@ -48,7 +48,7 @@ let config = {
 
 let assetsPath = document.documentElement.getAttribute('data-assets-path'),
   templateName = document.documentElement.getAttribute('data-template'),
-  rtlSupport = true; // set true for rtl support (rtl + ltr), false for ltr only.
+  rtlSupport = true;
 
 /**
  * TemplateCustomizer
@@ -89,13 +89,21 @@ TemplateCustomizer.LANGUAGES.fr = { ... };
 
 if (typeof TemplateCustomizer !== 'undefined') {
   window.templateCustomizer = new TemplateCustomizer({
-    cssPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
-    themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
+    cssPath: assetsPath + 'vendor/css/rtl/',
+    themesPath: assetsPath + 'vendor/css/rtl/',
     displayCustomizer: false,
-    lang: localStorage.getItem('templateCustomizer-' + templateName + '--Lang') || 'fa', // Set default language here
-    // defaultTheme: 2,
-    // defaultStyle: 'system',
+    lang: localStorage.getItem('templateCustomizer-' + templateName + '--Lang') || 'fa',
     defaultTextDir: 'rtl',
     controls: ['style', 'headerType', 'contentLayout', 'layoutCollapsed', 'layoutNavbarOptions', 'themes']
   });
 }
+
+var link = document.createElement('link');
+link.type = 'text/css';
+link.rel = 'stylesheet';
+link.href = assetsPath + 'css/rtl.css';
+
+document.head.appendChild(link);
+document.documentElement.setAttribute('dir', 'rtl');
+var customizer = document.getElementById('template-customizer');
+if (customizer) customizer.remove();

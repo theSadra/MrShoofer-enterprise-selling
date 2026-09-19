@@ -66,6 +66,61 @@ namespace Application.Areas.AgencyArea
       return View();
     }
 
+    [HttpGet]
+    public IActionResult LegalProfile()
+    {
+      if (agency == null) return RedirectToAction("Index", "Home");
+      if (!agency.IsOrganization)
+      {
+        TempData["ErrorMessage"] = "اطلاعات حقوقی فقط برای پنل سازمانی فعال است.";
+        return RedirectToAction(nameof(Index));
+      }
+      return View(new Application.ViewModels.Agency.AgencyLegalProfileViewModel
+      {
+        Name = agency.Name,
+        Address = agency.Address,
+        PhoneNumber = agency.PhoneNumber,
+        AdminMobile = agency.AdminMobile,
+        EconomicNo = agency.EconomicNo,
+        RegistrationNo = agency.RegistrationNo,
+        NationalId = agency.NationalId,
+        Fax = agency.Fax,
+        Province = agency.Province,
+        County = agency.County,
+        City = agency.City,
+        PostalCode = agency.PostalCode
+      });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> LegalProfile(Application.ViewModels.Agency.AgencyLegalProfileViewModel model)
+    {
+      if (agency == null) return RedirectToAction("Index", "Home");
+      if (!agency.IsOrganization)
+      {
+        TempData["ErrorMessage"] = "اطلاعات حقوقی فقط برای پنل سازمانی فعال است.";
+        return RedirectToAction(nameof(Index));
+      }
+
+      if (!string.IsNullOrWhiteSpace(model.Address))
+        agency.Address = model.Address.Trim();
+
+      agency.PhoneNumber = string.IsNullOrWhiteSpace(model.PhoneNumber) ? null : model.PhoneNumber.Trim();
+      agency.EconomicNo = string.IsNullOrWhiteSpace(model.EconomicNo) ? null : model.EconomicNo.Trim();
+      agency.RegistrationNo = string.IsNullOrWhiteSpace(model.RegistrationNo) ? null : model.RegistrationNo.Trim();
+      agency.NationalId = string.IsNullOrWhiteSpace(model.NationalId) ? null : model.NationalId.Trim();
+      agency.Fax = string.IsNullOrWhiteSpace(model.Fax) ? null : model.Fax.Trim();
+      agency.Province = string.IsNullOrWhiteSpace(model.Province) ? null : model.Province.Trim();
+      agency.County = string.IsNullOrWhiteSpace(model.County) ? null : model.County.Trim();
+      agency.City = string.IsNullOrWhiteSpace(model.City) ? null : model.City.Trim();
+      agency.PostalCode = string.IsNullOrWhiteSpace(model.PostalCode) ? null : model.PostalCode.Trim();
+      await _context.SaveChangesAsync();
+
+      TempData["SuccessMessage"] = "اطلاعات مالی / حقوقی آژانس ذخیره شد";
+      return RedirectToAction(nameof(LegalProfile));
+    }
+
 
     [HttpGet]
     public JsonResult GetSalesChartValues()

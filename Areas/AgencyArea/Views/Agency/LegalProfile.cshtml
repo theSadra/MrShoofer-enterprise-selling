@@ -1,0 +1,81 @@
+@model Application.ViewModels.Agency.AgencyLegalProfileViewModel
+@{
+	ViewData["Title"] = "اطلاعات مالی / حقوقی";
+	Layout = "_AgencySideLayout";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<div>
+			<h4 class="mb-1">اطلاعات مالی / حقوقی آژانس</h4>
+			<small class="text-muted">همه فیلدها اختیاری‌اند و در بخش «مشخصات مسافر» فاکتور رسمی نمایش داده می‌شوند</small>
+		</div>
+		<a class="btn btn-outline-secondary" asp-action="Index">بازگشت</a>
+	</div>
+
+	@if (TempData["SuccessMessage"] != null)
+	{
+		<div class="alert alert-success">@TempData["SuccessMessage"]</div>
+	}
+
+	<div class="card">
+		<div class="card-body">
+			<form method="post" asp-action="LegalProfile">
+				@Html.AntiForgeryToken()
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label class="form-label">نام شخص حقیقی / حقوقی</label>
+						<input class="form-control" value="@Model.Name" disabled />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">موبایل مدیر</label>
+						<input class="form-control" dir="ltr" value="@Model.AdminMobile" disabled />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">کد اقتصادی <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="EconomicNo" value="@Model.EconomicNo" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شماره ثبت <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="RegistrationNo" value="@Model.RegistrationNo" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شناسه ملی <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="NationalId" value="@Model.NationalId" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">تلفن <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="PhoneNumber" value="@Model.PhoneNumber" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">نمابر <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="Fax" value="@Model.Fax" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">کد پستی <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" dir="ltr" name="PostalCode" value="@Model.PostalCode" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">استان <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" name="Province" value="@Model.Province" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شهرستان <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" name="County" value="@Model.County" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شهر <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<input class="form-control" name="City" value="@Model.City" autocomplete="off" />
+					</div>
+					<div class="col-12">
+						<label class="form-label">نشانی <span class="text-muted fw-normal">(اختیاری)</span></label>
+						<textarea class="form-control" name="Address" rows="2">@Model.Address</textarea>
+					</div>
+				</div>
+				<div class="mt-4">
+					<button type="submit" class="btn btn-primary">ذخیره</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

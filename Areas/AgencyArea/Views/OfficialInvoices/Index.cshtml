@@ -1,0 +1,85 @@
+@model List<Application.Models.OfficialInvoice>
+@using Application.Services
+@{
+    Layout = "_AgencySideLayout";
+    ViewData["Title"] = "فاکتور رسمی";
+    var preview = ViewBag.SerialPreview as string ?? "";
+}
+
+<div dir="rtl" class="container-xxl flex-grow-1 container-p-y">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+        <div>
+            <h4 class="mb-1">فاکتور رسمی</h4>
+            <p class="text-muted mb-0" style="max-width:42rem;line-height:1.7">
+                فاکتور فقط برای بلیط‌های خریداری‌شده و لغوشده‌نشده، با اطلاعات ثابت بلیط صادر می‌شود.
+                شماره فاکتور بعدی: <strong dir="ltr">@preview</strong>
+            </p>
+        </div>
+        <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">صدور از فهرست بلیط‌ها</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <p class="mb-3 text-muted">هنوز فاکتوری صادر نشده. از فهرست بلیط‌ها روی «فاکتور رسمی» بزنید.</p>
+                <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">رفتن به بلیط‌ها</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>شماره</th>
+                            <th>تاریخ</th>
+                            <th>مسافر</th>
+                            <th>بلیط</th>
+                            <th>مبلغ (ریال)</th>
+                            <th>وضعیت</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var inv in Model)
+                    {
+                        var pdate = inv.InvoiceDate.ToPersianDate();
+                        <tr>
+                            <td><span dir="ltr">@(string.IsNullOrWhiteSpace(inv.SerialNumber) ? "—" : inv.SerialNumber)</span></td>
+                            <td><span dir="ltr">@($"{pdate.Year:0000}/{pdate.Month:00}/{pdate.Day:00}")</span></td>
+                            <td>@(string.IsNullOrWhiteSpace(inv.BuyerName) ? "—" : inv.BuyerName)</td>
+                            <td>@(string.IsNullOrWhiteSpace(inv.TicketCode) ? "—" : inv.TicketCode)</td>
+                            <td><span dir="ltr">@inv.PayableRials.ToString("N0")</span></td>
+                            <td>
+                                @if (inv.UploadStatus == Application.Models.OfficialInvoiceUploadStatus.Uploaded)
+                                {
+                                    <span class="badge bg-label-success">@inv.UploadStatusText</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-label-warning">@inv.UploadStatusText</span>
+                                }
+                            </td>
+                            <td class="text-nowrap">
+                                <a asp-action="Print" asp-route-id="@inv.Id" class="btn btn-sm btn-outline-primary">چاپ</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

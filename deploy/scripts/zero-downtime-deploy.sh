@@ -50,26 +50,35 @@ ENSURE_AUTOSTART="${ENSURE_AUTOSTART:-1}"
 AGENCY_IMAGE="${AGENCY_IMAGE:-mrshoofer-agency:latest}"
 DOCKER_NAME="${DOCKER_NAME:-mrshoofer-agency}"
 HEALTH_PATH="${HEALTH_PATH:-/}"
-SSH_OPTS="-o StrictHostKeyChecking=no -o PreferredAuthentications=password -o PubkeyAuthentication=no -o ConnectTimeout=30"
+SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30"
+if [[ -n "${DEPLOY_SSH_KEY:-}" ]]; then
+  SSH_OPTS="$SSH_OPTS -i ${DEPLOY_SSH_KEY/#\~/$HOME} -o IdentitiesOnly=yes"
+elif [[ -n "${DEPLOY_PASS:-}" ]]; then
+  SSH_OPTS="$SSH_OPTS -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+fi
 
 need() { command -v "$1" >/dev/null || { echo "Missing dependency: $1" >&2; exit 1; }; }
 need git
 
 remote() {
-  if [[ -n "${DEPLOY_PASS:-}" ]]; then
+  if [[ -n "${DEPLOY_SSH_KEY:-}" ]]; then
+    ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
+  elif [[ -n "${DEPLOY_PASS:-}" ]]; then
     need sshpass
     SSHPASS="$DEPLOY_PASS" sshpass -e ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
   else
-    ssh -T -o StrictHostKeyChecking=no -o ConnectTimeout=30 "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
+    ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
   fi
 }
 
 remote_scp() {
   local src="$1" dst="$2"
-  if [[ -n "${DEPLOY_PASS:-}" ]]; then
+  if [[ -n "${DEPLOY_SSH_KEY:-}" ]]; then
+    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
+  elif [[ -n "${DEPLOY_PASS:-}" ]]; then
     SSHPASS="$DEPLOY_PASS" sshpass -e scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
   else
-    scp -o StrictHostKeyChecking=no -o ConnectTimeout=30 "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
+    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
   fi
 }
 

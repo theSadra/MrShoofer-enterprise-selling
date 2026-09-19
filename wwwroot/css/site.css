@@ -1,1 +1,118 @@
-/* Custom styles goes here */
+/* ─────────────────────────────────────────────
+   Global pill-style buttons & curved inputs
+   Uses shadcn tokens (tokens.css) on customer pages
+   ───────────────────────────────────────────── */
+
+/* ── Inputs & Selects ── */
+.form-control,
+.form-select {
+    border-radius: var(--radius-md, 0.875rem) !important;
+    padding-inline: 1rem;
+    transition: border-color .18s, box-shadow .18s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #18181b !important;
+  box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.14) !important;
+  outline: 0 !important;
+}
+
+/* Input groups: outer corners only (LTR fallback; RTL in shadcn-bridge.css) */
+.input-group > .form-control:not(:last-child),
+.input-group > .form-select:not(:last-child) {
+    border-radius: 0 var(--radius-md, 0.875rem) var(--radius-md, 0.875rem) 0 !important;
+}
+.input-group > .form-control:not(:first-child),
+.input-group > .form-select:not(:first-child) {
+    border-radius: var(--radius-md, 0.875rem) 0 0 var(--radius-md, 0.875rem) !important;
+}
+.input-group > .input-group-text:first-child {
+    border-radius: 0 var(--radius-md, 0.875rem) var(--radius-md, 0.875rem) 0 !important;
+}
+.input-group > .input-group-text:last-child {
+    border-radius: var(--radius-md, 0.875rem) 0 0 var(--radius-md, 0.875rem) !important;
+}
+.input-group {
+    border-radius: var(--radius-md, 0.875rem);
+}
+
+/* ── Buttons – base pill shape ── */
+.btn {
+    border-radius: var(--radius-md, 0.875rem) !important;
+    font-weight: 500;
+    letter-spacing: .01em;
+    transition: box-shadow .18s, transform .12s, background .18s;
+}
+
+/* Slight lift on hover */
+.btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Primary — token shadow (front-palette / shadcn-bridge refine on customer pages) */
+.btn-primary {
+    box-shadow: var(--shadow-sm, 0 2px 12px rgba(0, 0, 0, .12));
+}
+.btn-primary:hover:not(:disabled) {
+    box-shadow: var(--shadow-md, 0 8px 20px rgba(0, 0, 0, .18));
+}
+.btn-primary:focus,
+.btn-primary:active {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring, oklch(0.708 0 0)) 35%, transparent) !important;
+}
+
+/* Success – green glow */
+.btn-success {
+    box-shadow: 0 2px 12px rgba(40, 199, 111, .28);
+}
+.btn-success:hover:not(:disabled) {
+    box-shadow: 0 4px 20px rgba(40, 199, 111, .42);
+}
+
+/* Outline variants – glow on hover */
+.btn-outline-primary:hover:not(:disabled) {
+    box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, .14));
+}
+.btn-outline-success:hover:not(:disabled) {
+    box-shadow: 0 2px 14px rgba(40, 199, 111, .30);
+}
+.btn-outline-danger:hover:not(:disabled) {
+    box-shadow: 0 2px 14px rgba(255, 62, 29, .25);
+}
+
+/* Danger */
+.btn-danger {
+    box-shadow: 0 2px 12px rgba(255, 62, 29, .25);
+}
+
+/* Label ghost buttons */
+.btn-label-primary,
+.btn-label-success,
+.btn-label-secondary,
+.btn-label-warning,
+.btn-label-info,
+.btn-label-danger {
+    box-shadow: none;
+}
+
+/* ── Large buttons – a bit more padding ── */
+.btn-lg {
+    padding: .65rem 1.75rem !important;
+    font-size: 1rem !important;
+    border-radius: var(--radius-lg, 1.125rem) !important;
+}
+
+/* ── Mobile tweaks ── */
+@media (max-width: 575.98px) {
+    .btn-lg {
+        width: 100%;
+    }
+    .form-control,
+    .form-select {
+        font-size: .95rem;
+    }
+}

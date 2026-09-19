@@ -1,16 +1,22 @@
 @{
     TempData.Keep();
+    var currentPage = (ViewContext.HttpContext.Request.Path.Value ?? "").TrimEnd('/');
+    if (string.IsNullOrEmpty(currentPage)) currentPage = "/";
 
+    bool IsActive(params string[] prefixes) =>
+        prefixes.Any(p => string.Equals(currentPage, p, StringComparison.OrdinalIgnoreCase)
+                          || currentPage.StartsWith(p + "/", StringComparison.OrdinalIgnoreCase));
 
-
-    string? currentPage = ViewContext.HttpContext.Request.Path;
+    var sellersOpen = currentPage.Equals("/Admin", StringComparison.OrdinalIgnoreCase)
+                      || IsActive("/Admin/Agency", "/Admin/Payments");
+    var invoicesOpen = IsActive("/Admin/OfficialInvoices");
+    var invoicesListActive = invoicesOpen
+                             && !currentPage.Equals("/Admin/OfficialInvoices/Seller", StringComparison.OrdinalIgnoreCase);
+    var invoicesSettingsActive = currentPage.Equals("/Admin/OfficialInvoices/Seller", StringComparison.OrdinalIgnoreCase);
+    var messagesActive = IsActive("/Admin/Messages");
 }
 
-<!-- Menu -->
-@* ! Do this simple *@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-
-    @* ! Hide app brand if navbar-full *@
     <div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
         <a asp-controller="Home" asp-action="Index" class="app-brand-link">
             <span class="app-brand-logo demo">
@@ -18,7 +24,6 @@
             </span>
             <span class="app-brand-text demo menu-text fw-bold">مسترشوفر</span>
         </a>
-
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
             <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
             <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
@@ -27,49 +32,50 @@
 
     <div class="menu-inner-shadow"></div>
 
-    @* ! Starter Kit menu-items *@
-
     <ul class="menu-inner py-1">
-        <!-- Dashboards -->
-        <li class='menu-item@(currentPage == "/Admin" || currentPage.StartsWith("/Admin/Agency") || currentPage.StartsWith("/Admin/Payments")? " active open" : "")'>
+        <li class='menu-item@(sellersOpen ? " active open" : "")'>
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div>فروشندگان</div>
-                @* <div class="badge bg-primary rounded-pill ms-auto">5</div> *@
             </a>
             <ul class="menu-sub">
-                <li class='menu-item@(currentPage == "/Admin" || currentPage.StartsWith("/Admin/Agency") ? " active" : "")'>
+                <li class='menu-item@(currentPage.Equals("/Admin", StringComparison.OrdinalIgnoreCase) || IsActive("/Admin/Agency") ? " active" : "")'>
                     <a asp-controller="AgencyManagement" asp-area="Admin" asp-action="Index" class="menu-link">
                         <div>مدیریت فروشندگان</div>
                     </a>
                 </li>
-                <li class='menu-item@(currentPage == "/Admin/Payments/ChargeRequests" ? " active" : "")'>
+                <li class='menu-item@(IsActive("/Admin/Payments") ? " active" : "")'>
                     <a asp-controller="Payments" asp-area="Admin" asp-action="ChargeRequests" class="menu-link">
                         <div>درخواست‌ها</div>
                     </a>
                 </li>
-
-
             </ul>
+        </li>
 
-
-
-
-            <ul class="menu-inner py-1">
-                <li class='menu-item@(currentPage == "/Admin/Messages" ? " active" : "")'>
-                    <a asp-controller="Messages"  asp-area="Admin" asp-action="Index" class="menu-link">
-                        <i class="ti ti-message menu-icon tf-icons"></i>
-                        <div>پیام‌ها</div>
+        <li class='menu-item@(invoicesOpen ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ti ti-file-invoice"></i>
+                <div>فاکتور رسمی</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(invoicesListActive ? " active" : "")'>
+                    <a href="/Admin/OfficialInvoices" class="menu-link">
+                        <div>فهرست فاکتورها (مودیان)</div>
                     </a>
                 </li>
-               
+                <li class='menu-item@(invoicesSettingsActive ? " active" : "")'>
+                    <a href="/Admin/OfficialInvoices/Seller" class="menu-link">
+                        <div>تنظیمات فاکتور</div>
+                    </a>
+                </li>
             </ul>
+        </li>
 
-
-
-
+        <li class='menu-item@(messagesActive ? " active" : "")'>
+            <a asp-controller="Messages" asp-area="Admin" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-message"></i>
+                <div>پیام‌ها</div>
+            </a>
+        </li>
     </ul>
-
-
 </aside>
-<!-- / Menu -->

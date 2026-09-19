@@ -1,0 +1,321 @@
+@model Application.Models.OfficialInvoice
+@using Application.Services.OfficialInvoices
+@using Application.Utilities
+@using System.Globalization
+@{
+    Layout = null;
+    var pc = new PersianCalendar();
+    var d = Model.InvoiceDate;
+    var shamsi = $"{pc.GetDayOfMonth(d):00} / {pc.GetMonth(d):00} / {pc.GetYear(d)}";
+    var lines = Model.Lines ?? new List<Application.Models.OfficialInvoiceLine>();
+    var assets = ViewBag.Template as InvoiceTemplateAssets ?? new InvoiceTemplateAssets();
+    var seller = ViewBag.Seller as Application.Models.InvoiceSellerProfile;
+    string Cell(string? v) => string.IsNullOrWhiteSpace(v) ? "" : v;
+    string Num(long v) => v == 0 ? "" : v.ToString("N0");
+    string SellerVal(string? fromProfile, string fallback) =>
+        string.IsNullOrWhiteSpace(fromProfile) ? fallback : fromProfile;
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>فاکتور @Model.SerialNumber</title>
+    <style>
+        @@font-face {
+            font-family: "Vazir FD";
+            src: url("/fonts/Vazir_FD.woff2") format("woff2");
+            font-weight: 500;
+            font-style: normal;
+        }
+        * { box-sizing: border-box; }
+        img { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body {
+            margin: 0;
+            background: #e8e8e8;
+            font-family: "Vazir FD", Tahoma, sans-serif;
+            color: #111;
+        }
+        /*
+          Sheet = main (tables) + foot (signatures+stamp).
+          Foot is OUTSIDE the scroll/clip area so the stamp cannot be cut off.
+        */
+        .sheet {
+            width: 210mm;
+            height: 148mm;
+            margin: 16px auto;
+            background: #fff;
+            padding: 3mm 6mm 2mm;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sheet__main {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .head {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .head__logo {
+            justify-self: start;
+            height: 32px;
+            width: auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 12px;
+            margin: 0;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+        .meta {
+            justify-self: end;
+            font-size: 11px;
+            text-align: left;
+        }
+        .meta strong { display: inline-block; min-width: 4.5em; }
+        table.box {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+        table.box th, table.box td {
+            border: 1px solid #111;
+            padding: 1px 4px;
+            vertical-align: top;
+        }
+        table.box th { background: #f3f3f3; font-weight: 700; }
+        .lbl { font-weight: 400; white-space: nowrap; }
+        .val { font-weight: 800; }
+        .sec { font-weight: 800; background: #ececec !important; text-align: center; }
+        .items th { text-align: center; white-space: nowrap; }
+        .items td { text-align: center; height: 13px; }
+        .items td.desc { text-align: right; }
+        .terms {
+            margin-top: 2px;
+            font-size: 10px;
+        }
+        /* Reserved footer band — seller+stamp on LEFT, buyer on RIGHT */
+        .foot {
+            flex: 0 0 22mm;
+            height: 22mm;
+            max-height: 22mm;
+            margin-top: 2mm;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 12px;
+            align-items: start;
+            direction: ltr; /* seller column = physical left */
+            overflow: visible;
+        }
+        .sign { direction: rtl; }
+        .sign__label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+        .sign--seller {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 2mm;
+        }
+        .sign--seller .sign__stamp {
+            display: block !important;
+            height: 48px !important;
+            max-height: 48px !important;
+            width: auto !important;
+            max-width: 140px;
+            margin: 0;
+            object-fit: contain;
+            object-position: left center;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .sign--buyer .sign__stamp { display: none !important; }
+        .actions { text-align: center; margin: 12px 0 24px; }
+        .actions button, .actions a {
+            font-family: inherit;
+            font-size: 14px;
+            padding: 8px 16px;
+            margin: 0 4px;
+        }
+        @@media print {
+            html, body {
+                background: #fff !important;
+                width: 210mm;
+                height: 148mm;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .sheet {
+                margin: 0 !important;
+                width: 210mm;
+                height: 148mm;
+                max-height: 148mm;
+                padding: 3mm 6mm 2mm;
+                box-shadow: none;
+            }
+            .actions { display: none !important; }
+            .foot {
+                flex: 0 0 22mm !important;
+                height: 22mm !important;
+                max-height: 22mm !important;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .sign--seller .sign__stamp {
+                height: 48px !important;
+                max-height: 48px !important;
+                display: block !important;
+            }
+        }
+        @@page {
+            size: A5 landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="actions">
+        <button type="button" onclick="window.print()">چاپ / PDF</button>
+        @if (ViewBag.IsAdminPrint == true)
+        {
+            <a href="/Admin/OfficialInvoices">بازگشت</a>
+        }
+        else
+        {
+            <a href="/OfficialInvoices">بازگشت</a>
+        }
+    </div>
+    <div class="sheet">
+        <div class="sheet__main">
+            <div class="head">
+                <img class="head__logo" src="@assets.LogoUrl" alt="مسترشوفر" />
+                <h1>@SellerVal(seller?.InvoiceTitle, OfficialInvoiceSeller.Title)</h1>
+                <div class="meta">
+                    <div>شماره سریال: <strong dir="ltr">@Model.SerialNumber</strong></div>
+                    <div>تاریخ: @shamsi</div>
+                </div>
+            </div>
+
+            <table class="box">
+                <tr><td class="sec" colspan="3">مشخصات فروشنده</td></tr>
+                <tr>
+                    <td><span class="lbl">نام شرکت:</span> <span class="val">@SellerVal(seller?.CompanyName, OfficialInvoiceSeller.CompanyName)</span></td>
+                    <td><span class="lbl">شماره اقتصادی:</span> <span class="val" dir="ltr">@SellerVal(seller?.EconomicNo, OfficialInvoiceSeller.EconomicNo)</span></td>
+                    <td><span class="lbl">شماره ثبت:</span> <span class="val" dir="ltr">@SellerVal(seller?.RegistrationNo, OfficialInvoiceSeller.RegistrationNo)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="lbl">شناسه ملی:</span> <span class="val" dir="ltr">@SellerVal(seller?.NationalId, OfficialInvoiceSeller.NationalId)</span></td>
+                    <td><span class="lbl">تلفن:</span> <span class="val" dir="ltr">@SellerVal(seller?.Phone, OfficialInvoiceSeller.Phone)</span></td>
+                    <td><span class="lbl">کد پستی:</span> <span class="val" dir="ltr">@SellerVal(seller?.PostalCode, OfficialInvoiceSeller.PostalCode)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="lbl">استان:</span> <span class="val">@SellerVal(seller?.Province, OfficialInvoiceSeller.Province)</span></td>
+                    <td><span class="lbl">شهرستان:</span> <span class="val">@SellerVal(seller?.County, OfficialInvoiceSeller.County)</span></td>
+                    <td><span class="lbl">شهر:</span> <span class="val">@SellerVal(seller?.City, OfficialInvoiceSeller.City)</span></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="lbl">نشانی:</span> <span class="val">@SellerVal(seller?.Address, OfficialInvoiceSeller.Address)</span></td>
+                </tr>
+            </table>
+
+            <table class="box">
+                <tr><td class="sec" colspan="3">مشخصات مسافر</td></tr>
+                <tr>
+                    <td><span class="lbl">نام شخص حقیقی / حقوقی:</span> <span class="val">@Cell(Model.BuyerName)</span></td>
+                    <td><span class="lbl">شماره اقتصادی:</span> <span class="val" dir="ltr">@Cell(Model.BuyerEconomicNo)</span></td>
+                    <td><span class="lbl">شماره ثبت:</span> <span class="val" dir="ltr">@Cell(Model.BuyerRegistrationNo)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="lbl">شناسه ملی:</span> <span class="val" dir="ltr">@Cell(Model.BuyerNationalId)</span></td>
+                    <td><span class="lbl">تلفن:</span> <span class="val" dir="ltr">@Cell(Model.BuyerPhone)</span></td>
+                    <td><span class="lbl">نمابر:</span> <span class="val" dir="ltr">@Cell(Model.BuyerFax)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="lbl">استان:</span> <span class="val">@Cell(Model.BuyerProvince)</span></td>
+                    <td><span class="lbl">شهرستان:</span> <span class="val">@Cell(Model.BuyerCounty)</span></td>
+                    <td><span class="lbl">شهر:</span> <span class="val">@Cell(Model.BuyerCity)</span></td>
+                </tr>
+                <tr>
+                    <td><span class="lbl">کد پستی:</span> <span class="val" dir="ltr">@Cell(Model.BuyerPostalCode)</span></td>
+                    <td colspan="2"><span class="lbl">نشانی:</span> <span class="val">@Cell(Model.BuyerAddress)</span></td>
+                </tr>
+            </table>
+
+            <table class="box items">
+                <tr><td class="sec" colspan="10">مشخصات کالا یا خدمات</td></tr>
+                <tr>
+                    <th>ردیف</th>
+                    <th>کد کالا</th>
+                    <th>شرح کالا یا خدمات</th>
+                    <th>مقدار</th>
+                    <th>واحد</th>
+                    <th>مبلغ واحد (ریال)</th>
+                    <th>مبلغ کل (ریال)</th>
+                    <th>تخفیف</th>
+                    <th>پس از تخفیف</th>
+                    <th>مالیات و عوارض</th>
+                </tr>
+                @for (var i = 0; i < 5; i++)
+                {
+                    var line = i < lines.Count ? lines[i] : null;
+                    <tr>
+                        <td>@(i + 1)</td>
+                        @if (line == null)
+                        {
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        }
+                        else
+                        {
+                            <td dir="ltr">@Cell(line.ItemCode)</td>
+                            <td class="desc">@Cell(line.Description)</td>
+                            <td>@(line.Quantity == 0 ? "" : line.Quantity.ToString("0.##"))</td>
+                            <td>@Cell(line.Unit)</td>
+                            <td>@Num(line.UnitAmountRials)</td>
+                            <td>@Num(line.LineTotalRials)</td>
+                            <td>@Num(line.DiscountRials)</td>
+                            <td>@Num(line.AfterDiscountRials)</td>
+                            <td>@Num(line.VatRials)</td>
+                        }
+                    </tr>
+                }
+                <tr>
+                    <td colspan="6" style="text-align:right">
+                        جمع کل قابل پرداخت: «@PersianRialWords.ToRialWords(Model.PayableRials)»
+                    </td>
+                    <td>@Num(Model.TotalRials)</td>
+                    <td>@Num(Model.DiscountRials)</td>
+                    <td>@Num(Model.PayableRials - Model.VatRials)</td>
+                    <td>@Num(Model.VatRials)</td>
+                </tr>
+            </table>
+
+            <div class="terms">
+                شرایط و نحوه فروش:
+                @(Model.PaymentIsCash ? "نقدی ☑   غیرنقدی ☐" : "نقدی ☐   غیرنقدی ☑")
+                &nbsp;&nbsp; توضیحات: @OfficialInvoiceSeller.MoodianNote
+            </div>
+        </div>
+
+        <div class="foot">
+            <div class="sign sign--seller">
+                <div class="sign__label">محل امضای فروشنده</div>
+                <img class="sign__stamp" src="@assets.StampUrl" alt="مهر ره‌نگار" width="126" height="48" />
+            </div>
+            <div class="sign sign--buyer">
+                <div class="sign__label">محل امضای مسافر</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

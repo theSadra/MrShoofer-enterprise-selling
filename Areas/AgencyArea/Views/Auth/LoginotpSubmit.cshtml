@@ -74,7 +74,17 @@
                     <div class="text-center">
                         <span id="countdown" class="countdown me-1"></span>
                         کد را دریافت نکردید؟
-                        <a href="javascript:void(0);" class="resend-link"> ارسال مجدد</a>
+                        <form id="resendOtpForm" method="post" asp-action="Loginotp" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="numberphone" value="@ViewBag.numberphone" />
+                            @if (!string.IsNullOrEmpty(ViewBag.ReturnUrl as string))
+                            {
+                                <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+                            }
+                            <button type="submit" id="resendOtpBtn" class="btn btn-link p-0 align-baseline resend-link disabled" disabled>
+                                ارسال مجدد
+                            </button>
+                        </form>
                     </div>
                 </form>
             </div>
@@ -90,7 +100,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("twoStepsForm");
         const inputs = form.querySelectorAll("input[type='tel']");
-        const resendLink = document.querySelector(".text-center a");
+        const resendBtn = document.getElementById("resendOtpBtn");
+        const countdown = document.getElementById("countdown");
 
         inputs.forEach(input => {
             input.addEventListener("input", function () {
@@ -111,29 +122,27 @@
         let timer;
         const resendTimer = () => {
             let timeLeft = 70;
+            resendBtn.disabled = true;
+            resendBtn.classList.add("disabled");
             timer = setInterval(() => {
                 timeLeft--;
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    resendLink.textContent = "ارسال مجدد";
-                    resendLink.classList.remove("disabled");
+                    if (countdown) countdown.textContent = "";
+                    resendBtn.textContent = "ارسال مجدد";
+                    resendBtn.disabled = false;
+                    resendBtn.classList.remove("disabled");
                 } else {
                     const minutes = Math.floor(timeLeft / 60);
                     const seconds = timeLeft % 60;
-                    resendLink.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                    resendLink.classList.add("disabled");
+                    const label = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    if (countdown) countdown.textContent = label;
+                    resendBtn.textContent = "ارسال مجدد";
+                    resendBtn.disabled = true;
+                    resendBtn.classList.add("disabled");
                 }
-            }, 1050);
+            }, 1000);
         };
         resendTimer();
-        resendLink.addEventListener("click", function () {
-            if (!resendLink.classList.contains("disabled")) {
-                // Resend logic here
-                // For example: resendCode();
-                // Reset timer
-                clearInterval(timer);
-                resendTimer();
-            }
-        });
     });
 </script>

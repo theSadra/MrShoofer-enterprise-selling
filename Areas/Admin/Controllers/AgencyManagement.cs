@@ -130,6 +130,10 @@ namespace Application.Areas.Admin.Controllers
         Address = viewModel.Address,
         Commission = viewModel.Commission,
         PhoneNumber = viewModel.PhoneNumber,
+        EconomicNo = viewModel.EconomicNo,
+        RegistrationNo = viewModel.RegistrationNo,
+        NationalId = viewModel.NationalId,
+        PanelType = viewModel.PanelType,
         IdentityUser = identityuser,
         ORSAPI_token = apikey
       };
@@ -228,6 +232,28 @@ namespace Application.Areas.Admin.Controllers
       return RedirectToAction("Security", new { id = agency.Id });
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateLegalInfo(int id, string? address, string? economicNo, string? registrationNo, string? nationalId, AgencyPanelType panelType)
+    {
+      var agency = await context.Agencies.FirstOrDefaultAsync(a => a.Id == id);
+      if (agency == null) return NotFound();
+
+      if (!string.IsNullOrWhiteSpace(address))
+        agency.Address = address.Trim();
+      agency.EconomicNo = string.IsNullOrWhiteSpace(economicNo) ? null : economicNo.Trim();
+      agency.RegistrationNo = string.IsNullOrWhiteSpace(registrationNo) ? null : registrationNo.Trim();
+      agency.NationalId = string.IsNullOrWhiteSpace(nationalId) ? null : nationalId.Trim();
+      agency.PanelType = panelType == AgencyPanelType.Organization
+        ? AgencyPanelType.Organization
+        : AgencyPanelType.Seller;
+      await context.SaveChangesAsync();
+
+      TempData["status"] = "success";
+      TempData["message"] = "اطلاعات فروشنده ذخیره شد.";
+      return RedirectToAction("DetailOverview", new { id });
+    }
+
     public async Task<IActionResult> GetAgenciesJson()
     {
       var agecyResult = context.Agencies
@@ -238,7 +264,9 @@ namespace Application.Areas.Admin.Controllers
           name = a.Name,
           admin_phone = a.AdminMobile,
           allsoled = a.SoldTickets.Count(),
-          address = a.Address
+          address = a.Address,
+          panelType = a.PanelType.ToString(),
+          panelTypeLabel = a.PanelType == AgencyPanelType.Organization ? "سازمانی" : "فروشنده"
         }).ToList();
 
       return Json(new { data = agecyResult });

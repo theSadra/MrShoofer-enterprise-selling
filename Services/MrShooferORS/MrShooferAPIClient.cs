@@ -25,6 +25,42 @@ namespace Application.Services.MrShooferORS
         _staticBaseUrl = client.BaseAddress.ToString();
     }
 
+    /// <summary>Configured ORS API origin (no trailing slash), used for service-type images etc.</summary>
+    public string BaseUrl => (_client.BaseAddress?.ToString() ?? _staticBaseUrl).TrimEnd('/');
+
+    /// <summary>
+    /// Turns ORS relative media paths into URLs. Service-type logos go through the same-origin
+    /// <c>/media/ors/…</c> proxy so the client can strip baked-in gray/white plates.
+    /// </summary>
+    public string ResolveMediaUrl(string? path, string fallback = "/taxi.png")
+    {
+      if (string.IsNullOrWhiteSpace(path)) return fallback;
+      var trimmed = path.Trim();
+
+      if (trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+          trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+      {
+        // Rewrite absolute ORS image URLs onto the local proxy (CORS / hotlink safe).
+        if (Uri.TryCreate(trimmed, UriKind.Absolute, out var abs) &&
+            abs.AbsolutePath.StartsWith("/images/", StringComparison.OrdinalIgnoreCase))
+        {
+          return "/media/ors" + abs.AbsolutePath;
+        }
+        return trimmed;
+      }
+
+      if (trimmed.StartsWith('/'))
+      {
+        if (trimmed.StartsWith("/images/", StringComparison.OrdinalIgnoreCase))
+          return "/media/ors" + trimmed;
+        if (trimmed.StartsWith("/media/ors/", StringComparison.OrdinalIgnoreCase))
+          return trimmed;
+        return BaseUrl + trimmed;
+      }
+
+      return trimmed;
+    }
+
 
     public void SetSellerApiKey(string apikey)
     {
@@ -56,6 +92,25 @@ namespace Application.Services.MrShooferORS
         var body = await result.Content.ReadAsStringAsync();
         var node = JsonNode.Parse(body);
         return node?["accountBalance_tomans"]?.ToString();
+      }
+      catch
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Live OTA profile from ORS (includes <c>baseCommission</c>).
+    /// Used so payable prices track ORS commission changes.
+    /// </summary>
+    public async Task<OrsAgencyInfo?> GetMyAgencyInfoAsync()
+    {
+      try
+      {
+        var result = await _client.GetAsync("/OTAManagement/GetMyAgencyInfo");
+        if (!result.IsSuccessStatusCode) return null;
+        var body = await result.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<OrsAgencyInfo>(body, _jsonOptions);
       }
       catch
       {
@@ -115,36 +170,55 @@ namespace Application.Services.MrShooferORS
     public async Task<string> ReserveTicketTemporarirly(TicketTempReserveRequestModel ticket)
     {
       var response = await _client.PostAsJsonAsync<TicketTempReserveRequestModel>("/Tickets/reserverTemporarily", ticket);
+      var body = await response.Content.ReadAsStringAsync();
 
-      if ((int)response.StatusCode != 200)
-        throw new Exception();
+      if (!response.IsSuccessStatusCode)
+      {
+        var detail = TryExtractError(body) ?? body;
+        if (string.IsNullOrWhiteSpace(detail))
+          detail = $"HTTP {(int)response.StatusCode}";
+        throw new Exception($"رزرو موقت ناموفق: {detail}");
+      }
 
-
-      var jsonresult = await response.Content.ReadAsStringAsync();
-
-      var node = JsonNode.Parse(jsonresult);
-
-
-      return node?["ticketCode"]?.ToString() ?? throw new Exception("Reserve failed: no ticketCode in response");
-
+      var node = JsonNode.Parse(string.IsNullOrWhiteSpace(body) ? "{}" : body);
+      return node?["ticketCode"]?.ToString()
+             ?? throw new Exception("رزرو موقت ناموفق: کد رزرو در پاسخ نبود");
     }
 
     public async Task<TicketConfirmationResponse> ConfirmReserve(ConfirmReserveRequestModel confirmreservemodel)
     {
       var response = await _client.PostAsJsonAsync<ConfirmReserveRequestModel>("/Tickets/confirmReserve", confirmreservemodel);
+      var body = await response.Content.ReadAsStringAsync();
 
       // When error happend
-      if ((int)response.StatusCode != 200)
+      if (!response.IsSuccessStatusCode)
       {
-        var jsonresult = JsonNode.Parse(await response.Content.ReadAsStringAsync());
-        throw new Exception(jsonresult?["error"]?.ToString() ?? "ConfirmReserve failed");
+        var detail = TryExtractError(body) ?? body;
+        throw new Exception(string.IsNullOrWhiteSpace(detail) ? "ConfirmReserve failed" : detail);
       }
 
-
-      var jsonresponse = JsonNode.Parse(await response.Content.ReadAsStringAsync());
-
+      var jsonresponse = JsonNode.Parse(string.IsNullOrWhiteSpace(body) ? "{}" : body);
       return JsonSerializer.Deserialize<TicketConfirmationResponse>(jsonresponse)
           ?? throw new Exception("ConfirmReserve: failed to deserialize response");
+    }
+
+    private static string? TryExtractError(string? body)
+    {
+      if (string.IsNullOrWhiteSpace(body)) return null;
+      try
+      {
+        var node = JsonNode.Parse(body);
+        if (node is JsonValue v && v.TryGetValue<string>(out var s))
+          return s;
+        return node?["error"]?.ToString()
+               ?? node?["message"]?.ToString()
+               ?? node?["title"]?.ToString();
+      }
+      catch
+      {
+        // ORS often returns a raw quoted/plain string on BadRequest
+        return body.Trim().Trim('"');
+      }
     }
 
 

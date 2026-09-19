@@ -1,0 +1,133 @@
+@model List<Application.ViewModels.Employees.EmployeeSpendRowViewModel>
+@using Application.Services
+@{
+	ViewData["Title"] = "مسافرین";
+	Layout = "_AgencySideLayout";
+	int year = (int)ViewBag.Year;
+	int month = (int)ViewBag.Month;
+	int grandTotal = (int)ViewBag.GrandTotal;
+	int grandTrips = (int)ViewBag.GrandTrips;
+	var filterLabel = ViewBag.FilterLabel as string ?? "";
+	var fromShamsi = ViewBag.FromShamsi as string ?? "";
+	var toShamsi = ViewBag.ToShamsi as string ?? "";
+	var persianYears = ViewBag.PersianYears as List<int> ?? new List<int>();
+	var monthNames = new Dictionary<int, string>
+	{
+		{1,"فروردین"},{2,"اردیبهشت"},{3,"خرداد"},{4,"تیر"},{5,"مرداد"},{6,"شهریور"},
+		{7,"مهر"},{8,"آبان"},{9,"آذر"},{10,"دی"},{11,"بهمن"},{12,"اسفند"}
+	};
+}
+
+<div class="main_container px-lg-6 px-0 pb-5" dir="rtl">
+	<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+		<div>
+			<h4 class="mb-1 text-blck">مسافرین</h4>
+			<small class="text-muted">گزارش هزینه سفرها — @filterLabel</small>
+		</div>
+		<a class="btn btn-outline-secondary" asp-action="Index">بازگشت به لیست</a>
+	</div>
+
+	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 mb-3">
+		<form method="get" class="row g-2 align-items-end">
+			<div class="col-md-3">
+				<label class="form-label mb-1">سال شمسی</label>
+								<select name="year" class="form-select">
+					@foreach (var y in persianYears)
+					{
+						if (y == year)
+						{
+							<option value="@y" selected>@y</option>
+						}
+						else
+						{
+							<option value="@y">@y</option>
+						}
+					}
+				</select>
+			</div>
+			<div class="col-md-3">
+				<label class="form-label mb-1">ماه شمسی</label>
+				<select name="month" class="form-select">
+					@foreach (var kv in monthNames)
+					{
+						if (kv.Key == month)
+						{
+							<option value="@kv.Key" selected>@kv.Value</option>
+						}
+						else
+						{
+							<option value="@kv.Key">@kv.Value</option>
+						}
+					}
+				</select>
+			</div>
+			<div class="col-md-2">
+				<label class="form-label mb-1">از تاریخ</label>
+				<input type="text" name="from" value="@fromShamsi" class="form-control" dir="ltr" placeholder="1404/01/01" />
+			</div>
+			<div class="col-md-2">
+				<label class="form-label mb-1">تا تاریخ</label>
+				<input type="text" name="to" value="@toShamsi" class="form-control" dir="ltr" placeholder="1404/12/29" />
+			</div>
+			<div class="col-md-2">
+				<button type="submit" class="btn btn-primary w-100">اعمال فیلتر</button>
+			</div>
+		</form>
+		<small class="text-muted d-block mt-2">اگر از/تا را پر کنید، بازه دستی جایگزین ماه می‌شود. قالب تاریخ: سال/ماه/روز شمسی</small>
+	</div>
+
+	<div class="row g-3 mb-3">
+		<div class="col-md-6">
+			<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3">
+				<small class="text-muted">تعداد سفر</small>
+				<h4 class="mb-0 text-blck">@grandTrips.ToString("N0")</h4>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3">
+				<small class="text-muted">جمع هزینه (تومان)</small>
+				<h4 class="mb-0 text-blck">@grandTotal.ToString("N0")</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-0 overflow-hidden">
+		<div class="table-responsive">
+			<table class="table table-hover align-middle mb-0">
+				<thead>
+					<tr>
+						<th class="ps-3">مسافر</th>
+						<th>تعداد سفر</th>
+						<th>جمع هزینه (تومان)</th>
+						<th class="pe-3"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model == null || Model.Count == 0)
+					{
+						<tr>
+							<td colspan="4" class="text-center text-muted py-5">در این بازه سفری ثبت نشده است</td>
+						</tr>
+					}
+					else
+					{
+						foreach (var r in Model)
+						{
+							<tr>
+								<td class="ps-3">@r.DisplayName</td>
+								<td>@r.TripCount.ToString("N0")</td>
+								<td>@r.TotalToman.ToString("N0")</td>
+								<td class="text-end pe-3">
+									@if (r.AgencyEmployeeId is int eid)
+									{
+										<a class="btn btn-sm btn-outline-secondary" asp-action="Trips" asp-route-id="@eid">جزئیات</a>
+									}
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

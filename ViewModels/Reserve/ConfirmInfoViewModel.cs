@@ -24,6 +24,10 @@ namespace Application.ViewModels.Reserve
     /// <summary>Optional agency employee used for this booking.</summary>
     public int? EmployeeId { get; set; }
 
+    /// <summary>Optional head of passengers (Organization panels only).</summary>
+    [MaxLength(120)]
+    public string? HeadOfPassengers { get; set; }
+
     /// <summary>JSON-serialized companion list (max 2) carried through confirm/pay.</summary>
     public string? CompanionsJson { get; set; }
 

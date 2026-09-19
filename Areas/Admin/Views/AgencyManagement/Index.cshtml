@@ -139,6 +139,14 @@
 						<span asp-validation-for="AdminMobile" class="text-danger"></span>
 					</div>
 					<div class="mb-3">
+						<label class="form-label">نوع پنل*</label>
+						<select class="form-select" asp-for="PanelType">
+							<option value="@((int)Application.Models.AgencyPanelType.Seller)">فروشنده</option>
+							<option value="@((int)Application.Models.AgencyPanelType.Organization)">سازمانی</option>
+						</select>
+						<small class="text-muted">فقط پنل سازمانی به فاکتور رسمی و سرپرست مسافرین دسترسی دارد.</small>
+					</div>
+					<div class="mb-3">
 						<label class="form-label">کمیسیون دریافتی*</label>
 						<input class="form-control" asp-for="Commission" value="5" type="number" />
 						<span asp-validation-for="Commission" class="text-danger"></span>
@@ -147,6 +155,18 @@
 						<label class="form-label mt-1">آدرس*</label>
 						<input class="form-control" asp-for="Address" />
 						<span asp-validation-for="Address" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label class="form-label">کد اقتصادی</label>
+						<input class="form-control" dir="ltr" asp-for="EconomicNo" />
+					</div>
+					<div class="mb-3">
+						<label class="form-label">شماره ثبت</label>
+						<input class="form-control" dir="ltr" asp-for="RegistrationNo" />
+					</div>
+					<div class="mb-3">
+						<label class="form-label">شناسه ملی</label>
+						<input class="form-control" dir="ltr" asp-for="NationalId" />
 					</div>
 				</div>
 				<div class="ecommerce-customer-add-shiping mb-3 pt-3">

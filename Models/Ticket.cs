@@ -14,6 +14,10 @@ namespace Application.Models
     public string? Email { get; set; }
     public string NaCode { get; set; }
     public string CompanyName { get; set; } = "";
+
+    /// <summary>Optional head-of-passengers label (Organization panels only).</summary>
+    public string? HeadOfPassengers { get; set; }
+
     public DateTime DOB { get; set; }
     public int TicketOriginalPrice { get; set; }
     public int TicketFinalPrice { get; set; }

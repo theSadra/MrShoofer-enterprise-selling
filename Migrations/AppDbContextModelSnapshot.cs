@@ -63,8 +63,20 @@ namespace Application.Migrations
                     b.Property<int>("Commission")
                         .HasColumnType("integer");
 
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("County")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("EconomicNo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("text");
 
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("text");
@@ -73,11 +85,26 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NationalId")
+                        .HasColumnType("text");
+
                     b.Property<string>("ORSAPI_token")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PanelType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Province")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RegistrationNo")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -210,6 +237,9 @@ namespace Application.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HeadOfPassengers")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsCancelled")
@@ -346,6 +376,9 @@ namespace Application.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HeadOfPassengers")
                         .HasColumnType("text");
 
                     b.Property<string>("Lastname")

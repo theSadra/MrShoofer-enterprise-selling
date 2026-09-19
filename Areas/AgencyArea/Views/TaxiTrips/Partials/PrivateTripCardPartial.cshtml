@@ -1,4 +1,5 @@
 @model Application.Services.MrShooferORS.SearchedTrip
+@inject Application.Services.MrShooferORS.MrShooferAPIClient OrsApi
 
 @{
     // Check if this is a VIP car (taxiSupervisorID == 7 OR carModelName contains VIP/تشریفات)
@@ -7,21 +8,8 @@
     (Model.carModelName.Contains("VIP", StringComparison.OrdinalIgnoreCase) ||
     Model.carModelName.Contains("تشریفات")));
 
-    // Use API image if available, otherwise fallback to default taxi.png
-    string imageUrl = "/taxi.png"; // default fallback
-    if (!string.IsNullOrWhiteSpace(Model.Image))
-    {
-        var imagePath = Model.Image.Trim();
-        // Prepend API base URL if the image path is relative
-        if (imagePath.StartsWith("/"))
-        {
-            imageUrl = "http://localhost:5000" + imagePath;
-        }
-        else
-        {
-            imageUrl = imagePath;
-        }
-    }
+    // Service-type logo from ORS API (`image` / TaxiSupervisor.ServiceTypeImageUrl)
+    string imageUrl = OrsApi.ResolveMediaUrl(Model.Image);
 }
 
 @if (Model.tripTypeID == Application.Services.MrShooferORS.TripType.OnlyPrivate)

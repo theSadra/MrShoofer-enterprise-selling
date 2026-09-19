@@ -18,6 +18,7 @@
 #   DEPLOY_HOST=89.42.199.39
 #   DEPLOY_PASS=...
 #   DEPLOY_USER=root
+#   DEPLOY_SSH_KEY=~/.ssh/ors_deploy
 #   USE_DOCKER=0
 #   DOCKER_PLATFORM=linux/amd64   # set on Apple Silicon
 #
@@ -69,17 +70,18 @@ done
 export DEPLOY_HOST DEPLOY_USER USE_DOCKER ENSURE_AUTOSTART
 export SKIP_BLUE_GREEN FORCE_FULL DRY_RUN
 export DEPLOY_PASS="${DEPLOY_PASS:-}"
+export DEPLOY_SSH_KEY="${DEPLOY_SSH_KEY:-}"
 export DOCKER_PLATFORM="${DOCKER_PLATFORM:-}"
 export AGENCY_IMAGE="${AGENCY_IMAGE:-mrshoofer-agency:latest}"
 
-# Prompt for password once if not set and not dry-run
-if [[ -z "${DEPLOY_PASS}" && "$DRY_RUN" != "1" ]]; then
+# Prompt for password once if not set, no SSH key, and not dry-run
+if [[ -z "${DEPLOY_PASS}" && -z "${DEPLOY_SSH_KEY}" && "$DRY_RUN" != "1" ]]; then
   if [[ -t 0 ]]; then
     read -r -s -p "SSH password for ${DEPLOY_USER}@${DEPLOY_HOST}: " DEPLOY_PASS
     echo
     export DEPLOY_PASS
   else
-    echo "Set DEPLOY_PASS or create .env.deploy" >&2
+    echo "Set DEPLOY_PASS, DEPLOY_SSH_KEY, or create .env.deploy" >&2
     exit 1
   fi
 fi
@@ -99,5 +101,36 @@ fi
 
 echo "==> Deploy target: ${DEPLOY_USER}@${DEPLOY_HOST}"
 echo "    mode: $([[ "$USE_DOCKER" == "1" ]] && echo docker || echo systemd)  fast=${SKIP_BLUE_GREEN}  full=${FORCE_FULL}  dry=${DRY_RUN}"
+
+# Deploy only ships committed files (git diff / publish). Catch the jalali/trip-search
+# class of 404s before cutover — untracked wwwroot assets never reach production.
+REQUIRED_STATIC=(
+  wwwroot/css/jalali-datepicker.css
+  wwwroot/js/jalali-datepicker.js
+  wwwroot/css/trip-search.css
+  wwwroot/css/TaxiTripsIndex.css
+  wwwroot/css/IndexPage.css
+  wwwroot/js/searchpage.js
+  wwwroot/js/IndexPage.js
+)
+missing=()
+untracked=()
+for f in "${REQUIRED_STATIC[@]}"; do
+  if [[ ! -f "$ROOT/$f" ]]; then
+    missing+=("$f")
+  elif ! git -C "$ROOT" ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+    untracked+=("$f")
+  fi
+done
+if ((${#missing[@]} + ${#untracked[@]} > 0)); then
+  echo "==> Deploy blocked: required static assets are missing from git" >&2
+  if ((${#missing[@]} > 0)); then
+    printf '  MISSING:   %s\n' "${missing[@]}" >&2
+  fi
+  if ((${#untracked[@]} > 0)); then
+    printf '  UNTRACKED: %s  (commit before deploy)\n' "${untracked[@]}" >&2
+  fi
+  exit 1
+fi
 
 exec bash "$ROOT/deploy/scripts/zero-downtime-deploy.sh"

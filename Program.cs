@@ -27,15 +27,22 @@ builder.Services.AddSingleton<DirectionsTravelTimeCalculator>();
 builder.Services.AddHttpClient<MrShooferAPIClient>((sp, client) =>
 {
   var config = sp.GetRequiredService<IConfiguration>();
-  var serviceUrl = config["serivce_url"] ?? "http://localhost:5001";
+  var serviceUrl = config["MrShoofer:ApiBaseUrl"]
+    ?? config["serivce_url"]
+    ?? config["serivce_url_fallback"]
+    ?? "https://ors.shoofer.taxi";
   client.BaseAddress = new Uri(serviceUrl);
   client.Timeout = TimeSpan.FromSeconds(30);
 });
 
 builder.Services.AddTransient<CustomerServiceSmsSender>();
+builder.Services.AddScoped<Application.Services.OfficialInvoices.IOfficialInvoiceService, Application.Services.OfficialInvoices.OfficialInvoiceService>();
 
 builder.Services
   .AddControllersWithViews()
+#if DEBUG
+  .AddRazorRuntimeCompilation()
+#endif
   .AddJsonOptions(opts =>
   {
     // Ensure Persian characters are not escaped in JSON responses
@@ -119,6 +126,17 @@ builder.Services.ConfigureApplicationCookie(options =>
   {
     OnRedirectToLogin = context =>
     {
+      var isApi = context.Request.Headers.Accept.Any(h =>
+                    h != null && h.Contains("application/json", StringComparison.OrdinalIgnoreCase))
+                  || string.Equals(context.Request.ContentType, "application/json", StringComparison.OrdinalIgnoreCase)
+                  || context.Request.Headers.XRequestedWith == "XMLHttpRequest";
+      if (isApi)
+      {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json; charset=utf-8";
+        return context.Response.WriteAsync("{\"success\":false,\"message\":\"برای ادامه وارد حساب شوید.\"}");
+      }
+
       if (context.Request.Path.StartsWithSegments("/Admin", StringComparison.OrdinalIgnoreCase))
       {
         var returnUrl = Uri.EscapeDataString($"{context.Request.PathBase}{context.Request.Path}{context.Request.QueryString}");
@@ -241,7 +259,10 @@ using (var scope = app.Services.CreateScope())
   }
 }
 
-app.UseResponseCompression();
+if (!app.Environment.IsDevelopment())
+{
+  app.UseResponseCompression();
+}
 
 app.UseRateLimiter();
 

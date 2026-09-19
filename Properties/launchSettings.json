@@ -3,8 +3,21 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
+      "hotReloadProfile": "aspnetcore",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_SUPPRESS_BROWSER_REFRESH": "0"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5055"
+    },
+    "watch": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "hotReloadProfile": "aspnetcore",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_SUPPRESS_BROWSER_REFRESH": "0"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5055"

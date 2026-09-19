@@ -9,7 +9,7 @@
 
 let assetsPath = document.documentElement.getAttribute('data-assets-path'),
   templateName = document.documentElement.getAttribute('data-template'),
-  rtlSupport = true; // set true for rtl support (rtl + ltr), false for ltr only.
+  rtlSupport = true;
 
 /**
  * TemplateCustomizer settings
@@ -25,10 +25,20 @@ let assetsPath = document.documentElement.getAttribute('data-assets-path'),
 
 if (typeof TemplateCustomizer !== 'undefined') {
   window.templateCustomizer = new TemplateCustomizer({
-    cssPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
-    themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
+    cssPath: assetsPath + 'vendor/css/rtl/',
+    themesPath: assetsPath + 'vendor/css/rtl/',
     displayCustomizer: false,
     defaultTextDir: 'rtl',
     controls: ['style']
   });
 }
+
+var link = document.createElement('link');
+link.type = 'text/css';
+link.rel = 'stylesheet';
+link.href = assetsPath + 'css/rtl.css';
+
+document.head.appendChild(link);
+document.documentElement.setAttribute('dir', 'rtl');
+var customizer = document.getElementById('template-customizer');
+if (customizer) customizer.remove();

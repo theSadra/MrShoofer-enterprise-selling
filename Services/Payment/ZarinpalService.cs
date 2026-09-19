@@ -11,6 +11,7 @@ namespace Application.Services.Payment
     private readonly string _paymentUrl;
     private readonly string _verifyUrl;
     private readonly string _gatewayUrl;
+    private readonly string _checkoutRefererBase;
     private readonly string? _callbackUrl;
     private readonly bool _isSandbox;
 
@@ -36,6 +37,7 @@ namespace Application.Services.Payment
               : "https://payment.zarinpal.com/pg/StartPay/");
 
       _callbackUrl = configuration["Zarinpal:CallbackUrl"];
+      _checkoutRefererBase = configuration["Zarinpal:CheckoutRefererBase"] ?? "https://pay.mrshoofer.ir/pg/checkout/";
     }
 
     public async Task<(bool Success, string Authority, string Message)> RequestPaymentAsync(
@@ -100,5 +102,49 @@ namespace Application.Services.Payment
     }
 
     public string GetPaymentGatewayUrl(string authority) => $"{_gatewayUrl}{authority}";
+
+    public async Task<(bool Success, string Html, string Message)> TryGetDirectGatewayHtmlAsync(string authority)
+    {
+      if (string.IsNullOrWhiteSpace(authority))
+        return (false, string.Empty, "authority is required");
+
+      var startPayUrl = GetPaymentGatewayUrl(authority);
+      var checkoutReferer = $"{_checkoutRefererBase.TrimEnd('/')}/{authority}";
+
+      try
+      {
+        using var request = new HttpRequestMessage(HttpMethod.Get, startPayUrl);
+        request.Headers.TryAddWithoutValidation("Referer", checkoutReferer);
+        request.Headers.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml");
+
+        using var response = await _httpClient.SendAsync(request);
+        var html = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+          return (false, string.Empty, $"gateway HTTP {(int)response.StatusCode}");
+
+        if (IsCheckoutReviewPage(html))
+          return (false, string.Empty, "gateway returned checkout review page");
+
+        if (!IsBankGatewayPage(html))
+          return (false, string.Empty, "gateway response was not a bank redirect page");
+
+        return (true, html, string.Empty);
+      }
+      catch (Exception ex)
+      {
+        return (false, string.Empty, ex.Message);
+      }
+    }
+
+    private static bool IsCheckoutReviewPage(string html) =>
+      html.Contains("تایید پرداخت", StringComparison.Ordinal)
+      || html.Contains("payment-form", StringComparison.Ordinal)
+      || html.Contains("تایید اطلاعات پرداخت", StringComparison.Ordinal);
+
+    private static bool IsBankGatewayPage(string html) =>
+      html.Contains("shaparak", StringComparison.OrdinalIgnoreCase)
+      || (html.Contains("document.forms['b'].submit()", StringComparison.Ordinal)
+          && html.Contains("id=\"b\"", StringComparison.Ordinal));
   }
 }

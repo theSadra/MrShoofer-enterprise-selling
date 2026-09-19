@@ -4,6 +4,25 @@
 	string? currentPage = ViewContext.HttpContext.Request.Path;
 }
 
+@using Application.Data
+@using Application.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext NavbarDb
+@inject UserManager<IdentityUser> NavbarUserManager
+@{
+	var isOrganizationPanel = false;
+	if (User?.Identity?.IsAuthenticated == true)
+	{
+		var uid = NavbarUserManager.GetUserId(User);
+		if (!string.IsNullOrEmpty(uid))
+		{
+			isOrganizationPanel = NavbarDb.Agencies.AsNoTracking()
+				.Any(a => a.IdentityUserId == uid && a.PanelType == AgencyPanelType.Organization);
+		}
+	}
+}
+
 <style>
 	[dir=rtl] .dropdown-menu-end[data-bs-popper] {
 		left: 0 !important;
@@ -14,15 +33,47 @@
 		.layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
 			left: 0.9rem !important;
 		}
+
+		.navbar.landing-navbar {
+			padding-inline: 0.85rem !important;
+			padding-block: 0.45rem !important;
+			margin-inline: 0.75rem;
+			border-radius: 1.25rem;
+		}
+
+		.landing-navbar .navbar-brand {
+			margin-inline-end: 0.65rem !important;
+		}
+	}
+
+	/* Prevent contact/profile dropdown flash before front-palette.css loads */
+	.landing-navbar .landing-nav-dropdown-menu:not(.show) {
+		display: none !important;
+	}
+
+	/* Agency tools dropdown — keep under trigger, don't cover sibling nav links */
+	@@media (min-width: 992px) {
+		.landing-navbar .landing-nav-item-dropdown {
+			position: relative;
+		}
+
+		.landing-navbar .landing-nav-item-dropdown .landing-nav-dropdown-menu.show {
+			position: absolute !important;
+			top: calc(100% + 0.4rem) !important;
+			inset-inline-end: 0 !important;
+			inset-inline-start: auto !important;
+			transform: none !important;
+			z-index: 1080;
+		}
 	}
 </style>
 
 <!-- Navbar: Start -->
 <nav class="layout-navbar shadow-none py-0 d-block">
 	<div class="container">
-		<div class="navbar navbar-expand-lg landing-navbar px-md-3 shadow p-0 px-1 p-md-2 " style="background:rgba(255, 255, 255, 1 );">
+		<div class="navbar navbar-expand-lg landing-navbar px-3 px-md-4 shadow" style="background:rgba(255, 255, 255, 1 );">
 			<!-- Menu logo wrapper: Start -->
-			<div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+			<div class="navbar-brand app-brand demo d-flex align-items-center py-0 me-3 me-lg-4">
 				<!-- Mobile menu toggle: Start-->
 				<button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<i class="ti ti-menu-2 ti-sm align-middle"></i>
@@ -30,7 +81,7 @@
 				<!-- Mobile menu toggle: End-->
 				<a asp-controller="Home" asp-action="Index" class="app-brand-link">
 					<span class="app-brand-logo demo" style="width:unset; height: unset;">
-						<img src="~/logo_full_b.png" height="29px" alt="مسترشوفر" />
+						<img src="~/logo_full_b.png" height="32" alt="مسترشوفر" />
 					</span>
 				</a>
 			</div>
@@ -40,10 +91,17 @@
 				<button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<i class="ti ti-x ti-sm"></i>
 				</button>
-				<ul class="navbar-nav me-auto p-3 p-lg-0">
+				@{
+					var path = (currentPage ?? "").ToLowerInvariant();
+					var agencyToolsActive =
+						path.Contains("/agencyarea/agency")
+						|| path.Contains("/agencyarea/officialinvoices")
+						|| path.Contains("/agencyarea/employees");
+				}
+				<ul class="navbar-nav me-auto p-3 p-lg-0 align-items-lg-center flex-lg-nowrap">
 
 					<li class="nav-item">
-						<a class="fw-medium btn btn-primary " asp-area="AgencyArea" asp-controller="Home" asp-action="Index">
+						<a class="fw-medium btn btn-sm btn-primary navbar-nav-btn navbar-newtrip-btn" asp-area="AgencyArea" asp-controller="Home" asp-action="Index">
 							<span>
 								<i class="ti ti-ticket"></i>
 								سفر جدید
@@ -52,40 +110,54 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-fragment="landingHero">
-
-							<span>
-
-								<i class="ti ti-home"></i>
-								پروفایل آژانس
-							</span>
-
-						</a>
-					</li>
-
-					<li class="nav-item">
 						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="TicketInfo" asp-action="Index">
-
-							<span>
-								<i class="ti ti-certificate-2"></i>
-								بلیط‌ ها
-							</span>
-
+							<span><i class="ti ti-certificate-2"></i> بلیط‌ ها</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="FrontPages" asp-action="LandingPage" asp-fragment="landingFAQ">
 
-							<span>
-								<i class="ti ti-heart-handshake"></i>
-								پشتیبانی 24/7
-
-							</span>
-
+					<li class="nav-item dropdown landing-nav-item-dropdown">
+						<a class="nav-link fw-medium dropdown-toggle @(agencyToolsActive ? "active" : null)" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-display="static" data-bs-auto-close="outside" aria-expanded="false">
+							<span><i class="ti ti-building-store"></i> خدمات آژانس</span>
 						</a>
+						<ul class="dropdown-menu landing-nav-dropdown-menu dropdown-menu-end">
+							<li>
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index">
+									<span><i class="ti ti-home"></i> پروفایل آژانس</span>
+								</a>
+							</li>
+							@if (isOrganizationPanel)
+							{
+							<li>
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index">
+									<span><i class="ti ti-file-invoice"></i> فاکتور رسمی</span>
+								</a>
+							</li>
+							}
+							<li>
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Employees" asp-action="Index">
+									<span><i class="ti ti-users"></i> مسافرین پرتردد</span>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Employees" asp-action="SpendReport">
+									<span><i class="ti ti-chart-bar"></i> گزارش هزینه مسافرین</span>
+								</a>
+							</li>
+							@if (isOrganizationPanel)
+							{
+							<li>
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
+									<span><i class="ti ti-id"></i> اطلاعات حقوقی</span>
+								</a>
+							</li>
+							}
+						</ul>
 					</li>
+
 					<li class="nav-item">
-						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingContact">ارتباط با ما</a>
+						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingContact">
+							<span><i class="ti ti-heart-handshake"></i> پشتیبانی</span>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -119,45 +191,83 @@
 				</li> *@
 				<!-- / Style Switcher-->
 				<!-- navbar button: Start -->
-				<li>
-
-					@{
+				@{
 						if (User.Identity.IsAuthenticated)
 
 						{
 						<li class="nav-item navbar-dropdown dropdown-user dropdown">
-							<a class="nav-link dropdown-toggle hide-arrow show" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="true">
-								<img src="~/store.png" height="32" />
+							<a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="false" aria-label="منوی حساب آژانس">
+								<img src="~/store.png" height="26" alt="" />
 							</a>
-							<ul class="dropdown-menu dropdown-menu-end" data-bs-popper="static">
+							<ul class="dropdown-menu dropdown-menu-end">
 
 								<li>
-									<a class="dropdown-item" href="pages-profile-user.html">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index">
 										<i class="ti ti-user-check me-2 ti-sm"></i>
 										<span class="align-middle">پروفایل آژانس</span>
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="pages-account-settings-billing.html">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="TicketInfo" asp-action="Index">
 										<span class="d-flex align-items-center align-middle">
 											<i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
 											<span class="flex-grow-1 align-middle">خریدها</span>
-
+										</span>
+									</a>
+								</li>
+								@if (isOrganizationPanel)
+								{
+								<li>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-file-invoice me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">فاکتور رسمی</span>
+										</span>
+									</a>
+								</li>
+								}
+								<li>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Employees" asp-action="Index">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-users me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">مسافرین پرتردد</span>
 										</span>
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="pages-pricing.html">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Employees" asp-action="SpendReport">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-chart-bar me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">گزارش هزینه مسافرین</span>
+										</span>
+									</a>
+								</li>
+								@if (isOrganizationPanel)
+								{
+								<li>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
+										<span class="d-flex align-items-center align-middle">
+											<i class="flex-shrink-0 ti ti-id me-2 ti-sm"></i>
+											<span class="flex-grow-1 align-middle">اطلاعات حقوقی</span>
+										</span>
+									</a>
+								</li>
+								}
+								<li>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-route-openChargeModal="true">
 										<i class="ti ti-currency-dollar me-2 ti-sm"></i>
 										<span class="align-middle">شارژ حساب</span>
 									</a>
 								</li>
+								@if (isOrganizationPanel)
+								{
 								<li>
-									<a class="dropdown-item" href="pages-account-settings-account.html">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
 										<i class="ti ti-settings me-2 ti-sm"></i>
-										<span class="align-middle">تنظیمات</span>
+										<span class="align-middle">تنظیمات حقوقی</span>
 									</a>
 								</li>
+								}
 
 								<li>
 									<div class="dropdown-divider"></div>
@@ -165,11 +275,10 @@
 
 
 								<li>
-									<a class="dropdown-item" href="pages-account-settings-billing.html">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingContact">
 										<span class="d-flex align-items-center align-middle">
 											<i class="flex-shrink-0 ti ti-heart-handshake me-2 ti-sm"></i>
 											<span class="flex-grow-1 align-middle">پشتیبانی 24/7</span>
-
 										</span>
 									</a>
 								</li>
@@ -191,10 +300,11 @@
 						else
 
 						{
-						<a asp-area="AgencyArea" asp-controller="Auth" asp-action="Login" class="btn btn-primary"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">ورود / ثبت نام</span></a>
+						<li class="nav-item">
+							<a asp-area="AgencyArea" asp-controller="Auth" asp-action="Login" class="btn btn-primary"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">ورود / ثبت نام</span></a>
+						</li>
 						}
 					}
-				</li>
 
 				<!-- navbar button: End -->
 			</ul>

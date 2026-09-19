@@ -481,12 +481,12 @@ button.list-group-item-primary.active {
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #7367f0 !important;
+  border-color: #18181b !important;
 }
 
 .input-group:focus-within .form-control,
 .input-group:focus-within .input-group-text {
-  border-color: #7367f0 !important;
+  border-color: #18181b !important;
 }
 
 .form-check-input:focus {
@@ -509,7 +509,7 @@ button.list-group-item-primary.active {
 }
 
 .form-control:focus ~ .form-label {
-  border-color: #7367f0;
+  border-color: #18181b;
 }
 .form-control:focus ~ .form-label::after {
   border-color: inherit;

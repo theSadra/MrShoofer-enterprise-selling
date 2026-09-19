@@ -1,0 +1,159 @@
+@model Application.Areas.AgencyArea.ViewModels.OfficialInvoices.OfficialInvoiceCreateViewModel
+@{
+    Layout = "_AgencySideLayout";
+    ViewData["Title"] = "صدور فاکتور رسمی";
+    var preview = ViewBag.SerialPreview as string ?? ViewData["SerialPreview"] as string ?? "";
+    var line = Model.Lines.FirstOrDefault();
+    var needsLegal = ViewBag.NeedsLegalProfile as bool? == true || ViewData["NeedsLegalProfile"] as bool? == true;
+    var legalUrl = ViewBag.LegalProfileUrl as string
+        ?? ViewData["LegalProfileUrl"] as string
+        ?? Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
+    string Cell(string? v) => string.IsNullOrWhiteSpace(v) ? "—" : v;
+}
+
+<div dir="rtl" class="container-xxl flex-grow-1 container-p-y">
+    <a asp-action="Index" class="small text-decoration-none"><i class="ti ti-arrow-right"></i> بازگشت به فهرست</a>
+    <h4 class="mt-2 mb-1">صدور فاکتور رسمی</h4>
+    <p class="text-muted" style="max-width:42rem;line-height:1.7">
+        اطلاعات از بلیط و پروفایل مالی آژانس پر شده و قابل ویرایش نیست.
+        شماره فاکتور: <strong dir="ltr">@preview</strong>
+    </p>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="fw-bold">مشخصات مسافر (خریدار)</span>
+            <a class="btn btn-sm btn-outline-primary" href="@legalUrl">تکمیل / ویرایش اطلاعات مالی</a>
+        </div>
+        <div class="card-body row g-3">
+            <div class="col-md-4">
+                <div class="text-muted small">نام شخص حقیقی / حقوقی</div>
+                <div class="fw-semibold">@Cell(Model.BuyerName)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">شماره اقتصادی</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerEconomicNo)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">شماره ثبت</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerRegistrationNo)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">شناسه ملی</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerNationalId)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">تلفن</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerPhone)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">نمابر</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerFax)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">استان</div>
+                <div class="fw-semibold">@Cell(Model.BuyerProvince)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">شهرستان</div>
+                <div class="fw-semibold">@Cell(Model.BuyerCounty)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">شهر</div>
+                <div class="fw-semibold">@Cell(Model.BuyerCity)</div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-muted small">کد پستی</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.BuyerPostalCode)</div>
+            </div>
+            <div class="col-md-8">
+                <div class="text-muted small">نشانی</div>
+                <div class="fw-semibold">@Cell(Model.BuyerAddress)</div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-muted small">کد بلیط</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.TicketCode)</div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-muted small">تاریخ فاکتور</div>
+                <div class="fw-semibold" dir="ltr">@Cell(Model.InvoiceDateShamsi)</div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-muted small">نحوه پرداخت</div>
+                <div class="fw-semibold">@(Model.PaymentIsCash ? "نقدی" : "غیرنقدی")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header fw-bold">شرح خدمت و مبلغ</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>کد</th>
+                            <th>شرح</th>
+                            <th>تعداد</th>
+                            <th>واحد</th>
+                            <th>مبلغ واحد (تومان)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td dir="ltr">@(line?.ItemCode ?? "—")</td>
+                            <td style="max-width:28rem;white-space:pre-wrap">@(line?.Description ?? "—")</td>
+                            <td dir="ltr">@(line?.Quantity.ToString("0.##") ?? "—")</td>
+                            <td>@(line?.Unit ?? "—")</td>
+                            <td dir="ltr">@((line?.UnitAmountTomans ?? 0).ToString("N0"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="small text-muted mb-0 mt-2 px-1">مبالغ ردیف به تومان است؛ مبلغ قابل پرداخت فاکتور در لیست فاکتورها به ریال نمایش داده می‌شود (×۱۰).</p>
+        </div>
+    </div>
+
+    <form method="post" asp-action="Create" class="d-flex flex-wrap gap-2 align-items-center">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="ticketCode" value="@Model.TicketCode" />
+        <button type="submit" class="btn btn-primary btn-lg">تأیید صدور و چاپ</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">انصراف</a>
+    </form>
+    <p class="text-muted small mt-3" style="max-width:42rem;line-height:1.7">
+        @Application.Services.OfficialInvoices.OfficialInvoiceSeller.MoodianNote
+    </p>
+</div>
+
+@if (needsLegal)
+{
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof Swal === 'undefined') return;
+            Swal.fire({
+                icon: 'info',
+                title: 'اطلاعات مالی تکمیل نشده',
+                html: 'برای نمایش کامل مشخصات خریدار در فاکتور رسمی، لطفاً اطلاعات مالی آژانس را تکمیل کنید.',
+                showCancelButton: true,
+                confirmButtonText: 'تکمیل اطلاعات مالی',
+                cancelButtonText: 'بعداً',
+                reverseButtons: true,
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-primary me-2',
+                    cancelButton: 'btn btn-outline-secondary'
+                }
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(legalUrl));
+                }
+            });
+        });
+    </script>
+}

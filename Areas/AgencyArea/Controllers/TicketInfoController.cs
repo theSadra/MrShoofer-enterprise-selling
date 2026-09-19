@@ -38,6 +38,7 @@ namespace Application.Areas.AgencyArea
 
       var tickets = agency.SoldTickets ?? new List<Ticket>();
       ViewBag.tickets = tickets.OrderByDescending(t => t.RegisteredAt).ToList();
+      ViewBag.isOrganization = agency.IsOrganization;
 
       return View();
     }
@@ -77,6 +78,7 @@ namespace Application.Areas.AgencyArea
 
       ViewBag.dateFilter = datesFilter;
       ViewBag.tickets = ticketsQuery.OrderByDescending(t => t.RegisteredAt).ToList();
+      ViewBag.isOrganization = agency.IsOrganization;
 
       return View("Index");
     }

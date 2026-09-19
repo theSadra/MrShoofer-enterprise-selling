@@ -100,9 +100,8 @@
   .input-container i {
     position: absolute;
     top: 50%;
-    inset-inline-start: 2px;
-    inset-inline-end: auto;
-    left: auto;
+    left: 2px;
+    right: auto;
     transform: translateY(-50%);
   }
 
@@ -344,357 +343,691 @@
 }
 
 /* ===================================================================
-   Hero redesign — "wayfinding" search hero
-   Scoped under #landingHero so nothing leaks to the rest of the page.
-   =================================================================== */
-#landingHero.landing-hero {
-  --brand: #7367f0;
-  --brand-deep: #5a4ede;
-  --ink: #2f2b3d;
-  --muted: #6f6b7d;
-  position: relative;
+
+
+/* === ORG production hero (pre-MapBook) === */
+.landing-hero,
+.light-style .landing-hero,
+.landing-hero1 {
+  --hero-ink: #000000;
+  --hero-muted: #5e5e5e;
+  --hero-accent: #000000;
+  --hero-sky: #f3f3f3;
+  --hero-ground: #ffffff;
+  padding-top: 0 !important;
+  padding-bottom: 1.5rem !important;
+  isolation: isolate;
   overflow: visible;
-  padding-block: 5.5rem 4rem;
-  background-color: #f7f7fd !important;
-  background-image:
-    radial-gradient(120% 70% at 50% -20%, rgba(115, 103, 240, 0.20) 0%, rgba(115, 103, 240, 0) 60%),
-    radial-gradient(40% 40% at 88% 6%, rgba(255, 159, 67, 0.12) 0%, rgba(255, 159, 67, 0) 60%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%237367f0' fill-opacity='0.09'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat, no-repeat, repeat !important;
-  background-blend-mode: normal !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f3f3 100%) !important;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f3f3f3 100%) !important;
   animation: none !important;
 }
 
-/* Eyebrow pill */
-#landingHero .hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--brand-deep);
-  border: 1px solid rgba(115, 103, 240, 0.22);
-  box-shadow: 0 6px 18px -8px rgba(115, 103, 240, 0.5);
-  font-size: 0.82rem;
-}
-#landingHero .hero-eyebrow i { font-size: 1rem; }
-
-/* Headline + sub */
-#landingHero .hero-title {
-  font-size: clamp(1.55rem, 1.05rem + 2.4vw, 2.5rem);
-  line-height: 1.4 !important;
-  color: var(--ink);
-  letter-spacing: 0;
-}
-#landingHero .hero-sub-title {
-  color: var(--muted);
-  font-size: 1.02rem;
+.light-style .landing-hero::after,
+.landing-hero::after {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
-/* The itinerary search card — the signature element */
-#landingHero .hero-search-card {
+.landing-hero-stage {
   position: relative;
-  z-index: 5;
-  overflow: visible !important;
-  border: 1px solid rgba(115, 103, 240, 0.14);
-  border-radius: 1.5rem;
-  box-shadow:
-    0 30px 60px -22px rgba(47, 43, 61, 0.30),
-    0 10px 24px -14px rgba(115, 103, 240, 0.28);
+  min-height: clamp(17rem, 42vw, 26rem);
+  padding-top: 4.25rem;
+  padding-bottom: 6.5rem;
+  background-color: var(--hero-sky);
+  overflow: hidden;
 }
-#landingHero .hero-search-card .card-body { padding: 1.5rem; }
-#landingHero .hero-search-card .card-header label { color: var(--muted); }
-#landingHero .hero-route-illus { align-items: center; }
-#landingHero .hero-search-card #tripForm {
-  border-top: 1px solid rgba(115, 103, 240, 0.10);
-  padding-top: 1.25rem;
-}
-#landingHero .hero-search-card .card-header h4 { color: var(--ink); }
 
-/* Inputs styled as clean wayfinding fields */
-#landingHero .input-container .form-control {
-  height: calc(3rem + 2px);
-  border-radius: 1rem;
-  border: 1px solid #e7e7f1;
-  background: #fbfbfe;
-  direction: rtl;
-  text-align: start;
-  padding-inline-start: 0.95rem;
-  padding-inline-end: 2.55rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-#landingHero .input-container .icon {
-  color: var(--brand);
-  inset-inline-start: auto !important;
-  inset-inline-end: 0.7rem !important;
-  left: auto !important;
-  right: auto;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-width: 0;
-  line-height: 1;
+/* Art fills the whole stage (not a floating postcard) */
+.landing-hero-stage-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
-#landingHero .input-container .form-control:hover { border-color: #d3d1ea; }
-#landingHero .input-container .form-control:focus {
-  border-color: var(--brand) !important;
-  background: #fff;
-  box-shadow: 0 0 0 0.18rem rgba(115, 103, 240, 0.25) !important;
-}
-#landingHero .input-container .form-control:hover { border-color: #d3d1ea; }
-#landingHero .hero-search-card .btn-primary {
-  height: calc(3rem + 2px);
-  border-radius: 1rem !important;
-  box-shadow: 0 12px 24px -10px rgba(115, 103, 240, 0.7);
+
+.landing-hero-stage-art-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Car sits lower-right in the art — crop sky, keep sedan in the band */
+  object-position: 72% 78%;
+  transform: scale(1.28);
+  transform-origin: 72% 78%;
 }
 
-#landingHero .hero-trust {
-  position: relative;
+/* Soft wash — original overlay (headline gone, keep first look) */
+.landing-hero-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   z-index: 1;
-}
-#landingHero .hero-stat { padding: 0 0.25rem; }
-#landingHero .hero-stat-num { display: block; font-size: 1.6rem; line-height: 1.2; }
-#landingHero .hero-stat-label { display: block; color: var(--muted); font-size: 0.9rem; }
-#landingHero .hero-divider {
-  width: 1px;
-  align-self: stretch;
-  min-height: 2.2rem;
-  background: linear-gradient(rgba(115, 103, 240, 0) 0%, rgba(115, 103, 240, 0.28) 50%, rgba(115, 103, 240, 0) 100%);
-}
-#landingHero .hero-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(115, 103, 240, 0.16);
-  color: #55516a;
-  font-size: 0.82rem;
-}
-#landingHero .hero-chip i { color: var(--brand); font-size: 1rem; }
-
-/* One orchestrated load moment */
-@keyframes heroRise {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-#landingHero .hero-lead { animation: heroRise 0.55s ease both; }
-#landingHero .hero-search-card { animation: heroRise 0.55s ease 0.08s both; }
-#landingHero .hero-trust { animation: heroRise 0.55s ease 0.16s both; }
-
-@media (max-width: 575.98px) {
-  #landingHero .hero-divider { display: none; }
-  #landingHero .hero-stats { gap: 1.25rem 1.5rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  #landingHero .hero-lead,
-  #landingHero .hero-search-card,
-  #landingHero .hero-trust { animation: none !important; }
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.12) 32%,
+      rgba(248, 247, 250, 0.45) 72%,
+      var(--hero-ground) 100%
+    );
 }
 
-/* ============================================================
-   Landing hero — dropdown fix, illustration motion, typography,
-   and RTL-aware mobile hardening. Scoped under #landingHero /
-   #landingCTA so nothing leaks to the rest of the site.
-   ============================================================ */
-
-/* --- Hero title: strip the leaked vendor gradient-text (a banned
-   pattern) so the intended solid-ink headline + primary accent shows. */
-#landingHero .hero-title {
-  background: none !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  -webkit-text-fill-color: currentColor !important;
-  animation: none !important;
-  text-wrap: balance;
-}
-#landingHero .hero-title .text-primary {
-  color: var(--brand) !important;
-  -webkit-text-fill-color: var(--brand) !important;
-}
-#landingHero .hero-sub-title { text-wrap: pretty; }
-
-/* --- Eyebrow pill: wrap gracefully and stay centered on any width. */
-#landingHero .hero-eyebrow {
-  max-width: min(94%, 42rem);
-  margin-inline: auto;
-  line-height: 1.55;
-  text-align: center;
-  white-space: normal;
-}
-
-/* --- Location dropdowns -------------------------------------------------
-   Root cause of "opens above the field": the global
-   `.dropdown-menu{inset:unset!important}` (plus Popper) removed Bootstrap's
-   `top:100%` anchor, so the menu fell back to the container's static top,
-   overlapping the input. Pin it cleanly BELOW the field with logical
-   properties (correct in RTL) and give it a real surface. */
-#landingHero .hero-search-card,
-#landingHero .hero-search-card .card-body,
-#landingHero #tripForm,
-#landingHero .inputcel,
-#landingHero .input-container {
-  overflow: visible !important;
-}
-#landingHero .input-container.dropdown {
+.landing-hero-stage-content {
   position: relative;
   z-index: 2;
 }
-#landingHero .input-container.dropdown.show {
-  z-index: 40;
-}
-#landingHero .input-container > .dropdown-menu.origin_location,
-#landingHero .input-container > .dropdown-menu.destination_location {
-  position: absolute !important;
-  inset: auto !important;
-  inset-block-start: calc(100% + 0.5rem) !important;
-  inset-inline-start: 0 !important;
-  inset-inline-end: 0 !important;
-  transform: none !important;
-  margin: 0 !important;
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: none !important;
-  padding: 0.55rem 0.65rem !important;
-  text-align: start;
-  direction: rtl;
-  z-index: 1060 !important;
-  background: #fff !important;
-  background-color: #fff !important;
-  opacity: 1 !important;
-  isolation: isolate;
-  border: 1px solid rgba(115, 103, 240, 0.16) !important;
-  border-radius: 1rem !important;
-  box-shadow:
-    0 22px 48px -20px rgba(47, 43, 61, 0.30),
-    0 8px 20px -14px rgba(115, 103, 240, 0.26) !important;
-}
-#landingHero .input-container > .dropdown-menu.origin_location.show,
-#landingHero .input-container > .dropdown-menu.destination_location.show {
-  animation: heroDropIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes heroDropIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+
+.landing-hero-search-wrap {
+  position: relative;
+  z-index: 3;
+  margin-top: -3.25rem;
+  margin-bottom: 1.25rem;
 }
 
-/* Dropdown header label + items */
-#landingHero .staredlocation_title {
+.landing-hero-below {
+  position: relative;
+  z-index: 1;
+}
+
+.landing-hero .hero-text-box {
+  max-width: 36rem !important;
+  margin: 0 auto !important;
+  padding-block: 0;
+  min-height: 0;
+}
+
+.landing-hero .hero-title {
+  color: #2f2b3d !important;
+  text-shadow: none;
+}
+
+.landing-hero .hero-sub-title {
+  color: var(--hero-muted) !important;
+}
+
+/* Legacy class aliases (safe if cached markup) */
+.landing-hero-visual,
+.landing-hero-visual-img {
+  display: none;
+}
+
+/*
+  Hero layout system
+  ─────────────────────────────────────────────────────────
+  Spacing scale (shared by form, stats, definition):
+    --hz-sp-2…6, --hz-pad, --hz-gap, --hz-radius
+
+  Widths:
+    Laptop  (≥992): page shell ~90%;
+                    search form only = previous compact ~45rem;
+                    definition = full shell width
+    Tablet  (768–991): full container
+    Mobile  (<768): full screen edge-to-edge
+*/
+.landing-hero .hero-safezone {
+  --hz-sp-2: 0.5rem;
+  --hz-sp-3: 0.75rem;
+  --hz-sp-4: 1rem;
+  --hz-sp-5: 1.5rem;
+  --hz-sp-6: 2rem;
+  --hz-pad: 1.5rem;
+  --hz-gap: 1.5rem;
+  --hz-radius: 1rem;
+  --hero-zone-radius: var(--hz-radius);
+
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hz-gap);
+}
+
+.landing-hero .hero-safezone--wide {
+  margin-top: var(--hz-gap);
+}
+
+.landing-hero .hero-search-panel {
+  width: 100%;
+  margin: 0;
+  padding: var(--hz-pad);
+  background: var(--hero-ground, #fff);
+  border: 1px solid rgba(67, 89, 113, 0.1);
+  border-radius: var(--hz-radius);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.landing-hero .hero-safezone--form {
+  width: min(100%, 52rem);
+}
+
+/* Trust chips — quieter, same ink as rest of site */
+.landing-hero .hero-trust-stats {
+  margin-top: 1rem;
+  gap: 0.75rem 1.5rem;
+}
+
+.landing-hero .hero-trust-stat {
+  color: var(--hero-muted);
+  font-size: 0.875rem;
+}
+
+.landing-hero .hero-trust-stat i {
+  color: var(--hero-accent);
+  opacity: 0.85;
+}
+
+.landing-hero .hero-trust-stat strong {
+  color: var(--hero-ink);
+  font-family: font-bold, "tahoma", sans-serif;
+  font-weight: normal;
+}
+
+.landing-hero .hero-search-head {
+  margin-bottom: var(--hz-sp-4);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+/* Laptop: wide shell; search form comfortably fits OD + swap + date + CTA */
+@media (min-width: 992px) {
+  .layout-navbar > .container,
+  .landing-hero-stage-content,
+  .landing-hero-search-wrap,
+  .landing-hero-below {
+    max-width: 90% !important;
+    width: 90%;
+  }
+  .landing-hero .hero-safezone--form {
+    max-width: 52rem;
+  }
+  .landing-hero .hero-safezone--wide {
+    max-width: 100%;
+  }
+  .landing-hero .hero-text-box {
+    max-width: 38rem !important;
+  }
+  .landing-hero .hero-safezone {
+    --hz-pad: 1.75rem;
+    --hz-gap: 1.5rem;
+  }
+  .landing-hero-stage {
+    min-height: clamp(20rem, 36vw, 28rem);
+    padding-bottom: 7rem;
+  }
+  .landing-hero-search-wrap {
+    margin-top: -3.75rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .layout-navbar > .container,
+  .landing-hero-stage-content,
+  .landing-hero-search-wrap,
+  .landing-hero-below {
+    max-width: min(90%, 85rem) !important;
+    width: min(90%, 85rem);
+  }
+}
+
+/* Tablet: full container width for cards */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .landing-hero .hero-safezone {
+    max-width: 100%;
+    --hz-pad: 1.5rem;
+    --hz-gap: 1.5rem;
+  }
+}
+
+/* Mobile: full screen cards */
+@media (max-width: 767.98px) {
+  .landing-hero-stage {
+    min-height: 16.5rem;
+    padding-top: 3.75rem;
+    padding-bottom: 5.25rem;
+  }
+  .landing-hero-stage-art-img {
+    object-position: 78% 74%;
+    transform: scale(1.42);
+    transform-origin: 78% 74%;
+  }
+  .landing-hero-stage-content,
+  .landing-hero-search-wrap,
+  .landing-hero-below {
+    padding-inline: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  .landing-hero-search-wrap {
+    margin-top: -2.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .landing-hero .hero-text-box {
+    padding-inline: var(--hz-sp-4, 1rem) !important;
+    max-width: none !important;
+  }
+  .landing-hero .hero-safezone--form {
+    width: 100%;
+  }
+  .landing-hero .hero-safezone {
+    width: 100%;
+    max-width: 100%;
+    gap: 0;
+    --hz-pad: 1.25rem;
+    --hz-gap: 0;
+    --hz-radius: 0;
+  }
+  .landing-hero .hero-search-panel {
+    padding-inline: var(--hz-pad);
+    padding-block: var(--hz-sp-5) var(--hz-sp-5);
+  }
+  .landing-hero .hero-search-head {
+    margin-bottom: var(--hz-sp-4);
+  }
+  .landing-hero .hero-definition-media {
+    border-radius: 0.75rem;
+  }
+  .landing-hero .hero-trust-stats {
+    padding: var(--hz-sp-5) var(--hz-pad);
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .landing-hero .hero-search-head {
+    display: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* Trust stats — same horizontal rhythm as cards */
+.hero-trust-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--hz-sp-5, 1.5rem) var(--hz-sp-6, 2rem);
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+.hero-trust-stat {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  margin: 0;
-  padding: 0.3rem 0.55rem 0.45rem;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--muted);
+  gap: var(--hz-sp-2, 0.5rem);
+  color: #000000;
+  font-family: font-regular, "tahoma", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
-#landingHero .origin_location .dropdown-item,
-#landingHero .destination_location .dropdown-item {
-  border-radius: 0.625rem;
-  padding: 0.55rem 0.7rem;
-  font-size: 0.95rem !important;
-  color: #45415c;
-  transition: background-color 0.14s ease, color 0.14s ease;
+.hero-trust-stat strong {
+  font-family: font-bold, "tahoma", sans-serif;
+  font-weight: normal;
+  color: var(--brand-ink, #000);
+  font-size: 1rem;
 }
-#landingHero .origin_location .dropdown-item:hover,
-#landingHero .origin_location .dropdown-item:focus,
-#landingHero .destination_location .dropdown-item:hover,
-#landingHero .destination_location .dropdown-item:focus {
-  background-color: rgba(115, 103, 240, 0.10);
-  color: var(--brand-deep);
+.hero-trust-stat i {
+  font-size: 1.1rem;
+  color: var(--brand-ink, #000);
+  flex-shrink: 0;
 }
 
-/* --- Route / wayfinding illustration: a live origin → destination trip. */
-#landingHero .route-illus { overflow: visible; }
-#landingHero .route-illus .route-dash { animation: routeFlow 1.5s linear infinite; }
-@keyframes routeFlow { to { stroke-dashoffset: -13; } }
-
-#landingHero .route-illus .route-origin-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: routePulse 2.4s ease-out infinite;
-}
-@keyframes routePulse {
-  0%        { transform: scale(0.7); opacity: 0.75; }
-  70%, 100% { transform: scale(2.1); opacity: 0; }
+/* Desktop: slightly larger heading */
+@media (min-width: 992px) {
+  .landing-hero .hero-title {
+    font-size: 2.5rem !important;        /* ~40px desktop */
+  }
+  .landing-hero {
+    padding-top: 7.5rem !important;
+    padding-bottom: 4rem !important;
+  }
 }
 
-#landingHero .route-illus .route-marker {
-  offset-path: path("M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52");
-  offset-rotate: 0deg;
-  animation: routeMove 3.4s cubic-bezier(0.66, 0, 0.34, 1) infinite;
-}
-@keyframes routeMove {
-  0%        { offset-distance: 0%;   opacity: 0; }
-  8%        { opacity: 1; }
-  80%       { offset-distance: 100%; opacity: 1; }
-  88%, 100% { offset-distance: 100%; opacity: 0; }
-}
-
-#landingHero .route-illus .route-pin {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation:
-    routePinDrop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
-    routePinBob 3s ease-in-out 0.8s infinite;
-}
-@keyframes routePinDrop {
-  from { transform: translateY(-12px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-@keyframes routePinBob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
-}
-
-#landingHero .route-illus .route-pin-shadow {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: routeShadow 3s ease-in-out 0.8s infinite;
-}
-@keyframes routeShadow {
-  0%, 100% { transform: scale(1);    opacity: 0.12; }
-  50%      { transform: scale(0.82); opacity: 0.07; }
-}
-
-/* --- Mobile hardening --------------------------------------------------- */
+/* Mobile: comfortable smaller scale */
 @media (max-width: 767.98px) {
-  #landingHero #tripForm .inputcel { margin-bottom: 0.75rem; }
-  #landingHero #tripForm .inputcel:last-child { margin-bottom: 0; }
-}
-@media (max-width: 575.98px) {
-  #landingHero.landing-hero { padding-block: 3.25rem 2.5rem; }
-  #landingHero .hero-title { font-size: clamp(1.35rem, 1.02rem + 3vw, 1.95rem); }
-  #landingHero .hero-eyebrow { font-size: 0.74rem; padding: 0.32rem 0.8rem; }
-  #landingHero .hero-search-card { border-radius: 1.15rem; }
-  #landingHero .hero-search-card .card-body { padding: 1.1rem; }
-  #landingHero .hero-stat-num { font-size: 1.35rem; }
-  #landingHero .input-container .form-control { height: calc(2.9rem + 2px); }
-  #landingHero .hero-search-card .btn-primary { height: calc(2.9rem + 2px); }
-}
-
-/* CTA: neutralise the inline width:80% that cramps phones/tablets. */
-@media (max-width: 991.98px) {
-  #landingCTA.landing-cta {
-    width: auto !important;
-    margin-inline: 1rem !important;
-    padding: 1.75rem 1.25rem !important;
+  .landing-hero .hero-title {
+    font-size: 1.625rem !important;      /* ~26px mobile */
+  }
+  .landing-hero .hero-sub-title {
+    font-size: 0.9375rem !important;
+  }
+  .landing-hero {
+    padding-top: 5.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  .hero-trust-stats {
+    gap: 1.25rem;
   }
 }
 
-/* --- Reduced motion: freeze the illustration + dropdown entrance. */
+/* ── End hero overrides ── */
+
+/* ── Definition CTA — Persian-first (PRODUCT.md + type/spacing rules) ──
+   Photo sits beside the bullets only; height matches the bullet list.
+   Image on visual left, bullets on visual right (RTL start).
+*/
+.hero-definition-cta {
+  --hd-sp-2: var(--hz-sp-2, 0.5rem);
+  --hd-sp-3: var(--hz-sp-3, 0.75rem);
+  --hd-sp-4: var(--hz-sp-4, 1rem);
+  --hd-sp-5: var(--hz-sp-5, 1.5rem);
+  --hd-sp-6: var(--hz-sp-6, 2rem);
+  --hd-radius: var(--hz-radius, 1rem);
+  --hd-ink: #000000;
+  --hd-muted: #5e5e5e;
+  --hd-accent: var(--brand-ink, #000);
+  --hd-surface: #fff;
+  --hd-photo-w: 14rem;
+  --hd-photo-ratio: 16 / 9;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-inline: 0;
+}
+.hero-definition-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  direction: rtl;
+  text-align: right;
+}
+.hero-definition-title {
+  font-family: font-bold, "tahoma", sans-serif;
+  font-weight: normal;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--hd-ink);
+  margin: 0 0 var(--hd-sp-3);
+  text-wrap: balance;
+}
+.hero-definition-body {
+  font-family: font-regular, "tahoma", sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  letter-spacing: 0;
+  color: var(--hd-muted);
+  margin: 0 0 var(--hd-sp-4);
+  text-wrap: pretty;
+}
+/* Photo + bullets row: photo size fixed (annotation); bullets stretch to match */
+.hero-definition-mid {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--hd-sp-4);
+  margin: 0 0 var(--hd-sp-5);
+  direction: ltr;
+}
+.hero-definition-media {
+  flex: 0 0 var(--hd-photo-w);
+  width: var(--hd-photo-w);
+  aspect-ratio: var(--hd-photo-ratio);
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  background: #ecebf0;
+  border-radius: var(--hd-radius); /* same as card */
+  align-self: flex-start;
+}
+.hero-definition-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Frame matches 16:9 source — cover fills without cropping the taxi */
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+}
+.hero-definition-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 0 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--hd-sp-2);
+  direction: rtl;
+  text-align: right;
+}
+.hero-definition-aside {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  direction: rtl;
+  text-align: right;
+}
+.hero-definition-bullets li {
+  font-family: font-regular, "tahoma", sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  letter-spacing: 0;
+  color: var(--hd-ink);
+  position: relative;
+  padding-inline-start: 1.15rem;
+}
+.hero-definition-bullets li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.65em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--hd-accent);
+}
+.hero-definition-btn {
+  border-radius: 1.25rem;
+  padding-inline: 1.75rem;
+  align-self: flex-start;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-definition-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.35rem 0.85rem rgba(0, 0, 0, 0.28);
+}
+.hero-definition-btn:focus-visible {
+  outline: 2px solid var(--hd-accent);
+  outline-offset: 3px;
+}
+@media (min-width: 768px) {
+  .hero-definition-content {
+    padding: 0;
+  }
+  .hero-definition-title {
+    font-size: 1.375rem;
+    line-height: 1.4;
+  }
+  .hero-definition-cta {
+    --hd-photo-w: 15rem;
+  }
+  .hero-definition-mid {
+    gap: var(--hd-sp-5);
+  }
+  .hero-definition-btn {
+    align-self: flex-start;
+    width: auto;
+  }
+}
+@media (max-width: 767.98px) {
+  .hero-definition-cta {
+    margin-top: 0;
+    /* Smaller landscape frame — full taxi visible (source is 16:9) */
+    --hd-photo-w: min(100%, 17.5rem);
+    --hd-photo-ratio: 16 / 9;
+  }
+  .hero-definition-content {
+    padding: var(--hz-sp-5) var(--hz-pad);
+  }
+  .hero-definition-mid {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--hd-sp-4);
+  }
+  .hero-definition-media {
+    flex: 0 0 auto;
+    width: var(--hd-photo-w);
+    max-width: 17.5rem;
+    min-height: 0;
+    aspect-ratio: var(--hd-photo-ratio);
+    align-self: center;
+  }
+  .hero-definition-img {
+    object-fit: contain;
+    object-position: center;
+    background: #ecebf0;
+  }
+  .hero-definition-aside {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .hero-definition-btn {
+    align-self: stretch;
+    width: 100%;
+    text-align: center;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  #landingHero .route-illus .route-dash,
-  #landingHero .route-illus .route-origin-pulse,
-  #landingHero .route-illus .route-marker,
-  #landingHero .route-illus .route-pin,
-  #landingHero .route-illus .route-pin-shadow,
-  #landingHero .input-container > .dropdown-menu.origin_location.show,
-  #landingHero .input-container > .dropdown-menu.destination_location.show {
-    animation: none !important;
+  .hero-definition-btn,
+  .hero-definition-btn:hover {
+    transition: none;
+    transform: none;
   }
-  #landingHero .route-illus .route-marker { offset-distance: 60%; opacity: 1; }
+}
+
+.search-submit-btn {
+  width: 100%;
+  border-radius: 1.2rem;
+}
+
+/* Mobile: taller inputs (+~5%) + CTA button matches input size */
+@media (max-width: 767.98px) {
+  .landing-hero {
+    /* Previous visual ~2.9rem → +5% */
+    --hero-field-h: 3.045rem;
+  }
+
+  .landing-hero #tripForm .form-control.origin,
+  .landing-hero #tripForm .form-control.destination,
+  .landing-hero #tripForm .form-control.starttimeselector {
+    min-height: var(--hero-field-h) !important;
+    height: var(--hero-field-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: calc(var(--hero-field-h) - 2px);
+    font-size: 1rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  .landing-hero #tripForm .search-submit-btn,
+  .landing-hero .hero-definition-btn {
+    width: 100% !important;
+    min-height: var(--hero-field-h) !important;
+    height: var(--hero-field-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-inline: 1.25rem !important;
+    font-size: 1rem !important;
+    line-height: 1 !important;
+    border-radius: 1.25rem !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    box-sizing: border-box;
+  }
+}
+
+
+
+.landing-features .features-icon-wrapper {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+.features-icon-description {
+  line-height: 1.8;
+  letter-spacing: 0;
+  max-width: 22rem;
+  margin-inline: auto;
+}
+
+.landing-features .feature-line-icon {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-color: var(--feature-icon-tint, #111);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.landing-features .feature-line-icon--ink {
+  --feature-icon-tint: #111111;
+  -webkit-mask-image: url("/img/front-pages/icons/laptop.png");
+  mask-image: url("/img/front-pages/icons/laptop.png");
+}
+
+.landing-features .feature-line-icon--paper {
+  --feature-icon-tint: #3f3f46;
+  -webkit-mask-image: url("/img/front-pages/icons/paper.png");
+  mask-image: url("/img/front-pages/icons/paper.png");
+}
+
+.landing-features .feature-line-icon--check {
+  --feature-icon-tint: #18181b;
+  -webkit-mask-image: url("/img/front-pages/icons/check.png");
+  mask-image: url("/img/front-pages/icons/check.png");
+}
+
+.landing-features .feature-line-icon--user {
+  --feature-icon-tint: #52525b;
+  -webkit-mask-image: url("/img/front-pages/icons/user.png");
+  mask-image: url("/img/front-pages/icons/user.png");
+}
+
+.landing-features .feature-line-icon--keys {
+  --feature-icon-tint: #27272a;
+  -webkit-mask-image: url("/img/front-pages/icons/keyboard.png");
+  mask-image: url("/img/front-pages/icons/keyboard.png");
+}
+
+/* Hero search trust check — force ink (Tabler filled icon) */
+#landingHero .hero-search-card .text-primary,
+#landingHero .hero-search-card .ti-circle-check-filled {
+  color: var(--brand-ink, #000) !important;
+}
+
+/* Strip purple from remaining Vuexy decorative PNGs */
+img[src*="Join-community-arrow"],
+img[src*="section-title-icon"],
+img[src*="pricing-plans-arrow"],
+img[src*="paper-airplane"],
+img[src*="shuttle-rocket"],
+img[src*="rocket.png"],
+img[src*="plane.png"],
+.landing-fun-facts img[src*="front-pages/icons"] {
+  filter: grayscale(1) contrast(1.35) brightness(0.35);
 }

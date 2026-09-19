@@ -6,42 +6,65 @@
 
 @section VendorStyles {
     <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
-    <link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
-
-    <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/jalali-datepicker.css" asp-append-version="true" />
     <link href="~/css/IndexPage.css" rel="stylesheet" asp-append-version="true" />
-
-
-    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
-
+    <link href="~/css/trip-search.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="preload" href="/img/front-pages/landing-page/hero-travel.webp" as="image" type="image/webp" fetchpriority="high" />
+    <style>
+      .landing-hero .od-pair-col { position: relative; }
+      .landing-hero .od-swap-btn {
+        --od-swap-size: 1.85rem;
+        position: absolute !important;
+        z-index: 4;
+        width: var(--od-swap-size) !important;
+        max-width: var(--od-swap-size) !important;
+        height: var(--od-swap-size) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #d9dee3;
+        background: #fff;
+        color: #8592a3;
+        line-height: 1;
+        box-shadow: 0 0 0 2px #fff, 0 1px 2px rgba(47, 43, 61, 0.06);
+        cursor: pointer;
+      }
+      @@media (max-width: 767.98px) {
+        .landing-hero #tripForm .od-pair { --od-swap-gutter: 0 !important; }
+        .landing-hero #tripForm .od-pair > .inputcel:first-child,
+        .landing-hero #tripForm .od-pair > .inputcel:last-of-type {
+          padding-inline: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          flex: 0 0 100% !important;
+        }
+      }
+      @@media (min-width: 768px) {
+        .landing-hero #tripForm .od-pair { --od-swap-gutter: 1rem; }
+        .landing-hero #tripForm .od-pair > .inputcel:first-child {
+          padding-inline-end: calc(var(--od-swap-gutter) / 2) !important;
+        }
+        .landing-hero #tripForm .od-pair > .inputcel:last-of-type {
+          padding-inline-start: calc(var(--od-swap-gutter) / 2) !important;
+        }
+        .landing-hero .od-swap-btn {
+          left: 50%;
+          top: 0.25rem;
+          transform: translateX(-50%);
+          border-radius: 0.75rem;
+        }
+      }
+    </style>
 }
 
 @section VendorScripts {
     <script src="~/libs/jquery.js"></script>
-
-    <script src="~/vendor/js/dropdown-hover.js"></script>
-    <script src="~/vendor/js/dropdown-hover.js"></script>
-
-    <script src="~/libs/jquery.js"> </script>
-    <script src="~/vendor/libs/moment/moment.js"></script>
     <script src="~/vendor/libs/jdate/jdate.min.js" asp-append-version="true"></script>
-    <script src="~/vendor/libs/flatpickr/flatpickr-jdate.js" asp-append-version="true"></script>
-    <script src="~/vendor/libs/flatpickr/l10n/fa.js" asp-append-version="true"></script>
-    <script src="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-    <script src="~/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-    <script src="~/vendor/libs/pickr/pickr.js"></script>
-    <script src="~/js/IndexPage.js" asp-append-version="true"> </script>
+    <script src="~/js/jalali-datepicker.js" asp-append-version="true"></script>
+    <script src="~/js/IndexPage.js" asp-append-version="true"></script>
     <script src="~/js/searchpage.js" asp-append-version="true"></script>
-
-    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="~/js/extended-ui-sweetalert2.js"></script>
 }
 
 @section PageScripts {
@@ -53,235 +76,123 @@
 
     <!-- Hero: Start -->
     <section id="hero-animation">
-        <div id="landingHero" style="" class="section-py landing-hero position-relative">
-            <div class="container">
-                <div class="hero-lead text-center mb-4">
-                    <span class="hero-eyebrow">
-                        <i class="ti ti-building-skyscraper"></i>
-                        سامانهٔ تخصصی فروش سازمانی سفرهای بین‌شهری، ویژهٔ آژانس‌ها و همکاران تجاری
-                    </span>
-                    <h1 class="hero-title fw-bold mt-3 mb-2">
-                        راهی مطمئن به <span class="text-primary">همه‌ی مقاصد ایران</span>
-                    </h1>
-                    <p class="hero-sub-title mb-0 lh-base">
-                        جستجو و خرید بلیط تاکسی بین‌شهری، سریع و مطمئن
-                    </p>
-
-
-                    @* <div class="landing-hero-btn d-inline-block position-relative">
-                    <span class="hero-btn-item position-absolute d-none d-md-flex text-heading">
-                    فرصت استثناییءء
-                    <img alt="پیکان انجمن" class="scaleX-n1-rtl" src="~/img/front-pages/icons/Join-community-arrow.png" />
-                    </span>
-                    <a class="btn btn-primary btn-lg" href="#landingPricing">خـرید از مارکئئت راسـتچین</a>
-                    </div> *@
+        <div id="landingHero" class="landing-hero position-relative">
+            <div class="landing-hero-stage">
+                <div class="landing-hero-stage-art" aria-hidden="true">
+                    <picture>
+                        <source srcset="/img/front-pages/landing-page/hero-travel.webp" type="image/webp" />
+                        <img src="/img/front-pages/landing-page/hero-travel.jpg"
+                             alt=""
+                             width="1600"
+                             height="800"
+                             class="landing-hero-stage-art-img"
+                             fetchpriority="high"
+                             decoding="async" />
+                    </picture>
                 </div>
-                @*  <div id="heroDashboardAnimation" class="hero-animation-img">
-                <a href="/Apps/Ecommerce/Dashboard" target="_blank">
-                <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
-                <img src="~/img/front-pages/landing-page/hero-dashboard-light.png" alt="hero dashboard" class="animation-img" data-app-light-img="front-pages/landing-page/hero-dashboard-light.png" data-app-dark-img="front-pages/landing-page/hero-dashboard-dark.png" />
-                <img src="~/img/front-pages/landing-page/hero-elements-light.png" alt="hero elements" class="position-absolute hero-elements-img animation-img top-0 start-0" data-app-light-img="front-pages/landing-page/hero-elements-light.png" data-app-dark-img="front-pages/landing-page/hero-elements-dark.png" />
+                <div class="container landing-hero-stage-content">
+                    <h1 class="visually-hidden">مستر شوفر — راهی مطمئن به همه مقاصد ایران</h1>
+                    <div class="hero-text-box text-center"></div>
                 </div>
-                </a>
-                </div> *@
+            </div>
 
-
-                <div class="row">
-                    <div class="col-lg-2 col-0"></div>
-                    <div class="row col-lg-8 col-12 m-0">
-                        <div class="card hero-search-card mb-3">
-                            <div class="card-body row pb-4">
-                                <div class="card-header d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 p-0 mb-4">
-                                    <div class="d-flex flex-column align-items-start">
-
-                                        <h4 class="mb-2">
-                                            <img class="pe-1 image" src="/caronraod.png" width="80px" />
-                                            جستجوی ‌سواری
-                                        </h4>
-
-                                        <label class="lh-base mb-0">
-                                            مسترشوفر، ارائه دهنده سفرهای بین شهری و ترانسفر فرودگاهی
-                                            <br />
-                                            <span class="fw-light">
-                                                با بالاترین کیفیت سرویس و بهترین خودروها
-                                                <i class="ti ti-circle-check-filled text-primary"></i>
-                                                @* <img src="/vip_badge.png" style="height:29px;" class="ms-1" /> *@
-                                            </span>
-                                        </label>
-                                    </div>
-
-                                    <div class="hero-route-illus d-none d-sm-flex flex-shrink-0" aria-hidden="true">
-                                        <svg class="route-illus" width="172" height="94" viewBox="0 0 172 94" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <!-- soft ground shadow under the pin -->
-                                            <ellipse class="route-pin-shadow" cx="150" cy="70" rx="11" ry="3.4" fill="#2f2b3d" fill-opacity="0.12" />
-                                            <!-- route base track -->
-                                            <path class="route-track" d="M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52"
-                                                  stroke="rgba(115,103,240,0.16)" stroke-width="3.2" stroke-linecap="round" fill="none" />
-                                            <!-- animated flowing dashes -->
-                                            <path class="route-dash" d="M20 72 C 56 84, 78 46, 110 40 S 150 40, 150 52"
-                                                  stroke="#7367f0" stroke-width="3.2" stroke-linecap="round" fill="none" stroke-dasharray="3 10" />
-                                            <!-- origin: pulsing ring + node -->
-                                            <circle class="route-origin-pulse" cx="20" cy="72" r="6" fill="rgba(115,103,240,0.30)" />
-                                            <circle cx="20" cy="72" r="5" fill="#fff" stroke="#7367f0" stroke-width="2.6" />
-                                            <!-- marker travelling along the route -->
-                                            <circle class="route-marker" r="3.4" fill="#5a4ede" />
-                                            <!-- destination map-pin (drops in, then gently bobs) -->
-                                            <g class="route-pin">
-                                                <path d="M150 12 c-8.3 0-15 6.7-15 15 0 10.3 15 22.5 15 22.5 s15-12.2 15-22.5 c0-8.3-6.7-15-15-15z" fill="#ff9f43" />
-                                                <circle cx="150" cy="27" r="5" fill="#fff" />
-                                            </g>
-                                        </svg>
-                                    </div>
-
-                                </div>
-
-                                <form asp-controller="TaxiTrips" asp-action="Index" method="get" class="row m-0" id="tripForm">
-                                    <div class="col-12 col-md-3 inputcel">
-                                        <div class="form-text d-md-none d-block" id="defaultFormControlHelp">شهر مبدا سفر</div>
-
-                                        <div class="input-container dropdown">
-                                            <input autocomplete="off" aria-describedby="defaultFormControlHelp" data-bs-toggle="dropdown" data-bs-display="static" class="form-control origin input-field dropdown-toggle" id="origin_input" placeholder="مبدا" type="text" role="button" name="originstring" />
-                                            <i class="ti ti-location mb-2 icon"></i>
-
-                                            <span class="dropdown-menu origin_location">
-
-
-
-                                                @*  <div class="city">
-                                                <a class="dropdown-item" href="javascript:void(0);">
-                                                تهران
-                                                <small class="" >
-                                                (همه پایانه‌ها)
-                                                </small>
-
-                                                </a>
-
-                                                <div class="terminals ms-3">
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
-
-                                                </div>
-                                                </div> *@
-                                            </span>
-                                        </div>
-                                        <div class="form-text d-md-block d-none" id="defaultFormControlHelp">شهر مبدا سفر</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 inputcel">
-                                        <div class="form-text d-block d-md-none" id="defaultFormControlHelp">شهر مقصد سفر</div>
-
-                                        <div class="input-container dropdown">
-                                            <input data-bs-toggle="dropdown" data-bs-display="static" autocomplete="off" class="form-control destination input-field dropdown-toggle" id="destination_input" placeholder="مقصد" type="text" role="button" name="destinationstring" />
-                                            <i class="ti ti-map-pin mb-2 icon"></i>
-                                            <span class="dropdown-menu destination_location">
-
-                                                @*  <div class="city">
-                                                <a class="dropdown-item" href="javascript:void(0);">
-                                                تهران
-                                                <small class="" >
-                                                (همه پایانه‌ها)
-                                                </small>
-
-                                                </a>
-
-                                                <div class="terminals ms-3">
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
-
-                                                </div>
-                                                </div> *@
-                                            </span>
-
-                                        </div>
-                                        <div class="form-text d-none d-md-block" id="defaultFormControlHelp">شهر مقصد سفر</div>
-                                    </div>
-
-
-                                    <div class="col-12 col-md-3 inputcel">
-                                        <div class="form-text d-block d-md-none" id="defaultFormControlHelp">انتخاب تاریخ</div>
-
-                                        <!-- /Human Friendly Date Picker-->
-                                        <!-- Disabled Range-->
-
-                                        <div class="input-container">
-                                            <input autocomplete="off" class="form-control starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
-                                            <i class="ti ti-calendar-stats icon"></i>
-                                        </div>
-                                        <div class="form-text d-none d-md-block" id="defaultFormControlHelp">انتخاب تاریخ</div>
-
-
-                                    </div>
-
-                                    @*  <div class="col-1 inputcel ">
-
-                                    <div class="input_con">
-                                    <label class="switch switch-square switch-lg" onclick="JustPrivateSelected()">
-                                    <input class="switch-input isprivate" type="checkbox">
-                                    <span class="switch-toggle-slider text-center">
-                                    <span class="switch-on">
-                                    <i class="ti ti-armchair-2"></i>
-                                    </span>
-                                    <span class="switch-off">
-                                    <i class="ti ti-sofa"></i>
-                                    </span>
-                                    </span>
-                                    </label>
-                                    </div>
-                                    <div class="form-text" id="defaultFormControlHelp">
-                                    <span class="justprivate_title">دربستی</span>
-                                    </div>
-
-
-                                    </div> *@
-
-                                    <div class="col-12 col-md-3 inputcel">
-                                        <div class="ps-0 mt-4 mt-md-0 ">
-                                            <button style="width:100%;" class="btn btn-primary waves-effect waves-light btn-lg" type="submit">
-                                                بزن بریم
-                                                <i class="ti ti-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </form>
+            <div class="container landing-hero-search-wrap">
+                <div class="hero-safezone hero-safezone--form">
+                    <div class="hero-search-panel">
+                        <div class="hero-search-head d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="mb-1 fw-semibold h5">
+                                    <i class="ti ti-route me-1 text-primary"></i>
+                                    جستجوی سواری
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    مستر شوفر — سواری بین‌شهری و ترانسفر فرودگاهی با رانندگان تأییدشده
+                                    <i class="ti ti-circle-check text-success ms-1"></i>
+                                </p>
                             </div>
+                            <img src="/mrshoofer_cars_banner.webp" width="72" height="72" class="d-none d-md-block" alt="ناوگان سواری رسمی مستر شوفر" decoding="async" />
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-0"></div>
-                </div>
 
-                <div class="hero-trust text-center mt-4">
-                    <div class="hero-stats d-inline-flex flex-wrap justify-content-center align-items-center">
-                        <div class="hero-stat text-center">
-                            <span class="hero-stat-num text-primary fw-bold"><bdi>۵۰۰+</bdi></span>
-                            <span class="hero-stat-label">مسیر بین‌شهری</span>
-                        </div>
-                        <span class="hero-divider"></span>
-                        <div class="hero-stat text-center">
-                            <span class="hero-stat-num text-primary fw-bold"><bdi>۱۲۰۰+</bdi></span>
-                            <span class="hero-stat-label">راننده در سراسر ایران</span>
-                        </div>
-                        <span class="hero-divider"></span>
-                        <div class="hero-stat text-center">
-                            <span class="hero-stat-num text-primary fw-bold"><bdi>۲۴/۷</bdi></span>
-                            <span class="hero-stat-label">پشتیبانی همه‌روزه</span>
-                        </div>
+                        <form asp-controller="TaxiTrips" asp-action="Index" method="get" class="row g-3 m-0" id="tripForm">
+                            <div class="col-12 col-md-6 od-pair-col">
+                                <div class="row g-2 g-md-0 od-pair">
+                                    <div class="col-12 col-md-6 inputcel">
+                                        <label class="form-text d-md-none d-block" for="origin_input" id="originHelpMobile">شهر مبدا سفر</label>
+                                        <div class="input-container">
+                                            <input autocomplete="off" autocapitalize="off" spellcheck="false"
+                                                   aria-describedby="originHelpDesktop originHelpMobile"
+                                                   aria-autocomplete="list" aria-haspopup="listbox"
+                                                   data-bs-toggle="dropdown" data-bs-offset="0,8"
+                                                   class="form-control origin input-field dropdown-toggle hide-arrow"
+                                                   id="origin_input" placeholder="مبدا" type="text" role="combobox"
+                                                   name="originstring" />
+                                            <i class="ti ti-location mb-2 icon" aria-hidden="true"></i>
+                                            <div class="dropdown-menu origin_location"></div>
+                                        </div>
+                                        <div class="form-text d-md-block d-none" id="originHelpDesktop">شهر مبدا سفر</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 inputcel">
+                                        <label class="form-text d-block d-md-none" for="destination_input" id="destinationHelpMobile">شهر مقصد سفر</label>
+                                        <div class="input-container">
+                                            <input data-bs-toggle="dropdown" data-bs-offset="0,8" autocomplete="off" autocapitalize="off" spellcheck="false"
+                                                   aria-describedby="destinationHelpDesktop destinationHelpMobile"
+                                                   aria-autocomplete="list" aria-haspopup="listbox"
+                                                   class="form-control destination input-field dropdown-toggle hide-arrow"
+                                                   id="destination_input" placeholder="مقصد" type="text" role="combobox"
+                                                   name="destinationstring" />
+                                            <i class="ti ti-map-pin mb-2 icon" aria-hidden="true"></i>
+                                            <div class="dropdown-menu destination_location"></div>
+                                        </div>
+                                        <div class="form-text d-none d-md-block" id="destinationHelpDesktop">شهر مقصد سفر</div>
+                                    </div>
+                                </div>
+                                <button type="button" class="od-swap-btn" id="od-swap-btn" title="جابه‌جایی مبدأ و مقصد" aria-label="جابه‌جایی مبدأ و مقصد">
+                                    <i class="ti ti-arrows-left-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-12 col-md-3 inputcel">
+                                <label class="form-text d-block d-md-none" for="starttime" id="dateHelpMobile">انتخاب تاریخ</label>
+                                <div class="input-container">
+                                    <input autocomplete="off" aria-describedby="dateHelpDesktop dateHelpMobile" class="form-control bdi starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
+                                    <i class="ti ti-calendar-stats mb-2 icon pe-0" aria-hidden="true"></i>
+                                </div>
+                                <div class="form-text d-none d-md-block" id="dateHelpDesktop">انتخاب تاریخ</div>
+                            </div>
+
+                            <div class="col-12 col-md-3 inputcel">
+                                <div class="ps-0">
+                                    <button class="btn btn-primary waves-effect waves-light btn-lg search-submit-btn" type="submit">
+                                        بزن بریم
+                                        <i class="ti ti-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="hero-chips d-flex flex-wrap justify-content-center gap-2 mt-4">
-                        <span class="hero-chip"><i class="ti ti-star"></i> خودروهای منتخب</span>
-                        <span class="hero-chip"><i class="ti ti-shield-check"></i> کیفیت تضمین‌شده</span>
-                        <span class="hero-chip"><i class="ti ti-headset"></i> پشتیبانی ۲۴/۷</span>
+                    <div class="hero-trust-stats">
+                        <div class="hero-trust-stat">
+                            <i class="ti ti-route" aria-hidden="true"></i>
+                            <span><strong>۵۰۰+</strong> مسیر فعال</span>
+                        </div>
+                        <div class="hero-trust-stat">
+                            <i class="ti ti-steering-wheel" aria-hidden="true"></i>
+                            <span><strong>۱۲۰۰+</strong> راننده تأییدشده</span>
+                        </div>
+                        <div class="hero-trust-stat">
+                            <i class="ti ti-headset" aria-hidden="true"></i>
+                            <span>پشتیبانی <strong>۲۴/۷</strong></span>
+                        </div>
+                        <div class="hero-trust-stat">
+                            <i class="ti ti-shield-check" aria-hidden="true"></i>
+                            <span>سفر <strong>مطمئن</strong> و بیمه‌شده</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        @* <div class="landing-hero-blank"></div> *@
     </section>
     <!-- Hero: End -->
     <!-- Useful features: Start -->
@@ -305,14 +216,14 @@
             <div class="features-icon-wrapper row gx-0 gy-4 g-sm-5">
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="~/img/front-pages/icons/laptop.png" alt="laptop charging" />
+                        <span class="feature-line-icon feature-line-icon--ink" role="img" aria-label="دسترسی آسان"></span>
                     </div>
                     <h5 class="mb-2">دسترسی آسان</h5>
                     <p class="features-icon-description">دسترسی به ناوگان متنوع و همیشه آماده به کار مسترشوفر، با کیفیت بالا و رانندگان تایید شده، برای مشتریان شما</p>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="/taxi.png" height="66px" alt="transition up" />
+                        <img src="/taxi.png" height="66" width="66" alt="ناوگان وسیع" loading="lazy" decoding="async" />
                     </div>
                     <h5 class="mb-2">ناوگان وسیع و آماده</h5>
                     <p class="features-icon-description">
@@ -321,14 +232,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="~/img/front-pages/icons/paper.png" alt="edit" />
+                        <span class="feature-line-icon feature-line-icon--paper" role="img" aria-label="تامین سریع"></span>
                     </div>
                     <h5 class="mb-2">تامین سریع، ارتباط مستمر</h5>
                     <p class="features-icon-description">مسترشوفر در سریعترین زمان، برای مسافران شما سرویس مناسب را تامین می‌کند</p>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="~/img/front-pages/icons/check.png" alt="3d select solid" />
+                        <span class="feature-line-icon feature-line-icon--check" role="img" aria-label="رانندگان تایید شده"></span>
                     </div>
                     <h5 class="mb-2">رانندگان و خودرو‌های تایید شده</h5>
                     <p class="features-icon-description">
@@ -338,14 +249,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="~/img/front-pages/icons/user.png" alt="lifebelt" />
+                        <span class="feature-line-icon feature-line-icon--user" role="img" aria-label="پشتیبانی ۲۴/۷"></span>
                     </div>
                     <h5 class="mb-2">پشتیبانی پاسخگو 24/7</h5>
                     <p class="features-icon-description">پشتیبانی سریع و فعال، آماده پاسخگویی به سوالات شما و مشتریان شما ❤️🕒</p>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center features-icon-box">
                     <div class="text-center mb-3">
-                        <img src="~/img/front-pages/icons/keyboard.png" alt="google docs" />
+                        <span class="feature-line-icon feature-line-icon--keys" role="img" aria-label="بلیط شخصی‌سازی‌شده"></span>
                     </div>
                     <h5 class="mb-2">بلیط شخصی سازی شده برای مشتریان</h5>
                     <p class="features-icon-description">قابلیت شخصی سازی بلیط توسط شما، برای مشتریان خود. قابلیت درج قیمت دلخواه</p>
@@ -506,7 +417,7 @@
                 <div class="col-lg-6 text-center text-lg-start">
                     <h6 class="h2 text-primary fw-bold mb-3">برای شروع آماده اید؟</h6>
                     <p class="fw-medium mb-4 fs-5">همین الان از ناوگان گسترده مسترشوفر بهره مند شوید!</p>
-                    <a href="#" class="btn btn-lg btn-primary">شروع کنید</a>
+                    <a href="#landingHero" class="btn btn-lg btn-primary">شروع کنید</a>
                 </div>
                 <div class="col-lg-6 pt-lg-5 text-center text-lg-end">
                     <img src="/mrshooferserachdemo.png" alt="cta dashboard" class="img-fluid" style="max-height:250px;" />
@@ -574,11 +485,11 @@
                             <form id="contact-us">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label" for="contact-form-fullname">نام و نام خانوادگی</label>
+                                        <label class="form-label" for="name">نام و نام خانوادگی</label>
                                         <input name="name" class="form-control" id="name" placeholder="نام خود را وارد کنید" type="text" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="contact-form-email">
+                                        <label class="form-label" for="number">
                                             شماره تلفن
 
                                             <span class="text-danger">
@@ -588,7 +499,7 @@
                                         <input required name="number" class="form-control" id="number" type="text" />
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" for="contact-form-message">پیام
+                                        <label class="form-label" for="message">پیام
                                             <span class="text-danger">
                                                 *
                                             </span>

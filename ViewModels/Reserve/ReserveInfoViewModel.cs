@@ -30,6 +30,10 @@ namespace Application.ViewModels.Reserve
     /// <summary>Optional selected agency employee used for autofill and ticket linkage.</summary>
     public int? EmployeeId { get; set; }
 
+    /// <summary>Optional head of passengers (Organization panels only).</summary>
+    [MaxLength(120)]
+    public string? HeadOfPassengers { get; set; }
+
     /// <summary>Optional companions (max 2) for charter; lead passenger remains the primary fields.</summary>
     public List<CompanionPassengerViewModel> Companions { get; set; } = new();
 

@@ -123,12 +123,10 @@ nav.layout-navbar.navbar-active::after {
         }
 }
 
-    @@media(min-width: 992px , min-width: 119.98){
+    @@media (min-width: 992px) {
         #landingHero {
           padding-top: 10rem !important;
         }
-
-
     }
 
     @@media (min-width: 992px) {
@@ -200,8 +198,10 @@ nav.layout-navbar.navbar-active::after {
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .show > .nav-link,
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .active > .nav-link,
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.show,
-.light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active {
-  color: #7367f0 !important;
+.light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active,
+.light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link:hover,
+.light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link:focus {
+  color: #000000 !important;
 }
 @@media (max-width: 991.98px) {
   .light-style .layout-navbar .navbar.landing-navbar .landing-nav-menu {
@@ -226,8 +226,10 @@ nav.layout-navbar.navbar-active::after {
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .show > .nav-link,
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .active > .nav-link,
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.show,
-.dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active {
-  color: #7367f0 !important;
+.dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active,
+.dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link:hover,
+.dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link:focus {
+  color: #ffffff !important;
 }
 @@media (max-width: 991.98px) {
   .dark-style .layout-navbar .navbar.landing-navbar .landing-nav-menu {
@@ -326,15 +328,32 @@ nav.layout-navbar.navbar-active::after {
 		background-blend-mode: normal, normal, normal, normal, normal !important;
 	}
 
+	/* Panel pages (dashboard, tickets, reserve…): calm surface, not marketing hero */
+	.agency-panel-section {
+		min-height: auto !important;
+	}
+	.agency-panel-hero.landing-hero,
+	#landingHero.agency-panel-hero {
+		padding-top: 6.5rem !important;
+		padding-bottom: 2rem !important;
+		background-color: #f7f7f8 !important;
+		background-image: none !important;
+	}
+	@@media (min-width: 992px) {
+		.agency-panel-hero.landing-hero,
+		#landingHero.agency-panel-hero {
+			padding-top: 7.25rem !important;
+		}
+	}
+
 
 </style>
 
 
 
-<div data-bs-spy="scroll" class="">
-    <!-- Hero: Start -->
-    <section id="hero-animation" style="min-height: 85vh !important;">
-        <div id="landingHero" style="padding-top: 8rem; background-color: none !important;" class="landing-hero position-relative">
+<div data-bs-spy="scroll" class="agency-panel-shell">
+    <section id="hero-animation" class="agency-panel-section">
+        <div id="landingHero" class="landing-hero agency-panel-hero position-relative">
             <div class="px-lg-5 mx-lg-2">
                 <div class="container">
                     @RenderBody()
@@ -342,5 +361,4 @@ nav.layout-navbar.navbar-active::after {
             </div>
         </div>
     </section>
-
 </div>

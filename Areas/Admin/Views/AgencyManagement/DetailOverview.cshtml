@@ -173,6 +173,12 @@
 							<a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
 						</li>
 						<li class="mb-3">
+							<span class="fw-medium me-2">نوع پنل: </span>
+							<span>
+								@(Model.PanelType == Application.Models.AgencyPanelType.Organization ? "سازمانی" : "فروشنده")
+							</span>
+						</li>
+						<li class="mb-3">
 							<span class="fw-medium me-2">کمیسیون پایه: </span>
 							<span >@Model.Commission
 								<span class="text-muted">
@@ -186,10 +192,57 @@
 								<bdi>@Model.Address</bdi>
 							</span>
 						</li>
+						<li class="mb-2">
+							<span class="fw-medium me-2">کد اقتصادی: </span>
+							<span dir="ltr">@(string.IsNullOrWhiteSpace(Model.EconomicNo) ? "—" : Model.EconomicNo)</span>
+						</li>
+						<li class="mb-2">
+							<span class="fw-medium me-2">شماره ثبت: </span>
+							<span dir="ltr">@(string.IsNullOrWhiteSpace(Model.RegistrationNo) ? "—" : Model.RegistrationNo)</span>
+						</li>
+						<li class="mb-3">
+							<span class="fw-medium me-2">شناسه ملی: </span>
+							<span dir="ltr">@(string.IsNullOrWhiteSpace(Model.NationalId) ? "—" : Model.NationalId)</span>
+						</li>
 					</ul>
-					@* <div class="d-flex justify-content-center">
-						<a class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal" href="javascript:">ویرایش پروفایل</a>
-					</div> *@
+					<form method="post" asp-action="UpdateLegalInfo" class="border-top pt-3 mt-2">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="id" value="@Model.Id" />
+						<h6 class="mb-3">ویرایش نوع پنل و اطلاعات حقوقی</h6>
+						<div class="mb-2">
+							<label class="form-label">نوع پنل</label>
+							<select class="form-select form-select-sm" name="panelType">
+								@if (Model.PanelType == Application.Models.AgencyPanelType.Seller)
+								{
+									<option value="@((int)Application.Models.AgencyPanelType.Seller)" selected>فروشنده</option>
+									<option value="@((int)Application.Models.AgencyPanelType.Organization)">سازمانی</option>
+								}
+								else
+								{
+									<option value="@((int)Application.Models.AgencyPanelType.Seller)">فروشنده</option>
+									<option value="@((int)Application.Models.AgencyPanelType.Organization)" selected>سازمانی</option>
+								}
+							</select>
+							<small class="text-muted d-block mt-1">فقط نوع سازمانی به فاکتور رسمی دسترسی دارد.</small>
+						</div>
+						<div class="mb-2">
+							<label class="form-label">آدرس سازمان</label>
+							<input class="form-control form-control-sm" name="address" value="@Model.Address" />
+						</div>
+						<div class="mb-2">
+							<label class="form-label">کد اقتصادی</label>
+							<input class="form-control form-control-sm" dir="ltr" name="economicNo" value="@Model.EconomicNo" />
+						</div>
+						<div class="mb-2">
+							<label class="form-label">شماره ثبت</label>
+							<input class="form-control form-control-sm" dir="ltr" name="registrationNo" value="@Model.RegistrationNo" />
+						</div>
+						<div class="mb-3">
+							<label class="form-label">شناسه ملی</label>
+							<input class="form-control form-control-sm" dir="ltr" name="nationalId" value="@Model.NationalId" />
+						</div>
+						<button type="submit" class="btn btn-sm btn-primary">ذخیره</button>
+					</form>
 				</div>
 			</div>
 		</div>

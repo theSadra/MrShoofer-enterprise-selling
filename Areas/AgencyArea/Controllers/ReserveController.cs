@@ -80,6 +80,7 @@ namespace Application.Areas.AgencyArea
       }
 
       ViewBag.trip = trip;
+      ViewBag.isOrganization = agency?.IsOrganization == true;
 
       // Check if there's saved form data from TempData (after login redirect)
       if (TempData.ContainsKey("SavedReserveData"))
@@ -174,6 +175,7 @@ namespace Application.Areas.AgencyArea
       ViewBag.agancy = agency;
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
+      ViewBag.isOrganization = agency?.IsOrganization == true;
 
       return View("ConfirmInfo");
     }
@@ -282,6 +284,7 @@ namespace Application.Areas.AgencyArea
         Nacode = viewModel.Nacode,
         Gender = viewModel.Gender,
         CompanyName = companionsDescription,
+        HeadOfPassengers = string.IsNullOrWhiteSpace(viewModel.HeadOfPassengers) ? null : viewModel.HeadOfPassengers.Trim(),
         AgencyEmployeeId = employeeId,
         CompanionsJson = companionsJson,
         Agency = agency
@@ -333,6 +336,7 @@ namespace Application.Areas.AgencyArea
         PhoneNumber = viewModel.Numberphone,
         NaCode = viewModel.Nacode,
         CompanyName = companionsDescription,
+        HeadOfPassengers = string.IsNullOrWhiteSpace(viewModel.HeadOfPassengers) ? null : viewModel.HeadOfPassengers.Trim(),
         TicketFinalPrice = reserve_response.paid_total_fee_tomans,
         Gender = viewModel.Gender,
         TicketOriginalPrice = trip.afterdiscticketprice,

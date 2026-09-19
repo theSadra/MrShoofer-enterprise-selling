@@ -3,12 +3,46 @@
   font-size: .8rem;
 }
 
-.success-payment {
-  background-color: RGBA(var(--bs-success-rgb), .25) !important;
+/* ORG dark pill — text «آماده پرداخت» + green check */
+.success-payment,
+.success-payment.text-bg-success {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.65rem !important;
+  width: 100% !important;
+  height: 3.5rem !important;
+  min-height: 3.5rem !important;
+  padding: 0 1.15rem !important;
+  border-radius: 1.6rem !important;
+  background-color: #5e5e5e !important;
+  color: #fff !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.success-payment .status-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+.success-payment .status-icon svg {
+  width: 1.55rem;
+  height: 1.55rem;
+  color: #22c55e !important;
+  stroke: #22c55e !important;
 }
 
 .not_enough_payment {
-  background-color: RGBA(var(--bs-secondary-rgb), .25) !important;
+  display: none !important;
 }
 
 .form-control {
@@ -106,7 +140,7 @@
 }
 
 .selected {
-  color: #7367f0;
+  color: #000000;
 }
 
 
@@ -702,7 +736,7 @@ select.selectpicker {
   }
 
 .bootstrap-select .dropdown-menu a:not([href]):not(.active):not(:active):not(.selected):hover {
-  color: #7367f0 !important;
+  color: #000000 !important;
 }
 
 .bootstrap-select .btn[class*=btn-]:active,

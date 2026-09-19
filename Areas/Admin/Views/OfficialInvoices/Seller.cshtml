@@ -1,0 +1,78 @@
+@model Application.Models.InvoiceSellerProfile
+@{
+    ViewData["Title"] = "تنظیمات فاکتور";
+}
+
+<div dir="rtl">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h4 class="mb-1">تنظیمات فاکتور</h4>
+            <p class="text-muted mb-0" style="max-width:40rem;line-height:1.7">
+                نام کامل، کد اقتصادی، شماره ثبت و آدرس سازمانی که روی فاکتور رسمی و در رویت مودیان نمایش داده می‌شود.
+            </p>
+        </div>
+        <a href="/Admin/OfficialInvoices" class="btn btn-outline-secondary">بازگشت به فاکتورها</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" action="/Admin/OfficialInvoices/Seller" class="row g-3">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="CompanyName">نام کامل سازمان</label>
+                    <input class="form-control" asp-for="CompanyName" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="InvoiceTitle">عنوان فاکتور</label>
+                    <input class="form-control" asp-for="InvoiceTitle" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="EconomicNo">کد اقتصادی</label>
+                    <input class="form-control" dir="ltr" asp-for="EconomicNo" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="RegistrationNo">شماره ثبت</label>
+                    <input class="form-control" dir="ltr" asp-for="RegistrationNo" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="NationalId">شناسه ملی</label>
+                    <input class="form-control" dir="ltr" asp-for="NationalId" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="Phone">تلفن</label>
+                    <input class="form-control" dir="ltr" asp-for="Phone" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="PostalCode">کد پستی</label>
+                    <input class="form-control" dir="ltr" asp-for="PostalCode" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="Province">استان</label>
+                    <input class="form-control" asp-for="Province" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="County">شهرستان</label>
+                    <input class="form-control" asp-for="County" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="City">شهر</label>
+                    <input class="form-control" asp-for="City" />
+                </div>
+                <div class="col-12">
+                    <label class="form-label" asp-for="Address">آدرس سازمان</label>
+                    <textarea class="form-control" rows="2" asp-for="Address"></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">ذخیره</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
