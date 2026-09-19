@@ -6,6 +6,25 @@
     var trip = (Application.Services.MrShooferORS.SearchedTrip)ViewBag.trip;
 
     var ticket = (Ticket)ViewBag.ticket;
+    int orsAfterDiscount = trip.afterdiscticketprice;
+    int orsBeforeDiscount = trip.originalTicketprice;
+    int listPrice = ViewBag.listPrice is int lp ? lp : orsAfterDiscount;
+    // Payable amount is computed in ReserveController (commission already applied).
+    int payablePrice = ViewBag.payablePrice is int pp ? pp : listPrice;
+    int commissionPercent = ViewBag.commissionPercent is int cp ? cp : 0;
+    bool canEditDisplayPrices = ViewBag.canEditDisplayPrices is bool cedp && cedp;
+    // Customer-facing display prices (agency can override via modal when commission > 0).
+    // Original defaults to ORS after-discount (legacy tickets may still store ORS list price).
+    int displayOriginal = ticket.TicketOriginalPrice > 0
+        ? (ticket.TicketOriginalPrice == trip.originalTicketprice ? orsAfterDiscount : ticket.TicketOriginalPrice)
+        : orsAfterDiscount;
+    int displayFinal = ticket.TicketFinalPrice > 0 ? ticket.TicketFinalPrice : orsAfterDiscount;
+    bool showPriceStrike = canEditDisplayPrices
+        ? displayOriginal != displayFinal
+        : orsBeforeDiscount != orsAfterDiscount && orsBeforeDiscount > 0;
+    // Zero-commission agencies: show ORS before/after discount, no display override.
+    int shownOriginal = canEditDisplayPrices ? displayOriginal : orsBeforeDiscount;
+    int shownFinal = canEditDisplayPrices ? displayFinal : orsAfterDiscount;
 
     Dictionary<int, string> monthName = new Dictionary<int, string>()
     {
@@ -42,11 +61,34 @@
 
     <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
 
+@if (canEditDisplayPrices)
+{
 <script>
     Swal.fire({
         title: 'سفر ثبت شد',
-        text: 'سفر سواری با موفقیت ثبت شد و پرداخت از طریق اعتبار آژانس انجام گرفت همچنین پیام حاوی لینک بلیط به مسافر ارسال گردید',
-        confirmButtonText: 'متوجه شدم',
+        text: 'سفر سواری با موفقیت ثبت شد. می‌توانید قیمت نمایشی بلیط را برای مسافر تنظیم کنید.',
+        confirmButtonText: 'تنظیم قیمت',
+        icon: 'success',
+        customClass: {
+            confirmButton: 'btn btn-primary waves-effect waves-light'
+        },
+        buttonsStyling: false,
+        allowOutsideClick: false
+    }).then(function () {
+        var el = document.getElementById('ticketPriceModal');
+        if (el && window.bootstrap) {
+            bootstrap.Modal.getOrCreateInstance(el).show();
+        }
+    });
+</script>
+}
+else
+{
+<script>
+    Swal.fire({
+        title: 'سفر ثبت شد',
+        text: 'سفر سواری با موفقیت ثبت شد.',
+        confirmButtonText: 'باشه',
         icon: 'success',
         customClass: {
             confirmButton: 'btn btn-primary waves-effect waves-light'
@@ -54,6 +96,7 @@
         buttonsStyling: false
     });
 </script>
+}
 
 
 <style>
@@ -85,6 +128,23 @@
 
     .not_enough_payment {
         background-color: RGBA(var(--bs-secondary-rgb), .25) !important;
+    }
+
+    .ticket-price-edit-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #0d6efd !important;
+        text-decoration: underline !important;
+        box-shadow: none !important;
+        border: 0 !important;
+        background: transparent !important;
+        line-height: 1.4;
+    }
+
+    .ticket-price-edit-link:hover,
+    .ticket-price-edit-link:focus {
+        color: #0a58ca !important;
+        text-decoration: underline !important;
     }
 
     .form-control {
@@ -182,7 +242,7 @@
     }
 
     .selected {
-        color: #7367f0;
+        color: #000000;
     }
 
 
@@ -311,20 +371,41 @@
             <div class="d-flex col-6" style="flex-direction: column; align-items: center;">
                 <span class="fs-3 ms-1 font-bold d-block" style="line-height: 2rem; --tw-text-opacity: 1; color: rgb(41 38 61 / var(--tw-text-opacity));">ثـبت موفقیت آمیز</span>
                 <small class="">سفر با موفقیت ثبت شد</small>
+                @if (canEditDisplayPrices)
+                {
+                <button type="button"
+                        class="btn btn-link p-0 mt-2 ticket-price-edit-link"
+                        data-bs-toggle="modal"
+                        data-bs-target="#ticketPriceModal">
+                    تغییر قیمت نمایشی
+                </button>
+                }
             </div>
 
             <div class="col-3 d-flex justify-content-end">
-              <div>
-
-
-                    <button class="btn rounded-pill btn-icon btn-label-secondary waves-effect" type="button">
-                    <span class="ti ti-share-2"></span>
+              <div class="d-flex align-items-center gap-2">
+                    @if (canEditDisplayPrices)
+                    {
+                    <button type="button"
+                            class="btn btn-link p-0 ticket-price-edit-link d-none d-md-inline"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ticketPriceModal">
+                        تغییر قیمت
                     </button>
-                    <a target="_blank" href="/TripReceiptPdf?reference=@ticket.TicketCode" class="btn rounded-pill btn-icon btn-label-primary " type="button">
-                        <span class="ti ti-printer"></span>
+                    }
+                    <button type="button"
+                            id="shareTicketBtn"
+                            class="btn rounded-pill btn-icon btn-label-secondary waves-effect"
+                            aria-label="اشتراک‌گذاری بلیط"
+                            data-ticket-code="@ticket.TicketCode">
+                        <span class="ti ti-share-2" aria-hidden="true"></span>
+                    </button>
+                    <a target="_blank"
+                       href="/TripReceiptPdf?reference=@ticket.TicketCode"
+                       class="btn rounded-pill btn-icon btn-label-primary"
+                       aria-label="پرینت بلیط">
+                        <span class="ti ti-printer" aria-hidden="true"></span>
                     </a>
-                
-
               </div>
               </div>
         </div>
@@ -640,9 +721,11 @@
                         </div>
                         <div>
 
-                            @if (trip.afterdiscticketprice != trip.originalTicketprice)
-                            {
-                                <div class="text-end mb-0">
+                            <div id="ticket-price-strike-wrap" class="text-end mb-0" style="@(showPriceStrike ? "" : "display:none")">
+                                    @if (!canEditDisplayPrices)
+                                    {
+                                    <small class="text-muted d-block mb-1">قیمت قبل از تخفیف</small>
+                                    }
                                     <h5 class="text-black mb-0">
                                         <s>
                                             <bdi>
@@ -652,25 +735,36 @@
                                                             <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
                                                         </symbol>
                                                     </use>
-                                                </svg>@trip.originalTicketprice.ToString("N0")
+                                                </svg><span id="ticket-display-original">@shownOriginal.ToString("N0")</span>
                                             </bdi>
                                         </s>
                                     </h5>
                                 </div>
+
+                            @if (!canEditDisplayPrices && showPriceStrike)
+                            {
+                            <small class="text-muted d-block text-end mb-1">قیمت بعد از تخفیف</small>
                             }
-
-
                             <h4 class="text-primary mb-1 text-end">
                                 <bdi>
                                     <svg class="toman">
                                         <use xlink:href="#toman">
                                             <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.59.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
+                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
                                             </symbol>
                                         </use>
-                                    </svg>@trip.afterdiscticketprice.ToString("N0")
+                                    </svg><span id="ticket-display-final">@shownFinal.ToString("N0")</span>
                                 </bdi>
                             </h4>
+                            @if (canEditDisplayPrices)
+                            {
+                            <button type="button"
+                                    class="btn btn-link p-0 mt-1 ticket-price-edit-link"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#ticketPriceModal">
+                                تغییر قیمت نمایشی
+                            </button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -712,5 +806,179 @@
 
 </div>
 
+<!-- Customize display prices for passenger ticket (commission agencies only) -->
+@if (canEditDisplayPrices)
+{
+<div class="modal fade" id="ticketPriceModal" tabindex="-1" aria-labelledby="ticketPriceModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" dir="rtl">
+        <div class="modal-content" style="border-radius: 1rem;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="ticketPriceModalLabel">تنظیم قیمت نمایشی بلیط</h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="بستن"></button>
+            </div>
+            <div class="modal-body pt-3">
+                <p class="text-muted small mb-3">
+                    قیمت اصلی با قیمت پس از تخفیف ORS (@orsAfterDiscount.ToString("N0") تومان) پر شده است. می‌توانید هر دو مبلغ را بدون محدودیت تغییر دهید.
+                </p>
+                <div class="mb-3">
+                    <label class="form-label" for="priceOriginalInput">قیمت اصلی (خط‌خورده)</label>
+                    <input type="text" inputmode="numeric" class="form-control" id="priceOriginalInput"
+                           value="@orsAfterDiscount.ToString("N0")" autocomplete="off" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="priceFinalInput">قیمت پس از تخفیف (نهایی)</label>
+                    <input type="text" inputmode="numeric" class="form-control" id="priceFinalInput"
+                           value="@displayFinal.ToString("N0")" autocomplete="off" />
+                </div>
+                <div id="priceModalError" class="text-danger small" style="display:none;"></div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-primary" id="saveTicketPricesBtn">اعمال قیمت</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var ticketCode = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ticket.TicketCode));
+    var orsAfterDiscount = @orsAfterDiscount;
+    var currentOriginal = @displayOriginal;
+    var currentFinal = @displayFinal;
+    var originalInput = document.getElementById('priceOriginalInput');
+    var finalInput = document.getElementById('priceFinalInput');
+    var errEl = document.getElementById('priceModalError');
+    var saveBtn = document.getElementById('saveTicketPricesBtn');
+    var modalEl = document.getElementById('ticketPriceModal');
+
+    function digitsOnly(raw) {
+        return (raw || '').toString().replace(/[^\d]/g, '');
+    }
+    function formatGrouped(n) {
+        var s = String(Math.max(0, parseInt(n, 10) || 0));
+        return s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function bindFormat(el) {
+        if (!el) return;
+        el.addEventListener('input', function () {
+            var d = digitsOnly(el.value);
+            el.value = d ? formatGrouped(d) : '';
+        });
+    }
+    bindFormat(originalInput);
+    bindFormat(finalInput);
+
+    function seedModalInputs() {
+        // Original seeds from ORS after-discount (or last saved display original)
+        if (originalInput) originalInput.value = formatGrouped(currentOriginal || orsAfterDiscount);
+        if (finalInput) finalInput.value = formatGrouped(currentFinal || orsAfterDiscount);
+        if (errEl) errEl.style.display = 'none';
+    }
+
+    if (modalEl) {
+        modalEl.addEventListener('show.bs.modal', seedModalInputs);
+    }
+
+    function applyToDom(original, final) {
+        var strikeWrap = document.getElementById('ticket-price-strike-wrap');
+        var origEl = document.getElementById('ticket-display-original');
+        var finalEl = document.getElementById('ticket-display-final');
+        if (origEl) origEl.textContent = formatGrouped(original);
+        if (finalEl) finalEl.textContent = formatGrouped(final);
+        if (strikeWrap) strikeWrap.style.display = original !== final ? '' : 'none';
+        currentOriginal = original;
+        currentFinal = final;
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+            var original = parseInt(digitsOnly(originalInput && originalInput.value), 10);
+            var final = parseInt(digitsOnly(finalInput && finalInput.value), 10);
+            if (!Number.isFinite(original) || !Number.isFinite(final) || original < 0 || final < 0) {
+                if (errEl) {
+                    errEl.style.display = '';
+                    errEl.textContent = 'مبالغ باید عدد معتبر باشند.';
+                }
+                return;
+            }
+            if (errEl) errEl.style.display = 'none';
+            saveBtn.disabled = true;
+            var url = '@Url.Action("UpdateTicketDisplayPrices", "Reserve", new { area = "AgencyArea" })';
+            fetch(url, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    ticketCode: ticketCode,
+                    originalPrice: original,
+                    finalPrice: final
+                })
+            }).then(function (r) {
+                return r.text().then(function (text) {
+                    var j = null;
+                    try { j = text ? JSON.parse(text) : null; } catch (e) { j = null; }
+                    return { ok: r.ok, status: r.status, j: j, raw: text };
+                });
+            }).then(function (res) {
+                saveBtn.disabled = false;
+                if (res.j && res.j.success) {
+                    applyToDom(original, final);
+                    if (modalEl && window.bootstrap) {
+                        bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                    }
+                    return;
+                }
+                var msg = (res.j && res.j.message)
+                    || (res.status === 401 || res.status === 403
+                        ? 'برای تغییر قیمت وارد حساب آژانس شوید.'
+                        : 'ذخیره قیمت ناموفق بود.');
+                if (errEl) {
+                    errEl.style.display = '';
+                    errEl.textContent = msg;
+                }
+            }).catch(function () {
+                saveBtn.disabled = false;
+                if (errEl) {
+                    errEl.style.display = '';
+                    errEl.textContent = 'خطا در ارتباط با سرور.';
+                }
+            });
+        });
+    }
+})();
+</script>
+}
+
+<script>
+(function () {
+    var shareBtn = document.getElementById('shareTicketBtn');
+    if (!shareBtn) return;
+    shareBtn.addEventListener('click', function () {
+        var code = shareBtn.getAttribute('data-ticket-code') || '';
+        var url = window.location.origin + '/TripReceiptPdf?reference=' + encodeURIComponent(code);
+        var title = 'بلیط مسترشوفر';
+        var text = 'بلیط سفر — کد ' + code;
+        if (navigator.share) {
+            navigator.share({ title: title, text: text, url: url }).catch(function () { /* dismissed */ });
+            return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () {
+                shareBtn.classList.add('btn-label-success');
+                shareBtn.setAttribute('title', 'لینک کپی شد');
+                window.setTimeout(function () {
+                    shareBtn.classList.remove('btn-label-success');
+                }, 1500);
+            });
+            return;
+        }
+        window.prompt('لینک بلیط را کپی کنید:', url);
+    });
+})();
+</script>
 
 

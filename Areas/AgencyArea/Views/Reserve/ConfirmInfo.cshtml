@@ -8,7 +8,25 @@
 
     var agancy = (Agency)ViewBag.agancy;
     bool canPayWithCredit = ViewBag.canbuy is bool buy && buy;
-    int agencyBalance = ViewBag.agancy_balance is int bal ? bal : 0;
+    int agencyBalance = 0;
+    try { agencyBalance = Convert.ToInt32(ViewBag.agancy_balance ?? 0); } catch { agencyBalance = 0; }
+    int listPrice = ViewBag.listPrice is int lp ? lp : trip.afterdiscticketprice;
+    // Payable amount is computed in ReserveController (commission already applied).
+    int ticketPrice = ViewBag.payablePrice is int pp ? pp : listPrice;
+    try { if (ViewBag.payablePrice != null) ticketPrice = Convert.ToInt32(ViewBag.payablePrice); } catch { }
+    bool showListStrike = ticketPrice != listPrice || trip.afterdiscticketprice != trip.originalTicketprice;
+    int strikePrice = ticketPrice != listPrice ? listPrice : trip.originalTicketprice;
+    bool canPayHybrid = agencyBalance > 0 && agencyBalance < ticketPrice;
+    int hybridRemainder = canPayHybrid ? ticketPrice - agencyBalance : 0;
+    // Keep canbuy in sync with parsed balance (avoids type-boxing mismatches).
+    canPayWithCredit = agencyBalance >= ticketPrice;
+    bool canUseWallet = agencyBalance > 0;
+    // Use wallet whenever there is balance (full cover → 0 gateway; shortfall → hybrid remainder).
+    bool walletToggleDefault = canUseWallet;
+    string defaultPm = canPayWithCredit ? "balance" : (canPayHybrid ? "hybrid" : "zarinpal");
+    string walletToggleHint = agencyBalance > 0
+        ? $"موجودی کیف پول: {agencyBalance.ToString("N0")} تومان"
+        : "موجودی کیف پول: ۰ تومان";
 
     Dictionary<int, string> monthName = new Dictionary<int, string>()
     {
@@ -51,11 +69,90 @@
     }
 
     .success-payment {
-        background-color: RGBA(var(--bs-success-rgb), .25) !important;
+        background-color: #5e5e5e !important;
+        color: #fff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 0.65rem !important;
+        padding: 0 1.15rem !important;
+        white-space: nowrap !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .success-payment .status-icon {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.1rem;
+        height: 2.1rem;
+    }
+
+    .success-payment .status-icon svg {
+        width: 1.55rem;
+        height: 1.55rem;
+        color: #22c55e !important;
+        stroke: #22c55e !important;
+    }
+
+    .success-payment h6,
+    .success-payment small,
+    .success-payment .text-muted {
+        color: #fff !important;
+    }
+
+    .success-payment .bg-success {
+        background-color: rgba(255, 255, 255, 0.14) !important;
     }
 
     .not_enough_payment {
-        background-color: RGBA(var(--bs-secondary-rgb), .25) !important;
+        display: none !important;
+    }
+
+    .pm-pick-icon {
+        flex: 0 0 2.4rem;
+        width: 2.4rem;
+        height: 2.4rem;
+        border-radius: .7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f3f3;
+        color: #111;
+        font-size: 1.25rem;
+        line-height: 1;
+    }
+
+    @@media (min-width: 768px) {
+        .downside-contaner {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            column-gap: 1.5rem;
+            row-gap: 1rem;
+            align-items: stretch;
+        }
+        .downside-contaner > .mb-4 {
+            grid-column: 1 / -1;
+        }
+        .downside-contaner > .col-md-6 {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: none;
+            flex: 1 1 auto;
+        }
+        .downside-contaner > .col-md-6 > .confirm-card {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
     }
 
     .pm-pick {
@@ -71,21 +168,8 @@
         width: 100%;
         text-align: start;
     }
-    .pm-pick.selected { border-color: #7367f0; background: #f8f7ff; }
+    .pm-pick.selected { border-color: #000000; background: #f3f3f3; }
     .pm-pick.disabled { opacity: .55; cursor: not-allowed; }
-    .pm-pick-icon {
-        flex: 0 0 2.4rem;
-        width: 2.4rem;
-        height: 2.4rem;
-        border-radius: .7rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #eef0ff;
-        color: #5e50ee;
-        font-size: 1.25rem;
-        line-height: 1;
-    }
     .pm-pick-copy {
         flex: 1 1 auto;
         min-width: 0;
@@ -108,11 +192,111 @@
     .pm-pick input {
         flex: 0 0 auto;
         margin: 0;
-        accent-color: #7367f0;
+        accent-color: #000000;
+    }
+    .pm-wallet-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        padding: 0.95rem 1.1rem;
+        border: 1px solid #e8e8e8;
+        border-radius: 1rem;
+        background: #fff;
+        margin-bottom: 0.75rem;
+    }
+    .pm-wallet-toggle.is-on {
+        border-color: #111;
+        background: #f7f7f7;
+    }
+    .pm-wallet-toggle.is-disabled {
+        opacity: 0.55;
+        pointer-events: none;
+    }
+    .pm-wallet-toggle-copy {
+        flex: 1 1 auto;
+        min-width: 0;
+        text-align: start;
+    }
+    .pm-wallet-toggle-copy strong {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #2f2b3d;
+        font-weight: 700;
+    }
+    .pm-wallet-toggle-copy small {
+        display: block;
+        margin-top: .15rem;
+        font-size: .8125rem;
+        line-height: 1.7;
+        color: #6d6b77;
+    }
+    .pm-wallet-toggle .form-check-input {
+        width: 2.75rem;
+        height: 1.45rem;
+        margin: 0;
+        cursor: pointer;
+        accent-color: #111;
+        background-color: #d4d4d8 !important;
+        border-color: #d4d4d8 !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+        --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    }
+    .pm-wallet-toggle .form-check-input:focus {
+        border-color: #111 !important;
+        box-shadow: 0 0 0 0.2rem rgba(17, 17, 17, 0.18) !important;
+    }
+    .pm-wallet-toggle .form-check-input:checked {
+        background-color: #111 !important;
+        border-color: #111 !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+    }
+    .pm-wallet-toggle .form-check-input:checked:focus {
+        border-color: #111 !important;
+        box-shadow: 0 0 0 0.2rem rgba(17, 17, 17, 0.18) !important;
+    }
+    .pm-invoice-summary {
+        border: 1px solid #e8e8e8;
+        border-radius: 1rem;
+        padding: 0.85rem 1.1rem;
+        background: #fafafa;
+        margin-top: 0.85rem;
+    }
+    .pm-invoice-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: #3f3f46;
+    }
+    .pm-invoice-row + .pm-invoice-row {
+        margin-top: 0.45rem;
+    }
+    .pm-invoice-row strong {
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        color: #18181b;
+    }
+    .pm-invoice-divider {
+        margin: 0.65rem 0;
+        border: 0;
+        border-top: 1px solid #e4e4e7;
+        opacity: 1;
+    }
+    .pm-invoice-row--payable {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #18181b;
+    }
+    .pm-invoice-row--payable strong {
+        font-size: 1.05rem;
     }
     #paymentmodal {
         direction: rtl;
-        text-align: right;
+        text-align: start;
         font-family: inherit;
     }
     #paymentmodal .modal-header {
@@ -139,8 +323,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #eef0ff;
-        color: #5e50ee;
+        background: #f3f3f3;
+        color: #111;
         font-size: 1.45rem;
     }
     .pm-modal-copy {
@@ -275,7 +459,7 @@
     }
 
     .selected {
-        color: #7367f0;
+        color: #000000;
     }
 
 
@@ -340,87 +524,240 @@
     }
 
     .confirm-card {
-        padding: 1.15rem 1.25rem !important;
-        margin-top: .7rem;
+        padding: 1.25rem 1.35rem !important;
+        margin-top: .55rem;
+        border: 1px solid #ececec;
+        box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 12px 28px rgba(0,0,0,.07);
+    }
+    .confirm-card .headline {
+        align-items: center;
+        gap: .5rem;
+        margin-bottom: .15rem;
+    }
+    .confirm-card .headline .badge {
+        font-family: font-regular, "IRANSansX", Tahoma, sans-serif !important;
+        font-feature-settings: "ss02";
+    }
+    .confirm-card .capacity {
+        padding: .35rem .7rem !important;
+        margin: 0 !important;
     }
     .confirm-card hr {
-        margin: 1rem 0;
+        margin: .85rem 0;
+        opacity: .55;
     }
     .confirm-trip-route {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 1rem;
-        padding: .85rem .15rem 0;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: end;
+        gap: .65rem 1rem;
+        padding: .65rem 0 .15rem;
         margin: 0;
         text-align: center;
     }
+    .confirm-trip-route > span:first-child,
+    .confirm-trip-route > span:last-child {
+        min-width: 0;
+    }
+    .confirm-trip-route .route-mid {
+        align-self: center;
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        color: #a1a1aa;
+        padding-bottom: .35rem;
+        white-space: nowrap;
+    }
+    .confirm-trip-route .route-mid .route-dots {
+        width: 1.6rem;
+        border-top: 2px dotted #d4d4d8;
+    }
     .confirm-trip-meta {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        padding: 0;
+    }
+    .confirm-meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         gap: .75rem;
-        padding: .15rem 0;
-        align-items: start;
+        padding: .7rem .85rem;
+        border-radius: .85rem;
+        background: #f6f6f6;
+    }
+    .confirm-meta-row small {
+        color: #71717a;
+        font-size: .8rem;
+        white-space: nowrap;
+    }
+    .confirm-meta-row .meta-value {
+        font-family: font-regular, "IRANSansX", Tahoma, sans-serif !important;
+        font-feature-settings: "ss02";
+        font-size: .95rem;
+        color: #18181b;
+        text-align: start;
+        line-height: 1.5;
+    }
+    .confirm-meta-row .carmodel {
+        font-size: .72rem !important;
+        padding: .2rem .55rem !important;
+        margin: 0 .15rem 0 0 !important;
+        vertical-align: middle;
+    }
+    .confirm-feature-note {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        margin-top: .65rem;
+        padding: .65rem .85rem;
+        border-radius: .85rem;
+        background: #f3f3f3;
+    }
+    .confirm-feature-note small {
+        color: #71717a;
+        font-size: .78rem;
+        line-height: 1.55;
+    }
+    .confirm-price-block {
+        margin-top: 1rem;
+        padding-top: .15rem;
     }
     .confirm-price-row {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         gap: 1rem;
-        margin-top: 1rem;
+        margin-top: 0;
     }
     .confirm-price-row h5 {
         margin: 0;
-        line-height: 1.7;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+    .confirm-price-row .price-stack {
+        text-align: end;
+        font-family: font-regular, "IRANSansX", Tahoma, sans-serif !important;
+        font-feature-settings: "ss02";
+    }
+    .confirm-price-row .price-stack s h5 {
+        font-size: .85rem;
+        color: #71717a;
+        font-weight: 500;
+    }
+    .confirm-price-row .price-final {
+        margin: .15rem 0 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #000 !important;
+        line-height: 1.45;
     }
     .confirm-price-hint {
-        margin: .7rem 0 0;
+        margin: .55rem 0 0;
         text-align: right;
-        font-size: .75rem;
-        line-height: 1.7;
-        color: #6d6b77;
+        font-size: .72rem;
+        line-height: 1.65;
+        color: #71717a;
+    }
+    @@media (max-width: 575.98px) {
+        .confirm-trip-route {
+            gap: .4rem .5rem;
+        }
+        .confirm-meta-row {
+            flex-wrap: wrap;
+            padding: .65rem .7rem;
+        }
     }
     .confirm-buyer-top {
         display: grid;
         grid-template-columns: 3.75rem 1fr 1fr 1fr;
-        gap: .75rem 1rem;
+        gap: .85rem 1rem;
         align-items: center;
         direction: rtl;
-        text-align: right;
+        text-align: start;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #f0f0f0;
     }
     .confirm-buyer-top small,
     .confirm-buyer-mid small {
         display: block;
-        margin-bottom: .2rem;
-        line-height: 1.7;
+        margin-bottom: .25rem;
+        line-height: 1.5;
+        font-size: .78rem;
+        color: #71717a;
     }
     .confirm-buyer-top h5,
     .confirm-buyer-mid h5 {
         margin: 0;
-        line-height: 1.7;
+        line-height: 1.45;
+        font-size: 1rem;
+        color: #18181b;
     }
     .confirm-buyer-mid {
-        display: grid;
-        grid-template-columns: minmax(10rem, .9fr) minmax(0, 1.4fr);
-        gap: .85rem 1rem;
-        align-items: center;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
         margin-top: 1rem;
         direction: rtl;
+        text-align: start;
     }
-    .confirm-note {
-        display: block;
-        margin-top: .9rem;
-        text-align: right;
-        font-size: .75rem;
-        line-height: 1.7;
-        color: #6d6b77;
+    .confirm-buyer-mid .buyer-phone-edit {
+        display: inline-flex;
+        align-items: center;
+        gap: .2rem;
+        margin-inline-start: .45rem;
+        font-size: .78rem;
+        font-weight: 600;
+        color: #18181b !important;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .confirm-buyer-mid .buyer-phone-edit:hover {
+        opacity: .7;
+    }
+    .confirm-buyer-notices {
+        display: flex;
+        flex-direction: column;
+        gap: .55rem;
+        margin-top: 1.1rem;
+    }
+    .confirm-buyer-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: .65rem;
+        margin: 0;
+        padding: .75rem .85rem;
+        border-radius: .95rem;
+        background: #f6f6f6;
+        color: #52525b;
+        text-align: start;
+        line-height: 1.65;
+        font-size: .8rem;
+    }
+    .confirm-buyer-notice img,
+    .confirm-buyer-notice .ti {
+        flex: 0 0 auto;
+        margin-top: .1rem;
+        font-size: 1.05rem;
+        color: #71717a;
+    }
+    .confirm-buyer-notice strong {
+        color: #18181b;
+        font-weight: 650;
+    }
+    .confirm-buyer-notice p {
+        margin: 0;
+        font-size: inherit;
+        line-height: inherit;
     }
     .confirm-actions {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 1rem;
-        margin-top: 1rem;
+        margin-top: 1.15rem;
     }
     .confirm-actions .btn {
         flex: 0 0 auto;
@@ -429,16 +766,14 @@
         border-radius: 1.6rem !important;
         margin: 0;
     }
-    .confirm-location-hint {
-        flex: 1 1 auto;
-        margin: 0;
-        text-align: right;
-        line-height: 1.7 !important;
-        font-size: .8rem !important;
-        color: #6d6b77;
-    }
     @@media (max-width: 767.98px) {
-        .confirm-buyer-top,
+        .confirm-buyer-top {
+            grid-template-columns: 3.5rem 1fr 1fr;
+            gap: .75rem .65rem;
+        }
+        .confirm-buyer-top > div:last-child {
+            grid-column: 2 / -1;
+        }
         .confirm-buyer-mid,
         .confirm-actions {
             display: flex;
@@ -446,7 +781,6 @@
             align-items: stretch;
         }
         .confirm-actions .btn { width: 100%; }
-        .confirm-location-hint { text-align: right; }
     }
 </style>
 
@@ -539,196 +873,142 @@
             </div>
             <div class="card rounded-5 confirm-card col-12 mt-0">
 
-                <div class="headline d-flex justify-between">
-                    <span class="badge bg-dark rounded-pill py-2" style="font-size: .875rem!important">
+                <div class="headline d-flex justify-content-between">
+                    <span class="badge bg-dark rounded-pill py-2" style="font-size: .8rem!important">
                         @trip.taxiSupervisorName
                     </span>
                     <div class="capacity badge bg-label-secondary rounded-pill">
                         <i class="ti ti-armchair-2 d-inline"></i>
-                        |
-                        @* <span class="badge bg-label-danger">دربتسی</span> *@
                         <small class="text-danger ms-1 d-inline t-bold">دربستی</small>
                     </div>
                 </div>
 
+                @{
+                    var pdate = new Application.Services.PersianDate(trip.startingDateTime);
+                    var models = (trip.carModelName ?? string.Empty).Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    string timeOfDay = trip.startingDateTime.Hour <= 11 ? "صبح"
+                                     : trip.startingDateTime.Hour < 15 ? "ظهر"
+                                     : trip.startingDateTime.Hour <= 19 ? "بعداز ظهر"
+                                     : "شب";
+                }
 
                 @* مبدا و مقصد *@
                 <div class="confirm-trip-route">
                     <span>
-                        <small class="d-block ms-1 ">
-                            <img src="/redpin.png" height="18px;" />
+                        <small class="d-block mb-1 text-muted">
+                            <img src="/redpin.png" height="16" alt="" />
                             مبدا
                         </small>
-                        <span class="fs-5 text-blck">
-                            @trip.originCityName
-                        </span>
-                        <small>
-                            @trip.oringinLocationName
-                        </small>
+                        <span class="fs-6 text-blck fw-semibold d-block">@trip.originCityName</span>
+                        <small class="text-muted">@trip.oringinLocationName</small>
                     </span>
 
-                    <span style="align-self: end;" class="mb-1">
-                        <span>
-                            ....
-                        </span>
-                        <img src="/taxi.png" height="30px" />
-                        <span>
-                            ....
-                        </span>
+                    <span class="route-mid" aria-hidden="true">
+                        <span class="route-dots"></span>
+                        <img src="/taxi.png" height="26" alt="" />
+                        <span class="route-dots"></span>
                     </span>
 
                     <span>
-                        <small class="d-block ms-1 ">
-                            <img src="/redpin.png" height="18px;" />
+                        <small class="d-block mb-1 text-muted">
+                            <img src="/redpin.png" height="16" alt="" />
                             مقصد
                         </small>
-                        <span class="fs-5 text-blck">
-                            @trip.destinationCityName
-                        </span>
-                        <small>
-                            @trip.destinationLocationName
-                        </small>
+                        <span class="fs-6 text-blck fw-semibold d-block">@trip.destinationCityName</span>
+                        <small class="text-muted">@trip.destinationLocationName</small>
                     </span>
                 </div>
 
                 <hr />
-                @* تاریخ و خودرو *@
-
 
                 <div class="confirm-trip-meta">
-
-                    <div class="col-4 d-flex flex-column align-items-center">
-
-                        <small>
-                            <i class="ti ti-calendar-event"></i>
-                            تاریخ سفر
-                        </small>
-
-                        <div class="d-flex mt-1" style="justify-content: space-between;">
-                            @{
-                                var pdate = new Application.Services.PersianDate(trip.startingDateTime);
-                            }
-
-                            <div>
-                                <span class="text-blck fs-5">
-                                    @pdate.Day
-                                    @monthName[pdate.Month]
-                                </span>
-                                <span class="fs-5 ms-1">
-                                    @pdate.DayOfWeek
-                                </span>
-
-                            </div>
-                        </div>
+                    <div class="confirm-meta-row">
+                        <small><i class="ti ti-calendar-event me-1"></i>تاریخ سفر</small>
+                        <span class="meta-value">@pdate.Day @monthName[pdate.Month] — @pdate.DayOfWeek</span>
                     </div>
-
-
-                    <div class="col-4 d-flex flex-column align-items-center">
-                        <small>
-                            <i class="ti ti-clock"></i>
-                            ساعت
-                        </small>
-
-                        <span class="text-blck fs-5 mt-1">
-                            @trip.startingDateTime.ToString("HH:mm")
-                            @{
-                                if (trip.startingDateTime.Hour >= 0 && trip.startingDateTime.Hour <= 11)
-                                {
-                                    <small>(صبح)</small>
-                                }
-
-                                else if (trip.startingDateTime.Hour >= 12 && trip.startingDateTime.Hour < 15)
-                                {
-                                    <small>(ظهر)</small>
-                                }
-
-                                else if (trip.startingDateTime.Hour >= 15 && trip.startingDateTime.Hour <= 19)
-                                {
-                                    <small>(بعداز ظهر)</small>
-                                }
-
-                                else
-                                {
-                                    <small>(شب)</small>
-
-                                }
-
-                            }
-                        </span>
+                    <div class="confirm-meta-row">
+                        <small><i class="ti ti-clock me-1"></i>ساعت حرکت</small>
+                        <span class="meta-value">@trip.startingDateTime.ToString("HH:mm") <small class="text-muted">(@timeOfDay)</small></span>
                     </div>
-
-                    <div class="col-4 d-flex flex-column align-items-center">
+                    <div class="confirm-meta-row">
                         <small>
-                            <i class="ti ti-car"></i>
-                            خودرو
+                            <i class="ti ti-car me-1"></i>خودرو
                             @if (trip.taxiSupervisorID == 7)
                             {
-                                <img src="/vip_badge.png" style="height:27px;">
+                                <img src="/vip_badge.png" style="height:18px;vertical-align:middle" alt="" />
                             }
                         </small>
-
-                        <span class="text-blck fs-5">
-                            <div class="d-flex mt-1" style="justify-content: space-between; font-size: 1rem;">
-                                <span>
-                                    @{ var models = (trip.carModelName ?? string.Empty).Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries); }
-                                    @foreach (var m in models)
-                                    {
-                                        <span class="text-blck badge bg-label-primary rounded-pill carmodel me-1">@m</span>
-                                    }
-                                </span>
-                            </div>
+                        <span class="meta-value">
+                            @foreach (var m in models)
+                            {
+                                <span class="badge bg-label-primary rounded-pill carmodel">@m</span>
+                            }
                         </span>
                     </div>
-
                 </div>
 
+                <div class="confirm-feature-note">
+                    <i class="ti ti-certificate-2" style="color:#000;font-size:1.05rem;flex-shrink:0" aria-hidden="true"></i>
+                    <small>بلیط رسمی پس از تأیید پرداخت در سامانه مسترشوفر صادر و ثبت می‌گردد</small>
+                </div>
 
-                <div class="col-12">
+                <div class="confirm-price-block">
                     <div class="confirm-price-row">
                         <div>
-                            <h5>قـیمت پرداختی خریدار</h5>
-                        </div>
-                        <div>
-
-                            @if (trip.afterdiscticketprice != trip.originalTicketprice)
+                            @if (ticketPrice != listPrice)
                             {
-                                <div class="text-end mb-0">
-                                    <h5 class="text-black mb-0">
-                                        <s>
-                                            <bdi>
-                                                <svg class="toman">
-                                                    <use xlink:href="#toman">
-                                                        <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                            <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                                        </symbol>
-                                                    </use>
-                                                </svg>@trip.originalTicketprice.ToString("N0")
-                                            </bdi>
-                                        </s>
-                                    </h5>
-                                </div>
+                                <h5>قیمت تمام شده</h5>
+                                <small class="text-muted d-block mt-1">قیمت پیشنهادی فروش: @listPrice.ToString("N0") تومان</small>
                             }
-
-
-                            <h4 class="text-primary mb-0 text-end">
+                            else if (trip.afterdiscticketprice != trip.originalTicketprice && trip.originalTicketprice > 0)
+                            {
+                                <h5>قیمت بعد از تخفیف</h5>
+                                <small class="text-muted d-block mt-1">قیمت قبل از تخفیف: @trip.originalTicketprice.ToString("N0") تومان</small>
+                            }
+                            else
+                            {
+                                <h5>قیمت تمام شده</h5>
+                            }
+                        </div>
+                        <div class="price-stack">
+                            @if (ticketPrice != listPrice)
+                            {
+                                <h5 class="mb-0 text-muted" style="font-size:0.9rem;font-weight:600;">
+                                    <bdi>
+                                        <svg class="toman" aria-hidden="true"><use xlink:href="#toman"></use></svg>@listPrice.ToString("N0")
+                                    </bdi>
+                                    <small class="ms-1" style="font-size:0.7rem;">پیشنهادی فروش</small>
+                                </h5>
+                            }
+                            else if (trip.afterdiscticketprice != trip.originalTicketprice && trip.originalTicketprice > 0)
+                            {
+                                <h5 class="mb-0 text-muted" style="font-size:0.9rem;font-weight:600;">
+                                    <bdi>
+                                        <s><svg class="toman" aria-hidden="true"><use xlink:href="#toman"></use></svg>@trip.originalTicketprice.ToString("N0")</s>
+                                    </bdi>
+                                    <small class="ms-1" style="font-size:0.7rem;">قبل از تخفیف</small>
+                                </h5>
+                            }
+                            <h4 class="price-final text-end">
                                 <bdi>
-                                    <svg class="toman">
-                                        <use xlink:href="#toman">
-                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                            </symbol>
-                                        </use>
-                                    </svg>@trip.afterdiscticketprice.ToString("N0")
+                                    <svg class="toman" aria-hidden="true"><use xlink:href="#toman"></use></svg>@ticketPrice.ToString("N0")
                                 </bdi>
                             </h4>
                         </div>
                     </div>
                     <p class="confirm-price-hint">
                         <i class="ti ti-info-circle ti-sm"></i>
-                        قیمت درج شده قیمت نهایی است و کمیسیون همراه آن محاسبه شده است
+                        @(ticketPrice != listPrice
+                            ? "مبلغ پرداختی شما پس از کسر کمیسیون است؛ قیمت پیشنهادی فروش را می‌توانید از مسافر دریافت کنید"
+                            : "قیمت درج‌شده مبلغ نهایی پرداخت شماست")
                     </p>
                 </div>
 
+                <svg width="0" height="0" class="d-none" aria-hidden="true">
+                    <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" fill-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z"></path>
+                    </symbol>
+                </svg>
 
             </div>
         </div>
@@ -753,7 +1033,7 @@
                         }
                     </div>
                     <div>
-                        <small class="text-muted">نام</small>
+                        <small>نام</small>
                         <h5>
                             @{
                                 if (reserve_viemodel.Gender == "male")
@@ -769,53 +1049,40 @@
                         </h5>
                     </div>
                     <div>
-                        <small class="text-muted">نام خانوادگی</small>
+                        <small>نام خانوادگی</small>
                         <h5>@reserve_viemodel.Lastname</h5>
                     </div>
                     <div>
-                        <small class="text-muted">کد ملی</small>
+                        <small>کد ملی</small>
                         <h5>@reserve_viemodel.NaCode</h5>
                     </div>
                 </div>
 
                 <div class="confirm-buyer-mid">
                     <div>
-                        <small class="text-muted">
+                        <small>
                             شماره تلفن همراه
-                            <a class="link" data-bs-target="#modalCenter" data-bs-toggle="modal" style="color: #7367f0 !important; cursor:pointer;">
+                            <a class="buyer-phone-edit link" data-bs-target="#modalCenter" data-bs-toggle="modal" href="javascript:void(0);">
                                 ویرایش<i class="ti ti-pencil"></i>
                             </a>
                         </small>
                         <h5 id="numberphone_display">@reserve_viemodel.NumebrPhone</h5>
                     </div>
-                    <div class="d-flex text-bg-warning p-2 not_enough_payment align-items-center gap-2" style="border-radius: 1.6rem !important;">
-                        <span class="text-blck bg-warning rounded-pill p-1 bg-opacity-75">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" />
-                                <path d="M12 8v4" />
-                                <path d="M12 16h.01" />
-                            </svg>
-                        </span>
-                        <div style="text-align: right;">
-                            <h6 class="mb-0">تایید شماره</h6>
-                            <small class="text-muted" style="word-break:break-word; line-height:1.7;">
-                                با توجه به هماهنگی مبدا و مقصد، شماره وارده حتما باید شماره‌ی <strong>مسافر</strong> باشد
-                            </small>
-                        </div>
+                </div>
+
+                <div class="confirm-buyer-notices">
+                    <div class="confirm-buyer-notice">
+                        <i class="ti ti-message-2" aria-hidden="true"></i>
+                        <p>بعد از ثبت خرید و صدور بلیط، لینک اطلاعات سفر و فایل بلیط برای مسافر ارسال می‌شود</p>
+                    </div>
+                    <div class="confirm-buyer-notice">
+                        <img src="/location.png" height="22" width="22" alt="" />
+                        <p>پس از ثبت و تایید بلیط، مکان دقیق مقصد و مبدا توسط <strong>مسترشوفر</strong> با مسافر هماهنگ خواهد شد.</p>
                     </div>
                 </div>
-                <small class="confirm-note">
-                    <i class="ti ti-message-2"></i>
-                    بعد از ثبت خرید و صدور بلیط، لینک اطلاعات سفر و فایل بلیط برای مسافر ارسال می‌شود
-                </small>
             </div>
             <div class="confirm-actions">
                 <button data-bs-target="#paymentmodal" data-bs-toggle="modal" class="btn btn-lg btn-primary">تایید و ادامه</button>
-                <p class="confirm-location-hint">
-                    <img src="/location.png" height="22px;" alt="" />
-                    پس از ثبت و تایید بلیط، مکان دقیق مقصد و مبدا توسط <strong>مسترشوفر</strong> با مسافر هماهنگ خواهد شد.
-                </p>
             </div>
         </div>
     </div>
@@ -895,7 +1162,7 @@
                                 </div>
                                 <div>
 
-                                    @if (trip.afterdiscticketprice != trip.originalTicketprice)
+                                    @if (showListStrike)
                                     {
                                         <div class="text-end mb-0">
                                             <h5 class="text-black mb-0">
@@ -907,7 +1174,7 @@
                                                                     <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
                                                                 </symbol>
                                                             </use>
-                                                        </svg>@trip.originalTicketprice.ToString("N0")
+                                                        </svg>@strikePrice.ToString("N0")
                                                     </bdi>
                                                 </s>
                                             </h5>
@@ -923,7 +1190,7 @@
                                                         <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
                                                     </symbol>
                                                 </use>
-                                            </svg>@trip.afterdiscticketprice.ToString("N0")
+                                            </svg>@ticketPrice.ToString("N0")
                                         </bdi>
                                     </h4>
                                 </div>
@@ -933,65 +1200,54 @@
                         <hr />
 
                         <div class="col-12 mt-2">
-                            <div class="d-flex flex-column gap-2 mb-2">
-                                <label class="pm-pick @(canPayWithCredit ? "" : "selected")" onclick="selectPm('zarinpal')">
-                                    <span class="pm-pick-icon" aria-hidden="true"><i class="ti ti-building-bank"></i></span>
-                                    <span class="pm-pick-copy">
-                                        <strong>درگاه پرداخت</strong>
-                                        <small>پرداخت با کارت بانکی و رزرو بلیط</small>
-                                    </span>
-                                    <input type="radio" name="pm-visual" id="pm-zarinpal" value="zarinpal" @(canPayWithCredit ? "" : "checked") />
-                                </label>
-                                @if (canPayWithCredit)
-                                {
-                                    <label class="pm-pick selected" onclick="selectPm('balance')">
-                                        <span class="pm-pick-icon" aria-hidden="true"><i class="ti ti-wallet"></i></span>
-                                        <span class="pm-pick-copy">
-                                            <strong>اعتبار حساب آژانس</strong>
-                                            <small>موجودی: @agencyBalance.ToString("N0") تومان</small>
-                                        </span>
-                                        <input type="radio" name="pm-visual" id="pm-balance" value="balance" checked />
-                                    </label>
-                                }
-                                else
-                                {
-                                    <div class="pm-pick disabled">
-                                        <span class="pm-pick-icon" aria-hidden="true"><i class="ti ti-wallet"></i></span>
-                                        <span class="pm-pick-copy">
-                                            <strong class="text-muted">اعتبار حساب آژانس</strong>
-                                            <small class="text-danger">موجودی کافی نیست — از درگاه پرداخت استفاده کنید</small>
-                                        </span>
-                                    </div>
-                                }
+                            <div id="pm-wallet-toggle-row"
+                                 class="pm-wallet-toggle @(walletToggleDefault ? "is-on" : "") @(!canUseWallet ? "is-disabled" : "")">
+                                <div class="pm-wallet-toggle-copy">
+                                    <strong>استفاده از موجودی کیف پول</strong>
+                                    <small id="pm-wallet-hint">@walletToggleHint</small>
+                                </div>
+                                <div class="form-check form-switch m-0">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           role="switch"
+                                           id="pm-wallet-toggle"
+                                           @(walletToggleDefault ? "checked" : "")
+                                           @(canUseWallet ? "" : "disabled")
+                                           onchange="syncWalletPayment()" />
+                                </div>
+                            </div>
+
+                            @{
+                                int initialWalletApplied = walletToggleDefault
+                                    ? (canPayWithCredit ? ticketPrice : (canPayHybrid ? agencyBalance : 0))
+                                    : 0;
+                                int initialGatewayPayable = Math.Max(0, ticketPrice - initialWalletApplied);
+                            }
+                            <div class="pm-invoice-summary" id="pm-invoice-summary">
+                                <div class="pm-invoice-row">
+                                    <span>قیمت نهایی</span>
+                                    <strong dir="ltr">@ticketPrice.ToString("N0") تومان</strong>
+                                </div>
+                                <div class="pm-invoice-row" id="pm-wallet-row" style="@(initialWalletApplied > 0 ? "" : "display:none")">
+                                    <span>کسر از کیف پول</span>
+                                    <strong class="text-success" dir="ltr" id="pm-wallet-applied">−@initialWalletApplied.ToString("N0") تومان</strong>
+                                </div>
+                                <hr class="pm-invoice-divider" />
+                                <div class="pm-invoice-row pm-invoice-row--payable">
+                                    <span>قابل پرداخت <small class="text-muted">(درگاه)</small></span>
+                                    <strong class="text-primary" dir="ltr" id="pm-gateway-payable">@initialGatewayPayable.ToString("N0") تومان</strong>
+                                </div>
                             </div>
                         </div>
 
-
-                        <div class="d-flex badge btn-lg text-bg-success w-100 waves-effect waves-light mt-2 success-payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;">
-                            <span class="text-blck bg-success rounded-pill p-1 bg-opacity-75" style="align-self: center;">
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check text-white">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
-                                    <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
-                                    <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
-                                    <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
-                                    <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
-                                    <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
-                                    <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
-                                    <path d="M9 12l2 2l4 -4" />
+                        <div id="pm-summary-title" class="d-flex align-items-center w-100 mt-2 success-payment" style="height: 3.5rem !important;border-radius: 1.6rem !important;" role="status">
+                            <span class="status-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                 </svg>
                             </span>
-
-
-                            <div>
-                                <h6>
-                                    پرداخت بلیط
-                                    <i class="ti ti-building-bank"></i>
-                                </h6>
-                                <small class="text-muted">درگاه پرداخت یا اعتبار حساب آژانس</small>
-                            </div>
-
+                            <span>آماده پرداخت</span>
                         </div>
 
                     </div>
@@ -1007,10 +1263,14 @@
                             <input name="Lastname" id="lastname" type="hidden" value="@reserve_viemodel.Lastname" />
                             <input name="Numberphone" id="numberphone" type="hidden" value="@reserve_viemodel.NumebrPhone" />
                             <input name="Nacode" id="nacode" type="hidden" value="@reserve_viemodel.NaCode" />
-                            <input name="Gender" id="nacode" type="hidden" value="@reserve_viemodel.Gender" />
-                            <input name="PaymentMethod" id="payment-method" type="hidden" value="@(canPayWithCredit ? "balance" : "zarinpal")" />
+                            <input name="Gender" id="gender" type="hidden" value="@reserve_viemodel.Gender" />
+                            <input name="EmployeeId" id="employee-id" type="hidden" value="@(reserve_viemodel.EmployeeId?.ToString() ?? "")" />
+                            <input name="CompanionsJson" id="companions-json" type="hidden" value="@Newtonsoft.Json.JsonConvert.SerializeObject(reserve_viemodel.Companions ?? new List<Application.ViewModels.Reserve.CompanionPassengerViewModel>())" />
+                            <input name="PaymentMethod" id="payment-method" type="hidden" value="@defaultPm" />
 
-                            <button class="btn btn-primary btn-lg" type="submit" id="confirm-pay-btn">تایید پرداخت</button>
+                            <button class="btn btn-primary btn-lg" type="submit" id="confirm-pay-btn">
+                                پرداخت
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -1024,21 +1284,46 @@
 </div>
 
 <script>
-    function selectPm(method) {
+    var pmTicketPrice = @ticketPrice;
+    var pmAgencyBalance = @agencyBalance;
+
+    function syncWalletPayment() {
+        var toggle = document.getElementById('pm-wallet-toggle');
         var hidden = document.getElementById('payment-method');
-        if (hidden) hidden.value = method;
-        document.querySelectorAll('.pm-pick').forEach(function (el) {
-            if (!el.classList.contains('disabled')) el.classList.remove('selected');
-        });
-        var radio = document.getElementById(method === 'balance' ? 'pm-balance' : 'pm-zarinpal');
-        if (radio) {
-            radio.checked = true;
-            var wrap = radio.closest('.pm-pick');
-            if (wrap) wrap.classList.add('selected');
+        var row = document.getElementById('pm-wallet-toggle-row');
+        var hint = document.getElementById('pm-wallet-hint');
+        var walletRow = document.getElementById('pm-wallet-row');
+        var walletAppliedEl = document.getElementById('pm-wallet-applied');
+        var gatewayEl = document.getElementById('pm-gateway-payable');
+        var useWallet = !!(toggle && toggle.checked && !toggle.disabled);
+
+        var walletApplied = 0;
+        var method = 'zarinpal';
+        var hintText = 'موجودی کیف پول: ' + pmAgencyBalance.toLocaleString('en-US') + ' تومان';
+
+        if (useWallet) {
+            if (pmAgencyBalance >= pmTicketPrice) {
+                method = 'balance';
+                walletApplied = pmTicketPrice;
+            } else if (pmAgencyBalance > 0) {
+                method = 'hybrid';
+                walletApplied = pmAgencyBalance;
+            }
         }
+
+        var gatewayPayable = Math.max(0, pmTicketPrice - walletApplied);
+
+        if (hidden) hidden.value = method;
+        if (row) row.classList.toggle('is-on', useWallet);
+        if (hint) hint.textContent = hintText;
+        if (walletRow) walletRow.style.display = walletApplied > 0 ? '' : 'none';
+        if (walletAppliedEl) walletAppliedEl.textContent = '−' + walletApplied.toLocaleString('en-US') + ' تومان';
+        if (gatewayEl) gatewayEl.textContent = gatewayPayable.toLocaleString('en-US') + ' تومان';
         var btn = document.getElementById('confirm-pay-btn');
-        if (btn) btn.textContent = method === 'zarinpal' ? 'پرداخت از درگاه' : 'تایید پرداخت از حساب';
+        if (btn) btn.textContent = gatewayPayable === 0 ? 'پرداخت از کیف پول' : 'پرداخت از درگاه';
     }
+
+    document.addEventListener('DOMContentLoaded', syncWalletPayment);
 
     function ChangeNumber() {
         var newPhoneNumber = document.getElementById('newnumberphone').value;

@@ -21,7 +21,13 @@ namespace Application.ViewModels.Reserve
     [Required(ErrorMessage = "جنسیت مسافر را انتخاب کنید")]
     public string Gender { set; get; }
 
-    /// <summary>balance = ORS agency credit; zarinpal = online card payment then issue ticket.</summary>
+    /// <summary>Optional agency employee used for this booking.</summary>
+    public int? EmployeeId { get; set; }
+
+    /// <summary>JSON-serialized companion list (max 2) carried through confirm/pay.</summary>
+    public string? CompanionsJson { get; set; }
+
+    /// <summary>balance | zarinpal | hybrid (wallet leftover + gateway remainder).</summary>
     public string? PaymentMethod { get; set; }
   }
 }

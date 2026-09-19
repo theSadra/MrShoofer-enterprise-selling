@@ -27,6 +27,12 @@ namespace Application.ViewModels.Reserve
     [EmailAddress(ErrorMessage = "لطفا یک ایمیل معتبر وارد کنید")]
     public string? Email { get; set; }
 
+    /// <summary>Optional selected agency employee used for autofill and ticket linkage.</summary>
+    public int? EmployeeId { get; set; }
+
+    /// <summary>Optional companions (max 2) for charter; lead passenger remains the primary fields.</summary>
+    public List<CompanionPassengerViewModel> Companions { get; set; } = new();
+
     [Required]
     public string TripCode { get; set; }
   }

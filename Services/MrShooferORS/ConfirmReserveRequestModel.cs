@@ -7,5 +7,6 @@ namespace Application.Services.MrShooferORS
     public string passengerLastName { get; set; }
     public string passengerNumberPhone { get; set; }
     public string passengerNationalCode { get; set; }
+    public string passengerCompanyName { get; set; }
   }
 }

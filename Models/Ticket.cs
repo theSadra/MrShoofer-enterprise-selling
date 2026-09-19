@@ -13,6 +13,7 @@ namespace Application.Models
     public string PhoneNumber { get; set; }
     public string? Email { get; set; }
     public string NaCode { get; set; }
+    public string CompanyName { get; set; } = "";
     public DateTime DOB { get; set; }
     public int TicketOriginalPrice { get; set; }
     public int TicketFinalPrice { get; set; }
@@ -23,6 +24,12 @@ namespace Application.Models
 
     public string ServiceName { set; get; }
     public string CarName { get; set; }
+
+    /// <summary>Optional link to agency employee roster used when booking.</summary>
+    public int? AgencyEmployeeId { get; set; }
+    public AgencyEmployee? AgencyEmployee { get; set; }
+
+    public ICollection<TicketCompanion> Companions { get; set; } = new List<TicketCompanion>();
 
     // nav prop
     public Agency Agency { get; set; }

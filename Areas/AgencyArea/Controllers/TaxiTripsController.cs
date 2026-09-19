@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Globalization;
 using Application.Models;
+using Application.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Application.ViewModels.TaxiTrips;
 using System.Text.RegularExpressions;
@@ -198,6 +199,22 @@ namespace Application.Areas.AgencyArea
     [Route("/TaxiTrips/SupportedCities")]
     public IActionResult SupportedCities() => Json(directionsRepository.GetDirections().Keys.ToList());
 
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("/TaxiTrips/SearchHints")]
+    public IActionResult SearchHints()
+    {
+      var supported = directionsRepository.GetDirections().Keys.OrderBy(x => x, StringComparer.Ordinal).ToList();
+      var popularOrigins = new[] { "تهران", "اصفهان", "شیراز", "رشت", "چالوس", "کرمانشاه", "نوشهر" };
+      var version = $"v2-{supported.Count}-{string.Join(',', popularOrigins)}";
+      return Json(new
+      {
+        supportedCities = supported,
+        popularOrigins,
+        version
+      });
+    }
+
     public override void OnActionExecuting(ActionExecutingContext context)
     {
       base.OnActionExecuting(context);
@@ -206,11 +223,7 @@ namespace Application.Areas.AgencyArea
       // Use agency token if authenticated, otherwise use guest/default token
       if (User?.Identity?.IsAuthenticated == true)
       {
-        var currentUserId = _userManager.GetUserId(User);
-        if (!string.IsNullOrWhiteSpace(currentUserId))
-        {
-          agency = this.context.Agencies.FirstOrDefault(a => a.IdentityUser != null && a.IdentityUser.Id == currentUserId);
-        }
+        agency = ResolveAgencyForUser();
         if (agency != null && !string.IsNullOrWhiteSpace(agency.ORSAPI_token))
           tokenToUse = agency.ORSAPI_token;
       }
@@ -315,29 +328,85 @@ namespace Application.Areas.AgencyArea
       }
 
       int traveltime_mins = _travelTimeCalculator.GetTravelMins(originstring, destinationstring);
+      // Re-resolve in case this action was hit without a prior authenticated filter path.
+      agency ??= ResolveAgencyForUser();
+      var commissionPercent = await ResolveCommissionPercentAsync();
 
       var end_result = response
         .OrderBy(t => t.startingDateTime)
-        .ThenBy(t => t.afterdiscticketprice)
+        .ThenBy(t => AgencyCommissionPricing.NetPayableTomans(t.afterdiscticketprice, commissionPercent))
         .Where(t => t.startingDateTime > DateTime.Now.AddMinutes(45))
         .ToList();
 
-      var searchedTripViewModels = end_result.Select(t => new SearchedTripViewModel
+      var searchedTripViewModels = end_result.Select(t =>
       {
-        startingDateTime = t.startingDateTime.ToString("HH:mm"),
-        arrivalDateTime = t.startingDateTime.AddMinutes(traveltime_mins).ToString("HH:mm"),
-        origin = $"{t.originCityName}({t.oringinLocationName})",
-        destination = $"{t.destinationCityName}({t.destinationLocationName})",
-        originalPrice = t.originalTicketprice.ToString("N0"),
-        afterdiscount = t.afterdiscticketprice.ToString("N0"),
-        taxiSupervisorName = t.taxiSupervisorName,
-        taxiSupervisorID = t.taxiSupervisorID,
-        tripcode = t.tripPlanCode,
-        carModelName = t.carModelName,
-        Image = t.Image
+        // Recommended sale = ORS after-discount list price (charge passenger this).
+        var recommendedSale = t.afterdiscticketprice;
+        // Payable = after-discount minus ORS/base commission.
+        var payable = AgencyCommissionPricing.NetPayableTomans(recommendedSale, commissionPercent);
+        var hasCommission = commissionPercent > 0;
+        return new SearchedTripViewModel
+        {
+          startingDateTime = t.startingDateTime.ToString("HH:mm"),
+          arrivalDateTime = t.startingDateTime.AddMinutes(traveltime_mins).ToString("HH:mm"),
+          origin = $"{t.originCityName}({t.oringinLocationName})",
+          destination = $"{t.destinationCityName}({t.destinationLocationName})",
+          originalPrice = t.originalTicketprice.ToString("N0"),
+          afterdiscount = recommendedSale.ToString("N0"),
+          payablePrice = payable.ToString("N0"),
+          commissionPercent = commissionPercent,
+          hasCommission = hasCommission,
+          taxiSupervisorName = t.taxiSupervisorName,
+          taxiSupervisorID = t.taxiSupervisorID,
+          tripcode = t.tripPlanCode,
+          carModelName = t.carModelName,
+          Image = _mrShooferAPIClient.ResolveMediaUrl(t.Image)
+        };
       }).ToList();
 
       return Json(searchedTripViewModels);
+    }
+
+    private Agency? ResolveAgencyForUser()
+    {
+      if (User?.Identity?.IsAuthenticated != true) return null;
+
+      var identityUser = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
+      if (identityUser == null) return null;
+
+      return context.Agencies.FirstOrDefault(a => a.IdentityUserId == identityUser.Id)
+             ?? context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+    }
+
+    /// <summary>
+    /// Prefer live ORS <c>baseCommission</c> so payable tracks ORS changes; fall back to local Agency.Commission.
+    /// Guests (no agency) get 0 — both prices show the ORS list amount.
+    /// </summary>
+    private async Task<int> ResolveCommissionPercentAsync()
+    {
+      if (agency == null) return 0;
+
+      try
+      {
+        var orsInfo = await _mrShooferAPIClient.GetMyAgencyInfoAsync();
+        if (orsInfo != null)
+        {
+          var live = (int)Math.Round(orsInfo.BaseCommission, MidpointRounding.AwayFromZero);
+          if (live < 0) live = 0;
+          if (live > 100) live = 100;
+
+          // Keep local copy aligned when ORS commission changes.
+          if (agency.Commission != live)
+          {
+            agency.Commission = live;
+            try { await context.SaveChangesAsync(); } catch { /* non-fatal */ }
+          }
+          return live;
+        }
+      }
+      catch { /* fall back to local */ }
+
+      return agency.Commission;
     }
   }
 }

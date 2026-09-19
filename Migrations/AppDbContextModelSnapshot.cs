@@ -187,7 +187,14 @@ namespace Application.Migrations
                     b.Property<int>("AgencyId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("AgencyEmployeeId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CarName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -253,6 +260,8 @@ namespace Application.Migrations
 
                     b.HasIndex("AgencyId");
 
+                    b.HasIndex("AgencyEmployeeId");
+
                     b.ToTable("Tickets");
                 });
 
@@ -308,6 +317,9 @@ namespace Application.Migrations
                     b.Property<int>("AgencyId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("AgencyEmployeeId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("AmountToman")
                         .HasColumnType("integer");
 
@@ -316,6 +328,13 @@ namespace Application.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CardPan")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CompanionsJson")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -354,15 +373,69 @@ namespace Application.Migrations
                     b.Property<int?>("TicketId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TicketPriceToman")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TripCode")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("WalletAppliedToman")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AgencyId");
 
                     b.ToTable("ZarinpalTicketPayments");
+                });
+
+            modelBuilder.Entity("Application.Models.AgencyEmployee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NaCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgencyId", "NaCode")
+                        .IsUnique();
+
+                    b.ToTable("AgencyEmployees");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -609,7 +682,14 @@ namespace Application.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Application.Models.AgencyEmployee", "AgencyEmployee")
+                        .WithMany("Tickets")
+                        .HasForeignKey("AgencyEmployeeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Agency");
+
+                    b.Navigation("AgencyEmployee");
                 });
 
             modelBuilder.Entity("Application.Models.ZarinpalChargeRequest", b =>
@@ -627,6 +707,17 @@ namespace Application.Migrations
                 {
                     b.HasOne("Application.Models.Agency", "Agency")
                         .WithMany()
+                        .HasForeignKey("AgencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agency");
+                });
+
+            modelBuilder.Entity("Application.Models.AgencyEmployee", b =>
+                {
+                    b.HasOne("Application.Models.Agency", "Agency")
+                        .WithMany("Employees")
                         .HasForeignKey("AgencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -687,7 +778,14 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Application.Models.Agency", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("SoldTickets");
+                });
+
+            modelBuilder.Entity("Application.Models.AgencyEmployee", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,7 +13,17 @@ namespace Application.Models
     public string ORSAPI_token { set; get; }
     public int Commission { get; set; }
 
+    public string? IdentityUserId { get; set; }
+
+    /// <summary>کد اقتصادی سازمان فروشنده (آژانس)</summary>
+    public string? EconomicNo { get; set; }
+    /// <summary>شماره ثبت سازمان فروشنده (آژانس)</summary>
+    public string? RegistrationNo { get; set; }
+    /// <summary>شناسه ملی / کد ملی سازمان فروشنده (آژانس)</summary>
+    public string? NationalId { get; set; }
+
     public IdentityUser IdentityUser { get; set; }
     public ICollection<Ticket> SoldTickets { get; set; }
+    public ICollection<AgencyEmployee> Employees { get; set; }
   }
 }

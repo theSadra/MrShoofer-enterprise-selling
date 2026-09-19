@@ -1,4 +1,5 @@
 @model List<Application.Services.MrShooferORS.SearchedTrip>
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
 @{
 
@@ -14,37 +15,41 @@
 }
 
 @section VendorStyles {
-    <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
-    <link rel="stylesheet" href="~/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-    <link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
     <link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
-
-	<link href="~/css/TaxiTripsIndex.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/jalali-datepicker.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/trip-search.css" asp-append-version="true" />
+	<link href="~/css/TaxiTripsIndex.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="~/vendor/libs/spinkit/spinkit.css">
-    
 }
 @section VendorScripts {
     <script src="~/libs/jquery.js"></script>
     <script src="~/vendor/libs/jdate/jdate.min.js" asp-append-version="true"></script>
-    <script src="~/vendor/libs/flatpickr/flatpickr-jdate.js" asp-append-version="true"></script>
-    <script src="~/vendor/libs/flatpickr/l10n/fa.js" asp-append-version="true"></script>
+    <script src="~/js/jalali-datepicker.js" asp-append-version="true"></script>
     <script src="~/vendor/js/dropdown-hover.js"></script>
-    <script src="~/vendor/js/dropdown-hover.js"></script>
-
 }
 @section PageScripts {
     <script src="~/js/cards-actions.js"></script>
-
     <script src="~/js/front-page-landing.js"></script>
-    <script src="~/js/forms-pickers-jalali.js" asp-append-version="true"></script>
-
-
-    <script src="~/js/searchpage.js"></script>
-
-	<script src="~/js/IndexPage.js" asp-append-version="true"> </script>
-    <script src="~/js/Trips.js" asp-append-version="true"> </script>
+    <script src="~/js/searchpage.js" asp-append-version="true"></script>
+	<script src="~/js/IndexPage.js" asp-append-version="true"></script>
+	<script>
+		window.ORS_API_BASE = '@(Configuration["MrShoofer:ApiBaseUrl"] ?? Configuration["serivce_url"] ?? "https://ors.shoofer.taxi")'.replace(/\/$/, '');
+	</script>
+	<script src="~/js/Trips.js" asp-append-version="true"></script>
+	<script>
+	(function () {
+		var rail = document.getElementById('tripsTimelineRail');
+		if (!rail) return;
+		document.querySelectorAll('.switchbar-container .scroll_button').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var dir = btn.getAttribute('data-scroll-dir') === 'end' ? 1 : -1;
+				// RTL: "start" (right chevron) scrolls toward start of content
+				var delta = Math.max(160, Math.floor(rail.clientWidth * 0.7)) * dir;
+				rail.scrollBy({ left: delta, behavior: 'smooth' });
+			});
+		});
+	})();
+	</script>
 
 
 
@@ -124,65 +129,93 @@
 </style>
 <style>
     .submitation {
-        max-width: 160px;
-        flex: 1;
-    }
-
-    .direction-container {
+        max-width: 300px;
+        min-width: 220px;
+        flex: 0 0 auto;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
     }
 
     .transport {
         flex-grow: 3;
         max-width: 300px;
+        margin-right: 3.6rem;
     }
 
     .trip-info {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: stretch;
+        gap: 1rem;
+        margin-inline-start: 0;
     }
 
-
-    @@media only screen and (max-width: 600px) {
-        .trip-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .provider h5 {
-            font-size: initial;
-        }
-
-        .starttime, .endtime {
-            font-size: 1.1rem !important;
-        }
-
-        .transport {
-            padding-left: 1.5rem;
-            padding-right: 1.2rem;
-            margin: 0 !important;
-        }
-
-        .submitation {
-            flex-direction: row !important;
-            max-width: unset !important;
-            justify-content: space-between !important;
-            padding-left: 1rem;
-        }
+    .trip-info-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
-    .transport {
-        margin-right: 3.6rem;
+    .startendtime {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: nowrap;
+    }
+
+    .starttime-badge {
+        border-radius: 0.45rem !important;
+        color: #18181b;
+        padding: 0.35rem 0.55rem;
+    }
+
+    .trip-route-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.15rem;
+        color: #a1a1aa;
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 2.5rem;
+    }
+
+    .trip-route-dots {
+        letter-spacing: 0.05em;
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+
+    .endtime-wrap {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.2rem;
+        white-space: nowrap;
+    }
+
+    .endtime-approx {
+        font-size: 0.65rem !important;
+    }
+
+    .direction {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
     }
 
     .fa-taxiSide {
         height: 1.2em;
+        width: 1.2em;
     }
 
     .price {
-        color: #0b5fb3;
-        font-size: 20px;
+        color: #18181b;
+        font-size: 1.125rem;
         font-style: normal;
         font-variation-settings: "wght" 700;
         font-weight: 700;
@@ -190,21 +223,32 @@
     }
 
     .orgprice {
-        color: #8d99a6;
-        font-size: 15px;
+        color: #18181b;
+        font-size: 0.95rem;
         font-style: normal;
-        font-variation-settings: "wght" 500;
-        font-weight: 500;
+        font-variation-settings: "wght" 600;
+        font-weight: 600;
         text-align: right;
-        text-decoration: line-through;
+        text-decoration: none;
+    }
+
+    .orgprice--struck,
+    .orgprice--struck .trip-price-num,
+    .orgprice--struck .trip-price-currency {
+        color: #a1a1aa !important;
+        font-size: 0.78rem !important;
+        font-weight: 500 !important;
+        text-decoration: line-through !important;
     }
 
     .logo-image {
-        height:58px;
+        height: 58px;
+        width: auto;
         -o-object-fit: contain;
         object-fit: contain;
+        background: transparent !important;
+        mix-blend-mode: multiply;
     }
-
 
     .leftside {
         display: flex;
@@ -217,22 +261,32 @@
         font-size: 14px;
         font-style: normal;
         font-variation-settings: "wght" 400;
-        font-weight: 400;
-        line-height: 28px;
+        line-height: 1.45;
+        min-width: 0;
     }
-
 
     .mainbody {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
+        width: 100%;
     }
 
     .provider {
         text-align: center;
+        flex: 0 0 auto;
+    }
+
+    .trip-service-name {
+        font-size: 1rem;
+        font-weight: 700;
     }
 
     .starttime, .endtime {
         font-size: 1.7rem;
+        color: #18181b;
+        font-weight: 700;
+        line-height: 1.1;
     }
 
     .tripcardheader {
@@ -243,127 +297,92 @@
 
     .carmodel {
         color: black !important;
+        max-width: 14rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .direction-container {
         display: flex;
         flex-direction: column;
         justify-content: start;
+        gap: 0.35rem;
+        min-width: 0;
     }
 
-	.landing-hero {
-		background-color: hsla(213.08823529411762, 0%, 93%, 1) !important;
-		background-image: radial-gradient(circle at 83% 22%, hsla(35.735294117647136, 82%, 87%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 50%, hsla(194.5588235294118, 37%, 91%, 1) 0%, transparent 50%), radial-gradient(circle at 21% 21%, hsla(27.999999999999577, 0%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 54% 77%, hsla(193.2352941176474, 100%, 95%, 1) 0%, transparent 50%), radial-gradient(circle at 30% 75%, hsla(197.87234042553195, 25%, 35%, 1) 0%, transparent 20%) !important;
-		background-blend-mode: normal, normal, normal, normal, normal !important;
+	.trips-page-shell .landing-hero,
+	.trips-page-shell .trips-results {
+		background: transparent !important;
+		background-image: none !important;
+		border-radius: 0 !important;
+		margin-inline: 0 !important;
+	}
+
+	.trips-page-shell .landing-hero::before,
+	.trips-page-shell .landing-hero::after {
+		display: none !important;
+		content: none !important;
 	}
 </style>
 
 
-<div class="landing-hero px-lg-5 px-0 px-lg-5 mx-lg-4 pb-md-3" style="padding-top: 7.5rem !important;">
+<div class="trips-page-shell">
+
+<div class="landing-hero trips-search-hero px-lg-5 px-0 pb-md-3">
 	<div class="container px-lg-6 px-0">
 
-	<div class="searchbar card shadow" style="">
-
-		<div class="row">
-			<div class="col-lg-2 col-0"></div>
-			<div class="row col-12 col-lg-8 p-0">
-				<div class="px-4 px-md-0 pe-0">
-                        <form asp-controller="TaxiTrips" method="get" asp-action="Index" id="tripForm">
-						<div class="card-body row mx-0  p-4 pt-md-2">
-							<div class="col-md-3 col-12 inputcel">
-
-								<small class="ms-3">مبدا</small>
+	<div class="searchbar card shadow">
+		<form asp-controller="TaxiTrips" method="get" asp-action="Index" id="tripForm"
+			  class="searchbar-form"
+			  data-initial-origin="@(ViewBag.origin_city_text as string ?? "")"
+			  data-initial-dest="@(ViewBag.dest_city_text as string ?? "")">
+			<div class="card-body searchbar-body">
+				@* OTA rail: origin | swap | destination | date | search — one horizontal unit *@
+				<div class="searchbar-rail">
+					<div class="od-pair-col">
+						<div class="od-pair">
+							<div class="inputcel">
+								<small class="searchbar-field-label">مبدا</small>
 								<div class="input-container">
-                                        <input required id="origin_input" name="originstring" autocomplete="off" aria-describedby="defaultFormControlHelp" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle" placeholder="مبدا" type="text" role="button" style="font-weight:bold;" />
-									<i class="ti ti-location mb-2 icon"></i>
-									<span class="dropdown-menu dropdown-menu-end origin_location" style="inset:unset !important; min-width:230px;">
-
-										@*  <div class="city">
-										<a class="dropdown-item" href="javascript:void(0);">
-										تهران
-										<small class="" >
-										(همه پایانه‌ها)
-										</small>
-
-										</a>
-
-										<div class="terminals ms-3">
-										<a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
-
-										</div>
-										</div> *@
-									</span>
+									<input required id="origin_input" name="originstring" autocomplete="off" value="@ViewBag.origin_city_text" data-bs-toggle="dropdown" class="form-control origin input-field dropdown-toggle hide-arrow" placeholder="مبدا" type="text" role="combobox" aria-expanded="false" style="font-weight:bold;" />
+									<i class="ti ti-location icon" aria-hidden="true"></i>
+									<div class="dropdown-menu dropdown-menu-end origin_location"></div>
 								</div>
-								@* <div class="form-text" id="defaultFormControlHelp">شهر مبدا سفر</div> *@
 							</div>
 
-							<div class="col-md-3 col-12 inputcel">
-								<small class="ms-3">مقصد</small>
-
+							<div class="inputcel">
+								<small class="searchbar-field-label">مقصد</small>
 								<div class="input-container">
-                                        <input required id="destination_input" name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle" placeholder="مقصد" type="text" role="button" style="font-weight:bold;" />
-									<i class="ti ti-map-pin mb-2 icon"></i>
-										<span class="dropdown-menu dropdown-menu-end destination_location" style="inset:unset !important; min-width:230px;">
-
-										@*  <div class="city">
-										<a class="dropdown-item" href="javascript:void(0);">
-										تهران
-										<small class="" >
-										(همه پایانه‌ها)
-										</small>
-
-										</a>
-
-										<div class="terminals ms-3">
-										<a class="dropdown-item" href="javascript:void(0);">پایانه بیهقی</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه آزادی</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه شرق</a>
-										<a class="dropdown-item" href="javascript:void(0);">پایانه غرب</a>
-
-										</div>
-										</div> *@
-									</span>
-
+									<input required id="destination_input" name="destinationstring" value="@ViewBag.dest_city_text" data-bs-toggle="dropdown" autocomplete="off" class="form-control destination input-field dropdown-toggle hide-arrow" placeholder="مقصد" type="text" role="combobox" aria-expanded="false" style="font-weight:bold;" />
+									<i class="ti ti-map-pin icon" aria-hidden="true"></i>
+									<div class="dropdown-menu dropdown-menu-end destination_location"></div>
 								</div>
-								@* <div class="form-text" id="defaultFormControlHelp">شهر مقصد سفر</div> *@
 							</div>
-
-							<div class="col-md-3 col-sm-12 inputcel mt-2 mt-md-0">
-
-								<small class="ms-3">تاریخ سفر</small>
-
-								<!-- /Human Friendly Date Picker-->
-								<!-- Disabled Range-->
-
-								<div class="input-container">
-                                        <input required name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="starttime" placeholder="تاریخ سفر" type="text" />
-									<i class="ti ti-calendar-stats mb-2 icon pe-0"></i>
-								</div>
-								@* <div class="form-text" id="defaultFormControlHelp">انتخاب تاریخ</div> *@
-
-
-							</div>
-
-
-
-							<div class="col-md-3 col-12 inputcel pt-2 align-items-end mt-md-0 mt-2 d-flex justify-content-end">
-								<button style="width:100%;" class="btn btn-primary waves-effect waves-light" type="submit">
-									پیدا کن
-									<i class="ti ti-search"></i>
-								</button>
-							</div>
-
 						</div>
-					</form>
+						<button type="button" class="od-swap-btn" id="od-swap-btn" title="جابه‌جایی مبدأ و مقصد" aria-label="جابه‌جایی مبدأ و مقصد">
+							<i class="ti ti-arrows-left-right" aria-hidden="true"></i>
+						</button>
+					</div>
+
+					<div class="inputcel searchbar-date">
+						<small class="searchbar-field-label">تاریخ سفر</small>
+						<div class="input-container">
+							<input required name="searchdate" autocomplete="off" value="@ViewBag.searchdate" class="form-control bdi starttimeselector" id="starttime" placeholder="تاریخ سفر" type="text" />
+							<i class="ti ti-calendar-stats icon" aria-hidden="true"></i>
+						</div>
+					</div>
+
+					<div class="searchbar-submit-cel">
+						<small class="searchbar-field-label searchbar-field-label--spacer" aria-hidden="true">&nbsp;</small>
+						<button class="btn btn-primary waves-effect waves-light searchbar-submit" type="submit">
+							پیدا کن
+							<i class="ti ti-search" aria-hidden="true"></i>
+						</button>
+					</div>
 				</div>
 			</div>
-			<div class="col-lg-2 col-0"></div>
-
-		</div>
-
+		</form>
 	</div>
 	</div>
 </div>
@@ -371,17 +390,15 @@
 
 
 
-<div id="" style="padding-top: 1.7rem; background-color: none !important;" class="position-relative">
-	<div class="px-lg-5 mx-lg-2">
+<div class="position-relative trips-results">
+	<div class="page-safezone">
 
-		<div class="container-lg">
-			<div class="px-lg-6 px-0">
-			
 				<div class="row ">
-					<div class="col-3 d-none d-md-block" style="padding-left:0.5rem !important;">
+					<div class="col-3 d-none d-md-block trips-sidebar" style="padding-left:0.5rem !important;">
+						<div class="trips-sidebar-sticky">
 						<div class="card">
 							<div class=" py-3 pe-4 ps-3" style="">
-								<lable class="direction-text mt-2 fw-normal" style="font-weight: normal !important;">
+								<label class="direction-text mt-2 fw-normal d-block" style="font-weight: normal !important;">
 									سفرهای سواری
 
 									<strong class="fs-5">
@@ -391,7 +408,7 @@
 									<strong >
 									@ViewBag.dest_city_text
 									</strong>
-								</lable>
+								</label>
 								<label class="mt-1 ms-1">
 									روز
 									
@@ -422,16 +439,16 @@
 							<div class="collapse show" style="">
 								<div class="card-body pt-0">
 									<div class="form-check ">
-                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" checked onclick="orderFilterSelected(0)">
-										<label class="form-check-label" for="defaultRadio1">پیشنهاد مسترشوفر</label>
+                                        <input class="form-check-input" id="orderFilterSuggested" name="default-radio-1" type="radio" value="" checked onclick="orderFilterSelected(0)">
+										<label class="form-check-label" for="orderFilterSuggested">پیشنهاد مسترشوفر</label>
 									</div>
 									<div class="form-check mt-2">
-                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(2)">
-										<label class="form-check-label fw-light" for="defaultRadio1">کمترین قیمت</label>
+                                        <input class="form-check-input" id="orderFilterCheapest" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(2)">
+										<label class="form-check-label fw-light" for="orderFilterCheapest">کمترین قیمت</label>
 									</div>
 									<div class="form-check mt-2">
-                                        <input class="form-check-input" id="defaultRadio1" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(1)">
-                                        <label class="form-check-label fw-light " for="defaultRadio1">بیشترین قیمت</label>
+                                        <input class="form-check-input" id="orderFilterPriciest" name="default-radio-1" type="radio" value="" onclick="orderFilterSelected(1)">
+                                        <label class="form-check-label fw-light " for="orderFilterPriciest">بیشترین قیمت</label>
 									</div>
 								</div>
 							</div>
@@ -464,14 +481,28 @@
 							</div>
 
 						</div>
+						</div><!-- /.trips-sidebar-sticky -->
 					</div>
-
-						
-							
 
                             <div class="col-12 col-md-9 px-1">
 
                                 @await Html.PartialAsync("TimelinePartial", DateTime.Now)
+
+                                <div class="card d-md-none mt-2 mb-2 trips-mobile-filters">
+                                    <div class="card-body py-3">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <span class="small text-muted ms-1">ترتیب:</span>
+                                            <div class="btn-group" role="group" aria-label="ترتیب نتایج">
+                                                <input type="radio" class="btn-check" name="mobile-order" id="mobileOrderSuggested" autocomplete="off" checked onclick="orderFilterSelected(0)">
+                                                <label class="btn btn-sm btn-outline-secondary" for="mobileOrderSuggested">پیشنهاد</label>
+                                                <input type="radio" class="btn-check" name="mobile-order" id="mobileOrderCheapest" autocomplete="off" onclick="orderFilterSelected(2)">
+                                                <label class="btn btn-sm btn-outline-secondary" for="mobileOrderCheapest">ارزان‌تر</label>
+                                                <input type="radio" class="btn-check" name="mobile-order" id="mobileOrderPriciest" autocomplete="off" onclick="orderFilterSelected(1)">
+                                                <label class="btn btn-sm btn-outline-secondary" for="mobileOrderPriciest">گران‌تر</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 							  
 								<div class="trips-container">
@@ -489,7 +520,7 @@
 
 
                                         <label class="fw-bold fs-5 ms-3">
-                                            در حال بارگزازی سفر ها
+                                            در حال بارگذاری سفر ها
                                         </label>
                                    </div>
 
@@ -498,10 +529,10 @@
 							</div>
 
 				</div>
-			</div>
-		</div>
 	</div>
 </div>
+
+</div><!-- /.trips-page-shell -->
 
 
 

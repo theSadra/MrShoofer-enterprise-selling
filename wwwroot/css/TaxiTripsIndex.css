@@ -14,6 +14,47 @@
   }
 }
 
+/* Never apply desktop px-lg-6 padding below lg — was causing mobile horizontal scroll */
+@media (max-width: 991.98px) {
+  .px-lg-6 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+/*
+  Trips safe zone — compact booking shell (~Alibaba-width cards).
+  Desktop cap ~64rem so cards stay narrow with clear side margins.
+*/
+.page-safezone {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .page-safezone {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .page-safezone {
+    max-width: 64rem !important;
+    width: 100% !important;
+    padding-inline: 1rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .page-safezone {
+    max-width: 64rem !important;
+    width: 100% !important;
+  }
+}
+
 
 
 
@@ -112,7 +153,7 @@
 }
 
 .selected-dayspan {
-  background: #7367f0;
+  background: #000000;
   border-radius: 4px 4px 0 0;
   bottom: -8px;
   height: 4px;
@@ -125,9 +166,13 @@
 
 
 .dropdown-menu {
-  inset: unset !important;
   min-width: 250px !important;
   transition: ease-out 300ms all;
+}
+
+/* Keep Popper inset for non-city menus; city pickers are positioned in trip-search.css */
+.dropdown-menu:not(.origin_location):not(.destination_location) {
+  inset: unset !important;
 }
 
 .locationicon {
@@ -178,4 +223,706 @@
 .input-container input {
     width: 100%;
     border: 1px solid #ccc;
+}
+
+/* Trips search hero — top spacing under fixed navbar.
+   Do not clip overflow: overflow-x:clip forces overflow-y clipping too and
+   chops the city dropdown into an empty white sheet over the date strip. */
+.trips-search-hero {
+  padding-top: 6.5rem !important;
+  padding-bottom: 1.25rem !important;
+  overflow: visible;
+}
+
+@media (min-width: 992px) {
+  .trips-search-hero {
+    padding-top: 7.5rem !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .trips-search-hero {
+    padding-top: 5.25rem !important;
+  }
+}
+
+/* Sticky filter sidebar — column stretches with trip list; cards stick inside it */
+.trips-results > .page-safezone > .row {
+  align-items: stretch;
+}
+
+.trips-sidebar {
+  align-self: stretch !important;
+  overflow: visible;
+}
+
+.trips-sidebar-sticky {
+  position: sticky;
+  top: 5rem;
+  z-index: 30;
+  max-height: calc(100vh - 5.75rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0.9rem 0.85rem 1.75rem;
+  margin-inline: -0.85rem;
+  margin-block: -0.35rem 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trips-sidebar-sticky > .card + .card {
+  margin-top: 0.65rem;
+}
+
+@media (max-width: 767.98px) {
+  .trips-sidebar-sticky {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* Desktop: searchbar + results share the same compact shell */
+@media (min-width: 992px) {
+  .trips-page-shell .landing-hero > .container.px-lg-6 {
+    max-width: 64rem !important;
+    width: 100% !important;
+    padding-inline: 1rem !important;
+    margin-inline: auto;
+  }
+
+  .trips-page-shell .trips-results > .page-safezone {
+    max-width: 64rem !important;
+    width: 100% !important;
+    padding-inline: 1rem;
+    margin-inline: auto;
+  }
+}
+
+.trips-results {
+  padding-top: 1.7rem;
+}
+
+/* Search bar — OTA rail. Overflow must stay visible so origin/destination
+   city menus can paint above the date timeline instead of a clipped ghost panel. */
+.searchbar {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  border-radius: 1.15rem !important;
+  overflow: visible;
+  position: relative;
+  z-index: 40;
+}
+
+.searchbar-form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.searchbar-body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 1rem 1rem !important;
+  overflow: visible;
+}
+
+.searchbar .input-container {
+  position: relative;
+  z-index: 1;
+}
+
+.searchbar .input-container:has(> .dropdown-menu.show) {
+  z-index: 60;
+}
+
+.searchbar .dropdown-menu.origin_location,
+.searchbar .dropdown-menu.destination_location {
+  z-index: 60 !important;
+  background: #fff !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12) !important;
+}
+
+@media (min-width: 768px) {
+  .searchbar-body {
+    padding: 1.1rem 1.15rem !important;
+  }
+}
+
+/* Single rail: OD + date + CTA — shrinks cleanly, never escapes the card */
+.searchbar-rail {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.searchbar-rail .od-pair-col {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+}
+
+.searchbar-rail .searchbar-date {
+  flex: 0 1 11.5rem;
+  min-width: 0;
+  max-width: 13rem;
+  width: 11.5rem;
+}
+
+.searchbar-rail .searchbar-submit-cel {
+  flex: 0 0 7.75rem;
+  width: 7.75rem;
+  min-width: 0;
+  max-width: 7.75rem;
+}
+
+.searchbar-field-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  margin-inline-start: 0.5rem;
+  color: #6f6b7d;
+  text-align: start;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchbar-field-label--spacer {
+  visibility: hidden;
+  user-select: none;
+}
+
+.searchbar-submit {
+  width: 100%;
+  min-height: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.9rem !important;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  padding-inline: 0.65rem !important;
+}
+
+.searchbar-submit .ti {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.searchbar .inputcel {
+  padding: 0 !important;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.searchbar .input-container {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.searchbar .input-container > i.icon {
+  position: absolute;
+  top: 50%;
+  left: 0.55rem !important;
+  right: auto !important;
+  transform: translateY(-50%);
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  width: 1.1rem;
+  height: 1.1rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #000000;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.searchbar .input-container input.form-control {
+  width: 100%;
+  max-width: 100%;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  border-radius: 0.9rem !important;
+  border: 1px solid #e0dfe8;
+  background: #fff;
+  padding-inline-start: 0.85rem !important;
+  padding-inline-end: 2.2rem !important;
+  text-align: start;
+  direction: rtl;
+  unicode-bidi: isolate;
+  box-shadow: none;
+  min-width: 0;
+}
+
+.searchbar .input-container input.form-control:focus {
+  border-color: #000000 !important;
+  box-shadow: 0 0 0 0.18rem rgba(0, 0, 0, 0.22) !important;
+}
+
+.searchbar .input-container input.bdi,
+.searchbar .input-container input.starttimeselector {
+  direction: rtl !important;
+  text-align: start !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.od-pair-col {
+  position: relative;
+}
+
+.od-pair {
+  --od-swap-gutter: 2.25rem;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.searchbar .od-pair > .inputcel {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.searchbar .od-pair > .inputcel:first-child {
+  padding-inline-end: calc(var(--od-swap-gutter) / 2) !important;
+}
+
+.searchbar .od-pair > .inputcel:last-of-type {
+  padding-inline-start: calc(var(--od-swap-gutter) / 2) !important;
+}
+
+.searchbar .od-pair-col > .od-swap-btn,
+.searchbar .od-swap-btn {
+  --od-swap-size: 1.85rem;
+  position: absolute !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 0.45rem !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  z-index: 5;
+  width: var(--od-swap-size) !important;
+  max-width: var(--od-swap-size) !important;
+  height: var(--od-swap-size) !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.7rem;
+  border: 1px solid #e0dfe8;
+  background: #fff;
+  color: #000000;
+  box-shadow:
+    0 0 0 3px #fff,
+    0 1px 3px rgba(47, 43, 61, 0.08);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.searchbar .od-swap-btn .ti {
+  transform: none !important;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.searchbar .od-swap-btn:hover,
+.searchbar .od-swap-btn:focus-visible {
+  color: #fff;
+  border-color: #000000;
+  background: #000000;
+  transform: translateX(-50%) !important;
+}
+
+.searchbar .od-swap-btn:active {
+  transform: translateX(-50%) scale(0.94) !important;
+}
+
+/* Mid widths: keep one row, tighten CTA/date */
+@media (max-width: 991.98px) {
+  .searchbar-rail {
+    gap: 0.4rem;
+  }
+
+  .searchbar-rail .searchbar-date {
+    flex-basis: 9.75rem;
+    width: 9.75rem;
+    max-width: 10.5rem;
+  }
+
+  .searchbar-rail .searchbar-submit-cel {
+    flex-basis: 6.75rem;
+    width: 6.75rem;
+    max-width: 6.75rem;
+  }
+
+  .od-pair {
+    --od-swap-gutter: 2rem;
+  }
+
+  .searchbar-submit {
+    font-size: 0.875rem;
+    padding-inline: 0.45rem !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .searchbar-body {
+    padding: 0.9rem !important;
+  }
+
+  .searchbar-rail {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .searchbar-rail .od-pair-col,
+  .searchbar-rail .searchbar-date,
+  .searchbar-rail .searchbar-submit-cel {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  .searchbar .od-pair {
+    --od-swap-gutter: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .searchbar .od-pair > .inputcel:first-child,
+  .searchbar .od-pair > .inputcel:last-of-type {
+    padding-inline: 0 !important;
+  }
+
+  /* Swap position: trip-search.css (between مبدا / مقصد) */
+  .searchbar-field-label {
+    margin-inline-start: 0.35rem;
+  }
+
+  .searchbar-field-label--spacer {
+    display: none;
+  }
+
+  .searchbar-submit,
+  .searchbar .input-container input.form-control {
+    height: 3.15rem;
+    min-height: 3.15rem;
+  }
+
+  .searchbar-rail .searchbar-submit-cel {
+    width: 100%;
+  }
+
+  .searchbar-submit {
+    width: 100%;
+  }
+}
+
+/* Persian type on trip cards / search inputs (ORG parity) */
+.trips-container .badge.carmodel,
+.trips-container .orgprice,
+.trips-container .price,
+.trips-container .discount-badge,
+.searchbar .form-control,
+.searchbar .starttimeselector {
+  font-family: font-regular, "IRANSansX", Tahoma, sans-serif !important;
+  font-feature-settings: "ss02";
+  letter-spacing: 0;
+}
+
+.trips-container .price {
+  color: #18181b !important;
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  text-decoration: none !important;
+}
+
+.trips-container .orgprice {
+  color: #18181b !important;
+  text-decoration: none !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+}
+
+/* 0% commission: smaller «قبل از تخفیف» label + struck price */
+.trips-container .trip-price-row--before .trip-price-label {
+  font-size: 0.62rem;
+  color: #71717a;
+  font-weight: 500;
+}
+
+.trips-container .orgprice--struck,
+.trips-container .orgprice--struck .trip-price-num,
+.trips-container .orgprice--struck .trip-price-currency {
+  color: #a1a1aa !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  text-decoration: line-through !important;
+}
+
+/* Two-column grid so labels and amounts share columns across rows */
+.trips-container .trip-price-stack {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 0.75rem;
+  row-gap: 0.45rem;
+  justify-content: start;
+  align-items: baseline;
+  width: 100%;
+  direction: rtl;
+}
+
+.trips-container .trip-price-row {
+  display: contents;
+}
+
+.trips-container .trip-price-label {
+  font-size: 0.7rem;
+  color: #52525b;
+  line-height: 1.25;
+  white-space: nowrap;
+  unicode-bidi: isolate;
+  text-align: start;
+}
+
+.trips-container .trip-price-row--pay .trip-price-label {
+  color: #18181b;
+  font-weight: 700;
+}
+
+.trips-container .trip-price-value {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+  white-space: nowrap !important;
+  direction: rtl;
+  unicode-bidi: isolate;
+  justify-self: start;
+}
+
+.trips-container .trip-price-num {
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.trips-container .trip-price-currency {
+  flex: 0 0 auto;
+  white-space: nowrap !important;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: inherit;
+  unicode-bidi: isolate;
+}
+
+.trips-container .trip-price-hint {
+  display: block;
+  grid-column: 1 / -1;
+  width: 100%;
+  text-align: start;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: #71717a;
+  white-space: normal;
+  direction: rtl;
+}
+
+/* Give the price column room so label + amount never collide */
+.trips-container .submitation {
+  max-width: 300px !important;
+  min-width: 220px;
+}
+
+/* ——— Mobile trip cards: stack, no overlap ——— */
+@media (max-width: 767.98px) {
+  .trips-container .trip-card {
+    padding-inline: 0.85rem !important;
+    overflow: hidden;
+  }
+
+  .trips-container .trip-info {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.85rem !important;
+    margin: 0 !important;
+  }
+
+  .trips-container .trip-info-main {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .trips-container .provider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.65rem;
+    text-align: start;
+  }
+
+  .trips-container .provider .logo-image {
+    height: 48px !important;
+    width: 48px !important;
+    flex: 0 0 auto;
+  }
+
+  .trips-container .provider .trip-service-name,
+  .trips-container .provider h5 {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.3;
+  }
+
+  .trips-container .transport {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100%;
+    flex-grow: 0;
+  }
+
+  .trips-container .startendtime {
+    width: 100%;
+    gap: 0.4rem;
+  }
+
+  .trips-container .starttime,
+  .trips-container .endtime {
+    font-size: 1.05rem !important;
+  }
+
+  .trips-container .direction {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+    justify-content: stretch;
+  }
+
+  .trips-container .directionval {
+    display: block;
+    width: 100%;
+    line-height: 1.4 !important;
+    font-size: 0.8125rem !important;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .trips-container .directionval--origin::before {
+    content: "مبدا: ";
+    color: #71717a;
+    font-weight: 500;
+  }
+
+  .trips-container .directionval--dest::before {
+    content: "مقصد: ";
+    color: #71717a;
+    font-weight: 500;
+  }
+
+  .trips-container .submitation {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 0.75rem;
+  }
+
+  .trips-container .trip-price-stack {
+    width: 100%;
+    grid-template-columns: 1fr auto;
+    column-gap: 0.5rem;
+  }
+
+  .trips-container .trip-price-label {
+    white-space: normal;
+  }
+
+  .trips-container .trip-reserve-btn,
+  .trips-container .submitation > .btn {
+    width: 100% !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0 !important;
+    min-height: 2.75rem;
+  }
+
+  .trips-container .topinfo .carmodel {
+    max-width: 11rem;
+  }
+}
+
+.trips-container .logo-image {
+  object-fit: contain;
+  background: transparent !important;
+  /* Knock out baked-in white/gray from ORS service-type PNGs */
+  mix-blend-mode: multiply;
+  -webkit-user-drag: none;
+}
+
+/* Car model filter chips — readable contrast (fixes white-on-light «همه») */
+#carmodelsfilter .car-chip {
+  color: #18181b !important;
+  background: #ffffff !important;
+  border: 1px solid #e4e4e7 !important;
+  box-shadow: none !important;
+  font-weight: 600;
+  padding-inline: 0.85rem;
+}
+
+#carmodelsfilter .car-chip:hover,
+#carmodelsfilter .car-chip:focus {
+  color: #18181b !important;
+  background: #f4f4f5 !important;
+  border-color: #d4d4d8 !important;
+}
+
+#carmodelsfilter .car-chip.car-chip--active,
+#carmodelsfilter .car-chip.car-chip--active:hover,
+#carmodelsfilter .car-chip.car-chip--active:focus {
+  color: #ffffff !important;
+  background: #111111 !important;
+  border-color: #111111 !important;
+}
+
+#carmodelsfilter .form-check-label {
+  color: #18181b !important;
 }

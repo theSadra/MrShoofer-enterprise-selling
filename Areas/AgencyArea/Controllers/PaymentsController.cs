@@ -105,7 +105,28 @@ namespace Application.Areas.AgencyArea.Controllers
       _context.ZarinpalChargeRequests.Add(zarinpalRequest);
       await _context.SaveChangesAsync();
 
-      return Redirect(_payment.GetPaymentGatewayUrl(authority));
+      var enterUrl = $"{Request.Scheme}://{Request.Host}{PaymentGatewayRedirect.BuildEnterGatewayPath(authority)}";
+      var (html, contentType) = PaymentGatewayRedirect.BuildRedirectPage(enterUrl);
+      return Content(html, contentType);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("/Payments/EnterGateway")]
+    public async Task<IActionResult> EnterGateway(string authority)
+    {
+      if (string.IsNullOrWhiteSpace(authority))
+        return BadRequest();
+
+      var pendingCharge = await _context.ZarinpalChargeRequests
+        .AnyAsync(z => z.Authority == authority && z.Status == "Pending");
+      var pendingTicket = await _context.ZarinpalTicketPayments
+        .AnyAsync(z => z.Authority == authority && z.Status == "Pending");
+
+      if (!pendingCharge && !pendingTicket)
+        return NotFound();
+
+      var (html, contentType) = await PaymentGatewayRedirect.ResolveEnterGatewayAsync(_payment, authority);
+      return Content(html, contentType);
     }
 
     [AllowAnonymous]
@@ -183,7 +204,7 @@ namespace Application.Areas.AgencyArea.Controllers
       if (Status != "OK")
       {
         TempData["ErrorMessage"] = "پرداخت لغو شد یا ناموفق بود";
-        return RedirectToAction("Index", "Home", new { area = "AgencyArea" });
+        return RedirectToAction("Index", "TaxiTrips", new { area = "AgencyArea" });
       }
 
       var pending = await _context.ZarinpalTicketPayments
@@ -193,7 +214,7 @@ namespace Application.Areas.AgencyArea.Controllers
       if (pending == null)
       {
         TempData["ErrorMessage"] = "درخواست پرداخت بلیط یافت نشد";
-        return RedirectToAction("Index", "Home", new { area = "AgencyArea" });
+        return RedirectToAction("Index", "TaxiTrips", new { area = "AgencyArea" });
       }
 
       if (pending.Status == "Success" && pending.TicketId is int existingId)
@@ -219,31 +240,69 @@ namespace Application.Areas.AgencyArea.Controllers
       pending.CardPan = cardPan;
 
       var seller = pending.Agency;
-      _apiClient.SetSellerApiKey(seller.ORSAPI_token);
-      await _apiClient.ChargeOTABalanceAsync(pending.AmountToman);
-
-      var tempreserve = new TicketTempReserveRequestModel { isPrivate = true, tripCode = pending.TripCode };
-      var reservecode = await _apiClient.ReserveTicketTemporarirly(tempreserve);
-      var confirm = new ConfirmReserveRequestModel
+      if (seller == null || string.IsNullOrWhiteSpace(seller.ORSAPI_token))
       {
-        passengerFirstName = pending.Firstname,
-        passengerLastName = pending.Lastname,
-        reservationCode = reservecode,
-        passengerNationalCode = pending.Nacode,
-        passengerNumberPhone = pending.Numberphone
-      };
+        await _context.SaveChangesAsync();
+        TempData["ErrorMessage"] = "پرداخت موفق بود اما اطلاعات آژانس برای صدور بلیط در دسترس نیست. با پشتیبانی تماس بگیرید.";
+        return RedirectToAction("Reservetrip", "Reserve", new { area = "AgencyArea", tripcode = pending.TripCode });
+      }
+
+      _apiClient.SetSellerApiKey(seller.ORSAPI_token);
+
+      // Gateway amount tops up ORS; hybrid relies on existing wallet + this charge covering full ticket.
+      var charged = await _apiClient.ChargeOTABalanceAsync(pending.AmountToman);
+      if (!charged)
+      {
+        _logger.LogError(
+          "ORS ChargeOTA failed after ZarinPal verify. Authority={Authority} amount={Amount}",
+          Authority, pending.AmountToman);
+      }
+
+      // Ensure ORS balance can cover the full ticket net (handles hybrid shortfall / failed charge).
+      try
+      {
+        var balStr = await _apiClient.GetAccountBalance();
+        var balance = (int)Convert.ToDouble(balStr ?? "0");
+        var needed = pending.TicketPriceToman > 0 ? pending.TicketPriceToman : pending.AmountToman + pending.WalletAppliedToman;
+        if (needed > 0 && balance < needed)
+        {
+          var topUp = needed - balance;
+          _logger.LogWarning(
+            "Topping up ORS shortfall after gateway. Authority={Authority} balance={Balance} needed={Needed} topUp={TopUp}",
+            Authority, balance, needed, topUp);
+          await _apiClient.ChargeOTABalanceAsync(topUp);
+        }
+      }
+      catch (Exception ex)
+      {
+        _logger.LogWarning(ex, "Could not verify/top-up ORS balance after ZarinPal. Authority={Authority}", Authority);
+      }
 
       TicketConfirmationResponse reserveResponse;
       try
       {
+        var tempreserve = new TicketTempReserveRequestModel { isPrivate = true, tripCode = pending.TripCode };
+        var reservecode = await _apiClient.ReserveTicketTemporarirly(tempreserve);
+        var confirm = new ConfirmReserveRequestModel
+        {
+          passengerFirstName = pending.Firstname,
+          passengerLastName = pending.Lastname,
+          reservationCode = reservecode,
+          passengerNationalCode = pending.Nacode,
+          passengerNumberPhone = pending.Numberphone,
+          passengerCompanyName = pending.CompanyName ?? ""
+        };
+
         reserveResponse = await _apiClient.ConfirmReserve(confirm);
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "ORS confirm failed after ZarinPal ticket payment. Authority={Authority}", Authority);
+        _logger.LogError(ex, "ORS ticket issue failed after ZarinPal ticket payment. Authority={Authority}", Authority);
         await _context.SaveChangesAsync();
-        TempData["ErrorMessage"] = "پرداخت موفق بود اما صدور بلیط با خطا مواجه شد. با پشتیبانی تماس بگیرید.";
-        return RedirectToAction("Index", "Agency");
+        TempData["ErrorMessage"] = "پرداخت موفق بود اما صدور بلیط با خطا مواجه شد. با پشتیبانی تماس بگیرید. " +
+                                   (string.IsNullOrWhiteSpace(ex.Message) ? "" : $"({ex.Message})");
+        // Stay in reserve flow — not Agency dashboard
+        return RedirectToAction("Reservetrip", "Reserve", new { area = "AgencyArea", tripcode = pending.TripCode });
       }
 
       var trip = await _apiClient.GetTripInfo(pending.TripCode);
@@ -253,9 +312,10 @@ namespace Application.Areas.AgencyArea.Controllers
         Lastname = pending.Lastname,
         PhoneNumber = pending.Numberphone,
         NaCode = pending.Nacode,
+        CompanyName = pending.CompanyName,
         TicketFinalPrice = reserveResponse.paid_total_fee_tomans,
         Gender = pending.Gender,
-        TicketOriginalPrice = trip.originalTicketprice,
+        TicketOriginalPrice = trip.afterdiscticketprice,
         TripOrigin = trip.originCityName,
         TripDestination = trip.destinationCityName,
         RegisteredAt = DateTime.Now,
@@ -263,13 +323,23 @@ namespace Application.Areas.AgencyArea.Controllers
         Tripcode = trip.tripPlanCode,
         ServiceName = trip.taxiSupervisorName,
         CarName = trip.carModelName,
-        Agency = seller
+        Agency = seller,
+        AgencyEmployeeId = pending.AgencyEmployeeId
+          ?? await _context.AgencyEmployees
+              .Where(e => e.AgencyId == seller.Id && e.NaCode == pending.Nacode)
+              .Select(e => (int?)e.Id)
+              .FirstOrDefaultAsync()
+          ?? await _context.AgencyEmployees
+              .Where(e => e.AgencyId == seller.Id && e.PhoneNumber == pending.Numberphone)
+              .Select(e => (int?)e.Id)
+              .FirstOrDefaultAsync()
       };
 
       _context.Attach(seller);
       _context.Tickets.Add(ticket);
       await _context.SaveChangesAsync();
       pending.TicketId = ticket.Id;
+      await AttachPendingCompanionsAsync(ticket.Id, pending.CompanionsJson, seller.Id);
       await _context.SaveChangesAsync();
 
       try
@@ -281,6 +351,58 @@ namespace Application.Areas.AgencyArea.Controllers
       }
 
       return RedirectToAction("ReserveConfirmed", "Reserve", new { area = "AgencyArea", ticketcode = ticket.TicketCode });
+    }
+
+    private async Task AttachPendingCompanionsAsync(int ticketId, string? companionsJson, int agencyId)
+    {
+      if (string.IsNullOrWhiteSpace(companionsJson)) return;
+
+      List<Application.ViewModels.Reserve.CompanionPassengerViewModel>? parsed;
+      try
+      {
+        parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Application.ViewModels.Reserve.CompanionPassengerViewModel>>(companionsJson);
+      }
+      catch
+      {
+        return;
+      }
+
+      if (parsed == null || parsed.Count == 0) return;
+
+      var order = 1;
+      foreach (var c in parsed.Take(2))
+      {
+        if (string.IsNullOrWhiteSpace(c.Firstname) || string.IsNullOrWhiteSpace(c.Lastname) ||
+            string.IsNullOrWhiteSpace(c.Gender) || string.IsNullOrWhiteSpace(c.NaCode))
+          continue;
+
+        int? employeeId = null;
+        if (c.EmployeeId is int eid && eid > 0)
+        {
+          var ok = await _context.AgencyEmployees.AnyAsync(e => e.Id == eid && e.AgencyId == agencyId);
+          if (ok) employeeId = eid;
+        }
+        if (employeeId == null)
+        {
+          var na = c.NaCode.Trim();
+          employeeId = await _context.AgencyEmployees
+            .Where(e => e.AgencyId == agencyId && e.NaCode == na)
+            .Select(e => (int?)e.Id)
+            .FirstOrDefaultAsync();
+        }
+
+        _context.TicketCompanions.Add(new TicketCompanion
+        {
+          TicketId = ticketId,
+          SortOrder = order++,
+          Firstname = c.Firstname.Trim(),
+          Lastname = c.Lastname.Trim(),
+          Gender = c.Gender.Trim(),
+          NaCode = c.NaCode.Trim(),
+          PhoneNumber = string.IsNullOrWhiteSpace(c.PhoneNumber) ? null : c.PhoneNumber.Trim(),
+          AgencyEmployeeId = employeeId
+        });
+      }
     }
   }
 }
