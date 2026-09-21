@@ -30,66 +30,88 @@ namespace Application.Areas.AgencyArea
       _apiClient = apiClient;
     }
 
-    // Main agency page, general info last tickets
+    // Agency / organization profile
     [HttpGet]
     public async Task<IActionResult> Index()
     {
       ViewBag.agency = agency;
 
-      // loading and fetching TODAY sold group
-      await _context.Entry(agency)
-         .Collection(a => a.SoldTickets)
-         .LoadAsync();
-
-      AgencyAnalyzerService analyzer = new AgencyAnalyzerService(agency);
-
-      ViewBag.totalsold = analyzer.GetTotalSold();
-      ViewBag.todaysold = analyzer.GetTodaySold();
-      ViewBag.thismonthsold = analyzer.GetThisMonthSold();
-      ViewBag._7dayssold = analyzer.GetLast7DaysSold();
-      ViewBag.thismonthtotalprice = analyzer.GetThisMonthSoldTotalPrice();
-      ViewBag.thismonthtotalprofit = analyzer.GetThisMonthTotalProfit();
-      ViewBag.todaytotalprofit = analyzer.GetTodayTotalPrifit();
-
-
-      ViewBag.Last7weekprofit = analyzer.GetLast7DaysProfit();
-
-
       var balanceStr = await _apiClient.GetAccountBalance();
       ViewBag.agancy_balance = balanceStr != null ? (long)Convert.ToDecimal(balanceStr) : 0L;
 
-      ViewBag.today_soldTickets = agency.SoldTickets
-        .Where(t => t.RegisteredAt >= DateTime.Today && t.RegisteredAt < DateTime.Today.AddDays(1))
-        .ToList();
-
-
       return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Route("/Agency")]
+    [Route("/Agency/Index")]
+    [Route("/Agency/UpdateProfile")]
+    public async Task<IActionResult> UpdateProfile(Application.ViewModels.Agency.AgencyProfileEditViewModel model)
+    {
+      if (agency == null)
+        return RedirectToAction("Index", "Home");
+
+      if (!ModelState.IsValid)
+      {
+        TempData["ErrorMessage"] = "لطفاً اطلاعات را کامل و صحیح وارد کنید.";
+        return RedirectToAction(nameof(Index));
+      }
+
+      var name = model.Name.Trim();
+      var adminMobile = model.AdminMobile.Trim();
+      var phone = string.IsNullOrWhiteSpace(model.PhoneNumber) ? null : model.PhoneNumber.Trim();
+      var address = model.Address.Trim();
+
+      // Local panel fields (incl. financial) must save even when ORS sync is unavailable.
+      agency.Name = name;
+      agency.AdminMobile = adminMobile;
+      agency.PhoneNumber = phone;
+      agency.Address = address;
+      if (agency.IsOrganization)
+      {
+        agency.EconomicNo = string.IsNullOrWhiteSpace(model.EconomicNo) ? null : model.EconomicNo.Trim();
+        agency.RegistrationNo = string.IsNullOrWhiteSpace(model.RegistrationNo) ? null : model.RegistrationNo.Trim();
+        agency.NationalId = string.IsNullOrWhiteSpace(model.NationalId) ? null : model.NationalId.Trim();
+        agency.Fax = string.IsNullOrWhiteSpace(model.Fax) ? null : model.Fax.Trim();
+        agency.Province = string.IsNullOrWhiteSpace(model.Province) ? null : model.Province.Trim();
+        agency.County = string.IsNullOrWhiteSpace(model.County) ? null : model.County.Trim();
+        agency.City = string.IsNullOrWhiteSpace(model.City) ? null : model.City.Trim();
+        agency.PostalCode = string.IsNullOrWhiteSpace(model.PostalCode) ? null : model.PostalCode.Trim();
+      }
+      await _context.SaveChangesAsync();
+
+      // Best-effort ORS sync for identity fields — never surface sync failures to the user.
+      _ = await _apiClient.UpdateMyAgencyInfoAsync(
+        companyName: name,
+        numberPhone: adminMobile,
+        backupNumberPhone: phone,
+        companyAddress: address);
+
+      var pendingTicket = TempData["PendingInvoiceTicketCode"] as string;
+      if (agency.IsOrganization && !agency.HasInvoiceFinancialInfo)
+      {
+        if (!string.IsNullOrWhiteSpace(pendingTicket))
+          TempData["PendingInvoiceTicketCode"] = pendingTicket;
+        TempData["InvoiceBlocked"] = true;
+        TempData["ErrorMessage"] = "اطلاعات آژانس ذخیره شد؛ برای صدور فاکتور رسمی، کد اقتصادی، شماره ثبت و شناسه ملی را کامل کنید.";
+        return RedirectToAction(nameof(Index));
+      }
+
+      TempData["SuccessMessage"] = "اطلاعات پروفایل با موفقیت ذخیره شد.";
+
+      if (agency.IsOrganization && !string.IsNullOrWhiteSpace(pendingTicket) && agency.HasInvoiceFinancialInfo)
+        return RedirectToAction("Create", "OfficialInvoices", new { area = "AgencyArea", ticketcode = pendingTicket });
+
+      return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public IActionResult LegalProfile()
     {
       if (agency == null) return RedirectToAction("Index", "Home");
-      if (!agency.IsOrganization)
-      {
-        TempData["ErrorMessage"] = "اطلاعات حقوقی فقط برای پنل سازمانی فعال است.";
-        return RedirectToAction(nameof(Index));
-      }
-      return View(new Application.ViewModels.Agency.AgencyLegalProfileViewModel
-      {
-        Name = agency.Name,
-        Address = agency.Address,
-        PhoneNumber = agency.PhoneNumber,
-        AdminMobile = agency.AdminMobile,
-        EconomicNo = agency.EconomicNo,
-        RegistrationNo = agency.RegistrationNo,
-        NationalId = agency.NationalId,
-        Fax = agency.Fax,
-        Province = agency.Province,
-        County = agency.County,
-        City = agency.City,
-        PostalCode = agency.PostalCode
-      });
+      // Profile page hosts financial info; keep invoice-gate TempData.
+      return Redirect(Url.Action(nameof(Index), "Agency", new { area = "AgencyArea" }) + "#financial");
     }
 
     [HttpPost]
@@ -97,11 +119,6 @@ namespace Application.Areas.AgencyArea
     public async Task<IActionResult> LegalProfile(Application.ViewModels.Agency.AgencyLegalProfileViewModel model)
     {
       if (agency == null) return RedirectToAction("Index", "Home");
-      if (!agency.IsOrganization)
-      {
-        TempData["ErrorMessage"] = "اطلاعات حقوقی فقط برای پنل سازمانی فعال است.";
-        return RedirectToAction(nameof(Index));
-      }
 
       if (!string.IsNullOrWhiteSpace(model.Address))
         agency.Address = model.Address.Trim();
@@ -118,19 +135,27 @@ namespace Application.Areas.AgencyArea
       await _context.SaveChangesAsync();
 
       var pendingTicket = TempData["PendingInvoiceTicketCode"] as string;
-      if (agency.HasInvoiceFinancialInfo)
+      if (agency.IsOrganization && agency.HasInvoiceFinancialInfo)
       {
-        TempData["SuccessMessage"] = "اطلاعات مالی / حقوقی آژانس ذخیره شد";
+        TempData["SuccessMessage"] = "اطلاعات مالی / حقوقی ذخیره شد.";
         if (!string.IsNullOrWhiteSpace(pendingTicket))
           return RedirectToAction("Create", "OfficialInvoices", new { area = "AgencyArea", ticketcode = pendingTicket });
-        return RedirectToAction(nameof(LegalProfile));
+        return Redirect(Url.Action(nameof(Index), "Agency", new { area = "AgencyArea" }) + "#financial");
       }
 
-      if (!string.IsNullOrWhiteSpace(pendingTicket))
-        TempData["PendingInvoiceTicketCode"] = pendingTicket;
-      TempData["InvoiceBlocked"] = true;
-      TempData["ErrorMessage"] = "برای صدور فاکتور رسمی، کد اقتصادی، شماره ثبت و شناسه ملی را وارد کنید.";
-      return RedirectToAction(nameof(LegalProfile));
+      if (agency.IsOrganization)
+      {
+        if (!string.IsNullOrWhiteSpace(pendingTicket))
+          TempData["PendingInvoiceTicketCode"] = pendingTicket;
+        TempData["InvoiceBlocked"] = true;
+        TempData["ErrorMessage"] = "برای صدور فاکتور رسمی، کد اقتصادی، شماره ثبت و شناسه ملی را وارد کنید.";
+      }
+      else
+      {
+        TempData["SuccessMessage"] = "اطلاعات مالی ذخیره شد.";
+      }
+
+      return Redirect(Url.Action(nameof(Index), "Agency", new { area = "AgencyArea" }) + "#financial");
     }
 
 
@@ -173,8 +198,8 @@ namespace Application.Areas.AgencyArea
       var identityUser = _userManager.GetUserAsync(User).Result;
       agency = _context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
 
-
-      _apiClient.SetSellerApiKey(agency.ORSAPI_token);
+      if (agency != null && !string.IsNullOrWhiteSpace(agency.ORSAPI_token))
+        _apiClient.SetSellerApiKey(agency.ORSAPI_token);
     }
   }
 }

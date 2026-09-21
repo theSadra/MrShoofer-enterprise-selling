@@ -1,75 +1,92 @@
 @{
-  Layout = "_CommonMasterLayout";
-  ViewData["navbarType"] = (ViewData["navbarType"] ?? "layout-navbar-fixed");
-  ViewData["isFront"] = (ViewData["isFront"] ??= true);
+    Layout = "_CommonMasterLayout";
+    ViewData["navbarType"] = (ViewData["navbarType"] ?? "layout-navbar-fixed");
+    ViewData["isFront"] = (ViewData["isFront"] ??= true);
 
-  var isSideMenu = ViewData["isSideMenu"] is bool sideMenuFlag && sideMenuFlag;
-  if (isSideMenu)
-  {
-    ViewData["menuFixed"] = ViewData["menuFixed"] ?? "layout-menu-fixed";
-  }
+    var isSideMenu = ViewData["isSideMenu"] is bool sideMenuFlag && sideMenuFlag;
+    var showFrontNavbar = ViewData["showFrontNavbar"] is bool showNavFlag && showNavFlag;
+    // Panel pages: show logo navbar on mobile; Index keeps full navbar.
+    var mobileOnlyNavbar = isSideMenu && !showFrontNavbar;
+    if (isSideMenu)
+    {
+        ViewData["menuFixed"] = ViewData["menuFixed"] ?? "layout-menu-fixed";
+        ViewData["navbarType"] = "layout-navbar-fixed";
+    }
 }
 
 @section VendorStyles {
-  @RenderSection("VendorStyles", required: false)
+    @RenderSection("VendorStyles", required: false)
 }
 
 @section PageStyles {
-  @if (isSideMenu)
-  {
-    <link rel="stylesheet" href="~/css/front-side-menu.css" asp-append-version="true" />
-  }
-  @RenderSection("PageStyles", required: false)
+    @if (isSideMenu)
+    {
+        <link rel="stylesheet" href="~/css/front-side-menu.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+    }
+    @RenderSection("PageStyles", required: false)
 }
 
 @section VendorScripts {
-  @if (isSideMenu)
-  {
-    <environment include="Development">
-      <script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-      <script src="~/vendor/libs/hammer/hammer.js"></script>
-      <script src="~/vendor/js/menu.js"></script>
-    </environment>
-    <environment exclude="Development">
-      <script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" asp-append-version="true"></script>
-      <script src="~/vendor/libs/hammer/hammer.js" asp-append-version="true"></script>
-      <script src="~/vendor/js/menu.js" asp-append-version="true"></script>
-    </environment>
-  }
-  @RenderSection("VendorScripts", required: false)
+    @if (isSideMenu)
+    {
+        <environment include="Development">
+            <script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+            <script src="~/vendor/libs/hammer/hammer.js"></script>
+            <script src="~/vendor/js/menu.js"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="~/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" asp-append-version="true"></script>
+            <script src="~/vendor/libs/hammer/hammer.js" asp-append-version="true"></script>
+            <script src="~/vendor/js/menu.js" asp-append-version="true"></script>
+        </environment>
+        <script src="~/vendor/iconify/iconify-icon.min.js" asp-append-version="true"></script>
+        <script src="~/js/fluent-color-icons.js" asp-append-version="true"></script>
+    }
+    @RenderSection("VendorScripts", required: false)
 }
 
 @section PageScripts {
-  @if (isSideMenu)
-  {
-    <script src="~/js/front-side-menu.js" asp-append-version="true"></script>
-  }
-  @RenderSection("PageScripts", required: false)
+    @if (isSideMenu)
+    {
+        <script src="~/js/front-side-menu.js" asp-append-version="true"></script>
+    }
+    @RenderSection("PageScripts", required: false)
+    @if (TempData["NeedFinancialInfo"] as bool? == true)
+    {
+        ViewData["FinancialInfoUrl"] = Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial";
+        ViewData["AutoShowFinancialAlert"] = true;
+        @await Html.PartialAsync("_NeedFinancialInfoSwal")
+    }
 }
 
 @if (isSideMenu)
 {
-  <div class="layout-wrapper layout-content-navbar layout-front-with-menu">
-    <div class="layout-container">
-      @await Html.PartialAsync("Sections/Menu/_FrontVerticalMenu")
+    <div class="layout-wrapper layout-content-navbar layout-front-with-menu@(mobileOnlyNavbar ? " front-navbar-mobile-only" : "")">
+        <div class="layout-container">
+            @await Html.PartialAsync("Sections/Menu/_FrontVerticalMenu")
 
-      <div class="layout-page">
-        @await Html.PartialAsync("Sections/Navbar/_NavbarFront")
-        <div class="content-wrapper front-side-menu-content">
-          @RenderBody()
-          @await Html.PartialAsync("Sections/Footer/_FooterFront")
-          <div class="content-backdrop fade"></div>
+            <div class="layout-page">
+                @await Html.PartialAsync("Sections/Navbar/_NavbarFront")
+                <div class="content-wrapper front-side-menu-content">
+                    @RenderBody()
+                    @if (ViewData["HideFrontFooter"] is not true)
+                    {
+                        @await Html.PartialAsync("Sections/Footer/_FooterFront")
+                    }
+                    @await Html.PartialAsync("_AgencySupportModal")
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="layout-overlay layout-menu-toggle"></div>
-    <div class="drag-target"></div>
-  </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+        <div class="drag-target"></div>
+    </div>
 }
 else
 {
-  @await Html.PartialAsync("Sections/Navbar/_NavbarFront")
-  @RenderBody()
-  @await Html.PartialAsync("Sections/Footer/_FooterFront")
+    @await Html.PartialAsync("Sections/Navbar/_NavbarFront")
+    @RenderBody()
+    @await Html.PartialAsync("Sections/Footer/_FooterFront")
 }

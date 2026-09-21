@@ -12,86 +12,113 @@ namespace Application.Areas.AgencyArea
   [Authorize]
   public class TicketInfoController : Controller
   {
+    private const int PageSize = 20;
+
     private readonly AppDbContext context;
     private readonly UserManager<IdentityUser> userManager;
+
     public TicketInfoController(AppDbContext context, UserManager<IdentityUser> userManager)
     {
       this.context = context;
       this.userManager = userManager;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1, string? datesFilter = null)
     {
-      var username = User?.Identity != null ? User.Identity.Name : null;
+      if (page < 1) page = 1;
 
+      var username = User?.Identity != null ? User.Identity.Name : null;
       var agency = await context.Agencies
         .Include(a => a.IdentityUser)
-        .Include(a => a.SoldTickets)
+        .AsNoTracking()
         .FirstOrDefaultAsync(a => a.IdentityUser.UserName == username);
 
       if (agency == null)
       {
-        // No agency found for the current user; show empty list gracefully
-        ViewBag.tickets = new List<Ticket>();
+        BindEmpty(page);
         return View();
       }
 
-      var tickets = agency.SoldTickets ?? new List<Ticket>();
-      ViewBag.tickets = tickets.OrderByDescending(t => t.RegisteredAt).ToList();
+      var query = context.Tickets
+        .AsNoTracking()
+        .Where(t => EF.Property<int>(t, "AgencyId") == agency.Id);
+
+      if (!string.IsNullOrWhiteSpace(datesFilter))
+      {
+        var range = TryParseDateFilter(datesFilter);
+        if (range == null)
+          return RedirectToAction(nameof(Index), new { page });
+
+        query = query.Where(t => t.RegisteredAt >= range.Value.Start && t.RegisteredAt <= range.Value.End);
+        ViewBag.dateFilter = datesFilter;
+      }
+
+      var totalCount = await query.CountAsync();
+      var activeCount = await query.CountAsync(t => !t.IsCancelled);
+      var cancelledCount = totalCount - activeCount;
+      var totalPaid = await query.Where(t => !t.IsCancelled).SumAsync(t => (long)t.TicketFinalPrice);
+
+      var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)PageSize));
+      if (page > totalPages) page = totalPages;
+
+      var tickets = await query
+        .OrderByDescending(t => t.RegisteredAt)
+        .Skip((page - 1) * PageSize)
+        .Take(PageSize)
+        .ToListAsync();
+
+      ViewBag.tickets = tickets;
+      ViewBag.page = page;
+      ViewBag.pageSize = PageSize;
+      ViewBag.totalCount = totalCount;
+      ViewBag.totalPages = totalPages;
+      ViewBag.activeCount = activeCount;
+      ViewBag.cancelledCount = cancelledCount;
+      ViewBag.totalPaid = totalPaid;
       ViewBag.isOrganization = agency.IsOrganization;
       ViewBag.hasInvoiceFinancialInfo = agency.HasInvoiceFinancialInfo;
-      ViewBag.legalProfileUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
+      ViewBag.legalProfileUrl = Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial";
 
       return View();
     }
 
-
     [HttpGet]
-    public async Task<IActionResult> Filter(string datesFilter)
+    public IActionResult Filter(string datesFilter, int page = 1)
     {
-      // Date filters
-      string[] date_strings = (datesFilter ?? string.Empty).Replace(" ", "").Split('-');
-      if (date_strings.Length < 2)
-      {
-        return RedirectToAction(nameof(Index));
-      }
-
-      DateTime startDate = new PersianDate(date_strings[0]).ToDateTime();
-      startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 0, 0, 0);
-
-      DateTime endDate = new PersianDate(date_strings[1]).ToDateTime();
-      endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 23, 59, 59);
-
-      var username = User?.Identity != null ? User.Identity.Name : null;
-
-      var agency = await context.Agencies
-        .Include(a => a.IdentityUser)
-        .Include(a => a.SoldTickets)
-        .FirstOrDefaultAsync(a => a.IdentityUser.UserName == username);
-
-      if (agency == null)
-      {
-        ViewBag.tickets = new List<Ticket>();
-        return View("Index");
-      }
-
-      var ticketsQuery = agency.SoldTickets.AsQueryable();
-      ticketsQuery = FilterTickets_by_date(ticketsQuery, startDate, endDate);
-
-      ViewBag.dateFilter = datesFilter;
-      ViewBag.tickets = ticketsQuery.OrderByDescending(t => t.RegisteredAt).ToList();
-      ViewBag.isOrganization = agency.IsOrganization;
-      ViewBag.hasInvoiceFinancialInfo = agency.HasInvoiceFinancialInfo;
-      ViewBag.legalProfileUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
-
-      return View("Index");
+      return RedirectToAction(nameof(Index), new { datesFilter, page });
     }
 
-
-
-    private IQueryable<Ticket> FilterTickets_by_date(IQueryable<Ticket> tickets, DateTime startDate, DateTime endDate)
+    private static (DateTime Start, DateTime End)? TryParseDateFilter(string datesFilter)
     {
-      return tickets.Where(t => t.RegisteredAt >= startDate && t.RegisteredAt <= endDate);
+      var dateStrings = datesFilter.Replace(" ", "").Split('-');
+      if (dateStrings.Length < 2) return null;
+
+      try
+      {
+        var startDate = new PersianDate(dateStrings[0]).ToDateTime();
+        startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 0, 0, 0);
+
+        var endDate = new PersianDate(dateStrings[1]).ToDateTime();
+        endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 23, 59, 59);
+
+        return (startDate, endDate);
+      }
+      catch
+      {
+        return null;
+      }
+    }
+
+    private void BindEmpty(int page)
+    {
+      ViewBag.tickets = new List<Ticket>();
+      ViewBag.page = page;
+      ViewBag.pageSize = PageSize;
+      ViewBag.totalCount = 0;
+      ViewBag.totalPages = 1;
+      ViewBag.activeCount = 0;
+      ViewBag.cancelledCount = 0;
+      ViewBag.totalPaid = 0L;
     }
   }
 }

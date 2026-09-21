@@ -100,8 +100,8 @@
 				var hideLandingLinks = ViewData["isSideMenu"] is bool hideNav && hideNav;
 			}
 			<div class="collapse navbar-collapse landing-nav-menu @(hideLandingLinks ? "d-none" : null)" id="navbarSupportedContent">
-				<button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<i class="ti ti-x ti-sm"></i>
+				<button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="بستن منو">
+					<iconify-icon class="navbar-close-icon" icon="fluent:dismiss-24" width="23" height="23" aria-hidden="true"></iconify-icon>
 				</button>
 				@{
 					var path = (currentPage ?? "").ToLowerInvariant();
@@ -137,28 +137,25 @@
 									<span><i class="ti ti-home"></i> پروفایل آژانس</span>
 								</a>
 							</li>
-							@if (isOrganizationPanel)
-							{
 							<li>
 								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index">
 									<span><i class="ti ti-file-invoice"></i> فاکتور رسمی</span>
 								</a>
 							</li>
-							}
 							<li>
 								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Employees" asp-action="Index">
-									<span><i class="ti ti-users"></i> مسافرین پرتردد</span>
+									<span><i class="ti ti-users"></i> @(isOrganizationPanel ? "اعضای سازمان" : "مسافرین")</span>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Employees" asp-action="SpendReport">
-									<span><i class="ti ti-chart-bar"></i> گزارش هزینه مسافرین</span>
+								<a class="dropdown-item navbar-nav-btn" href="/Analytics">
+									<span><i class="ti ti-chart-bar"></i> گزارشات</span>
 								</a>
 							</li>
 							@if (isOrganizationPanel)
 							{
 							<li>
-								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
+								<a class="dropdown-item navbar-nav-btn" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-fragment="financial">
 									<span><i class="ti ti-id"></i> اطلاعات حقوقی</span>
 								</a>
 							</li>
@@ -167,7 +164,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link fw-medium" asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingContact">
+						<a class="nav-link fw-medium" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#agencySupportModal">
 							<span><i class="ti ti-heart-handshake"></i> پشتیبانی</span>
 						</a>
 					</li>
@@ -208,78 +205,74 @@
 
 						{
 						<li class="nav-item navbar-dropdown dropdown-user dropdown">
-							<a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="false" aria-label="منوی حساب آژانس">
-								<img src="~/store.png" height="26" alt="" />
+							<a class="nav-link dropdown-toggle hide-arrow d-flex align-items-center" data-bs-toggle="dropdown" href="javascript:void(0);" aria-expanded="false" aria-label="منوی حساب آژانس">
+								<span class="navbar-agency-avatar" aria-hidden="true">
+									<iconify-icon icon="fluent-color:building-24" width="26" height="26"></iconify-icon>
+								</span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end">
 
 								<li>
 									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index">
-										<i class="ti ti-user-check me-2 ti-sm"></i>
+										<iconify-icon class="fc-icon me-2" icon="fluent-color:person-available-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 										<span class="align-middle">پروفایل آژانس</span>
 									</a>
 								</li>
 								<li>
 									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="TicketInfo" asp-action="Index">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:receipt-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 											<span class="flex-grow-1 align-middle">خریدها</span>
 										</span>
 									</a>
 								</li>
-								@if (isOrganizationPanel)
-								{
 								<li>
 									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-file-invoice me-2 ti-sm"></i>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:document-text-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 											<span class="flex-grow-1 align-middle">فاکتور رسمی</span>
 										</span>
 									</a>
 								</li>
-								}
 								<li>
 									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Employees" asp-action="Index">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-users me-2 ti-sm"></i>
-											<span class="flex-grow-1 align-middle">مسافرین پرتردد</span>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:people-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+											<span class="flex-grow-1 align-middle">@(isOrganizationPanel ? "اعضای سازمان" : "مسافرین")</span>
 										</span>
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Employees" asp-action="SpendReport">
+									<a class="dropdown-item" href="/Analytics">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-chart-bar me-2 ti-sm"></i>
-											<span class="flex-grow-1 align-middle">گزارش هزینه مسافرین</span>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:chart-multiple-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+											<span class="flex-grow-1 align-middle">گزارشات</span>
 										</span>
 									</a>
 								</li>
 								@if (isOrganizationPanel)
 								{
 								<li>
-									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-fragment="financial">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-id me-2 ti-sm"></i>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:contact-card-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 											<span class="flex-grow-1 align-middle">اطلاعات حقوقی</span>
 										</span>
 									</a>
 								</li>
 								}
 								<li>
-									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-route-openChargeModal="true">
-										<i class="ti ti-currency-dollar me-2 ti-sm"></i>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-fragment="balance">
+										<iconify-icon class="fc-icon me-2" icon="fluent-color:coin-multiple-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 										<span class="align-middle">شارژ حساب</span>
 									</a>
 								</li>
-								@if (isOrganizationPanel)
-								{
 								<li>
-									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="LegalProfile">
-										<i class="ti ti-settings me-2 ti-sm"></i>
-										<span class="align-middle">تنظیمات حقوقی</span>
+									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index">
+										<iconify-icon class="fc-icon me-2" icon="fluent-color:settings-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+										<span class="align-middle">تنظیمات / پروفایل</span>
 									</a>
 								</li>
-								}
 
 								<li>
 									<div class="dropdown-divider"></div>
@@ -287,10 +280,10 @@
 
 
 								<li>
-									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-fragment="landingContact">
+									<a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#agencySupportModal">
 										<span class="d-flex align-items-center align-middle">
-											<i class="flex-shrink-0 ti ti-heart-handshake me-2 ti-sm"></i>
-											<span class="flex-grow-1 align-middle">پشتیبانی 24/7</span>
+											<iconify-icon class="fc-icon flex-shrink-0 me-2" icon="fluent-color:person-feedback-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+											<span class="flex-grow-1 align-middle">درخواست پیگیری</span>
 										</span>
 									</a>
 								</li>
@@ -300,7 +293,7 @@
 								</li>
 								<li>
 									<a class="dropdown-item" asp-area="AgencyArea" asp-controller="Auth" asp-action="Logout">
-										<i class="ti ti-logout me-2 ti-sm"></i>
+										<iconify-icon class="fc-icon me-2" icon="fluent-color:lock-closed-24" width="18" height="18" aria-hidden="true"></iconify-icon>
 										<span class="align-middle text-danger">خروج از حساب</span>
 									</a>
 								</li>

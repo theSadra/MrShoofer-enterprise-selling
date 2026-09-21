@@ -1,11 +1,23 @@
+@using Application.Models
 @using Application.Services
 @{
-
-	ViewData["Title"] = "بلیط ها";
-
-
-
+	ViewData["Title"] = "بلیط‌ها";
 	Layout = "_AgencySideLayout";
+
+	var tickets = ViewBag.tickets as List<Ticket> ?? new List<Ticket>();
+	var page = ViewBag.page != null ? Convert.ToInt32(ViewBag.page) : 1;
+	var totalPages = ViewBag.totalPages != null ? Convert.ToInt32(ViewBag.totalPages) : 1;
+	var totalCount = ViewBag.totalCount != null ? Convert.ToInt32(ViewBag.totalCount) : tickets.Count;
+	var activeCount = ViewBag.activeCount != null ? Convert.ToInt32(ViewBag.activeCount) : tickets.Count(t => !t.IsCancelled);
+	var cancelledCount = ViewBag.cancelledCount != null ? Convert.ToInt32(ViewBag.cancelledCount) : tickets.Count(t => t.IsCancelled);
+	if (page < 1) page = 1;
+	if (totalPages < 1) totalPages = 1;
+	var dateFilter = ViewBag.dateFilter as string;
+	var isOrganization = ViewBag.isOrganization != null && Convert.ToBoolean(ViewBag.isOrganization);
+	var hasInvoiceFinancialInfo = ViewBag.hasInvoiceFinancialInfo != null && Convert.ToBoolean(ViewBag.hasInvoiceFinancialInfo);
+	var legalProfileUrl = ViewBag.legalProfileUrl as string ?? Url.Action("LegalProfile", "Agency");
+	var showNeedLegalSwal = isOrganization && !hasInvoiceFinancialInfo;
+	var pageSize = ViewBag.pageSize != null ? Convert.ToInt32(ViewBag.pageSize) : 20;
 }
 
 @section VendorStyles {
@@ -14,13 +26,15 @@
 	<link rel="stylesheet" href="~/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
 	<link rel="stylesheet" href="~/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
 	<link rel="stylesheet" href="~/vendor/libs/pickr/pickr-themes.css" />
+}
 
-	<link href="~/vendor/css/pages/front-page-landing.css" rel="stylesheet" />
-	<link href="~/css/taxitripsindex.css" rel="stylesheet" />
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/ticket-orders.css" asp-append-version="true" />
 }
 
 @section VendorScripts {
-	<script src="~/libs/jquery.js"> </script>
+	<script src="~/libs/jquery.js"></script>
 	<script src="~/vendor/libs/moment/moment.js"></script>
 	<script src="~/vendor/libs/jdate/jdate.min.js" asp-append-version="true"></script>
 	<script src="~/vendor/libs/flatpickr/flatpickr-jdate.js" asp-append-version="true"></script>
@@ -34,571 +48,304 @@
 @section PageScripts {
 	<script src="~/js/forms-pickers-jalali.js" asp-append-version="true"></script>
 	<script src="~/js/ui-modals.js"></script>
-
 }
-@* ************** Content ************** *@
 
-
-<style>
-	.daytext {
-		text-align: center;
-	}
-
-	.tripday {
-		align-items: stretch;
-		border-radius: 8px !important;
-		cursor: pointer;
-		display: flex;
-		flex-direction: column;
-		flex-shrink: 0;
-		justify-content: center;
-		margin: 0 6px;
-		padding: 0 4px;
-		position: relative;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		user-select: none;
-		/* width: 88px; */
-	}
-
-	.switchbar-container {
-		display: flex;
-		align-items: center;
-		display: flex;
-		max-width: 100%;
-		flex-direction: row !important;
-	}
-
-	.scroll_button {
-		padding: 8px;
-		width: 48px;
-	}
-
-	.timelline-container {
-		align-items: center;
-		display: flex;
-		overflow-x: scroll;
-		overflow-y: hidden;
-		padding-bottom: 8px;
-		scrollbar-width: none;
-		display: flex;
-	}
-
-	.scroll_button {
-		background: none;
-		border: none;
-		color: inherit;
-		cursor: pointer;
-		outline: none;
-		align-self: stretch;
-	}
-</style>
-<style>
-
-
-	@@media only screen and (min-width: 960px) {
-		.px-lg-6 {
-			padding-right: 2.6rem !important;
-			padding-left: 2.6rem !important;
-		}
-	}
-
-	@@media only screen and (min-width: 1200px) {
-		.px-lg-6 {
-			padding-right: 8rem !important;
-			padding-left: 8rem !important;
-		}
-	}
-</style>
-<style>
-	.submitation {
-		max-width: 160px;
-		flex: 1;
-	}
-
-	.direction-container {
-	}
-
-	.transport {
-		flex-grow: 3;
-		max-width: 300px;
-	}
-
-	.trip-info {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-
-	@@media only screen and (max-width: 600px) {
-		.trip-info {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-		}
-
-		.provider h5 {
-			font-size: initial;
-		}
-
-		.starttime, .endtime {
-			font-size: 1.1rem !important;
-		}
-
-		.transport {
-			padding-left: 1.5rem;
-			padding-right: 1.2rem;
-			margin: 0 !important;
-		}
-
-		.submitation {
-			flex-direction: row !important;
-			max-width: unset !important;
-			justify-content: space-between !important;
-			padding-left: 1rem;
-		}
-	}
-
-	.transport {
-		margin-right: 3.6rem;
-	}
-
-	.fa-taxiSide {
-		height: 1.2em;
-	}
-
-	.price {
-		color: #0b5fb3;
-		font-size: 20px;
-		font-style: normal;
-		font-variation-settings: "wght" 700;
-		font-weight: 700;
-		text-align: right;
-	}
-
-	.orgprice {
-		color: #8d99a6;
-		font-size: 15px;
-		font-style: normal;
-		font-variation-settings: "wght" 500;
-		font-weight: 500;
-		text-align: right;
-		text-decoration: line-through;
-	}
-
-	.logo-image {
-		height: 40px;
-		-o-object-fit: contain;
-		object-fit: contain;
-		width: 40px;
-		background: transparent !important;
-		mix-blend-mode: multiply;
-	}
-
-
-	.leftside {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.directionval {
-		font-weight: 400;
-		font-size: 14px;
-		font-style: normal;
-		font-variation-settings: "wght" 400;
-		font-weight: 400;
-		line-height: 28px;
-	}
-
-
-	.mainbody {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.provider {
-		text-align: center;
-	}
-
-	.starttime, .endtime {
-		font-size: 1.7rem;
-	}
-
-	.tripcardheader {
-		display: flex;
-		justify-content: space-between;
-		align-items: start;
-	}
-
-	.carmodel {
-		color: black !important;
-	}
-
-	.direction-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: start;
-	}
-
-	.landing-hero {
-		background-color: hsla(213.08823529411762, 0%, 93%, 1) !important;
-		background-image: radial-gradient(circle at 83% 22%, hsla(35.735294117647136, 82%, 87%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 50%, hsla(194.5588235294118, 37%, 91%, 1) 0%, transparent 50%), radial-gradient(circle at 21% 21%, hsla(27.999999999999577, 0%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 54% 77%, hsla(193.2352941176474, 100%, 95%, 1) 0%, transparent 50%), radial-gradient(circle at 30% 75%, hsla(197.87234042553195, 25%, 35%, 1) 0%, transparent 20%) !important;
-		background-blend-mode: normal, normal, normal, normal, normal !important;
-	}
-</style>
-
-
-<div class="px-lg-6 px-0 mt-4">
-
-	<div class="searchbar card shadow card rounded-5 p-4" style="">
-
-		<div class="row">
-
-			<div class="d-flex justify-content-between">
-
-				@{
-					if (!String.IsNullOrEmpty(ViewBag.dateFilter))
-					{
-						<div>
-							<h3 class="mb-1">
-								بلیط‌های خریداری شده
-							</h3>
-							<h5 class="fw-normal">
-								در بازه
-								@ViewBag.dateFilter
-							</h5>
-						</div>
-					}
-
-					else
-					{
-
-						<h3>
-							آخرین‌ بلیط‌ ها
-						</h3>
-					}
-				}
-
-				<div>
-					<button class="btn btn-primary d-inline" data-bs-target="#paymentmodal" data-bs-toggle="modal">
-						<i class="ti ti-filter"></i>
-						فیلتر
-					</button>
-				</div>
-
-
-			</div>
-			<div class="py-2">
-
-				@if (ViewBag.tickets.Count < 1)
-				{
-
-					if (!String.IsNullOrEmpty(ViewBag.dateFilter))
-					{
-						<div class="col-12 d-flex text-center align-items-center py-3 mt-2" style="flex-direction: column;">
-
-							<h5>
-								<i class="ti ti-ticket"></i>
-								بلیطی پیدا نشد
-							</h5>
-							<small>
-								در بازه زمانی که جستجو کردید، بلیطی یافت نشد. میتوانید فیلترها را تغییر دهید
-							</small>
-
-						</div>
-					}
-					else
-					{
-						<div class="col-12 d-flex text-center align-items-center py-3 mt-2" style="flex-direction: column;">
-
-							<h5>
-								<i class="ti ti-ticket"></i>
-								هنوز بلیطی وجود ندارد
-							</h5>
-							<small>
-								شما هنوز بلیطی خریداری نکرده اید می‌توانید از لینک، سفرهای سواری را جستجو کنید
-							</small>
-							<a class="btn btn-primary mt-3" asp-controller="Home" asp-action="Index">
-								جستجوی سفرها
-							</a>
-						</div>
-					}
-				}
-
-				@foreach (Ticket ticket in ViewBag.tickets)
-				{
-					<div class="col-12 card rounded-5 p-3 mt-2">
-
-						<div class="col-12 row rounded-5 p-0 ">
-							<div class="d-flex justify-content-center align-items-center col-6 col-md-1 ps-1">
-								@* <svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ticket">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M15 5l0 2" />
-							<path d="M15 11l0 2" />
-							<path d="M15 17l0 2" />
-							<path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
-							</svg> *@
-
-								@{
-									if (ticket.Gender == "male")
-									{
-										<img src="~/male.png" height="60" />
-
-									}
-									else
-									{
-										<img src="~/female.png" height="60" />
-									}
-								}
-
-
-							</div>
-
-							<div class="d-flex col-6 col-md-3" style="flex-direction: column">
-								<h5 class="mb-1">
-									اطلاعات خریدار
-								</h5>
-
-								<div class="ps-1">
-									<div class="">
-										<lable class="fw-bold">
-											نام :
-										</lable>
-										<label>
-											@ticket.Firstname
-										</label>
-									</div>
-
-									<div class="">
-										<lable class="fw-bold">
-											نام‌خانوادگی :
-										</lable>
-										<label>
-											@ticket.Lastname
-										</label>
-									</div>
-
-									<div class="">
-										<lable class="fw-bold">
-											شماره تلفن :
-										</lable>
-										<label>
-											<a href="tel:+98
-@ticket.PhoneNumber
-		">@ticket.PhoneNumber</a>
-										</label>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="d-flex col-6 col-md-3" style="flex-direction: column">
-								<h5 class="mb-1">
-									اطلاعات سفر
-								</h5>
-
-								<div class="ps-1">
-									<div class="">
-										<lable class="fw-bold">
-											@ticket.ServiceName
-										</lable>
-									</div>
-
-									<div class="">
-										<lable class="fw-bold">
-											مسیر :
-										</lable>
-										<label>
-											<span class="fw-bold">
-												@ticket.TripOrigin
-											</span>
-											به
-											<span class="fw-bold">
-												@ticket.TripDestination
-											</span>
-										</label>
-									</div>
-
-									<div class="">
-										<lable class="fw-bold">
-											خودرو :
-										</lable>
-										<label>
-											@ticket.CarName
-										</label>
-									</div>
-
-								</div>
-							</div>
-							<div class="d-flex col-6 col-md-3" style="flex-direction: column">
-								<h5 class="mb-1">
-									اطلاعات خرید
-								</h5>
-
-								<div class="ps-1">
-									<div class="">
-										<lable class="fw-bold">
-											تاریخ خرید :
-										</lable>
-										<label>
-											@ticket.RegisteredAt.ToString("HH:mm")
-											-
-											@ticket.RegisteredAt.ToPersianDate().ToShortDateString()
-										</label>
-									</div>
-
-									<div class="">
-										<lable class="fw-bold">
-											قیمت :
-										</lable>
-										<label>
-											@ticket.TicketFinalPrice.ToString("N0")
-										</label>
-									</div>
-
-								</div>
-							</div>
-							<div class="d-flex col-12 col-md-2 P-0 align-self-center gap-2" style="flex-direction: column">
-								@if (!ticket.IsCancelled && ViewBag.isOrganization is bool isOrg && isOrg)
-								{
-									var hasFin = ViewBag.hasInvoiceFinancialInfo as bool? == true;
-									if (hasFin)
-									{
-										<a class="btn btn-outline-primary px-0" target="_blank" rel="noopener"
-										   asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Create" asp-route-ticketcode="@ticket.TicketCode">
-											<i class="ti ti-file-invoice"></i>
-											فاکتور رسمی
-										</a>
-									}
-									else
-									{
-										<a href="@(ViewBag.legalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))"
-										   class="btn btn-outline-warning px-0 js-invoice-need-legal">
-											<i class="ti ti-file-invoice"></i>
-											فاکتور رسمی
-										</a>
-									}
-								}
-								<a class="btn btn-secondary px-0" asp-area="AgencyArea" asp-controller="CustomerService" asp-action="TripReceiptPDF" asp-route-reference="@ticket.TicketCode">
-
-									<i class="ti ti-printer"></i>
-									چاپ بلیط
-								</a>
-							</div>
-
-						</div>
-
-					</div>
-				}
-			</div>
+<div class="ticket-orders" dir="rtl">
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+		<h4 class="mb-0">
+			<span class="text-muted fw-light">خریدها /</span>
+			لیست بلیط‌ها
+		</h4>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ticketFilterModal">
+			<iconify-icon class="fc-icon me-1" icon="fluent-color:calendar-data-bar-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+			فیلتر تاریخ
+		</button>
+	</div>
+
+	@if (!string.IsNullOrEmpty(dateFilter))
+	{
+		<div class="alert alert-secondary d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+			<span>نمایش بلیط‌ها در بازه <strong>@dateFilter</strong></span>
+			<a class="btn btn-sm btn-outline-secondary" asp-action="Index">پاک کردن فیلتر</a>
 		</div>
+	}
 
-	</div>
-
-	<div class="row mt-2">
-	</div>
-
-</div>
-
-<div class="col-12">
-	<small class="text-light fw-medium"></small>
-	<div class="mt-4">
-		<!-- Modal -->
-		<div aria-hidden="true" class="modal fade py-2" id="paymentmodal" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header ">
-						<div class="d-flex justify-content-start align-items-center mt-2">
-							<i class="ti ti-filter ti-lg text-warning"></i>
-							<div class="ms-3">
-
-								<h3 class="modal-title" id="modalCenterTitle">فیلتر بلیط‌ ها</h3>
-								<small>
-									بلیط‌ های فروخته شده‌ی آژانس
-								</small>
-							</div>
-							<button aria-label="بستن" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-						</div>
-					</div>
-					<div class="modal-body pb-1">
-						<div class="col-12 mt-2">
+	<!-- Summary widgets (OrderList pattern) -->
+	<div class="card mb-4">
+		<div class="card-widget-separator-wrapper">
+			<div class="card-body card-widget-separator">
+				<div class="row gy-4 gy-sm-1">
+					<div class="col-sm-6 col-lg-4">
+						<div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
 							<div>
-								<h5 style="align-self:end;">
-									<i class="ti ti-calendar-month"></i>
-									فیلتر بر اساس زمان خرید
-								</h5>
-
-								<small style="font-size: .7rem;" class="text-muted d-block">
-
-									<a class="ms-2" asp-action="Index">
-										<i class="ti ti-backspace"></i>
-										پاک کردن فیلتر
-									</a>
-								</small>
-
+								<h4 class="mb-2">@totalCount.ToString("N0")</h4>
+								<p class="mb-0 fw-medium">کل بلیط‌ها</p>
 							</div>
-							<form class="d-flex justify-content-between ms-1 " asp-action="Filter" method="get">
-								<input value="@ViewBag.dateFilter" name="datesFilter" class="form-control" id="bs-rangepicker-basic" type="text">
-
-								<button type="submit" class="btn btn-primary ms-2">
-									جستجو
-								</button>
-							</form>
-
+							<span class="ticket-orders__stat-icon me-sm-4" aria-hidden="true">
+								<iconify-icon icon="fluent-color:receipt-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+						<hr class="d-none d-sm-block d-lg-none me-4" />
+					</div>
+					<div class="col-sm-6 col-lg-4">
+						<div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+							<div>
+								<h4 class="mb-2">@activeCount.ToString("N0")</h4>
+								<p class="mb-0 fw-medium">فعال</p>
+							</div>
+							<span class="ticket-orders__stat-icon me-lg-4" aria-hidden="true">
+								<iconify-icon icon="fluent-color:checkmark-circle-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+						<hr class="d-none d-sm-block d-lg-none" />
+					</div>
+					<div class="col-sm-6 col-lg-4">
+						<div class="d-flex justify-content-between align-items-start pb-3 pb-sm-0">
+							<div>
+								<h4 class="mb-2">@cancelledCount.ToString("N0")</h4>
+								<p class="mb-0 fw-medium">لغو شده</p>
+							</div>
+							<span class="ticket-orders__stat-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:dismiss-circle-24" width="28" height="28"></iconify-icon>
+							</span>
 						</div>
 					</div>
-
-					<hr />
-
 				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- Order list table -->
+	<div class="card">
+		<div class="card-header border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+			<h5 class="card-title mb-0">بلیط‌های خریداری‌شده</h5>
+			<small class="text-muted">
+				@if (totalCount == 0)
+				{
+					<span>موردی برای نمایش نیست</span>
+				}
+				else
+				{
+					var fromItem = ((page - 1) * pageSize) + 1;
+					var toItem = Math.Min(page * pageSize, totalCount);
+					<span>نمایش @fromItem تا @toItem از @totalCount — @pageSize مورد در هر صفحه</span>
+				}
+			</small>
+		</div>
+		<div class="card-datatable table-responsive ticket-orders__scroll">
+			<table class="datatables-order table border-top ticket-orders__table">
+				<thead>
+					<tr>
+						<th>کد</th>
+						<th>تاریخ</th>
+						<th>مسافر</th>
+						<th>تلفن</th>
+						<th>وضعیت</th>
+						<th>مسیر</th>
+						<th>سرویس</th>
+						<th>خودرو</th>
+						<th class="text-center">عملیات</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (tickets.Count == 0)
+					{
+						<tr>
+							<td colspan="9" class="text-center py-5 text-wrap">
+								@if (!string.IsNullOrEmpty(dateFilter))
+								{
+									<p class="mb-1 fw-medium">بلیطی پیدا نشد</p>
+									<small class="text-muted">در بازه انتخاب‌شده بلیطی ثبت نشده است.</small>
+								}
+								else
+								{
+									<p class="mb-1 fw-medium">هنوز بلیطی وجود ندارد</p>
+									<small class="text-muted d-block mb-3">می‌توانید از صفحه اصلی سفر جستجو کنید.</small>
+									<a class="btn btn-primary" asp-area="AgencyArea" asp-controller="Home" asp-action="Index">جستجوی سفرها</a>
+								}
+							</td>
+						</tr>
+					}
+					else
+					{
+						foreach (var ticket in tickets)
+						{
+							var pdate = ticket.RegisteredAt.ToPersianDate();
+							<tr>
+								<td>
+									<span class="fw-medium">#@ticket.TicketCode</span>
+								</td>
+								<td dir="ltr">
+									<bdi>@($"{pdate.Year}/{pdate.Month:00}/{pdate.Day:00}")، @ticket.RegisteredAt.ToString("HH:mm")</bdi>
+								</td>
+								<td>
+									<span class="ticket-orders__passenger-name">@ticket.Firstname @ticket.Lastname</span>
+								</td>
+								<td dir="ltr">@ticket.PhoneNumber</td>
+								<td>
+									@if (ticket.IsCancelled)
+									{
+										<span class="badge bg-label-secondary d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:dismiss-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											لغو شده
+										</span>
+									}
+									else
+									{
+										<span class="badge bg-label-success d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:checkmark-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											فعال
+										</span>
+									}
+								</td>
+								<td>@ticket.TripOrigin به @ticket.TripDestination</td>
+								<td>@ticket.ServiceName</td>
+								<td>@ticket.CarName</td>
+								<td class="text-center">
+									<div class="dropdown">
+										<button type="button" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="عملیات">
+											<i class="ti ti-dots-vertical"></i>
+										</button>
+										<div class="dropdown-menu dropdown-menu-end m-0">
+											<a class="dropdown-item"
+											   asp-area="AgencyArea"
+											   asp-controller="CustomerService"
+											   asp-action="TripReceiptPDF"
+											   asp-route-reference="@ticket.TicketCode">
+												<iconify-icon class="fc-icon me-1" icon="fluent-color:receipt-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+												چاپ بلیط
+											</a>
+											@if (!ticket.IsCancelled)
+											{
+												if (isOrganization)
+												{
+													if (hasInvoiceFinancialInfo)
+													{
+														<a class="dropdown-item"
+														   target="_blank"
+														   rel="noopener"
+														   asp-area="AgencyArea"
+														   asp-controller="OfficialInvoices"
+														   asp-action="Create"
+														   asp-route-ticketcode="@ticket.TicketCode">
+															<iconify-icon class="fc-icon me-1" icon="fluent-color:document-text-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+															فاکتور رسمی
+														</a>
+													}
+													else
+													{
+														<a href="@legalProfileUrl" class="dropdown-item js-invoice-need-legal">
+															<iconify-icon class="fc-icon me-1" icon="fluent-color:document-text-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+															فاکتور رسمی
+														</a>
+													}
+												}
+												else if (!string.IsNullOrWhiteSpace(ticket.HeadOfPassengers))
+												{
+													<a class="dropdown-item"
+													   target="_blank"
+													   rel="noopener"
+													   asp-area="AgencyArea"
+													   asp-controller="OfficialInvoices"
+													   asp-action="Create"
+													   asp-route-ticketcode="@ticket.TicketCode">
+														<iconify-icon class="fc-icon me-1" icon="fluent-color:document-text-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+														فاکتور رسمی
+													</a>
+												}
+												else
+												{
+													<span class="dropdown-item disabled text-muted" title="ابتدا سرپرست مسافرین را در رزرو وارد کنید">
+														<iconify-icon class="fc-icon me-1" icon="fluent-color:document-text-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+														فاکتور رسمی (نیاز به سرپرست)
+													</span>
+												}
+											}
+										</div>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+
+		@if (totalPages > 1)
+		{
+			<div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+				<small class="text-muted">صفحه @(page) از @totalPages</small>
+				<nav aria-label="صفحه‌بندی بلیط‌ها">
+					<ul class="pagination pagination-sm mb-0">
+						<li class="page-item @(page <= 1 ? "disabled" : null)">
+							<a class="page-link"
+							   asp-action="Index"
+							   asp-route-page="@(page - 1)"
+							   asp-route-datesFilter="@dateFilter"
+							   tabindex="@(page <= 1 ? -1 : null)">قبلی</a>
+						</li>
+						@{
+							var startPage = Math.Max(1, page - 2);
+							var endPage = Math.Min(totalPages, page + 2);
+						}
+						@for (var p = startPage; p <= endPage; p++)
+						{
+							<li class="page-item @(p == page ? "active" : null)">
+								<a class="page-link"
+								   asp-action="Index"
+								   asp-route-page="@p"
+								   asp-route-datesFilter="@dateFilter">@p</a>
+							</li>
+						}
+						<li class="page-item @(page >= totalPages ? "disabled" : null)">
+							<a class="page-link"
+							   asp-action="Index"
+							   asp-route-page="@(page + 1)"
+							   asp-route-datesFilter="@dateFilter"
+							   tabindex="@(page >= totalPages ? -1 : null)">بعدی</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		}
+	</div>
+</div>
+
+<div class="modal fade" id="ticketFilterModal" tabindex="-1" aria-labelledby="ticketFilterModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="d-flex align-items-center gap-2">
+					<iconify-icon icon="fluent-color:calendar-data-bar-24" width="22" height="22" aria-hidden="true"></iconify-icon>
+					<div>
+						<h5 class="modal-title mb-0" id="ticketFilterModalTitle">فیلتر بلیط‌ها</h5>
+						<small class="text-muted">بر اساس زمان خرید</small>
+					</div>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+			</div>
+			<div class="modal-body">
+				<form class="d-flex gap-2" asp-action="Index" method="get">
+					<input type="hidden" name="page" value="1" />
+					<input value="@dateFilter" name="datesFilter" class="form-control" id="bs-rangepicker-basic" type="text" placeholder="بازه تاریخ" />
+					<button type="submit" class="btn btn-primary text-nowrap">جستجو</button>
+				</form>
+				@if (!string.IsNullOrEmpty(dateFilter))
+				{
+					<a class="btn btn-sm btn-link px-0 mt-2" asp-action="Index">
+						<i class="ti ti-backspace"></i>
+						پاک کردن فیلتر
+					</a>
+				}
 			</div>
 		</div>
 	</div>
 </div>
 
-
-<div class="pb-5">
-</div>
-
-@{ var showNeedLegalSwal = ViewBag.isOrganization as bool? == true && ViewBag.hasInvoiceFinancialInfo as bool? != true; }
 @if (showNeedLegalSwal)
 {
-	<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
-	<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			document.querySelectorAll('.js-invoice-need-legal').forEach(function (el) {
-				el.addEventListener('click', function (e) {
-					e.preventDefault();
-					var url = el.getAttribute('href');
-					if (typeof Swal === 'undefined') {
-						window.location.href = url;
-						return;
-					}
-					Swal.fire({
-						icon: 'warning',
-						title: 'اطلاعات مالی تکمیل نشده',
-						html: 'برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس را تکمیل کنید.',
-						showCancelButton: true,
-						confirmButtonText: 'تکمیل اطلاعات مالی',
-						cancelButtonText: 'انصراف',
-						reverseButtons: true,
-						allowOutsideClick: false,
-						buttonsStyling: false,
-						customClass: {
-							confirmButton: 'btn btn-primary me-2',
-							cancelButton: 'btn btn-outline-secondary'
-						}
-					}).then(function (result) {
-						if (result.isConfirmed) window.location.href = url;
-					});
-				});
-			});
-		});
-	</script>
+	ViewData["FinancialInfoUrl"] = legalProfileUrl;
+	ViewData["AutoShowFinancialAlert"] = false;
+	ViewData["FinancialAlertBindSelector"] = ".js-invoice-need-legal";
+	@await Html.PartialAsync("_NeedFinancialInfoSwal")
 }
-
-

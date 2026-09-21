@@ -733,9 +733,58 @@ span.flatpickr-day.selected {
   font-weight: normal;
 }
 
+/* Connector lines between steps (icon row) */
+.steps {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.steps .step-container {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.steps .step-container.selected,
+.steps .step-container[style*="flex: none"] {
+  flex: 0 0 auto;
+}
+
+.steps .step {
+  flex: 0 0 auto;
+}
+
+.steps .step .ti {
+  padding-inline: 0.2rem !important;
+}
+
+.steps .step-container > .bg-divider,
+.steps .step-container > [class*="h-[0.063rem]"] {
+  flex: 1 1 auto !important;
+  align-self: flex-start;
+  width: auto !important;
+  min-width: 1rem;
+  height: 2px !important;
+  margin-top: 1.05rem; /* center on ti-lg icon */
+  margin-inline: 0.35rem;
+  border-radius: 999px;
+  background-color: #c5c9d3 !important;
+  opacity: 1;
+}
+
 @media (max-width: 767.98px) {
   .steps .step i.ti-lg {
     font-size: 1.8rem !important; /* 10% under desktop 2rem */
+  }
+
+  .steps .step-container > .bg-divider,
+  .steps .step-container > [class*="h-[0.063rem]"] {
+    margin-top: 0.95rem;
+    margin-inline: 0.2rem;
+    min-width: 0.5rem;
   }
 }
 

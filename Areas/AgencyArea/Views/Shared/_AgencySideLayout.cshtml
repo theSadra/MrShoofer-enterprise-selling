@@ -1,7 +1,7 @@
 @{
     TempData.Keep();
     Layout = "_FrontLayout";
-    ViewData["navbarType"] = (ViewData["navbarType"] ?? "layout-navbar-fixed");
+    // Mobile logo bar comes from _FrontLayout; do not force navbar-hidden.
     ViewData["isFront"] = (ViewData["isFront"] ??= true);
     ViewData["isSideMenu"] = true;
 }
@@ -125,7 +125,7 @@ nav.layout-navbar.navbar-active::after {
 }
 
     @@media (min-width: 992px) {
-        #landingHero {
+        #landingHero:not(.agency-panel-hero) {
           padding-top: 10rem !important;
         }
     }
@@ -335,16 +335,21 @@ nav.layout-navbar.navbar-active::after {
 	}
 	.agency-panel-hero.landing-hero,
 	#landingHero.agency-panel-hero {
-		padding-top: 6.5rem !important;
-		padding-bottom: 2rem !important;
+		padding-top: 0 !important;
+		padding-bottom: 1rem !important;
 		background-color: #f7f7f8 !important;
 		background-image: none !important;
 	}
 	@@media (min-width: 992px) {
 		.agency-panel-hero.landing-hero,
 		#landingHero.agency-panel-hero {
-			padding-top: 7.25rem !important;
+			padding-top: 0 !important;
 		}
+	}
+
+	/* No top navbar on panel pages — drop legacy first-section spacer */
+	.agency-panel-shell .first-section-pt {
+		padding-top: 0 !important;
 	}
 
 

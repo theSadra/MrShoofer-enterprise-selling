@@ -1,8 +1,10 @@
+using Application.Data;
 using Application.Services.Auth;
 using Application.ViewModels.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Policy;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -15,12 +17,14 @@ namespace Application.Areas.AgencyArea
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _usermanager;
     private readonly IOtpLogin _otpLogin;
+    private readonly AppDbContext _db;
 
-    public AuthController(SignInManager<IdentityUser> signInManager, IOtpLogin otplogin, UserManager<IdentityUser> usermanager)
+    public AuthController(SignInManager<IdentityUser> signInManager, IOtpLogin otplogin, UserManager<IdentityUser> usermanager, AppDbContext db)
     {
       _otpLogin = otplogin;
       _signInManager = signInManager;
       _usermanager = usermanager;
+      _db = db;
     }
 
     [HttpGet]
@@ -86,6 +90,8 @@ namespace Application.Areas.AgencyArea
         var result = await _signInManager.PasswordSignInAsync(user, viewmodel.Password, viewmodel.RemmemberMe, lockoutOnFailure: false);
         if (user != null && result.Succeeded)
         {
+          await FlagIncompleteFinancialInfoAsync(user);
+
           // Redirect or take further action
           if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
             return LocalRedirect(ReturnUrl);
@@ -340,6 +346,7 @@ namespace Application.Areas.AgencyArea
 
       // Logging in the user
       await _signInManager.SignInAsync(user, true, "OTP");
+      await FlagIncompleteFinancialInfoAsync(user);
       
       // Redirect to ReturnUrl if provided and is local
       if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
@@ -356,6 +363,24 @@ namespace Application.Areas.AgencyArea
       await _signInManager.SignOutAsync();
 
       return RedirectToAction("Index", "Home");
+    }
+
+    private async Task FlagIncompleteFinancialInfoAsync(IdentityUser user)
+    {
+      if (user == null) return;
+
+      var agency = await _db.Agencies.AsNoTracking()
+        .FirstOrDefaultAsync(a => a.IdentityUserId == user.Id);
+
+      if (agency == null)
+      {
+        agency = await _db.Agencies.AsNoTracking()
+          .Include(a => a.IdentityUser)
+          .FirstOrDefaultAsync(a => a.IdentityUser != null && a.IdentityUser.Id == user.Id);
+      }
+
+      if (agency != null && agency.IsOrganization && !agency.HasInvoiceFinancialInfo)
+        TempData["NeedFinancialInfo"] = true;
     }
   }
 }

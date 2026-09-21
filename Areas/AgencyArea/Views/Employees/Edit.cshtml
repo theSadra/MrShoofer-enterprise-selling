@@ -1,16 +1,26 @@
 @model Application.ViewModels.Employees.AgencyEmployeeFormViewModel
 @{
-	ViewData["Title"] = "ویرایش مسافر";
+	var pageTitle = ViewBag.PageTitle as string ?? "ویرایش";
+	ViewData["Title"] = pageTitle;
 	Layout = "_AgencySideLayout";
+	var entityLabel = ViewBag.EntityLabel as string ?? "فرد";
+	var isOrganization = ViewBag.IsOrganization as bool? == true;
 }
 
-<div class="main_container px-lg-6 px-0 pb-5" dir="rtl">
-	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-		<h4 class="mb-0 text-blck">ویرایش مسافر پرتردد</h4>
-		<a class="btn btn-outline-secondary" asp-action="Index">بازگشت</a>
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/agency-users.css" asp-append-version="true" />
+}
+
+<div class="agency-users container-xxl flex-grow-1 container-p-y" dir="rtl">
+	<div class="agency-users__head">
+		<div>
+			<h1 class="agency-users__title">@pageTitle</h1>
+			<p class="agency-users__subtitle">اطلاعات @entityLabel برای رزرو و فاکتور سریع‌تر ذخیره می‌شود.</p>
+		</div>
+		<a class="agency-users__btn agency-users__btn--ghost" asp-action="Index">بازگشت به فهرست</a>
 	</div>
 
-	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 p-md-4">
+	<div class="agency-users-form">
 		<form asp-action="Edit" method="post">
 			@Html.AntiForgeryToken()
 			<input type="hidden" asp-for="Id" />
@@ -45,13 +55,31 @@
 					<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 				</div>
 				<div class="col-md-6">
-					<label asp-for="Email" class="form-label">ایمیل (اختیاری)</label>
-					<input asp-for="Email" class="form-control" autocomplete="off" dir="ltr" />
+					<label asp-for="Email" class="form-label">ایمیل</label>
+					<input asp-for="Email" class="form-control" autocomplete="off" dir="ltr" placeholder="اختیاری" />
 					<span asp-validation-for="Email" class="text-danger"></span>
 				</div>
+				@if (isOrganization)
+				{
+				<div class="col-12">
+					<label asp-for="InternalTitle" class="form-label">سمت / نقش درون سازمانی <span class="text-muted fw-normal">(اختیاری)</span></label>
+					<input asp-for="InternalTitle" class="form-control" list="orgRolePresets" maxlength="120" autocomplete="off" placeholder="انتخاب یا ایجاد نقش جدید" />
+					<datalist id="orgRolePresets">
+						<option value="مدیرعامل (CEO)"></option>
+						<option value="مدیر"></option>
+						<option value="کارمند"></option>
+						<option value="کارشناس"></option>
+						<option value="حسابدار"></option>
+						<option value="منشی"></option>
+					</datalist>
+					<small class="text-muted">می‌توانید از نقش‌های پیش‌فرض انتخاب کنید یا نقش جدید بنویسید.</small>
+					<span asp-validation-for="InternalTitle" class="text-danger"></span>
+				</div>
+				}
 			</div>
-			<div class="mt-4">
-				<button type="submit" class="btn btn-primary btn-lg px-4" style="border-radius: 1.6rem;">ذخیره تغییرات</button>
+			<div class="agency-users-form__actions">
+				<button type="submit" class="agency-users__btn agency-users__btn--primary">ذخیره تغییرات</button>
+				<a class="agency-users__btn agency-users__btn--ghost" asp-action="Index">انصراف</a>
 			</div>
 		</form>
 	</div>

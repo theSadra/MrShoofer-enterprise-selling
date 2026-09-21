@@ -1,78 +1,141 @@
 @model List<Application.Models.Ticket>
 @using Application.Services
 @{
-	var employee = (Application.Models.AgencyEmployee)ViewBag.Employee;
-	ViewData["Title"] = $"سفرهای {employee.Firstname} {employee.Lastname}";
+	var employee = ViewBag.Employee as Application.Models.AgencyEmployee;
+	ViewData["Title"] = employee != null
+		? $"سفرهای {employee.Firstname} {employee.Lastname}"
+		: "سفرهای مسافر";
 	Layout = "_AgencySideLayout";
 	var fromShamsi = ViewBag.FromShamsi as string ?? "";
 	var toShamsi = ViewBag.ToShamsi as string ?? "";
+	var trips = Model ?? new List<Application.Models.Ticket>();
 }
 
-<div class="main_container px-lg-6 px-0 pb-5" dir="rtl">
-	<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/ticket-orders.css" asp-append-version="true" />
+}
+
+<div class="ticket-orders" dir="rtl">
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
 		<div>
-			<h4 class="mb-1 text-blck">سفرهای @employee.Firstname @employee.Lastname</h4>
-			<small class="text-muted">کد ملی @employee.NaCode · @employee.PhoneNumber</small>
+			<h4 class="mb-1">
+				<span class="text-muted fw-light">مسافرین /</span>
+				سفرهای @(employee?.Firstname) @(employee?.Lastname)
+			</h4>
+			@if (employee != null)
+			{
+				<small class="text-muted">
+					کد ملی @employee.NaCode
+					@if (!string.IsNullOrWhiteSpace(employee.PhoneNumber))
+					{
+						<span>· @employee.PhoneNumber</span>
+					}
+				</small>
+			}
 		</div>
-		<a class="btn btn-outline-secondary" asp-action="Index">بازگشت به لیست</a>
+		<a class="btn btn-outline-secondary" asp-action="Index">
+			<iconify-icon class="fc-icon me-1" icon="fluent-color:arrow-square-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+			بازگشت به لیست
+		</a>
 	</div>
 
-	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 mb-3">
-		<form method="get" asp-action="Trips" asp-route-id="@employee.Id" class="row g-2 align-items-end">
-			<div class="col-md-4">
-				<label class="form-label mb-1">از تاریخ شمسی</label>
-				<input type="text" name="from" value="@fromShamsi" class="form-control" dir="ltr" placeholder="1404/01/01" />
-			</div>
-			<div class="col-md-4">
-				<label class="form-label mb-1">تا تاریخ شمسی</label>
-				<input type="text" name="to" value="@toShamsi" class="form-control" dir="ltr" placeholder="1404/12/29" />
-			</div>
-			<div class="col-md-4 d-flex gap-2">
-				<button type="submit" class="btn btn-primary flex-grow-1">اعمال فیلتر</button>
-			</div>
-		</form>
+	<div class="card mb-4">
+		<div class="card-body">
+			<form method="get" asp-action="Trips" asp-route-id="@(employee?.Id)" class="row g-2 align-items-end">
+				<div class="col-md-4">
+					<label class="form-label mb-1">از تاریخ شمسی</label>
+					<input type="text" name="from" value="@fromShamsi" class="form-control" dir="ltr" placeholder="1404/01/01" />
+				</div>
+				<div class="col-md-4">
+					<label class="form-label mb-1">تا تاریخ شمسی</label>
+					<input type="text" name="to" value="@toShamsi" class="form-control" dir="ltr" placeholder="1404/12/29" />
+				</div>
+				<div class="col-md-4 d-flex gap-2">
+					<button type="submit" class="btn btn-primary flex-grow-1">
+						<iconify-icon class="fc-icon me-1" icon="fluent-color:calendar-data-bar-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+						اعمال فیلتر
+					</button>
+				</div>
+			</form>
+		</div>
 	</div>
 
-	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-0 overflow-hidden">
-		<div class="table-responsive">
-			<table class="table table-hover align-middle mb-0">
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<h5 class="card-title mb-0">لیست سفرها</h5>
+			<small class="text-muted">@trips.Count مورد</small>
+		</div>
+		<div class="card-datatable table-responsive ticket-orders__scroll">
+			<table class="table ticket-orders__table">
 				<thead>
 					<tr>
-						<th class="ps-3">کد بلیط</th>
+						<th>کد</th>
 						<th>مسیر</th>
-						<th>تاریخ ثبت</th>
-						<th>مبلغ (تومان)</th>
-						<th class="pe-3">وضعیت</th>
+						<th>تاریخ</th>
+						<th>مبلغ</th>
+						<th>وضعیت</th>
+						<th class="text-center">عملیات</th>
 					</tr>
 				</thead>
 				<tbody>
-					@if (Model == null || Model.Count == 0)
+					@if (trips.Count == 0)
 					{
 						<tr>
-							<td colspan="5" class="text-center text-muted py-5">در این بازه سفری برای این مسافر ثبت نشده است</td>
+							<td colspan="6" class="text-center text-muted py-5">در این بازه سفری برای این مسافر ثبت نشده است</td>
 						</tr>
 					}
 					else
 					{
-						foreach (var t in Model)
+						foreach (var t in trips)
 						{
-							var companions = t.Companions?.OrderBy(c => c.SortOrder).ToList() ?? new List<Application.Models.TicketCompanion>();
+							var companions = t.Companions?.OrderBy(c => c.SortOrder).ToList()
+								?? new List<Application.Models.TicketCompanion>();
 							var pdate = t.RegisteredAt.ToPersianDate();
 							<tr>
-								<td class="ps-3">@t.TicketCode</td>
 								<td>
-									@t.TripOrigin → @t.TripDestination
+									<span class="fw-medium">#@t.TicketCode</span>
+								</td>
+								<td>
+									<span>@t.TripOrigin به @t.TripDestination</span>
 									@if (companions.Count > 0)
 									{
-										<div class="small text-muted mt-1">
-											همراهان:
-											@string.Join("، ", companions.Select(c => c.Firstname + " " + c.Lastname))
-										</div>
+										<small class="d-block text-muted">
+											همراهان: @string.Join("، ", companions.Select(c => c.Firstname + " " + c.Lastname))
+										</small>
 									}
 								</td>
-								<td dir="ltr">@($"{pdate.Year}/{pdate.Month:00}/{pdate.Day:00} {t.RegisteredAt:HH:mm}")</td>
-								<td>@t.TicketFinalPrice.ToString("N0")</td>
-								<td class="pe-3">@(t.IsCancelled ? "لغو شده" : "صادر شده")</td>
+								<td dir="ltr">
+									<bdi>@($"{pdate.Year}/{pdate.Month:00}/{pdate.Day:00}")، @t.RegisteredAt.ToString("HH:mm")</bdi>
+								</td>
+								<td>@t.TicketFinalPrice.ToString("N0") تومان</td>
+								<td>
+									@if (t.IsCancelled)
+									{
+										<span class="badge bg-label-secondary d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:dismiss-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											لغو شده
+										</span>
+									}
+									else
+									{
+										<span class="badge bg-label-success d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:checkmark-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											فعال
+										</span>
+									}
+								</td>
+								<td class="text-center">
+									<a class="btn btn-sm btn-icon"
+									   asp-area="AgencyArea"
+									   asp-controller="CustomerService"
+									   asp-action="TripReceiptPDF"
+									   asp-route-reference="@t.TicketCode"
+									   title="چاپ بلیط"
+									   aria-label="چاپ بلیط">
+										<iconify-icon icon="fluent-color:receipt-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+									</a>
+								</td>
 							</tr>
 						}
 					}

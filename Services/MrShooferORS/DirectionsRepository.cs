@@ -68,22 +68,46 @@ namespace Application.Services.MrShooferORS
 
       try
       {
+        static string Norm(string? s) =>
+          (s ?? "").Replace("‌", "").Replace(" ", "").Trim();
 
-        var match = documentroot.EnumerateArray()
-
-              .FirstOrDefault(element => (
-                  element.GetProperty("Cityone").GetString() == originCity &&
-                  element.GetProperty("Citytwo").GetString() == destinationCity) ||
-
-                  (element.GetProperty("Citytwo").GetString() == originCity &&
-                  element.GetProperty("Cityone").GetString() == destinationCity));
-
-        if (match.ValueKind == JsonValueKind.Undefined)
+        var o = Norm(originCity);
+        var d = Norm(destinationCity);
+        if (o.Length == 0 || d.Length == 0)
         {
           return 0;
         }
 
-        return match.GetProperty("TravelTime_mins").GetInt32();
+        JsonElement? exact = null;
+        JsonElement? fuzzy = null;
+        foreach (var element in documentroot.EnumerateArray())
+        {
+          var c1 = Norm(element.GetProperty("Cityone").GetString());
+          var c2 = Norm(element.GetProperty("Citytwo").GetString());
+          if ((c1 == o && c2 == d) || (c2 == o && c1 == d))
+          {
+            exact = element;
+            break;
+          }
+
+          if (fuzzy == null)
+          {
+            var forward = (o.Contains(c1) || c1.Contains(o)) && (d.Contains(c2) || c2.Contains(d));
+            var reverse = (o.Contains(c2) || c2.Contains(o)) && (d.Contains(c1) || c1.Contains(d));
+            if (forward || reverse)
+            {
+              fuzzy = element;
+            }
+          }
+        }
+
+        var match = exact ?? fuzzy;
+        if (match == null)
+        {
+          return 0;
+        }
+
+        return match.Value.GetProperty("TravelTime_mins").GetInt32();
       }
       catch (Exception ex)
       {

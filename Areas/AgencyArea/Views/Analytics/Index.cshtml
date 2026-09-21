@@ -1,0 +1,274 @@
+@model Application.ViewModels.Analytics.AnalyticsDashboardViewModel
+@using System.Text.Json
+@{
+	ViewData["Title"] = "گزارشات و تحلیل";
+	Layout = "_AgencySideLayout";
+
+	var monthNames = new Dictionary<int, string>
+	{
+		{1,"فروردین"},{2,"اردیبهشت"},{3,"خرداد"},{4,"تیر"},{5,"مرداد"},{6,"شهریور"},
+		{7,"مهر"},{8,"آبان"},{9,"آذر"},{10,"دی"},{11,"بهمن"},{12,"اسفند"}
+	};
+
+	var chartLabels = JsonSerializer.Serialize(Model.DailySeries.Select(d => d.Label).ToList());
+	var chartTrips = JsonSerializer.Serialize(Model.DailySeries.Select(d => d.Trips).ToList());
+	var chartSpend = JsonSerializer.Serialize(Model.DailySeries.Select(d => d.SpendToman).ToList());
+	var maxRouteTrips = Model.TopRoutes.Count == 0 ? 1 : Model.TopRoutes.Max(r => r.TripCount);
+}
+
+@section VendorStyles {
+	<link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
+}
+
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/agency-analytics.css" asp-append-version="true" />
+}
+
+@section VendorScripts {
+	<script src="~/vendor/libs/apex-charts/apexcharts.js" asp-append-version="true"></script>
+}
+
+@section PageScripts {
+	<script src="~/js/agency-analytics.js" asp-append-version="true"></script>
+}
+
+<div class="agency-analytics" dir="rtl"
+	 data-chart-labels='@Html.Raw(chartLabels)'
+	 data-chart-trips='@Html.Raw(chartTrips)'
+	 data-chart-spend='@Html.Raw(chartSpend)'>
+
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+		<div>
+			<h4 class="mb-1">
+				<span class="text-muted fw-light">گزارشات /</span>
+				داشبورد تحلیل
+			</h4>
+			<small class="text-muted">بازه: @Model.FilterLabel</small>
+		</div>
+		<a class="btn btn-outline-secondary" asp-controller="Employees" asp-action="Index">بازگشت به مسافرین</a>
+	</div>
+
+	<!-- Filters (same as SpendReport) -->
+	<div class="card mb-4">
+		<div class="card-body">
+			<form method="get" asp-action="Index" class="row g-2 align-items-end">
+				<div class="col-12 col-md-3">
+					<label class="form-label mb-1">سال شمسی</label>
+					<select name="year" class="form-select">
+						@foreach (var y in Model.PersianYears)
+						{
+							if (y == Model.Year)
+							{
+								<option value="@y" selected>@y</option>
+							}
+							else
+							{
+								<option value="@y">@y</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="col-12 col-md-3">
+					<label class="form-label mb-1">ماه شمسی</label>
+					<select name="month" class="form-select">
+						@foreach (var kv in monthNames)
+						{
+							if (kv.Key == Model.Month)
+							{
+								<option value="@kv.Key" selected>@kv.Value</option>
+							}
+							else
+							{
+								<option value="@kv.Key">@kv.Value</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="col-12 col-md-2">
+					<label class="form-label mb-1">از تاریخ</label>
+					<input type="text" name="from" value="@Model.FromShamsi" class="form-control" dir="ltr" placeholder="1404/01/01" />
+				</div>
+				<div class="col-12 col-md-2">
+					<label class="form-label mb-1">تا تاریخ</label>
+					<input type="text" name="to" value="@Model.ToShamsi" class="form-control" dir="ltr" placeholder="1404/12/29" />
+				</div>
+				<div class="col-12 col-md-2">
+					<button type="submit" class="btn btn-primary w-100">اعمال فیلتر</button>
+				</div>
+			</form>
+			<small class="text-muted d-block mt-2">اگر از/تا را پر کنید، بازه دستی جایگزین ماه می‌شود.</small>
+		</div>
+	</div>
+
+	<!-- Statistics (Ecommerce Dashboard pattern) -->
+	<div class="card mb-4">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<h5 class="card-title mb-0">آمار</h5>
+			<small class="text-muted">@Model.FilterLabel</small>
+		</div>
+		<div class="card-body">
+			<div class="row gy-3">
+				<div class="col-md-3 col-12">
+					<div class="d-flex align-items-center">
+						<span class="agency-analytics__kpi-icon me-3" aria-hidden="true">
+							<iconify-icon icon="fluent-color:location-ripple-24" width="26" height="26"></iconify-icon>
+						</span>
+						<div>
+							<h5 class="mb-0">@Model.GrandTrips.ToString("N0")</h5>
+							<small class="text-muted">سفرهای فعال</small>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-12">
+					<div class="d-flex align-items-center">
+						<span class="agency-analytics__kpi-icon me-3" aria-hidden="true">
+							<iconify-icon icon="fluent-color:coin-multiple-24" width="26" height="26"></iconify-icon>
+						</span>
+						<div>
+							<h5 class="mb-0">@Model.GrandTotal.ToString("N0")</h5>
+							<small class="text-muted">جمع هزینه (تومان)</small>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-12">
+					<div class="d-flex align-items-center">
+						<span class="agency-analytics__kpi-icon me-3" aria-hidden="true">
+							<iconify-icon icon="fluent-color:people-24" width="26" height="26"></iconify-icon>
+						</span>
+						<div>
+							<h5 class="mb-0">@Model.PassengerCount.ToString("N0")</h5>
+							<small class="text-muted">مسافرین دارای سفر</small>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-12">
+					<div class="d-flex align-items-center">
+						<span class="agency-analytics__kpi-icon me-3" aria-hidden="true">
+							<iconify-icon icon="fluent-color:chart-multiple-24" width="26" height="26"></iconify-icon>
+						</span>
+						<div>
+							<h5 class="mb-0">@Model.AvgTicket.ToString("N0")</h5>
+							<small class="text-muted">میانگین بلیط</small>
+						</div>
+					</div>
+				</div>
+			</div>
+			@if (Model.CancelledCount > 0)
+			{
+				<small class="text-muted d-block mt-3">بلیط‌های لغوشده در این بازه: @Model.CancelledCount.ToString("N0")</small>
+			}
+		</div>
+	</div>
+
+	<div class="row">
+		<!-- Revenue / trips chart -->
+		<div class="col-xl-8 col-12 mb-4">
+			<div class="card h-100">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<div>
+						<h5 class="card-title mb-0">روند سفر و هزینه</h5>
+						<small class="text-muted">نمودار روزانه در بازه انتخابی</small>
+					</div>
+				</div>
+				<div class="card-body">
+					<div id="agencyAnalyticsChart"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Top routes -->
+		<div class="col-xl-4 col-12 mb-4">
+			<div class="card h-100">
+				<div class="card-header">
+					<h5 class="card-title mb-0">پرتکرارترین مسیرها</h5>
+					<small class="text-muted">بر اساس تعداد سفر</small>
+				</div>
+				<div class="card-body">
+					@if (Model.TopRoutes.Count == 0)
+					{
+						<p class="text-muted mb-0 text-center py-4">مسیری در این بازه ثبت نشده است</p>
+					}
+					else
+					{
+						<ul class="agency-analytics__routes list-unstyled mb-0">
+							@foreach (var route in Model.TopRoutes)
+							{
+								var pct = Math.Max(6, (int)Math.Round(100.0 * route.TripCount / maxRouteTrips));
+								<li class="agency-analytics__route">
+									<div class="d-flex justify-content-between align-items-center gap-2 mb-1">
+										<span class="fw-medium text-truncate">@route.Origin به @route.Destination</span>
+										<small class="text-muted text-nowrap">@route.TripCount.ToString("N0") سفر</small>
+									</div>
+									<div class="progress agency-analytics__progress" role="progressbar" aria-valuenow="@pct" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar" style="width:@pct%"></div>
+									</div>
+									<small class="text-muted">@route.TotalToman.ToString("N0") تومان</small>
+								</li>
+							}
+						</ul>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Spend report table (same as before) -->
+	<div class="card" id="spend-report">
+		<div class="card-header border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+			<div>
+				<h5 class="card-title mb-0">گزارش هزینه مسافرین</h5>
+				<small class="text-muted">همان گزارش هزینه — مرتب‌شده بر اساس مبلغ</small>
+			</div>
+			<small class="text-muted">@Model.SpendRows.Count.ToString("N0") ردیف</small>
+		</div>
+		<div class="table-responsive agency-analytics__scroll">
+			<table class="table agency-analytics__table mb-0">
+				<thead>
+					<tr>
+						<th>مسافر</th>
+						<th>تعداد سفر</th>
+						<th>جمع هزینه (تومان)</th>
+						<th class="text-center">عملیات</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model.SpendRows.Count == 0)
+					{
+						<tr>
+							<td colspan="4" class="text-center text-muted py-5">در این بازه سفری ثبت نشده است</td>
+						</tr>
+					}
+					else
+					{
+						foreach (var r in Model.SpendRows)
+						{
+							<tr>
+								<td>
+									<div class="d-inline-flex align-items-center gap-2">
+										<span class="agency-analytics__avatar" aria-hidden="true">
+											<iconify-icon icon="fluent-color:person-24" width="18" height="18"></iconify-icon>
+										</span>
+										<span class="fw-medium">@r.DisplayName</span>
+									</div>
+								</td>
+								<td>@r.TripCount.ToString("N0")</td>
+								<td>@r.TotalToman.ToString("N0")</td>
+								<td class="text-center">
+									@if (r.AgencyEmployeeId is int eid)
+									{
+										<a class="btn btn-sm btn-outline-secondary" asp-controller="Employees" asp-action="Trips" asp-route-id="@eid">جزئیات</a>
+									}
+									else
+									{
+										<span class="text-muted">—</span>
+									}
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

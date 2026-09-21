@@ -45,9 +45,8 @@
   max-width: 100% !important;
 }
 
-/* Fixed chrome — logo/brand + panel mode stay put while nav scrolls */
-.layout-front-with-menu .front-side-menu .app-brand,
-.layout-front-with-menu .front-side-menu .front-side-menu-mode {
+/* Fixed chrome — logo/brand stays put while nav scrolls */
+.layout-front-with-menu .front-side-menu .app-brand {
   flex: 0 0 auto !important;
   flex-shrink: 0 !important;
 }
@@ -130,16 +129,30 @@
 }
 
 /* Open group (expanded, not current branch) — light accent only */
-.layout-front-with-menu .front-side-menu.bg-menu-theme .menu-inner .menu-item.open:not(.active) > .menu-link.menu-toggle {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme
+  .menu-inner
+  .menu-item.open:not(.active)
+  > .menu-link.menu-toggle {
   background: var(--fsm-accent) !important;
 }
 
-html:not(.layout-menu-collapsed) .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-inner .menu-item:not(.active) > .menu-link:hover {
+html:not(.layout-menu-collapsed)
+  .layout-front-with-menu
+  .front-side-menu.bg-menu-theme
+  .menu-inner
+  .menu-item:not(.active)
+  > .menu-link:hover {
   background: var(--fsm-accent) !important;
 }
 
 /* Active top-level (leaf OR group leader with active child) — solid black pill */
-html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical > .menu-inner > .menu-item.active > .menu-link,
+html[dir='rtl']
+  .layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  > .menu-inner
+  > .menu-item.active
+  > .menu-link,
 .layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical > .menu-inner > .menu-item.active > .menu-link {
   background: var(--fsm-active) !important;
   background-image: none !important;
@@ -148,31 +161,49 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vert
   border-radius: var(--fsm-radius-sm) !important;
 }
 
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical > .menu-inner > .menu-item.active > .menu-link .menu-icon:not(.menu-icon-3d) {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  > .menu-inner
+  > .menu-item.active
+  > .menu-link
+  .menu-icon:not(.menu-icon-3d) {
   color: var(--fsm-active-fg) !important;
 }
 
 /* Soft nested active — submenu children only */
-html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub .menu-item.active > .menu-link:not(.menu-toggle),
+html[dir='rtl']
+  .layout-front-with-menu
+  .front-side-menu.bg-menu-theme
+  .menu-sub
+  .menu-item.active
+  > .menu-link:not(.menu-toggle),
 .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub .menu-item.active > .menu-link:not(.menu-toggle) {
   background: color-mix(in oklch, var(--fsm-fg) 8%, transparent) !important;
   background-image: none !important;
   box-shadow: none !important;
   color: var(--fsm-fg) !important;
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif !important;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif !important;
 }
 
-.layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub .menu-item.active > .menu-link .menu-icon:not(.menu-icon-3d) {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme
+  .menu-sub
+  .menu-item.active
+  > .menu-link
+  .menu-icon:not(.menu-icon-3d) {
   color: var(--fsm-fg) !important;
 }
 
-/* Isometric 3D color icons (img) — keep native fills, align with label */
-.layout-front-with-menu .front-side-menu img.menu-icon.menu-icon-3d {
+/* Isometric / Fluent color icons — fixed slot so every row shares one icon column */
+.layout-front-with-menu .front-side-menu img.menu-icon.menu-icon-3d,
+.layout-front-with-menu .front-side-menu iconify-icon.menu-icon.menu-icon-3d {
   display: block !important;
-  flex: 0 0 auto !important;
+  flex: 0 0 1.375rem !important;
   width: 1.375rem !important; /* 22px */
   height: 1.375rem !important;
+  min-width: 1.375rem !important;
   max-width: 1.375rem !important;
+  margin: 0 !important;
   margin-inline-end: 0.55rem !important;
   object-fit: contain;
   object-position: center;
@@ -184,6 +215,13 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub
   pointer-events: none;
 }
 
+/* Kill Vuexy LTR/RTL margin flips that shove nested icons off the column */
+.layout-front-with-menu .front-side-menu.menu-vertical .menu-sub .menu-icon,
+html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub .menu-icon {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 /* Nav click loading — replace icon with spinner until page settles */
 @keyframes fsm-menu-spin {
   to {
@@ -193,8 +231,25 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub
 
 .layout-front-with-menu .front-side-menu .menu-link.is-loading > img.menu-icon,
 .layout-front-with-menu .front-side-menu .menu-link.is-loading > i.menu-icon:not(.menu-link-spinner),
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical .menu-sub > .menu-item .menu-link.is-loading > img.menu-icon.menu-icon-3d,
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical .menu-sub > .menu-item .menu-link.is-loading > i.menu-icon:not(.menu-link-spinner) {
+.layout-front-with-menu .front-side-menu .menu-link.is-loading > iconify-icon.menu-icon:not(.menu-link-spinner),
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link.is-loading
+  > img.menu-icon.menu-icon-3d,
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link.is-loading
+  > i.menu-icon:not(.menu-link-spinner),
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link.is-loading
+  > iconify-icon.menu-icon:not(.menu-link-spinner) {
   display: none !important;
   visibility: hidden !important;
 }
@@ -214,7 +269,12 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub
   animation: fsm-menu-spin 0.7s linear infinite;
 }
 
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical .menu-sub > .menu-item .menu-link .menu-link-spinner {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link
+  .menu-link-spinner {
   display: inline-flex !important;
   width: 1.25rem !important; /* 20px — matches nested menu icon */
   height: 1.25rem !important;
@@ -223,39 +283,74 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .menu-item.active > .menu-link.is-loading .menu-link-spinner,
-.layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub .menu-item.active > .menu-link.is-loading .menu-link-spinner {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme
+  .menu-sub
+  .menu-item.active
+  > .menu-link.is-loading
+  .menu-link-spinner {
   color: var(--fsm-fg) !important;
 }
 
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical > .menu-inner > .menu-item.active > .menu-link.is-loading .menu-link-spinner {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  > .menu-inner
+  > .menu-item.active
+  > .menu-link.is-loading
+  .menu-link-spinner {
   color: var(--fsm-active-fg) !important;
 }
 
 .layout-front-with-menu .front-side-menu .menu-item.active > .menu-link img.menu-icon.menu-icon-3d,
 .layout-front-with-menu .front-side-menu .menu-item.open > .menu-link img.menu-icon.menu-icon-3d,
 .layout-front-with-menu .front-side-menu .menu-link:hover img.menu-icon.menu-icon-3d,
-.layout-front-with-menu .front-side-menu .menu-link:focus img.menu-icon.menu-icon-3d {
+.layout-front-with-menu .front-side-menu .menu-link:focus img.menu-icon.menu-icon-3d,
+.layout-front-with-menu .front-side-menu .menu-item.active > .menu-link iconify-icon.menu-icon.menu-icon-3d,
+.layout-front-with-menu .front-side-menu .menu-item.open > .menu-link iconify-icon.menu-icon.menu-icon-3d,
+.layout-front-with-menu .front-side-menu .menu-link:hover iconify-icon.menu-icon.menu-icon-3d,
+.layout-front-with-menu .front-side-menu .menu-link:focus iconify-icon.menu-icon.menu-icon-3d {
   filter: none !important;
   opacity: 1 !important;
 }
 
 /* Show nested icons; hide Vuexy circle bullets (we use icons instead) */
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical .menu-sub > .menu-item .menu-link .menu-icon:not(.menu-icon-3d) {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link
+  .menu-icon:not(.menu-icon-3d) {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  width: 1.125rem !important;
+  flex: 0 0 1.375rem !important;
+  width: 1.375rem !important;
   font-size: 1.05rem !important;
-  margin-inline-end: 0.5rem !important;
+  margin: 0 !important;
+  margin-inline-end: 0.55rem !important;
   color: var(--fsm-muted);
 }
 
-.layout-front-with-menu .front-side-menu.bg-menu-theme.menu-vertical .menu-sub > .menu-item .menu-link img.menu-icon.menu-icon-3d {
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link
+  img.menu-icon.menu-icon-3d,
+.layout-front-with-menu
+  .front-side-menu.bg-menu-theme.menu-vertical
+  .menu-sub
+  > .menu-item
+  .menu-link
+  iconify-icon.menu-icon.menu-icon-3d {
   display: block !important;
-  width: 1.25rem !important; /* 20px nested */
-  height: 1.25rem !important;
-  max-width: 1.25rem !important;
-  margin-inline-end: 0.5rem !important;
+  flex: 0 0 1.375rem !important;
+  width: 1.375rem !important;
+  height: 1.375rem !important;
+  min-width: 1.375rem !important;
+  max-width: 1.375rem !important;
+  margin: 0 !important;
+  margin-inline-end: 0.55rem !important;
 }
 
 .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub > .menu-item > .menu-link::before {
@@ -263,25 +358,30 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.bg-menu-theme .menu-sub
   display: none !important;
 }
 
-/* Nested indent — deeper inset from menu start (RTL → physical left) */
-html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub .menu-link,
+/*
+  Nested rows: same horizontal inset as top-level links so icons stack in one column.
+  (Vuexy used padding-right: 2.875rem on submenu, which shoved nested icons sideways.)
+*/
+html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub .menu-link,
 .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub .menu-link {
-  padding-inline-start: 2.25rem !important;
+  margin-inline: 0.875rem !important;
+  padding-inline-start: 1rem !important;
   padding-inline-end: 0.85rem !important;
 }
 
-/* Keep a light tree rail aligned with nested start edge */
+/* Keep a light tree rail aligned with the shared icon column */
 .layout-front-with-menu .front-side-menu .menu-inner > .menu-item.open > .menu-sub {
   position: relative;
 }
 
 .layout-front-with-menu .front-side-menu .menu-inner > .menu-item.open > .menu-sub::before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 0;
   top: 0.35rem;
   bottom: 0.35rem;
-  inset-inline-start: 1.55rem;
+  /* 0.875rem margin + 1rem pad + half icon ≈ center of icon column */
+  inset-inline-start: calc(0.875rem + 1rem + 0.6875rem);
   width: 0;
   border-inline-start: 1px solid color-mix(in oklch, var(--fsm-fg) 12%, transparent);
   border-color: color-mix(in oklch, var(--fsm-fg) 12%, transparent) !important;
@@ -323,46 +423,6 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   object-fit: contain !important;
 }
 
-/* ── Panel mode toggle (آژانس / سازمانی) — app-specific chrome ───────────── */
-.layout-front-with-menu .front-side-menu .front-side-menu-mode {
-  flex: 0 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.15rem;
-  margin: 0.55rem 1rem 0.35rem;
-  padding: 0.2rem;
-  border: 1px solid var(--fsm-border);
-  border-radius: 999px;
-  background: var(--fsm-bg-deep);
-}
-
-.layout-front-with-menu .front-side-menu .front-side-menu-mode__btn {
-  appearance: none;
-  border: 0;
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1.85rem;
-  padding: 0.3rem 0.55rem;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--fsm-muted);
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
-  font-size: 0.6875rem;
-  line-height: 1.2;
-  text-align: center;
-  user-select: none;
-}
-
-.layout-front-with-menu .front-side-menu .front-side-menu-mode__btn.is-active {
-  background: #fff;
-  color: var(--fsm-fg);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--fsm-border) 80%, transparent),
-    0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
 /* ── Upcoming trips (سفرهای پیش‌رو) — flows under تنظیمات inside menu-inner ─ */
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming-li {
   list-style: none;
@@ -396,7 +456,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   align-items: center;
   flex-wrap: wrap;
   gap: 0.35rem;
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0;
@@ -405,7 +465,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__demo-tag {
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5625rem;
   font-weight: 500;
   line-height: 1;
@@ -417,7 +477,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__all {
   flex: 0 0 auto;
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.625rem;
   color: var(--fsm-fg);
   text-decoration: none !important;
@@ -438,7 +498,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   border-radius: var(--fsm-radius-sm);
   background: var(--fsm-bg-deep);
   color: var(--fsm-muted);
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.6875rem;
   line-height: 1.45;
   text-align: center;
@@ -465,10 +525,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   background: #fff;
   color: var(--fsm-fg);
   text-decoration: none !important;
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__item.has-progress {
@@ -508,14 +565,14 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__day {
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
   color: inherit;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__month {
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5625rem;
   color: inherit;
   opacity: 0.78;
@@ -526,7 +583,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__time {
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5625rem;
   color: inherit;
   opacity: 0.72;
@@ -534,30 +591,35 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   unicode-bidi: isolate;
 }
 
-/* Date block — stage-aware tint (matches status chips) */
-.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--registered {
-  background: color-mix(in oklch, var(--fsm-fg) 9%, white);
-  color: var(--fsm-fg);
+/* Date block — stage-aware tint
+   reserved=blue · ongoing=green · cancelled=red · done=purple */
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming {
+  --trip-reserved: oklch(0.55 0.16 250);
+  --trip-ongoing: oklch(0.55 0.15 145);
+  --trip-cancelled: oklch(0.55 0.19 25);
+  --trip-done: oklch(0.52 0.18 305);
 }
 
-.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--confirmed {
-  background: color-mix(in oklch, var(--fsm-active, #696cff) 16%, white);
-  color: color-mix(in oklch, var(--fsm-active, #696cff) 78%, black);
-}
-
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--registered,
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--confirmed,
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--departing {
-  background: color-mix(in oklch, oklch(0.75 0.15 75) 24%, white);
-  color: oklch(0.45 0.12 55);
+  background: color-mix(in oklch, var(--trip-reserved) 18%, white);
+  color: color-mix(in oklch, var(--trip-reserved) 82%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--in-progress {
-  background: color-mix(in oklch, oklch(0.72 0.14 155) 22%, white);
-  color: oklch(0.4 0.1 155);
+  background: color-mix(in oklch, var(--trip-ongoing) 20%, white);
+  color: color-mix(in oklch, var(--trip-ongoing) 80%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--completed {
-  background: color-mix(in oklch, oklch(0.72 0.16 145) 26%, white);
-  color: oklch(0.38 0.12 145);
+  background: color-mix(in oklch, var(--trip-done) 20%, white);
+  color: color-mix(in oklch, var(--trip-done) 82%, black);
+}
+
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--cancelled {
+  background: color-mix(in oklch, var(--trip-cancelled) 18%, white);
+  color: color-mix(in oklch, var(--trip-cancelled) 82%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__tick {
@@ -576,7 +638,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   margin: 0;
   border: 0;
   border-radius: 999px;
-  background: oklch(0.52 0.14 145);
+  background: var(--trip-done);
   color: #fff;
   line-height: 1;
   box-shadow: none;
@@ -609,7 +671,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__passenger {
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.75rem;
   color: var(--fsm-fg);
   overflow: hidden;
@@ -618,7 +680,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__route {
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.625rem;
   color: var(--fsm-muted);
   overflow: hidden;
@@ -635,7 +697,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status {
   flex: 0 0 auto;
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5625rem;
   line-height: 1;
   padding: 0.18rem 0.35rem;
@@ -644,33 +706,30 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   color: var(--fsm-fg);
 }
 
-/* Stage chips — soft Vuexy/Vega-style labels (Ticket has no rich status enum) */
-.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--registered {
-  background: color-mix(in oklch, var(--fsm-fg) 8%, transparent);
-  color: var(--fsm-fg);
-}
-
-.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--confirmed {
-  background: color-mix(in oklch, var(--fsm-active, #696cff) 14%, white);
-  color: color-mix(in oklch, var(--fsm-active, #696cff) 72%, black);
-}
-
+/* Stage chips — reserved=blue · ongoing=green · cancelled=red · done=purple */
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--registered,
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--confirmed,
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--departing {
-  background: color-mix(in oklch, oklch(0.75 0.15 75) 22%, white);
-  color: oklch(0.45 0.12 55);
+  background: color-mix(in oklch, var(--trip-reserved) 16%, white);
+  color: color-mix(in oklch, var(--trip-reserved) 78%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--in-progress {
-  background: color-mix(in oklch, oklch(0.72 0.14 155) 20%, white);
-  color: oklch(0.4 0.1 155);
+  background: color-mix(in oklch, var(--trip-ongoing) 18%, white);
+  color: color-mix(in oklch, var(--trip-ongoing) 78%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--completed {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  background: color-mix(in oklch, oklch(0.72 0.16 145) 22%, white);
-  color: oklch(0.38 0.12 145);
+  background: color-mix(in oklch, var(--trip-done) 18%, white);
+  color: color-mix(in oklch, var(--trip-done) 80%, black);
+}
+
+.layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--cancelled {
+  background: color-mix(in oklch, var(--trip-cancelled) 16%, white);
+  color: color-mix(in oklch, var(--trip-cancelled) 80%, black);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status-check {
@@ -680,7 +739,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__car {
   min-width: 0;
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5625rem;
   color: var(--fsm-muted);
   overflow: hidden;
@@ -721,7 +780,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   bottom: 0;
   max-width: 100%;
   border-radius: inherit;
-  background: #6a6a6a;
+  background: var(--trip-ongoing, oklch(0.55 0.15 145));
   min-width: 0;
 }
 
@@ -741,7 +800,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__progress-eta {
   flex: 0 0 auto;
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.5rem;
   line-height: 1;
   color: var(--fsm-muted);
@@ -784,7 +843,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__btn:hover,
-.layout-front-with-menu .front-side-menu .front-side-menu-user__btn[aria-expanded="true"] {
+.layout-front-with-menu .front-side-menu .front-side-menu-user__btn[aria-expanded='true'] {
   background: #fff;
   border-color: var(--fsm-border);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -801,7 +860,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   height: 2rem;
   border-radius: 999px;
   overflow: hidden;
-  background: #fff;
+  background: color-mix(in oklch, var(--fsm-muted-bg, #f4f4f5) 80%, white);
   border: 1px solid var(--fsm-border);
   display: grid;
   place-items: center;
@@ -812,6 +871,11 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.layout-front-with-menu .front-side-menu .front-side-menu-user__avatar iconify-icon {
+  display: block;
+  line-height: 0;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__avatar--icon {
@@ -828,7 +892,7 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__name {
-  font-family: font-demi-bold, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-demi-bold, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.8125rem;
   color: var(--fsm-fg);
   overflow: hidden;
@@ -837,12 +901,19 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__balance {
-  font-family: font-regular, "IRANSansX", Tahoma, sans-serif;
+  font-family: font-regular, 'IRANSansX', Tahoma, sans-serif;
   font-size: 0.6875rem;
   color: var(--fsm-muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.layout-front-with-menu .front-side-menu .front-side-menu-close-icon,
+.layout-front-with-menu .navbar-close-icon {
+  color: #111 !important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__chevron {
@@ -851,6 +922,12 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   font-size: 1.05rem;
   color: var(--fsm-muted);
   opacity: 0.75;
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+.layout-front-with-menu .front-side-menu .front-side-menu-user__btn[aria-expanded="true"] .front-side-menu-user__chevron {
+  transform: rotate(0deg);
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-user__menu {
@@ -900,25 +977,71 @@ html[dir="rtl"] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   min-height: 100%;
 }
 
-.layout-front-with-menu .layout-navbar .container {
-  max-width: 100%;
-  padding-inline: 1rem;
+/*
+  Side-menu pages without a top navbar: kill fixed-navbar spacer.
+  Beat demo.css `.layout-navbar-fixed … .layout-page { padding-top: 78px }`.
+*/
+html.layout-navbar-hidden .layout-wrapper.layout-front-with-menu .layout-page,
+html.layout-menu-fixed.layout-navbar-hidden .layout-wrapper.layout-front-with-menu .layout-page,
+html.layout-navbar-fixed
+  .layout-wrapper.layout-front-with-menu:not(:has(> .layout-container > .layout-page > .layout-navbar))
+  .layout-page,
+.layout-wrapper.layout-front-with-menu:not(:has(.layout-navbar)) .layout-page {
+  padding-top: 0 !important;
 }
 
-/*
-  Landing hero: kill the fixed-navbar spacer band so the stage art
-  fills from the top of the viewport behind the floating navbar.
-  Agency panel pages (no .landing-hero-stage) keep the normal 78px pad.
-  Specificity must beat demo.css:
-  .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page
-*/
-html.layout-navbar-fixed .layout-wrapper.layout-content-navbar.layout-front-with-menu:not(.layout-horizontal):not(.layout-without-menu):has(.landing-hero-stage) .layout-page,
-html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-menu:not(.layout-horizontal):not(.layout-without-menu):has(.landing-hero-stage) .layout-page {
+/* Panel pages: logo navbar only on mobile; desktop uses side-menu brand */
+@media (min-width: 992px) {
+  .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only > .layout-container > .layout-page > .layout-navbar {
+    display: none !important;
+  }
+
+  html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only .layout-page,
+  html.layout-menu-fixed.layout-navbar-fixed
+    .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only
+    .layout-page {
+    padding-top: 0 !important;
+  }
+
+  html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only .layout-page::before,
+  html.layout-menu-fixed.layout-navbar-fixed
+    .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only
+    .layout-page::before {
+    content: none !important;
+    display: none !important;
+    height: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu.front-navbar-mobile-only .layout-page {
+    padding-top: 4.75rem !important;
+  }
+}
+
+html.layout-navbar-hidden .layout-wrapper.layout-front-with-menu .layout-page::before,
+html.layout-menu-fixed.layout-navbar-hidden .layout-wrapper.layout-front-with-menu .layout-page::before {
+  content: none !important;
+  display: none !important;
+  height: 0 !important;
+}
+
+/* Index (navbar present): hero clears the floating bar */
+html.layout-navbar-fixed
+  .layout-wrapper.layout-content-navbar.layout-front-with-menu:not(.layout-horizontal):not(.layout-without-menu):has(
+    .landing-hero-stage
+  )
+  .layout-page,
+html.layout-menu-fixed.layout-navbar-fixed
+  .layout-wrapper.layout-front-with-menu:not(.layout-horizontal):not(.layout-without-menu):has(.landing-hero-stage)
+  .layout-page {
   padding-top: 0 !important;
 }
 
 html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu:has(.landing-hero-stage) .layout-page::before,
-html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-menu:has(.landing-hero-stage) .layout-page::before {
+html.layout-menu-fixed.layout-navbar-fixed
+  .layout-wrapper.layout-front-with-menu:has(.landing-hero-stage)
+  .layout-page::before {
   content: none !important;
   display: none !important;
   background: none !important;
@@ -933,9 +1056,38 @@ html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-men
 }
 
 .layout-wrapper.layout-front-with-menu:has(.landing-hero-stage) .landing-hero-stage {
-  /* Cover the former navbar spacer + keep art edge-to-top */
-  min-height: clamp(22rem, 48vw, 32rem);
+  min-height: clamp(18rem, 40vw, 28rem);
+  padding-top: 1.5rem;
+}
+
+.layout-wrapper.layout-front-with-menu:has(.layout-navbar):has(.landing-hero-stage) .landing-hero-stage {
   padding-top: 5.5rem;
+}
+
+/* Panel pages without navbar: no leftover top band */
+.layout-front-with-menu:not(:has(.layout-navbar)) .agency-panel-hero.landing-hero,
+.layout-front-with-menu:not(:has(.layout-navbar)) #landingHero.agency-panel-hero {
+  padding-top: 0 !important;
+}
+
+/* Mobile-only open control (pages without top navbar) */
+.layout-front-with-menu .front-side-menu-open-btn {
+  position: fixed;
+  top: 0.85rem;
+  inset-inline-start: 0.85rem;
+  z-index: 1080;
+  color: var(--fsm-fg);
+  width: 2.35rem;
+  height: 2.35rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--fsm-radius-sm);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.layout-front-with-menu .front-side-menu-open-btn:hover {
+  background: var(--fsm-accent);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -961,7 +1113,7 @@ html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-men
     box-shadow: var(--fsm-edge-shadow) !important;
   }
 
-  html[dir="rtl"].layout-menu-fixed .layout-front-with-menu .layout-page,
+  html[dir='rtl'].layout-menu-fixed .layout-front-with-menu .layout-page,
   html.layout-menu-fixed .layout-front-with-menu .layout-page,
   .layout-front-with-menu .layout-page {
     flex: 1 1 auto !important;
@@ -974,14 +1126,7 @@ html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-men
     padding-left: 0 !important;
   }
 
-  html[dir="rtl"].layout-menu-fixed .layout-front-with-menu .layout-navbar,
-  .layout-front-with-menu .layout-navbar {
-    right: var(--fsm-width) !important;
-    left: 0 !important;
-    width: auto !important;
-  }
-
-  html[dir="rtl"].layout-menu-fixed .layout-front-with-menu .layout-page::before,
+  html[dir='rtl'].layout-menu-fixed .layout-front-with-menu .layout-page::before,
   .layout-front-with-menu .layout-page::before {
     right: var(--fsm-width) !important;
     left: 0 !important;
@@ -990,6 +1135,12 @@ html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-men
 
   .layout-front-with-menu .layout-overlay {
     display: none !important;
+  }
+
+  .layout-front-with-menu .layout-navbar {
+    right: var(--fsm-width) !important;
+    left: 0 !important;
+    width: auto !important;
   }
 
   .layout-front-with-menu .layout-navbar .navbar.landing-navbar {
@@ -1039,5 +1190,90 @@ html.layout-menu-fixed.layout-navbar-fixed .layout-wrapper.layout-front-with-men
 
   .layout-front-with-menu .layout-navbar .layout-menu-toggle:hover {
     background: var(--fsm-accent);
+  }
+}
+
+/* ── Support / FAQ modal ── */
+.agency-support-modal__content {
+  border: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.agency-support-modal__hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agency-support-modal__faq .accordion-item {
+  border: 1px solid var(--bs-border-color, #e4e4e7);
+  border-radius: 0.75rem !important;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.agency-support-modal__faq .accordion-header {
+  min-height: 3.5rem;
+}
+
+.agency-support-modal__faq .accordion-button {
+  font-weight: 650;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  min-height: 3.5rem;
+  padding: 0.85rem 1rem;
+  box-shadow: none !important;
+  align-items: center;
+}
+
+.agency-support-modal__faq .accordion-button:not(.collapsed) {
+  background: color-mix(in oklch, var(--bs-primary, #000) 4%, white);
+  color: inherit;
+}
+
+.agency-support-modal__faq .accordion-body {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--bs-secondary-color);
+  padding: 0 1rem 1rem;
+}
+
+.agency-support-modal__cta {
+  border-top: 1px solid var(--bs-border-color, #e4e4e7);
+}
+
+.agency-support-modal__cta-icon {
+  display: inline-flex;
+}
+
+.agency-support-modal__phone {
+  display: inline-block;
+  font-size: 1.35rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  color: var(--bs-primary, #000);
+  text-decoration: none;
+}
+
+.agency-support-modal__phone:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 575.98px) {
+  #agencySupportModal .modal-dialog {
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .agency-support-modal__faq .accordion-button {
+    font-size: 0.86rem;
+    padding: 0.75rem 0.85rem;
+    min-height: 3.75rem;
+  }
+
+  .agency-support-modal__phone {
+    font-size: 1.2rem;
   }
 }

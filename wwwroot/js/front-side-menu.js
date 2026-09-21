@@ -45,9 +45,12 @@
     link.setAttribute('aria-busy', 'true');
 
     if (!link.querySelector('.menu-link-spinner')) {
-      var icon = link.querySelector('img.menu-icon-3d, i.menu-icon');
-      var spinner = document.createElement('i');
-      spinner.className = 'ti ti-loader-2 menu-link-spinner';
+      var icon = link.querySelector('img.menu-icon-3d, i.menu-icon, iconify-icon.menu-icon');
+      var spinner = document.createElement('iconify-icon');
+      spinner.className = 'fc-icon menu-link-spinner';
+      spinner.setAttribute('icon', 'fluent-color:arrow-sync-24');
+      spinner.setAttribute('width', '22');
+      spinner.setAttribute('height', '22');
       spinner.setAttribute('aria-hidden', 'true');
       if (icon && icon.parentNode === link) {
         icon.insertAdjacentElement('afterend', spinner);

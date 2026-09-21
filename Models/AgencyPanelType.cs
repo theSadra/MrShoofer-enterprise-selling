@@ -1,7 +1,8 @@
 namespace Application.Models
 {
   /// <summary>
-  /// Seller = normal agency panel. Organization = org panel with official-invoice features.
+  /// Seller (آژانس) = agency panel; invoices under head-of-passengers; may have commission.
+  /// Organization (سازمانی) = org panel; invoices under org name; commission always 0; financial profile required.
   /// </summary>
   public enum AgencyPanelType
   {

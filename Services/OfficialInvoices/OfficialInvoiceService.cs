@@ -200,7 +200,8 @@ namespace Application.Services.OfficialInvoices
             var agency = await _db.Agencies.AsNoTracking().FirstOrDefaultAsync(a => a.Id == agencyId);
             var isOrg = agency?.IsOrganization == true;
 
-            // Organization invoices use the agency legal/financial profile as buyer («مشخصات مسافر»).
+            // Organization: buyer = agency legal profile.
+            // Agency (seller): buyer = head of passengers only (no agency financial IDs).
             if (isOrg && agency != null)
             {
                 invoice.BuyerName = agency.Name;
@@ -217,35 +218,32 @@ namespace Application.Services.OfficialInvoices
             }
             else
             {
-                invoice.BuyerName = string.IsNullOrWhiteSpace(ticket.CompanyName)
-                    ? $"{ticket.Firstname} {ticket.Lastname}".Trim()
-                    : ticket.CompanyName;
-                invoice.BuyerNationalId = !string.IsNullOrWhiteSpace(ticket.CompanyName) && !string.IsNullOrWhiteSpace(agency?.NationalId)
-                    ? agency!.NationalId
-                    : ticket.NaCode;
-                invoice.BuyerEconomicNo = NullIfBlank(agency?.EconomicNo);
-                invoice.BuyerRegistrationNo = NullIfBlank(agency?.RegistrationNo);
-                invoice.BuyerAddress = NullIfBlank(agency?.Address);
-                invoice.BuyerPhone = NullIfBlank(agency?.PhoneNumber) ?? ticket.PhoneNumber;
-                invoice.BuyerFax = NullIfBlank(agency?.Fax);
-                invoice.BuyerProvince = NullIfBlank(agency?.Province);
-                invoice.BuyerCounty = NullIfBlank(agency?.County);
-                invoice.BuyerCity = NullIfBlank(agency?.City);
-                invoice.BuyerPostalCode = NullIfBlank(agency?.PostalCode);
+                invoice.BuyerName = NullIfBlank(ticket.HeadOfPassengers)
+                    ?? $"{ticket.Firstname} {ticket.Lastname}".Trim();
+                invoice.BuyerNationalId = NullIfBlank(ticket.NaCode);
+                invoice.BuyerEconomicNo = null;
+                invoice.BuyerRegistrationNo = null;
+                invoice.BuyerAddress = null;
+                invoice.BuyerPhone = NullIfBlank(ticket.PhoneNumber);
+                invoice.BuyerFax = null;
+                invoice.BuyerProvince = null;
+                invoice.BuyerCounty = null;
+                invoice.BuyerCity = null;
+                invoice.BuyerPostalCode = null;
             }
 
             var rials = (long)ticket.TicketFinalPrice * 10;
-            var passenger = $"{ticket.Firstname} {ticket.Lastname}".Trim();
-            var headBit = !string.IsNullOrWhiteSpace(ticket.HeadOfPassengers)
-                ? $" — سرپرست مسافرین: {ticket.HeadOfPassengers.Trim()}"
-                : "";
+            // Seller invoices are issued to the head of passengers; org invoices keep the passenger name in the line text.
+            var namedOnLine = !isOrg && !string.IsNullOrWhiteSpace(ticket.HeadOfPassengers)
+                ? ticket.HeadOfPassengers.Trim()
+                : $"{ticket.Firstname} {ticket.Lastname}".Trim();
             var serviceBit = string.IsNullOrWhiteSpace(ticket.ServiceName) ? "" : $" ({ticket.ServiceName})";
             invoice.Lines = new List<OfficialInvoiceLine>
             {
                 new()
                 {
                     ItemCode = ticket.TicketCode,
-                    Description = $"بابت سفر {ticket.TripOrigin} به {ticket.TripDestination}{serviceBit} با کد بلیط {ticket.TicketCode} به مبلغ {rials.ToString("N0")} ریال. برای مسافر: {passenger}{headBit}",
+                    Description = $"بابت سفر {ticket.TripOrigin} به {ticket.TripDestination}{serviceBit} با کد بلیط {ticket.TicketCode} به مبلغ {rials.ToString("N0")} ریال. برای مسافر: {namedOnLine}",
                     Quantity = 1,
                     Unit = "سفر",
                     UnitAmountRials = rials

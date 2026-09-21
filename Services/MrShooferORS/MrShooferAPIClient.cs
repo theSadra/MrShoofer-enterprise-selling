@@ -118,6 +118,48 @@ namespace Application.Services.MrShooferORS
       }
     }
 
+    /// <summary>
+    /// Push agency profile edits to ORS (name, phones, address). Does not change commission.
+    /// </summary>
+    public async Task<(bool Success, string? Error)> UpdateMyAgencyInfoAsync(
+      string companyName,
+      string numberPhone,
+      string? backupNumberPhone,
+      string companyAddress)
+    {
+      try
+      {
+        var payload = new
+        {
+          CompanyName = companyName,
+          NumberPhone = numberPhone,
+          BackupNumberPhone = backupNumberPhone,
+          CompanyAddress = companyAddress
+        };
+
+        var jsonBody = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+        {
+          PropertyNamingPolicy = null
+        });
+
+        using var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+        var result = await _client.PostAsync("/OTAManagement/UpdateMyAgencyInfo", content);
+        var body = await result.Content.ReadAsStringAsync();
+
+        if (result.IsSuccessStatusCode)
+          return (true, null);
+
+        var detail = TryExtractError(body) ?? body;
+        if (string.IsNullOrWhiteSpace(detail))
+          detail = $"HTTP {(int)result.StatusCode}";
+        return (false, detail);
+      }
+      catch (Exception ex)
+      {
+        return (false, ex.Message);
+      }
+    }
+
 
     public async Task<IList<SearchedTrip>> SearchTrips(DateTime startspan, DateTime endspan, int originCityId, int destinationCityid, int? originterminalId = null, int? destinationterminalid = null)
     {

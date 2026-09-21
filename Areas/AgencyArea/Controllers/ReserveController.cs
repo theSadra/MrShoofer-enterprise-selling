@@ -588,8 +588,8 @@ namespace Application.Areas.AgencyArea
         if (agency == null)
           return Json(new { success = false, message = "آژانس یافت نشد." });
 
-        if (GetCommissionPercent() <= 0)
-          return Json(new { success = false, message = "تغییر قیمت نمایشی فقط برای آژانس‌های دارای کمیسیون فعال است." });
+        if (agency.IsOrganization || GetCommissionPercent() <= 0)
+          return Json(new { success = false, message = "تغییر قیمت نمایشی برای این حساب فعال نیست." });
 
         var ticketCode = request.TicketCode.Trim();
         var ticket = await context.Tickets
@@ -636,6 +636,14 @@ namespace Application.Areas.AgencyArea
     private int GetCommissionPercent()
     {
       if (_commissionPercent.HasValue) return _commissionPercent.Value;
+
+      // Organization panels never take commission and cannot override display prices.
+      if (agency?.IsOrganization == true)
+      {
+        _commissionPercent = 0;
+        return 0;
+      }
+
       if (User?.Identity?.IsAuthenticated != true || agency == null)
       {
         _commissionPercent = 0;

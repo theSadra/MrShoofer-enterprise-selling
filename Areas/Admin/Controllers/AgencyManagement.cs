@@ -128,12 +128,14 @@ namespace Application.Areas.Admin.Controllers
         AdminMobile = viewModel.AdminMobile,
         DateJoined = DateTime.Now,
         Address = viewModel.Address,
-        Commission = viewModel.Commission,
+        Commission = viewModel.PanelType == AgencyPanelType.Organization ? 0 : viewModel.Commission,
         PhoneNumber = viewModel.PhoneNumber,
         EconomicNo = viewModel.EconomicNo,
         RegistrationNo = viewModel.RegistrationNo,
         NationalId = viewModel.NationalId,
-        PanelType = viewModel.PanelType,
+        PanelType = viewModel.PanelType == AgencyPanelType.Organization
+          ? AgencyPanelType.Organization
+          : AgencyPanelType.Seller,
         IdentityUser = identityuser,
         ORSAPI_token = apikey
       };
@@ -247,10 +249,14 @@ namespace Application.Areas.Admin.Controllers
       agency.PanelType = panelType == AgencyPanelType.Organization
         ? AgencyPanelType.Organization
         : AgencyPanelType.Seller;
+      if (agency.PanelType == AgencyPanelType.Organization)
+        agency.Commission = 0;
       await context.SaveChangesAsync();
 
       TempData["status"] = "success";
-      TempData["message"] = "اطلاعات فروشنده ذخیره شد.";
+      TempData["message"] = agency.PanelType == AgencyPanelType.Organization
+        ? "نوع حساب سازمانی ذخیره شد (کمیسیون صفر)."
+        : "اطلاعات فروشنده ذخیره شد.";
       return RedirectToAction("DetailOverview", new { id });
     }
 

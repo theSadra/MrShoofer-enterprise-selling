@@ -5,7 +5,6 @@
     shareUrl = canonical;
   var shareEnc = Uri.EscapeDataString(shareUrl);
   var shareText = Uri.EscapeDataString("مسترشوفر — رزرو سواری بین‌شهری و ترانسفر فرودگاهی");
-  var siteHost = Context.Request.Host.Host;
 }
 
 <footer class="landing-footer bg-body footer-text">
@@ -65,10 +64,7 @@
   </div>
   <div class="footer-bottom py-3">
     <div class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start">
-      <p class="footer-text mb-2 mb-md-0">© @DateTime.UtcNow.Year مسترشوفر. تمامی حقوق محفوظ است.</p>
-      <p class="footer-text mb-0">
-        <a class="footer-link" href="@($"{Context.Request.Scheme}://{Context.Request.Host}/")">@siteHost</a>
-      </p>
+      <p class="footer-text mb-0">© @DateTime.UtcNow.Year مسترشوفر. تمامی حقوق محفوظ است.</p>
     </div>
   </div>
 </footer>

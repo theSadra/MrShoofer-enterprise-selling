@@ -1,0 +1,144 @@
+/* Agency analytics dashboard — Ecommerce/Analytics layout adapted */
+
+.agency-analytics {
+  padding-block: 1.25rem 1.5rem;
+}
+
+.agency-analytics__kpi-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 0.65rem;
+  background: color-mix(in oklch, var(--bs-primary, #000) 6%, white);
+}
+
+.agency-analytics__routes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.agency-analytics__progress {
+  height: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--bs-primary, #000) 8%, white);
+  margin-bottom: 0.2rem;
+}
+
+.agency-analytics__progress .progress-bar {
+  background: var(--bs-primary, #000);
+  border-radius: 999px;
+}
+
+.agency-analytics__scroll {
+  overflow-x: auto;
+}
+
+.agency-analytics__table > :not(caption) > * > * {
+  padding: 0.55rem 0.85rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.agency-analytics__table thead th {
+  font-size: 0.78rem;
+  color: var(--bs-secondary-color);
+  font-weight: 600;
+}
+
+.agency-analytics__table tbody td {
+  font-size: 0.875rem;
+}
+
+.agency-analytics__table tbody tr:hover {
+  background-color: color-mix(in oklch, var(--bs-primary, #000) 4%, white);
+}
+
+.agency-analytics__avatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+#agencyAnalyticsChart {
+  min-height: 280px;
+}
+
+@media (max-width: 767.98px) {
+  .agency-analytics {
+    padding-block: 0.75rem 1.25rem;
+  }
+
+  .agency-analytics > .d-flex.justify-content-between {
+    align-items: stretch !important;
+    flex-direction: column;
+  }
+
+  .agency-analytics > .d-flex.justify-content-between .btn {
+    width: 100%;
+  }
+
+  .agency-analytics h4 {
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+
+  .agency-analytics h4 .text-muted {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .agency-analytics .card-header {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    align-items: flex-start !important;
+  }
+
+  .agency-analytics .card-header .card-title {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .agency-analytics .card-body .row.gy-3 > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .agency-analytics__kpi-icon {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .agency-analytics .card-body .row.gy-3 h5 {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .agency-analytics .card-body .row.gy-3 small {
+    display: block;
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  .agency-analytics form.row > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .agency-analytics__table > :not(caption) > * > * {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  #agencyAnalyticsChart {
+    min-height: 200px;
+  }
+}

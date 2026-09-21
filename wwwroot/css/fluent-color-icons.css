@@ -1,0 +1,40 @@
+/* Fluent Color (Iconify) shared sizing */
+
+iconify-icon.fc-icon,
+.fc-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+iconify-icon.fc-icon--sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+iconify-icon.fc-icon--md {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+iconify-icon.fc-icon--lg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.navbar-agency-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--muted, #f4f4f5) 85%, white);
+  border: 1px solid var(--border, oklch(0.922 0 0));
+  line-height: 0;
+}
+
+.navbar-agency-avatar iconify-icon {
+  display: block;
+  line-height: 0;
+}

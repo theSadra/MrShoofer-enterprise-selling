@@ -4,7 +4,7 @@
     ViewData["Title"] = "صدور فاکتور رسمی";
     var preview = ViewBag.SerialPreview as string ?? ViewData["SerialPreview"] as string ?? "";
     var line = Model.Lines.FirstOrDefault();
-    var legalUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
+    var legalUrl = Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial";
     string Cell(string? v) => string.IsNullOrWhiteSpace(v) ? "—" : v;
 }
 

@@ -413,8 +413,8 @@ html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .layout-navbar .
 
 /* Stage fills under the navbar */
 html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero-stage {
-  min-height: clamp(22rem, 50vw, 34rem);
-  padding-top: 5.5rem;
+  min-height: clamp(18rem, 40vw, 28rem);
+  padding-top: 5.25rem;
   background-color: var(--hero-sky, #e8eef5);
 }
 
@@ -433,6 +433,14 @@ html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero {
   pointer-events: none;
 }
 
+.landing-hero-stage-art picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .landing-hero-stage-art-img {
   position: absolute;
   inset: 0;
@@ -440,15 +448,24 @@ html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Keep scene (car / terminal) in the visible band under the navbar */
-  object-position: center 58%;
-  transform: none;
+  /* Intercity framing */
+  object-position: 72% 78%;
+  transform: scale(1.06);
+  transform-origin: 72% 78%;
   filter: none;
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   opacity: 0;
   z-index: 0;
-  /* Slower, softer crossfade between بین شهری ↔ ترانسفر فرودگاهی */
   transition: opacity 980ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity;
+}
+
+/* Airport flat art — keep car + terminal in frame (same soft merge as intercity) */
+.landing-hero-stage-art-img[data-hero-art-layer="airport"] {
+  object-position: 55% 72%;
+  transform: scale(1.05);
+  transform-origin: 55% 72%;
 }
 
 .landing-hero-stage-art-img.is-active {
@@ -459,13 +476,45 @@ html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero {
 @media (prefers-reduced-motion: reduce) {
   .landing-hero-stage-art-img {
     transition: none;
+    transform: scale(1.03);
   }
 }
 
-/* No color wash over the art — keep original look */
+/* Soft white merge at bottom — light enough that the car stays fully visible */
+.landing-hero-stage::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(2.5rem, 7vw, 4rem);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.28) 40%,
+    rgba(255, 255, 255, 0.75) 75%,
+    #ffffff 100%
+  );
+  /* Avoid heavy blur over the car — soft gradient merge only */
+  filter: none;
+}
+
+/* Soft wash like mrshoofer.com — keep car readable */
 .landing-hero-stage::before {
-  content: none;
-  display: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.12) 32%,
+    rgba(248, 247, 250, 0.28) 72%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
 }
 
 .landing-hero-stage-content {
@@ -476,7 +525,7 @@ html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero {
 .landing-hero-search-wrap {
   position: relative;
   z-index: 3;
-  margin-top: -3.25rem;
+  margin-top: clamp(-3.75rem, -7vw, -2.75rem);
   margin-bottom: 1.25rem;
 }
 
@@ -884,8 +933,8 @@ html[dir="rtl"] .landing-hero .hero-seg-badge {
     --hz-gap: 1.5rem;
   }
   .landing-hero-stage {
-    min-height: clamp(24rem, 42vw, 34rem);
-    padding-top: 5.75rem;
+    min-height: clamp(20rem, 36vw, 28rem);
+    padding-top: 5.5rem;
     padding-bottom: 7rem;
   }
   .landing-hero-search-wrap {
@@ -915,14 +964,20 @@ html[dir="rtl"] .landing-hero .hero-seg-badge {
 /* Mobile: postcard search card (inset + radius) with title/meta like desktop */
 @media (max-width: 767.98px) {
   .landing-hero-stage {
-    min-height: 20.5rem;
-    padding-top: 4.75rem;
+    min-height: 16.5rem;
+    padding-top: 3.75rem;
     padding-bottom: 5.25rem;
   }
   .landing-hero-stage-art-img {
-    object-position: center 62%;
-    transform: none;
+    object-position: 78% 74%;
+    transform: scale(1.1);
+    transform-origin: 78% 74%;
     filter: none;
+  }
+  .landing-hero-stage-art-img[data-hero-art-layer="airport"] {
+    object-position: 52% 70%;
+    transform: scale(1.08);
+    transform-origin: 52% 70%;
   }
   .landing-hero-stage-content,
   .landing-hero-search-wrap,

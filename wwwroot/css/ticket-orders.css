@@ -1,0 +1,99 @@
+/* Ticket list — compact single-line rows + horizontal scroll */
+
+.ticket-orders {
+  padding-block: 1.25rem 1.5rem;
+}
+
+.ticket-orders .card-widget-separator .border-end {
+  border-color: var(--bs-border-color) !important;
+}
+
+.ticket-orders__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.ticket-orders__table {
+  width: max-content;
+  min-width: 100%;
+  margin-bottom: 0;
+  table-layout: auto;
+}
+
+.ticket-orders__table > :not(caption) > * > * {
+  padding: 0.65rem 0.85rem;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: 1.25;
+}
+
+.ticket-orders__table thead th {
+  font-size: 0.78rem;
+  color: var(--bs-secondary-color);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ticket-orders__table tbody td {
+  font-size: 0.875rem;
+}
+
+.ticket-orders__table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.ticket-orders__table tbody tr:hover {
+  background-color: color-mix(in oklch, var(--bs-primary, #000) 4%, white);
+}
+
+.ticket-orders__table .text-wrap {
+  white-space: normal !important;
+}
+
+.ticket-orders__passenger-name {
+  color: var(--bs-secondary-color, #6c757d);
+  font-weight: 500;
+}
+
+.ticket-orders__table .badge {
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 0.28rem 0.55rem;
+  vertical-align: middle;
+}
+
+.ticket-orders__stat-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.ticket-orders__stat-icon iconify-icon {
+  display: block;
+}
+
+.ticket-orders__table .badge iconify-icon,
+.ticket-orders__table td iconify-icon {
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.ticket-orders .btn iconify-icon,
+.ticket-orders .dropdown-item iconify-icon {
+  vertical-align: -0.2em;
+}
+
+.ticket-orders .pagination .page-link {
+  min-width: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 767.98px) {
+  .ticket-orders .card-widget-separator .border-end {
+    border-inline-end: 0 !important;
+  }
+}

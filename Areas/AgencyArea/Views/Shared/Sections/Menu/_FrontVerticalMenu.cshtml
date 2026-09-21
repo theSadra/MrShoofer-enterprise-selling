@@ -7,6 +7,7 @@
 @inject AppDbContext MenuDb
 @inject UserManager<IdentityUser> MenuUserManager
 @inject MrShooferAPIClient MenuApi
+@inject DirectionsTravelTimeCalculator MenuTravelTime
 @{
   TempData.Keep();
   var path = (ViewContext.HttpContext.Request.Path.Value ?? "").ToLowerInvariant();
@@ -23,17 +24,15 @@
   var isTickets = path.Contains("/ticketinfo");
   var isAgencyProfile = path.Contains("/agencyarea/agency") && !path.Contains("legalprofile");
   var isLegalProfile = path.Contains("legalprofile");
-  var isEmployees = path.Contains("/employees") && !path.Contains("spendreport") && !path.Contains("/create");
-  var isEmployeeCreate = path.Contains("/employees/create");
-  var isSpendReport = path.Contains("spendreport");
+  var isEmployees = path.Contains("/employees") && !path.Contains("spendreport");
+  var isSpendReport = path.Contains("spendreport") || path.Contains("/analytics");
   var isOfficialInvoices = path.Contains("/officialinvoices");
   var isChargeModal = isAgencyProfile && string.Equals(query["openChargeModal"].ToString(), "true", StringComparison.OrdinalIgnoreCase);
-  var isFavorites = isHome && section == "favorites";
   var isSupport = isHome && section == "support";
   var isSettingsSection = isAgencyProfile && section == "settings";
 
-  var isIntercity = isHome && !isFavorites && !isSupport && (tripFocus == "intercity" || string.IsNullOrEmpty(tripFocus));
-  var isAirport = isHome && !isFavorites && !isSupport && tripFocus == "airport";
+  var isIntercity = isHome && !isSupport && (tripFocus == "intercity" || string.IsNullOrEmpty(tripFocus));
+  var isAirport = isHome && !isSupport && tripFocus == "airport";
   var isNewTripBranch = isIntercity || isAirport;
 
   Agency? menuAgency = null;
@@ -43,11 +42,8 @@
   var upcomingTrips = new List<Ticket>();
   const int upcomingTripsLimit = 5;
 
-  // DEV: sample «سفرهای پیش‌رو» with multiple stage chips.
-  // Set false (or omit ?upcomingDemo=1) to use live SoldTickets only.
-  const bool forceUpcomingTripsDemo = true;
-  var showUpcomingTripsDemo = forceUpcomingTripsDemo
-    || string.Equals(query["upcomingDemo"].ToString(), "1", StringComparison.OrdinalIgnoreCase);
+  // Demo only via ?upcomingDemo=1 — live SoldTickets by default.
+  var showUpcomingTripsDemo = string.Equals(query["upcomingDemo"].ToString(), "1", StringComparison.OrdinalIgnoreCase);
 
   if (User?.Identity?.IsAuthenticated == true)
   {
@@ -57,45 +53,50 @@
       menuAgency = MenuDb.Agencies.AsNoTracking()
         .FirstOrDefault(a => a.IdentityUserId == uid);
       isOrganizationPanel = menuAgency?.PanelType == AgencyPanelType.Organization;
+    }
 
-      if (menuAgency != null)
+    if (menuAgency != null)
+    {
+      // Prefer still-active tickets for the upcoming strip.
+      var lookback = DateTime.Today.AddDays(-3);
+      var upcomingQuery = MenuDb.Agencies
+        .AsNoTracking()
+        .Where(a => a.Id == menuAgency.Id)
+        .SelectMany(a => a.SoldTickets)
+        .Where(t => !t.IsCancelled && t.RegisteredAt >= lookback);
+
+      upcomingTrips = upcomingQuery
+        .OrderByDescending(t => t.RegisteredAt)
+        .Take(20)
+        .ToList();
+
+      if (!string.IsNullOrWhiteSpace(menuAgency.ORSAPI_token))
       {
-        var today = DateTime.Today;
-        var upcomingQuery = MenuDb.Agencies
-          .AsNoTracking()
-          .Where(a => a.Id == menuAgency.Id)
-          .SelectMany(a => a.SoldTickets)
-          .Where(t => !t.IsCancelled && t.RegisteredAt >= today);
-
-        attentionTripsCount = upcomingQuery.Count();
-        upcomingTrips = upcomingQuery
-          .OrderBy(t => t.RegisteredAt)
-          .Take(upcomingTripsLimit)
-          .ToList();
-
-        if (!string.IsNullOrWhiteSpace(menuAgency.ORSAPI_token))
+        try
         {
-          try
+          MenuApi.SetSellerApiKey(menuAgency.ORSAPI_token);
+          var balStr = MenuApi.GetAccountBalance().GetAwaiter().GetResult();
+          if (!string.IsNullOrWhiteSpace(balStr) && decimal.TryParse(balStr, out var bal))
           {
-            MenuApi.SetSellerApiKey(menuAgency.ORSAPI_token);
-            var balStr = MenuApi.GetAccountBalance().GetAwaiter().GetResult();
-            if (!string.IsNullOrWhiteSpace(balStr) && decimal.TryParse(balStr, out var bal))
-            {
-              menuBalanceLabel = $"{bal.ToString("N0")} تومان";
-            }
+            menuBalanceLabel = $"{bal.ToString("N0")} تومان";
           }
-          catch
-          {
-            menuBalanceLabel = null;
-          }
+        }
+        catch
+        {
+          menuBalanceLabel = null;
         }
       }
     }
   }
 
-  // Ticket only exposes RegisteredAt (no separate arrival). Progress for in-progress
-  // uses start → ETA; ETA falls back to start + default trip length when missing.
-  const double defaultInProgressHours = 2.0;
+  // Progress = elapsed / TravelTime_mins window (same source as search arrival times).
+  const int defaultTravelMins = 120;
+  int ResolveTravelMins(string? origin, string? destination)
+  {
+    var mins = MenuTravelTime.GetTravelMins(origin ?? "", destination ?? "");
+    return mins > 0 ? mins : defaultTravelMins;
+  }
+
   int? CalcTripProgressPercent(DateTime start, DateTime arrival)
   {
     var totalSec = (arrival - start).TotalSeconds;
@@ -108,8 +109,48 @@
     return (int)Math.Round(Math.Clamp(elapsedSec / totalSec * 100.0, 0.0, 100.0));
   }
 
-  // Unified list for real tickets or DEV demo stages (Ticket has no status enum beyond IsCancelled).
-  // Cancelled is never shown in «سفرهای پیش‌رو». Completed-today keeps a success tick on the card.
+  // Cap ORS GetTripInfo calls — menu renders on every page and must stay fast.
+  var tripDepartureCache = new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
+  var orsTripInfoBudget = Math.Min(upcomingTripsLimit, 5);
+
+  DateTime ResolveTripDeparture(Ticket trip)
+  {
+    if (!string.IsNullOrWhiteSpace(trip.Tripcode)
+        && tripDepartureCache.TryGetValue(trip.Tripcode, out var cached))
+    {
+      return cached;
+    }
+
+    var departure = trip.RegisteredAt;
+    if (orsTripInfoBudget > 0
+        && !string.IsNullOrWhiteSpace(trip.Tripcode)
+        && menuAgency != null
+        && !string.IsNullOrWhiteSpace(menuAgency.ORSAPI_token))
+    {
+      try
+      {
+        orsTripInfoBudget--;
+        MenuApi.SetSellerApiKey(menuAgency.ORSAPI_token);
+        var info = MenuApi.GetTripInfo(trip.Tripcode).GetAwaiter().GetResult();
+        if (info != null && info.startingDateTime != default)
+        {
+          departure = info.startingDateTime;
+        }
+      }
+      catch
+      {
+        // Fall back to RegisteredAt when ORS trip info is unavailable.
+      }
+    }
+
+    if (!string.IsNullOrWhiteSpace(trip.Tripcode))
+    {
+      tripDepartureCache[trip.Tripcode] = departure;
+    }
+
+    return departure;
+  }
+
   var upcomingToday = DateTime.Today;
   var upcomingDisplayItems = new List<(
     DateTime At,
@@ -131,7 +172,6 @@
     var demoBase = upcomingToday.AddHours(9);
     var ticketsHref = Url.Action("Index", "TicketInfo", new { area = "AgencyArea" });
 
-    // Completed today — stay visible with a success tick (not cancelled).
     upcomingDisplayItems.Add((
       upcomingToday.AddHours(7).AddMinutes(15),
       "رضا نوری",
@@ -177,7 +217,6 @@
       null,
       null));
 
-    // Mid-progress ~70%: departed 70m ago, ETA in 30m (matches prototype fill).
     var demoInProgressStart = DateTime.Now.AddMinutes(-70);
     var demoInProgressArrival = DateTime.Now.AddMinutes(30);
     upcomingDisplayItems.Add((
@@ -191,13 +230,11 @@
       ticketsHref,
       CalcTripProgressPercent(demoInProgressStart, demoInProgressArrival),
       demoInProgressArrival));
-    // Intentionally no cancelled demo card — cancelled must never appear here.
   }
   else
   {
     foreach (var trip in upcomingTrips)
     {
-      // Defensive: upcomingQuery already excludes IsCancelled.
       if (trip.IsCancelled)
       {
         continue;
@@ -212,30 +249,41 @@
       var detailHref = Url.Action("CustomerReserveInfo", "CustomerService", new { area = "AgencyArea", reference = trip.TicketCode })
         ?? Url.Action("Index", "TicketInfo", new { area = "AgencyArea" });
 
-      // Live SoldTickets: only RegisteredAt exists. Infer completed-today when the
-      // assumed trip window has fully elapsed; otherwise registered (no cancelled).
-      var arrival = trip.RegisteredAt.AddHours(defaultInProgressHours);
+      var departure = ResolveTripDeparture(trip);
+      var travelMins = ResolveTravelMins(trip.TripOrigin, trip.TripDestination);
+      var arrival = departure.AddMinutes(travelMins);
+      var now = DateTime.Now;
+
+      // Drop trips that already finished before today.
+      if (arrival < upcomingToday)
+      {
+        continue;
+      }
+
       var statusKey = "registered";
       var statusLabel = "رزرو شده";
       int? progressPercent = null;
-      DateTime? progressArrival = null;
+      DateTime? progressArrival = arrival;
 
-      if (trip.RegisteredAt.Date == upcomingToday && arrival <= DateTime.Now)
+      if (arrival <= now)
       {
-        statusKey = "completed";
-        statusLabel = "انجام شده";
+        // Finished trips do not belong in upcoming / ongoing.
+        continue;
       }
-      else if (trip.RegisteredAt <= DateTime.Now && arrival > DateTime.Now)
+      else if (departure <= now && arrival > now)
       {
-        // In-window trip: show progress bar (sibling progress-bar feature).
         statusKey = "in-progress";
         statusLabel = "در حال انجام";
-        progressPercent = CalcTripProgressPercent(trip.RegisteredAt, arrival);
-        progressArrival = arrival;
+        progressPercent = CalcTripProgressPercent(departure, arrival);
+      }
+      else if (departure > now && (departure - now).TotalMinutes <= 45)
+      {
+        statusKey = "departing";
+        statusLabel = "نزدیک به حرکت";
       }
 
       upcomingDisplayItems.Add((
-        trip.RegisteredAt,
+        departure,
         passengerName,
         trip.TripOrigin,
         trip.TripDestination,
@@ -246,13 +294,17 @@
         progressPercent,
         progressArrival));
     }
+
+    attentionTripsCount = upcomingDisplayItems.Count(t =>
+      t.StatusKey is "registered" or "confirmed" or "departing" or "in-progress");
   }
 
-  // Hard filter: never render cancelled in «سفرهای پیش‌رو».
-  // Then chronological by start (RegisteredAt / demo At) — earliest first.
+  // Hard filter: only upcoming / in-progress (never cancelled or finished).
   upcomingDisplayItems = upcomingDisplayItems
-    .Where(t => !IsUpcomingCancelledKey(t.StatusKey))
+    .Where(t => !IsUpcomingCancelledKey(t.StatusKey)
+      && t.StatusKey is not "completed")
     .OrderBy(t => t.At)
+    .Take(upcomingTripsLimit)
     .ToList();
 
   var businessName = !string.IsNullOrWhiteSpace(menuAgency?.Name)
@@ -260,19 +312,12 @@
     : "آژانس شما";
   var balanceText = menuBalanceLabel ?? "موجودی در دسترس نیست";
 
-  var customersSectionTitle = isOrganizationPanel ? "اعضای سازمان" : "مشتریان";
-  var customersManageLabel = isOrganizationPanel ? "مدیریت اعضا" : "مدیریت مشتریان";
-  var customersCreateLabel = isOrganizationPanel ? "عضو جدید" : "مشتری جدید";
+  var customersSectionTitle = isOrganizationPanel ? "اعضای سازمان" : "مسافرین";
 
-  var isInvoicesNav = isOrganizationPanel
-    ? isOfficialInvoices
-    : (isAgencyProfile && !isChargeModal && !isSettingsSection);
-  var isCreditNav = isChargeModal;
-  var isSettingsNav = isLegalProfile
-    || isSettingsSection
-    || (isOrganizationPanel && isAgencyProfile && !isChargeModal && string.IsNullOrEmpty(section));
+  var isInvoicesNav = isOfficialInvoices;
+  var isCreditNav = false;
+  var isSettingsNav = isAgencyProfile || isLegalProfile;
 
-  var isCustomersBranch = isEmployees || isEmployeeCreate;
   var isFinanceBranch = isInvoicesNav || isSpendReport || isCreditNav || isSupport;
 }
 @*
@@ -289,17 +334,10 @@
       </span>
     </a>
 
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-      <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
-      <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto" aria-label="بستن منو">
+      <iconify-icon class="fc-icon menu-toggle-icon d-none d-xl-block" icon="fluent-color:options-24" width="20" height="20" aria-hidden="true"></iconify-icon>
+      <iconify-icon class="front-side-menu-close-icon d-block d-xl-none" icon="fluent:dismiss-24" width="23" height="23" aria-hidden="true"></iconify-icon>
     </a>
-  </div>
-
-  <div class="front-side-menu-mode" role="group" aria-label="نوع پنل">
-    <span class="front-side-menu-mode__btn@(!isOrganizationPanel ? " is-active" : "")"
-          aria-current="@(!isOrganizationPanel ? "true" : null)">آژانس</span>
-    <span class="front-side-menu-mode__btn@(isOrganizationPanel ? " is-active" : "")"
-          aria-current="@(isOrganizationPanel ? "true" : null)">سازمانی</span>
   </div>
 
   <div class="menu-inner-shadow"></div>
@@ -311,19 +349,19 @@
 
     <li class="menu-item@(isNewTripBranch ? " active open" : "")">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/route.svg" alt="" aria-hidden="true" />
+        <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:location-ripple-24" width="22" height="22" aria-hidden="true"></iconify-icon>
         <div>سفر جدید</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item@(isIntercity ? " active" : "")">
           <a asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-route-tripFocus="intercity" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/road.svg" alt="" aria-hidden="true" />
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:shifts-24" width="22" height="22" aria-hidden="true"></iconify-icon>
             <div>سفر بین شهری</div>
           </a>
         </li>
         <li class="menu-item@(isAirport ? " active" : "")">
           <a asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-route-tripFocus="airport" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/plane.svg" alt="" aria-hidden="true" />
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:globe-24" width="22" height="22" aria-hidden="true"></iconify-icon>
             <div>ترانسفر فرودگاهی</div>
             <span class="badge rounded-pill ms-auto menu-badge-new" aria-hidden="true">جدید</span>
           </a>
@@ -333,7 +371,7 @@
 
     <li class="menu-item@(isTickets ? " active" : "")">
       <a asp-area="AgencyArea" asp-controller="TicketInfo" asp-action="Index" class="menu-link">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/tickets.svg" alt="" aria-hidden="true" />
+        <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:clipboard-24" width="22" height="22" aria-hidden="true"></iconify-icon>
         <div>سفرهای ثبت شده</div>
         @if (attentionTripsCount > 0)
         {
@@ -342,64 +380,40 @@
       </a>
     </li>
 
-    <li class="menu-item@(isCustomersBranch ? " active open" : "")">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/users.svg" alt="" aria-hidden="true" />
+    <li class="menu-item@(isEmployees ? " active" : "")">
+      <a asp-area="AgencyArea" asp-controller="Employees" asp-action="Index" class="menu-link">
+        <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:people-24" width="22" height="22" aria-hidden="true"></iconify-icon>
         <div>@customersSectionTitle</div>
       </a>
-      <ul class="menu-sub">
-        <li class="menu-item@(isEmployees ? " active" : "")">
-          <a asp-area="AgencyArea" asp-controller="Employees" asp-action="Index" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/users-group.svg" alt="" aria-hidden="true" />
-            <div>@customersManageLabel</div>
-          </a>
-        </li>
-        <li class="menu-item@(isEmployeeCreate ? " active" : "")">
-          <a asp-area="AgencyArea" asp-controller="Employees" asp-action="Create" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/user-plus.svg" alt="" aria-hidden="true" />
-            <div>@customersCreateLabel</div>
-          </a>
-        </li>
-      </ul>
     </li>
 
     <li class="menu-item@(isFinanceBranch ? " active open" : "")">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/finance.svg" alt="" aria-hidden="true" />
+        <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:coin-multiple-24" width="22" height="22" aria-hidden="true"></iconify-icon>
         <div>مالی و حسابداری</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item@(isInvoicesNav ? " active" : "")">
-          @if (isOrganizationPanel)
-          {
-            <a asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index" class="menu-link">
-              <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/receipt.svg" alt="" aria-hidden="true" />
-              <div>فاکتورها</div>
-            </a>
-          }
-          else
-          {
-            <a asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" class="menu-link">
-              <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/receipt.svg" alt="" aria-hidden="true" />
-              <div>فاکتورها</div>
-            </a>
-          }
+          <a asp-area="AgencyArea" asp-controller="OfficialInvoices" asp-action="Index" class="menu-link">
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:receipt-24" width="22" height="22" aria-hidden="true"></iconify-icon>
+            <div>فاکتورها</div>
+          </a>
         </li>
         <li class="menu-item@(isSpendReport ? " active" : "")">
-          <a asp-area="AgencyArea" asp-controller="Employees" asp-action="SpendReport" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/chart.svg" alt="" aria-hidden="true" />
+          <a href="/Analytics" class="menu-link">
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:chart-multiple-24" width="22" height="22" aria-hidden="true"></iconify-icon>
             <div>گزارشات</div>
           </a>
         </li>
         <li class="menu-item@(isCreditNav ? " active" : "")">
-          <a asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-route-openChargeModal="true" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/wallet.svg" alt="" aria-hidden="true" />
+          <a href="/Agency#balance" class="menu-link">
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:savings-24" width="22" height="22" aria-hidden="true"></iconify-icon>
             <div>مدیریت اعتبار</div>
           </a>
         </li>
         <li class="menu-item@(isSupport ? " active" : "")">
-          <a asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-route-section="support" asp-fragment="landingContact" class="menu-link">
-            <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/support.svg" alt="" aria-hidden="true" />
+          <a href="javascript:void(0);" class="menu-link" data-bs-toggle="modal" data-bs-target="#agencySupportModal">
+            <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:person-feedback-24" width="22" height="22" aria-hidden="true"></iconify-icon>
             <div>درخواست پیگیری</div>
           </a>
         </li>
@@ -410,16 +424,9 @@
       <span class="menu-header-text">عمومی</span>
     </li>
 
-    <li class="menu-item@(isFavorites ? " active" : "")">
-      <a asp-area="AgencyArea" asp-controller="Home" asp-action="Index" asp-route-section="favorites" class="menu-link">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/heart.svg" alt="" aria-hidden="true" />
-        <div>مورد علاقه</div>
-      </a>
-    </li>
-
     <li class="menu-item@(isSettingsNav ? " active" : "")">
-      <a asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-route-section="settings" class="menu-link">
-        <img class="menu-icon menu-icon-3d" src="~/img/menu-icons/settings.svg" alt="" aria-hidden="true" />
+      <a asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" class="menu-link">
+        <iconify-icon class="fc-icon menu-icon menu-icon-3d" icon="fluent-color:settings-24" width="22" height="22" aria-hidden="true"></iconify-icon>
         <div>تنظیمات</div>
       </a>
     </li>
@@ -479,7 +486,7 @@
                     @if (isCompletedToday)
                     {
                       <span class="front-side-menu-upcoming__tick" aria-hidden="true">
-                        <i class="ti ti-check"></i>
+                        <iconify-icon icon="fluent-color:checkmark-circle-24" width="16" height="16" aria-hidden="true"></iconify-icon>
                       </span>
                     }
                     <span class="front-side-menu-upcoming__main">
@@ -496,7 +503,7 @@
                           <span class="front-side-menu-upcoming__status front-side-menu-upcoming__status--@trip.StatusKey">
                             @if (isCompletedToday)
                             {
-                              <i class="ti ti-check front-side-menu-upcoming__status-check" aria-hidden="true"></i>
+                              <iconify-icon class="front-side-menu-upcoming__status-check" icon="fluent-color:checkmark-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
                             }
                             @trip.StatusLabel
                           </span>
@@ -559,33 +566,33 @@
                 aria-controls="frontSideMenuUserMenu"
                 aria-label="منوی حساب آژانس">
           <span class="front-side-menu-user__avatar" aria-hidden="true">
-            <img src="~/store.png" width="32" height="32" alt="" />
+            <iconify-icon icon="fluent-color:building-24" width="22" height="22"></iconify-icon>
           </span>
           <span class="front-side-menu-user__meta">
             <span class="front-side-menu-user__name">@businessName</span>
             <span class="front-side-menu-user__balance">@balanceText</span>
           </span>
-          <i class="ti ti-selector front-side-menu-user__chevron" aria-hidden="true"></i>
+          <iconify-icon class="fc-icon front-side-menu-user__chevron" icon="fluent-color:arrow-square-down-24" width="18" height="18" aria-hidden="true"></iconify-icon>
         </button>
         <ul class="dropdown-menu front-side-menu-user__menu"
             id="frontSideMenuUserMenu"
             aria-labelledby="frontSideMenuUserBtn">
           <li>
             <a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index">
-              <i class="ti ti-user me-2"></i>
-              پروفایل آژانس
+              <iconify-icon class="fc-icon me-2" icon="fluent-color:person-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+              پروفایل @(isOrganizationPanel ? "سازمان" : "آژانس")
             </a>
           </li>
           <li>
-            <a class="dropdown-item" asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" asp-route-openChargeModal="true">
-              <i class="ti ti-wallet me-2"></i>
+            <a class="dropdown-item" href="@Url.Action("Index", "Agency", new { area = "AgencyArea" })#balance">
+              <iconify-icon class="fc-icon me-2" icon="fluent-color:savings-24" width="18" height="18" aria-hidden="true"></iconify-icon>
               شارژ حساب
             </a>
           </li>
           <li><hr class="dropdown-divider" /></li>
           <li>
             <a class="dropdown-item text-danger" asp-area="AgencyArea" asp-controller="Auth" asp-action="Logout">
-              <i class="ti ti-logout me-2"></i>
+              <iconify-icon class="fc-icon me-2" icon="fluent-color:lock-closed-24" width="18" height="18" aria-hidden="true"></iconify-icon>
               خروج
             </a>
           </li>
@@ -596,26 +603,26 @@
     {
       <a asp-area="AgencyArea" asp-controller="Agency" asp-action="Index" class="front-side-menu-user__btn front-side-menu-user__btn--link">
         <span class="front-side-menu-user__avatar" aria-hidden="true">
-          <img src="~/store.png" width="32" height="32" alt="" />
+          <iconify-icon icon="fluent-color:building-24" width="22" height="22"></iconify-icon>
         </span>
         <span class="front-side-menu-user__meta">
           <span class="front-side-menu-user__name">حساب آژانس</span>
           <span class="front-side-menu-user__balance">تکمیل پروفایل</span>
         </span>
-        <i class="ti ti-chevron-left front-side-menu-user__chevron" aria-hidden="true"></i>
+        <iconify-icon class="fc-icon front-side-menu-user__chevron" icon="fluent-color:arrow-square-24" width="18" height="18" aria-hidden="true"></iconify-icon>
       </a>
     }
     else
     {
       <a asp-area="AgencyArea" asp-controller="Auth" asp-action="Login" class="front-side-menu-user__btn front-side-menu-user__btn--link">
         <span class="front-side-menu-user__avatar front-side-menu-user__avatar--icon" aria-hidden="true">
-          <i class="ti ti-login"></i>
+          <iconify-icon icon="fluent-color:person-available-24" width="20" height="20" aria-hidden="true"></iconify-icon>
         </span>
         <span class="front-side-menu-user__meta">
           <span class="front-side-menu-user__name">ورود / ثبت نام</span>
           <span class="front-side-menu-user__balance">دسترسی به پنل آژانس</span>
         </span>
-        <i class="ti ti-chevron-left front-side-menu-user__chevron" aria-hidden="true"></i>
+        <iconify-icon class="fc-icon front-side-menu-user__chevron" icon="fluent-color:arrow-square-24" width="18" height="18" aria-hidden="true"></iconify-icon>
       </a>
     }
   </div>

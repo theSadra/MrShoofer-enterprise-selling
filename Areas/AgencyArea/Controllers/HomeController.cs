@@ -43,7 +43,8 @@ namespace Application.Areas.AgencyArea
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-      return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+      // Always send users to the branded Persian error page — never the stock ASP.NET template.
+      return Redirect("/Error/500");
     }
   }
 }

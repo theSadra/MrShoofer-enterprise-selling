@@ -26,38 +26,17 @@ namespace Application.Areas.AgencyArea
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? q = null)
+    public async Task<IActionResult> Index(string? q = null, int? openCreate = null)
     {
       if (_agency == null) return RedirectToAction("Index", "Home");
-
-      var query = _context.AgencyEmployees
-        .Where(e => e.AgencyId == _agency.Id);
-
-      if (!string.IsNullOrWhiteSpace(q))
-      {
-        var term = q.Trim();
-        query = query.Where(e =>
-          e.Firstname.Contains(term) ||
-          e.Lastname.Contains(term) ||
-          e.NaCode.Contains(term) ||
-          e.PhoneNumber.Contains(term) ||
-          (e.Email != null && e.Email.Contains(term)));
-      }
-
-      var employees = await query
-        .OrderBy(e => e.Lastname)
-        .ThenBy(e => e.Firstname)
-        .ToListAsync();
-
-      ViewBag.Search = q ?? "";
-      return View(employees);
+      return await RenderIndexAsync(q, new AgencyEmployeeFormViewModel(), openCreate == 1);
     }
 
     [HttpGet]
     public IActionResult Create()
     {
       if (_agency == null) return RedirectToAction("Index", "Home");
-      return View(new AgencyEmployeeFormViewModel());
+      return RedirectToAction(nameof(Index), new { openCreate = 1 });
     }
 
     [HttpPost]
@@ -65,14 +44,16 @@ namespace Application.Areas.AgencyArea
     public async Task<IActionResult> Create(AgencyEmployeeFormViewModel model)
     {
       if (_agency == null) return RedirectToAction("Index", "Home");
-      if (!ModelState.IsValid) return View(model);
+
+      if (!ModelState.IsValid)
+        return await RenderIndexAsync(null, model, openCreate: true);
 
       var exists = await _context.AgencyEmployees
         .AnyAsync(e => e.AgencyId == _agency.Id && e.NaCode == model.NaCode);
       if (exists)
       {
-        ModelState.AddModelError(nameof(model.NaCode), "مسافری با این کد ملی قبلاً ثبت شده است");
-        return View(model);
+        ModelState.AddModelError(nameof(model.NaCode), "فردی با این کد ملی قبلاً ثبت شده است");
+        return await RenderIndexAsync(null, model, openCreate: true);
       }
 
       var now = DateTime.Now;
@@ -85,12 +66,96 @@ namespace Application.Areas.AgencyArea
         NaCode = model.NaCode.Trim(),
         PhoneNumber = model.PhoneNumber.Trim(),
         Email = string.IsNullOrWhiteSpace(model.Email) ? null : model.Email.Trim(),
+        InternalTitle = _agency.IsOrganization && !string.IsNullOrWhiteSpace(model.InternalTitle)
+          ? model.InternalTitle.Trim()
+          : null,
         CreatedAt = now,
         UpdatedAt = now
       });
       await _context.SaveChangesAsync();
-      TempData["SuccessMessage"] = "مسافر پرتردد با موفقیت افزوده شد";
+      TempData["SuccessMessage"] = _agency.IsOrganization ? "عضو با موفقیت افزوده شد" : "مسافر با موفقیت افزوده شد";
       return RedirectToAction(nameof(Index));
+    }
+
+    private async Task<IActionResult> RenderIndexAsync(
+      string? q,
+      AgencyEmployeeFormViewModel createModel,
+      bool openCreate)
+    {
+      var query = _context.AgencyEmployees
+        .Where(e => e.AgencyId == _agency!.Id);
+
+      if (!string.IsNullOrWhiteSpace(q))
+      {
+        var term = q.Trim();
+        query = query.Where(e =>
+          e.Firstname.Contains(term) ||
+          e.Lastname.Contains(term) ||
+          e.NaCode.Contains(term) ||
+          e.PhoneNumber.Contains(term) ||
+          (e.Email != null && e.Email.Contains(term)) ||
+          (e.InternalTitle != null && e.InternalTitle.Contains(term)));
+      }
+
+      var employees = await query
+        .OrderBy(e => e.Lastname)
+        .ThenBy(e => e.Firstname)
+        .ToListAsync();
+
+      var monthStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+      var lookback = monthStart.AddMonths(-6);
+      var recentTicketRows = await _context.Tickets
+        .AsNoTracking()
+        .Where(t => EF.Property<int>(t, "AgencyId") == _agency!.Id
+                    && !t.IsCancelled
+                    && t.RegisteredAt >= lookback)
+        .Select(t => new
+        {
+          t.AgencyEmployeeId,
+          t.NaCode,
+          t.PhoneNumber,
+          t.Firstname,
+          t.Lastname,
+          t.RegisteredAt
+        })
+        .ToListAsync();
+
+      var employeeIdsWithTrips = new HashSet<int>();
+      var monthTripCount = 0;
+      foreach (var row in recentTicketRows)
+      {
+        var ticket = new Ticket
+        {
+          AgencyEmployeeId = row.AgencyEmployeeId,
+          NaCode = row.NaCode,
+          PhoneNumber = row.PhoneNumber,
+          Firstname = row.Firstname,
+          Lastname = row.Lastname,
+          RegisteredAt = row.RegisteredAt
+        };
+        var matched = ResolveEmployeeForTicket(ticket, employees);
+        if (matched == null) continue;
+        employeeIdsWithTrips.Add(matched.Id);
+        if (ticket.RegisteredAt >= monthStart)
+          monthTripCount++;
+      }
+
+      var readyToBookCount = employees.Count(e =>
+        !string.IsNullOrWhiteSpace(e.NaCode)
+        && e.NaCode.Trim().Length == 10
+        && e.NaCode.Trim().All(char.IsDigit)
+        && !string.IsNullOrWhiteSpace(e.PhoneNumber)
+        && !string.IsNullOrWhiteSpace(e.Gender));
+
+      SetPeopleLabels();
+      ViewBag.Search = q ?? "";
+      ViewBag.TotalCount = employees.Count;
+      ViewBag.WithTripsCount = employeeIdsWithTrips.Count;
+      ViewBag.MonthTripCount = monthTripCount;
+      ViewBag.ReadyToBookCount = readyToBookCount;
+      ViewBag.OpenCreateModal = openCreate;
+      ViewBag.CreateModel = createModel;
+      return View("Index", employees);
     }
 
     [HttpGet]
@@ -125,80 +190,15 @@ namespace Application.Areas.AgencyArea
     }
 
     [HttpGet]
-    public async Task<IActionResult> SpendReport(int? year, int? month, string? from, string? to)
+    public IActionResult SpendReport(int? year, int? month, string? from, string? to)
     {
-      if (_agency == null) return RedirectToAction("Index", "Home");
-
-      var nowP = DateTime.Now.ToPersianDate();
-      int py = year ?? nowP.Year;
-      int pm = month ?? nowP.Month;
-      if (pm < 1 || pm > 12) pm = nowP.Month;
-
-      DateTime fromDt;
-      DateTime toDt;
-      string filterLabel;
-
-      if (!string.IsNullOrWhiteSpace(from) || !string.IsNullOrWhiteSpace(to))
-      {
-        (fromDt, toDt) = ResolveShamsiRange(from, to, defaultMonthSpan: null);
-        filterLabel = $"{fromDt.ToPersianDate().ToShortDateString()} تا {toDt.AddDays(-1).ToPersianDate().ToShortDateString()}";
-        py = fromDt.ToPersianDate().Year;
-        pm = fromDt.ToPersianDate().Month;
-      }
-      else
-      {
-        var pc = new PersianCalendar();
-        fromDt = pc.ToDateTime(py, pm, 1, 0, 0, 0, 0);
-        var days = pc.GetDaysInMonth(py, pm);
-        toDt = pc.ToDateTime(py, pm, days, 0, 0, 0, 0).AddDays(1);
-        filterLabel = $"{new PersianDate(fromDt).MonthName} {py}";
-      }
-
-      var employees = await _context.AgencyEmployees
-        .AsNoTracking()
-        .Where(e => e.AgencyId == _agency.Id)
-        .ToListAsync();
-
-      var tickets = await _context.Tickets
-        .AsNoTracking()
-        .Include(t => t.AgencyEmployee)
-        .Where(t => EF.Property<int>(t, "AgencyId") == _agency.Id &&
-                    t.RegisteredAt >= fromDt &&
-                    t.RegisteredAt < toDt &&
-                    !t.IsCancelled)
-        .ToListAsync();
-
-      var rows = tickets
-        .GroupBy(t => ResolveEmployeeForTicket(t, employees)?.Id)
-        .Select(g =>
-        {
-          var emp = employees.FirstOrDefault(e => e.Id == g.Key)
-                    ?? g.Select(t => t.AgencyEmployee).FirstOrDefault(e => e != null);
-          var name = emp != null
-            ? $"{emp.Firstname} {emp.Lastname}"
-            : "بدون تخصیص به مسافر پرتردد";
-          return new EmployeeSpendRowViewModel
-          {
-            AgencyEmployeeId = g.Key,
-            DisplayName = name,
-            TripCount = g.Count(),
-            TotalToman = g.Sum(t => t.TicketFinalPrice)
-          };
-        })
-        .OrderByDescending(r => r.TotalToman)
-        .ToList();
-
-      ViewBag.Year = py;
-      ViewBag.Month = pm;
-      ViewBag.From = fromDt;
-      ViewBag.To = toDt;
-      ViewBag.FromShamsi = fromDt.ToPersianDate().ToShortDateString();
-      ViewBag.ToShamsi = toDt.AddDays(-1).ToPersianDate().ToShortDateString();
-      ViewBag.FilterLabel = filterLabel;
-      ViewBag.GrandTotal = rows.Sum(r => r.TotalToman);
-      ViewBag.GrandTrips = rows.Sum(r => r.TripCount);
-      ViewBag.PersianYears = Enumerable.Range(nowP.Year - 5, 7).Reverse().ToList();
-      return View(rows);
+      var qs = new List<string>();
+      if (year is int y) qs.Add($"year={y}");
+      if (month is int m) qs.Add($"month={m}");
+      if (!string.IsNullOrWhiteSpace(from)) qs.Add($"from={Uri.EscapeDataString(from)}");
+      if (!string.IsNullOrWhiteSpace(to)) qs.Add($"to={Uri.EscapeDataString(to)}");
+      var url = "/Analytics" + (qs.Count > 0 ? "?" + string.Join("&", qs) : "");
+      return Redirect(url);
     }
 
     [HttpGet]
@@ -210,6 +210,8 @@ namespace Application.Areas.AgencyArea
         .FirstOrDefaultAsync(e => e.Id == id && e.AgencyId == _agency.Id);
       if (employee == null) return NotFound();
 
+      SetPeopleLabels();
+      ViewBag.PageTitle = _agency.IsOrganization ? "ویرایش عضو" : "ویرایش مسافر";
       return View(new AgencyEmployeeFormViewModel
       {
         Id = employee.Id,
@@ -218,7 +220,8 @@ namespace Application.Areas.AgencyArea
         Gender = employee.Gender,
         NaCode = employee.NaCode,
         PhoneNumber = employee.PhoneNumber,
-        Email = employee.Email
+        Email = employee.Email,
+        InternalTitle = employee.InternalTitle
       });
     }
 
@@ -228,6 +231,8 @@ namespace Application.Areas.AgencyArea
     {
       if (_agency == null) return RedirectToAction("Index", "Home");
       if (!model.Id.HasValue) return BadRequest();
+      SetPeopleLabels();
+      ViewBag.PageTitle = _agency.IsOrganization ? "ویرایش عضو" : "ویرایش مسافر";
       if (!ModelState.IsValid) return View(model);
 
       var employee = await _context.AgencyEmployees
@@ -238,7 +243,7 @@ namespace Application.Areas.AgencyArea
         .AnyAsync(e => e.AgencyId == _agency.Id && e.NaCode == model.NaCode && e.Id != employee.Id);
       if (duplicate)
       {
-        ModelState.AddModelError(nameof(model.NaCode), "مسافری با این کد ملی قبلاً ثبت شده است");
+        ModelState.AddModelError(nameof(model.NaCode), "فردی با این کد ملی قبلاً ثبت شده است");
         return View(model);
       }
 
@@ -248,10 +253,13 @@ namespace Application.Areas.AgencyArea
       employee.NaCode = model.NaCode.Trim();
       employee.PhoneNumber = model.PhoneNumber.Trim();
       employee.Email = string.IsNullOrWhiteSpace(model.Email) ? null : model.Email.Trim();
+      employee.InternalTitle = _agency.IsOrganization && !string.IsNullOrWhiteSpace(model.InternalTitle)
+        ? model.InternalTitle.Trim()
+        : null;
       employee.UpdatedAt = DateTime.Now;
 
       await _context.SaveChangesAsync();
-      TempData["SuccessMessage"] = "اطلاعات مسافر به‌روزرسانی شد";
+      TempData["SuccessMessage"] = "اطلاعات با موفقیت به‌روزرسانی شد";
       return RedirectToAction(nameof(Index));
     }
 
@@ -288,7 +296,8 @@ namespace Application.Areas.AgencyArea
           gender = e.Gender,
           naCode = e.NaCode,
           phoneNumber = e.PhoneNumber,
-          email = e.Email
+          email = e.Email,
+          internalTitle = e.InternalTitle
         })
         .ToListAsync();
 
@@ -334,6 +343,9 @@ namespace Application.Areas.AgencyArea
         NaCode = naCode,
         PhoneNumber = model.PhoneNumber.Trim(),
         Email = string.IsNullOrWhiteSpace(model.Email) ? null : model.Email.Trim(),
+        InternalTitle = _agency.IsOrganization && !string.IsNullOrWhiteSpace(model.InternalTitle)
+          ? model.InternalTitle.Trim()
+          : null,
         CreatedAt = now,
         UpdatedAt = now
       };
@@ -352,7 +364,8 @@ namespace Application.Areas.AgencyArea
           gender = entity.Gender,
           naCode = entity.NaCode,
           phoneNumber = entity.PhoneNumber,
-          email = entity.Email
+          email = entity.Email,
+          internalTitle = entity.InternalTitle
         }
       });
     }
@@ -362,6 +375,18 @@ namespace Application.Areas.AgencyArea
       base.OnActionExecuting(context);
       var identityUser = _userManager.GetUserAsync(User).Result;
       _agency = _context.Agencies.FirstOrDefault(a => a.IdentityUser == identityUser);
+    }
+
+    private void SetPeopleLabels()
+    {
+      var isOrg = _agency?.IsOrganization == true;
+      ViewBag.IsOrganization = isOrg;
+      ViewBag.PageTitle = isOrg ? "اعضای سازمان" : "مسافرین";
+      ViewBag.PageSubtitle = isOrg
+        ? "مدیریت اعضای سازمان، سمت‌ها و نقش‌های درون‌سازمانی"
+        : "دفترچه مسافرین برای رزرو سریع‌تر";
+      ViewBag.CreateLabel = isOrg ? "افزودن عضو" : "افزودن مسافر";
+      ViewBag.EntityLabel = isOrg ? "عضو" : "مسافر";
     }
 
     private static AgencyEmployee? ResolveEmployeeForTicket(Ticket ticket, List<AgencyEmployee> employees)

@@ -1,100 +1,291 @@
 @model List<Application.Models.OfficialInvoice>
+@using Application.Models
 @using Application.Services
 @{
-    Layout = "_AgencySideLayout";
-    ViewData["Title"] = "فاکتور رسمی";
-    var preview = ViewBag.SerialPreview as string ?? "";
+	Layout = "_AgencySideLayout";
+	ViewData["Title"] = "فاکتور رسمی";
+
+	var invoices = Model ?? new List<OfficialInvoice>();
+	var preview = ViewBag.SerialPreview as string ?? "";
+	var hasFinancial = ViewBag.HasInvoiceFinancialInfo != null && Convert.ToBoolean(ViewBag.HasInvoiceFinancialInfo);
+	var isOrganization = ViewBag.IsOrganization != null && Convert.ToBoolean(ViewBag.IsOrganization);
+	var needsFinancial = isOrganization && !hasFinancial;
+	var legalProfileUrl = ViewBag.LegalProfileUrl as string ?? Url.Action("Index", "Agency") + "#financial";
+	var page = ViewBag.page != null ? Convert.ToInt32(ViewBag.page) : 1;
+	var pageSize = ViewBag.pageSize != null ? Convert.ToInt32(ViewBag.pageSize) : 20;
+	var totalCount = ViewBag.totalCount != null ? Convert.ToInt32(ViewBag.totalCount) : invoices.Count;
+	var totalPages = ViewBag.totalPages != null ? Convert.ToInt32(ViewBag.totalPages) : 1;
+	var buyerCount = ViewBag.buyerCount != null ? Convert.ToInt32(ViewBag.buyerCount) : 0;
+	var uploadedCount = ViewBag.uploadedCount != null ? Convert.ToInt32(ViewBag.uploadedCount) : 0;
+	var pendingCount = ViewBag.pendingCount != null ? Convert.ToInt32(ViewBag.pendingCount) : 0;
+	var uploadedSum = ViewBag.uploadedSum != null ? Convert.ToInt64(ViewBag.uploadedSum) : 0L;
+	var pendingSum = ViewBag.pendingSum != null ? Convert.ToInt64(ViewBag.pendingSum) : 0L;
+	if (page < 1) page = 1;
+	if (totalPages < 1) totalPages = 1;
+
+	string Initials(string? name)
+	{
+		if (string.IsNullOrWhiteSpace(name)) return "؟";
+		var parts = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+		if (parts.Length == 1) return parts[0][0].ToString();
+		return (parts[0][0].ToString() + parts[^1][0]).ToUpperInvariant();
+	}
 }
 
-<div dir="rtl" class="container-xxl flex-grow-1 container-p-y">
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/invoice-list.css" asp-append-version="true" />
+}
 
-    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
-        <div>
-            <h4 class="mb-1">فاکتور رسمی</h4>
-            <p class="text-muted mb-0" style="max-width:42rem;line-height:1.7">
-                فاکتور فقط برای بلیط‌های خریداری‌شده و لغوشده‌نشده، با اطلاعات ثابت بلیط صادر می‌شود.
-                شماره فاکتور بعدی: <strong dir="ltr">@preview</strong>
-            </p>
-        </div>
-        @if (ViewBag.HasInvoiceFinancialInfo as bool? == true)
-        {
-            <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">صدور از فهرست بلیط‌ها</a>
-        }
-        else
-        {
-            <a href="@(ViewBag.LegalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))" class="btn btn-warning">تکمیل اطلاعات مالی</a>
-        }
-    </div>
+<div class="invoice-list" dir="rtl">
+	@if (TempData["Success"] != null)
+	{
+		<div class="alert alert-success">@TempData["Success"]</div>
+	}
+	@if (TempData["Error"] != null)
+	{
+		<div class="alert alert-danger">@TempData["Error"]</div>
+	}
 
-    @if (ViewBag.HasInvoiceFinancialInfo as bool? != true)
-    {
-        <div class="alert alert-warning d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <span>تا تکمیل اطلاعات مالی (کد اقتصادی، شماره ثبت و شناسه ملی) امکان صدور فاکتور رسمی وجود ندارد.</span>
-            <a href="@(ViewBag.LegalProfileUrl as string ?? Url.Action("LegalProfile", "Agency"))" class="btn btn-sm btn-warning">تکمیل اطلاعات مالی</a>
-        </div>
-    }
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+		<div>
+			<h4 class="mb-1">
+				<span class="text-muted fw-light">صورتحساب /</span>
+				لیست فاکتورها
+			</h4>
+			<small class="text-muted">شماره فاکتور بعدی: <strong dir="ltr">@preview</strong></small>
+		</div>
+		@if (!needsFinancial)
+		{
+			<a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">
+				<iconify-icon class="fc-icon me-1" icon="fluent-color:receipt-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+				صدور از فهرست بلیط‌ها
+			</a>
+		}
+		else
+		{
+			<a href="@legalProfileUrl" class="btn btn-warning">
+				<iconify-icon class="fc-icon me-1" icon="fluent-color:warning-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+				تکمیل اطلاعات مالی
+			</a>
+		}
+	</div>
 
-    @if (!Model.Any())
-    {
-        <div class="card">
-            <div class="card-body text-center py-5">
-                <p class="mb-3 text-muted">هنوز فاکتوری صادر نشده. از فهرست بلیط‌ها روی «فاکتور رسمی» بزنید.</p>
-                <a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">رفتن به بلیط‌ها</a>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>شماره</th>
-                            <th>تاریخ</th>
-                            <th>مسافر</th>
-                            <th>بلیط</th>
-                            <th>مبلغ (ریال)</th>
-                            <th>وضعیت</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var inv in Model)
-                    {
-                        var pdate = inv.InvoiceDate.ToPersianDate();
-                        <tr>
-                            <td><span dir="ltr">@(string.IsNullOrWhiteSpace(inv.SerialNumber) ? "—" : inv.SerialNumber)</span></td>
-                            <td><span dir="ltr">@($"{pdate.Year:0000}/{pdate.Month:00}/{pdate.Day:00}")</span></td>
-                            <td>@(string.IsNullOrWhiteSpace(inv.BuyerName) ? "—" : inv.BuyerName)</td>
-                            <td>@(string.IsNullOrWhiteSpace(inv.TicketCode) ? "—" : inv.TicketCode)</td>
-                            <td><span dir="ltr">@inv.PayableRials.ToString("N0")</span></td>
-                            <td>
-                                @if (inv.UploadStatus == Application.Models.OfficialInvoiceUploadStatus.Uploaded)
-                                {
-                                    <span class="badge bg-label-success">@inv.UploadStatusText</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-label-warning">@inv.UploadStatusText</span>
-                                }
-                            </td>
-                            <td class="text-nowrap">
-                                <a asp-action="Print" asp-route-id="@inv.Id" class="btn btn-sm btn-outline-primary">چاپ</a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    }
+	@if (needsFinancial)
+	{
+		<div class="alert alert-warning d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+			<span>تا تکمیل اطلاعات مالی (کد اقتصادی، شماره ثبت و شناسه ملی) امکان صدور فاکتور رسمی سازمانی وجود ندارد.</span>
+			<a href="@legalProfileUrl" class="btn btn-sm btn-warning">تکمیل اطلاعات مالی</a>
+		</div>
+	}
+	else if (!isOrganization)
+	{
+		<div class="alert alert-info mb-3">
+			فاکتور آژانس فقط به نام <strong>سرپرست مسافرین</strong> صادر می‌شود؛ اطلاعات مالی سازمان لازم نیست.
+		</div>
+	}
+
+	<!-- Invoice List Widget -->
+	<div class="card mb-4">
+		<div class="card-widget-separator-wrapper">
+			<div class="card-body card-widget-separator">
+				<div class="row gy-4 gy-sm-1">
+					<div class="col-sm-6 col-lg-3">
+						<div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+							<div>
+								<h3 class="mb-1">@buyerCount.ToString("N0")</h3>
+								<p class="mb-0">مشتریان</p>
+							</div>
+							<span class="invoice-list__stat-icon me-sm-4" aria-hidden="true">
+								<iconify-icon icon="fluent-color:people-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+						<hr class="d-none d-sm-block d-lg-none me-4" />
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+							<div>
+								<h3 class="mb-1">@totalCount.ToString("N0")</h3>
+								<p class="mb-0">فاکتورها</p>
+							</div>
+							<span class="invoice-list__stat-icon me-lg-4" aria-hidden="true">
+								<iconify-icon icon="fluent-color:document-text-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+						<hr class="d-none d-sm-block d-lg-none" />
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+							<div>
+								<h3 class="mb-1">@uploadedSum.ToString("N0")</h3>
+								<p class="mb-0">ثبت‌شده (@uploadedCount.ToString("N0"))</p>
+							</div>
+							<span class="invoice-list__stat-icon me-sm-4" aria-hidden="true">
+								<iconify-icon icon="fluent-color:checkmark-circle-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="d-flex justify-content-between align-items-start">
+							<div>
+								<h3 class="mb-1">@pendingCount.ToString("N0")</h3>
+								<p class="mb-0">درحال صدور</p>
+							</div>
+							<span class="invoice-list__stat-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:warning-24" width="28" height="28"></iconify-icon>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Invoice List Table -->
+	<div class="card">
+		<div class="card-header border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+			<h5 class="card-title mb-0">لیست فاکتورهای رسمی</h5>
+			<small class="text-muted">
+				@if (totalCount == 0)
+				{
+					<span>موردی برای نمایش نیست</span>
+				}
+				else
+				{
+					var fromItem = ((page - 1) * pageSize) + 1;
+					var toItem = Math.Min(page * pageSize, totalCount);
+					<span>نمایش @fromItem تا @toItem از @totalCount — @pageSize مورد در هر صفحه</span>
+				}
+			</small>
+		</div>
+		<div class="card-datatable table-responsive invoice-list__scroll">
+			<table class="invoice-list-table table border-top invoice-list__table">
+				<thead>
+					<tr>
+						<th>#شناسه</th>
+						<th>وضعیت</th>
+						<th>مشتری</th>
+						<th>مبلغ (ریال)</th>
+						<th>تاریخ</th>
+						<th>بلیط</th>
+						<th>وضعیت فاکتور</th>
+						<th class="cell-fit text-center">عملیات</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (invoices.Count == 0)
+					{
+						<tr>
+							<td colspan="8" class="text-center py-5 text-wrap">
+								<p class="mb-3 text-muted">هنوز فاکتوری صادر نشده. از فهرست بلیط‌ها روی «فاکتور رسمی» بزنید.</p>
+								<a asp-controller="TicketInfo" asp-action="Index" class="btn btn-primary">رفتن به بلیط‌ها</a>
+							</td>
+						</tr>
+					}
+					else
+					{
+						foreach (var inv in invoices)
+						{
+							var pdate = inv.InvoiceDate.ToPersianDate();
+							var uploaded = inv.UploadStatus == OfficialInvoiceUploadStatus.Uploaded;
+							<tr>
+								<td>
+									<a asp-action="Print" asp-route-id="@inv.Id" class="fw-medium text-nowrap" dir="ltr">
+										#@(string.IsNullOrWhiteSpace(inv.SerialNumber) ? inv.Id.ToString() : inv.SerialNumber)
+									</a>
+								</td>
+								<td>
+									@if (uploaded)
+									{
+										<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30" title="@inv.UploadStatusText">
+											<iconify-icon icon="fluent-color:checkmark-circle-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+										</span>
+									}
+									else
+									{
+										<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30" title="@inv.UploadStatusText">
+											<iconify-icon icon="fluent-color:warning-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+										</span>
+									}
+								</td>
+								<td>
+									<div class="d-inline-flex align-items-center gap-2 text-nowrap">
+										<span class="avatar avatar-sm">
+											<span class="avatar-initial rounded-circle bg-label-primary">@Initials(inv.BuyerName)</span>
+										</span>
+										<span class="fw-medium">@(string.IsNullOrWhiteSpace(inv.BuyerName) ? "—" : inv.BuyerName)</span>
+										@if (!string.IsNullOrWhiteSpace(inv.BuyerNationalId))
+										{
+											<small class="text-muted" dir="ltr">· @inv.BuyerNationalId</small>
+										}
+									</div>
+								</td>
+								<td dir="ltr">@inv.PayableRials.ToString("N0")</td>
+								<td dir="ltr" class="text-nowrap">
+									<bdi>@($"{pdate.Year:0000}/{pdate.Month:00}/{pdate.Day:00}")</bdi>
+								</td>
+								<td class="text-nowrap">@(string.IsNullOrWhiteSpace(inv.TicketCode) ? "—" : inv.TicketCode)</td>
+								<td>
+									@if (uploaded)
+									{
+										<span class="badge bg-label-success d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:checkmark-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											@inv.UploadStatusText
+										</span>
+									}
+									else
+									{
+										<span class="badge bg-label-warning d-inline-flex align-items-center gap-1">
+											<iconify-icon icon="fluent-color:warning-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+											@inv.UploadStatusText
+										</span>
+									}
+								</td>
+								<td class="text-center">
+									<div class="dropdown">
+										<button type="button" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="عملیات">
+											<i class="ti ti-dots-vertical"></i>
+										</button>
+										<div class="dropdown-menu dropdown-menu-end m-0">
+											<a class="dropdown-item" asp-action="Print" asp-route-id="@inv.Id">
+												<iconify-icon class="fc-icon me-1" icon="fluent-color:receipt-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+												چاپ / پیش‌نمایش
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+
+		@if (totalPages > 1)
+		{
+			<div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+				<small class="text-muted">صفحه @(page) از @totalPages</small>
+				<nav aria-label="صفحه‌بندی فاکتورها">
+					<ul class="pagination pagination-sm mb-0">
+						<li class="page-item @(page <= 1 ? "disabled" : null)">
+							<a class="page-link" asp-action="Index" asp-route-page="@(page - 1)" tabindex="@(page <= 1 ? -1 : null)">قبلی</a>
+						</li>
+						@{
+							var startPage = Math.Max(1, page - 2);
+							var endPage = Math.Min(totalPages, page + 2);
+						}
+						@for (var p = startPage; p <= endPage; p++)
+						{
+							<li class="page-item @(p == page ? "active" : null)">
+								<a class="page-link" asp-action="Index" asp-route-page="@p">@p</a>
+							</li>
+						}
+						<li class="page-item @(page >= totalPages ? "disabled" : null)">
+							<a class="page-link" asp-action="Index" asp-route-page="@(page + 1)" tabindex="@(page >= totalPages ? -1 : null)">بعدی</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		}
+	</div>
 </div>

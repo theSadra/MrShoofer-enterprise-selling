@@ -22,25 +22,55 @@ namespace Application.Areas.AgencyArea.Controllers
             _invoices = invoices;
         }
 
-        public async Task<IActionResult> Index(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Index(int page = 1, CancellationToken cancellationToken = default)
         {
+            const int pageSize = 20;
+            if (page < 1) page = 1;
+
             var agency = await ResolveAgencyAsync(cancellationToken);
             if (agency == null) return RedirectToAction("Login", "Auth");
-            if (!agency.IsOrganization)
-            {
-                TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
-                return RedirectToAction("Index", "Agency");
-            }
 
             ViewData["Title"] = "فاکتور رسمی";
-            var list = await _db.OfficialInvoices.AsNoTracking()
-                .Where(i => i.AgencyId == agency.Id)
+            ViewBag.IsOrganization = agency.IsOrganization;
+
+            var query = _db.OfficialInvoices.AsNoTracking()
+                .Where(i => i.AgencyId == agency.Id);
+
+            var totalCount = await query.CountAsync(cancellationToken);
+            var uploadedCount = await query.CountAsync(i => i.UploadStatus == OfficialInvoiceUploadStatus.Uploaded, cancellationToken);
+            var pendingCount = totalCount - uploadedCount;
+            var buyerCount = await query
+                .Select(i => i.BuyerNationalId ?? i.BuyerName ?? ("#" + i.Id))
+                .Distinct()
+                .CountAsync(cancellationToken);
+            var uploadedSum = await query
+                .Where(i => i.UploadStatus == OfficialInvoiceUploadStatus.Uploaded)
+                .SumAsync(i => (long?)i.PayableRials, cancellationToken) ?? 0L;
+            var pendingSum = await query
+                .Where(i => i.UploadStatus == OfficialInvoiceUploadStatus.Pending)
+                .SumAsync(i => (long?)i.PayableRials, cancellationToken) ?? 0L;
+
+            var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+            if (page > totalPages) page = totalPages;
+
+            var list = await query
                 .OrderByDescending(i => i.Id)
-                .Take(200)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
+
             ViewBag.SerialPreview = _invoices.GetSerialSettings().Preview;
             ViewBag.HasInvoiceFinancialInfo = agency.HasInvoiceFinancialInfo;
-            ViewBag.LegalProfileUrl = Url.Action("LegalProfile", "Agency", new { area = "AgencyArea" });
+            ViewBag.LegalProfileUrl = Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial";
+            ViewBag.page = page;
+            ViewBag.pageSize = pageSize;
+            ViewBag.totalCount = totalCount;
+            ViewBag.totalPages = totalPages;
+            ViewBag.buyerCount = buyerCount;
+            ViewBag.uploadedCount = uploadedCount;
+            ViewBag.pendingCount = pendingCount;
+            ViewBag.uploadedSum = uploadedSum;
+            ViewBag.pendingSum = pendingSum;
             return View(list);
         }
 
@@ -49,19 +79,15 @@ namespace Application.Areas.AgencyArea.Controllers
         {
             var agency = await ResolveAgencyAsync(cancellationToken);
             if (agency == null) return RedirectToAction("Login", "Auth");
-            if (!agency.IsOrganization)
-            {
-                TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
-                return RedirectToAction("Index", "TicketInfo");
-            }
 
-            if (!agency.HasInvoiceFinancialInfo)
+            // Organization invoices require legal/financial profile; agency (seller) invoices do not.
+            if (agency.IsOrganization && !agency.HasInvoiceFinancialInfo)
             {
                 TempData["InvoiceBlocked"] = true;
                 TempData["ErrorMessage"] = "برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.";
                 if (!string.IsNullOrWhiteSpace(ticketcode))
                     TempData["PendingInvoiceTicketCode"] = ticketcode.Trim();
-                return RedirectToAction("LegalProfile", "Agency");
+                return Redirect(Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial");
             }
 
             if (string.IsNullOrWhiteSpace(ticketcode))
@@ -82,8 +108,15 @@ namespace Application.Areas.AgencyArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            if (!agency.IsOrganization && string.IsNullOrWhiteSpace(ticket.HeadOfPassengers))
+            {
+                TempData["Error"] = "برای صدور فاکتور آژانس، بلیط باید سرپرست مسافرین داشته باشد.";
+                return RedirectToAction("Index", "TicketInfo");
+            }
+
             ViewData["Title"] = "صدور فاکتور رسمی";
             ViewData["SerialPreview"] = _invoices.GetSerialSettings().Preview;
+            ViewBag.IsOrganization = agency.IsOrganization;
 
             var draft = new OfficialInvoice { AgencyId = agency.Id };
             await _invoices.PrefillFromTicketAsync(draft, ticket, agency.Id);
@@ -97,19 +130,14 @@ namespace Application.Areas.AgencyArea.Controllers
         {
             var agency = await ResolveAgencyAsync(cancellationToken);
             if (agency == null) return RedirectToAction("Login", "Auth");
-            if (!agency.IsOrganization)
-            {
-                TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
-                return RedirectToAction("Index", "TicketInfo");
-            }
 
-            if (!agency.HasInvoiceFinancialInfo)
+            if (agency.IsOrganization && !agency.HasInvoiceFinancialInfo)
             {
                 TempData["InvoiceBlocked"] = true;
                 TempData["ErrorMessage"] = "برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.";
                 if (!string.IsNullOrWhiteSpace(ticketCode))
                     TempData["PendingInvoiceTicketCode"] = ticketCode.Trim();
-                return RedirectToAction("LegalProfile", "Agency");
+                return Redirect(Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial");
             }
 
             var (status, ticket, existing) = await _invoices.ResolveEligibleTicketAsync(ticketCode, agency.Id, cancellationToken);
@@ -122,6 +150,12 @@ namespace Application.Areas.AgencyArea.Controllers
             {
                 TempData["Error"] = EligibilityMessage(status);
                 return RedirectToAction(nameof(Index));
+            }
+
+            if (!agency.IsOrganization && string.IsNullOrWhiteSpace(ticket.HeadOfPassengers))
+            {
+                TempData["Error"] = "برای صدور فاکتور آژانس، بلیط باید سرپرست مسافرین داشته باشد.";
+                return RedirectToAction("Index", "TicketInfo");
             }
 
             var invoice = new OfficialInvoice { AgencyId = agency.Id, CreatedBy = User.Identity?.Name };
@@ -144,22 +178,20 @@ namespace Application.Areas.AgencyArea.Controllers
         {
             var agency = await ResolveAgencyAsync(cancellationToken);
             if (agency == null) return RedirectToAction("Login", "Auth");
-            if (!agency.IsOrganization)
-            {
-                TempData["Error"] = "فاکتور رسمی فقط برای پنل سازمانی فعال است.";
-                return RedirectToAction("Index", "Agency");
-            }
 
             var invoice = await _db.OfficialInvoices.AsNoTracking()
                 .FirstOrDefaultAsync(i => i.Id == id && i.AgencyId == agency.Id, cancellationToken);
             if (invoice == null) return NotFound();
 
-            // Always show current agency legal/financial profile on print (buyer block).
-            ApplyAgencyBuyerProfile(invoice, agency);
+            // Organization prints use the live agency legal profile as buyer.
+            // Agency (seller) invoices keep the head-of-passengers buyer captured at issue time.
+            if (agency.IsOrganization)
+                ApplyAgencyBuyerProfile(invoice, agency);
 
             OfficialInvoiceService.HydrateLines(invoice);
             ViewBag.Template = _invoices.GetAssets();
             ViewBag.Seller = await _invoices.GetSellerProfileAsync(cancellationToken);
+            ViewBag.IsOrganization = agency.IsOrganization;
             ViewData["Title"] = "فاکتور " + invoice.SerialNumber;
             return View(invoice);
         }

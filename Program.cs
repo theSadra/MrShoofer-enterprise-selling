@@ -266,13 +266,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseRateLimiter();
 
-if (app.Environment.IsDevelopment())
+// Never show developer/raw ASP.NET error pages to browsers — even in Development.
+app.UseExceptionHandler("/Error");
+if (!app.Environment.IsDevelopment())
 {
-  app.UseDeveloperExceptionPage();
-}
-else
-{
-  app.UseExceptionHandler("/Home/Error");
   app.UseHsts();
 }
 

@@ -26,5 +26,8 @@ namespace Application.ViewModels.Employees
 
     [EmailAddress(ErrorMessage = "لطفا یک ایمیل معتبر وارد کنید")]
     public string? Email { get; set; }
+
+    [StringLength(120, ErrorMessage = "سمت درون سازمانی حداکثر ۱۲۰ کاراکتر است")]
+    public string? InternalTitle { get; set; }
   }
 }

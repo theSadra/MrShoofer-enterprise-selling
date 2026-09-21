@@ -3,6 +3,7 @@
 
     ViewData["Title"] = "سواری بین شهری";
     ViewData["isSideMenu"] = true;
+    ViewData["showFrontNavbar"] = true;
 
     var tripFocus = (Context.Request.Query["tripFocus"].ToString() ?? "").Trim().ToLowerInvariant();
     if (tripFocus is not ("intercity" or "airport" or "vip"))
@@ -35,8 +36,8 @@
     <link rel="stylesheet" href="~/css/jalali-datepicker.css" asp-append-version="true" />
     <link href="~/css/IndexPage.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/trip-search.css" rel="stylesheet" asp-append-version="true" />
-    <link rel="preload" href="/img/front-pages/landing-page/hero-intercity.jpg" as="image" type="image/jpeg" fetchpriority="high" />
-    <link rel="preload" href="/img/front-pages/landing-page/hero-airport.jpg" as="image" type="image/jpeg" />
+    <link rel="preload" href="/img/front-pages/landing-page/hero-travel.webp" as="image" type="image/webp" fetchpriority="high" />
+    <link rel="preload" href="/img/front-pages/landing-page/hero-airport.webp" as="image" type="image/webp" />
     <style>
       .landing-hero .od-pair-col { position: relative; }
 
@@ -216,22 +217,28 @@
         <div id="landingHero" class="landing-hero position-relative">
             <div class="landing-hero-stage" data-hero-stage data-hero-art="@(tripFocus == "airport" ? "airport" : "intercity")">
                 <div class="landing-hero-stage-art" aria-hidden="true">
-                    <img src="/img/front-pages/landing-page/hero-intercity.jpg"
-                         alt=""
-                         width="1024"
-                         height="512"
-                         class="landing-hero-stage-art-img@(tripFocus == "airport" ? "" : " is-active")"
-                         data-hero-art-layer="intercity"
-                         fetchpriority="@(tripFocus == "airport" ? "low" : "high")"
-                         decoding="async" />
-                    <img src="/img/front-pages/landing-page/hero-airport.jpg"
-                         alt=""
-                         width="1024"
-                         height="512"
-                         class="landing-hero-stage-art-img@(tripFocus == "airport" ? " is-active" : "")"
-                         data-hero-art-layer="airport"
-                         fetchpriority="@(tripFocus == "airport" ? "high" : "low")"
-                         decoding="async" />
+                    <picture>
+                        <source type="image/webp" srcset="/img/front-pages/landing-page/hero-travel.webp" />
+                        <img src="/img/front-pages/landing-page/hero-travel.jpg"
+                             alt=""
+                             width="2560"
+                             height="1280"
+                             class="landing-hero-stage-art-img@(tripFocus == "airport" ? "" : " is-active")"
+                             data-hero-art-layer="intercity"
+                             fetchpriority="@(tripFocus == "airport" ? "low" : "high")"
+                             decoding="async" />
+                    </picture>
+                    <picture>
+                        <source type="image/webp" srcset="/img/front-pages/landing-page/hero-airport.webp" />
+                        <img src="/img/front-pages/landing-page/hero-airport.jpg"
+                             alt=""
+                             width="2560"
+                             height="1280"
+                             class="landing-hero-stage-art-img@(tripFocus == "airport" ? " is-active" : "")"
+                             data-hero-art-layer="airport"
+                             fetchpriority="@(tripFocus == "airport" ? "high" : "low")"
+                             decoding="async" />
+                    </picture>
                 </div>
                 <div class="container landing-hero-stage-content">
                     <h1 class="visually-hidden">مستر شوفر — راهی مطمئن به همه مقاصد ایران</h1>

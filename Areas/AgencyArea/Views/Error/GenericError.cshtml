@@ -1,0 +1,29 @@
+@{
+  Layout = "_BlankLayout";
+  ViewData["Title"] = "خطا";
+}
+
+@section PageStyles {
+<link rel="stylesheet" href="~/vendor/css/pages/page-misc.css">
+}
+
+<style>
+  .misc-wrapper {
+    min-height: 80vh !important;
+  }
+</style>
+
+<div class="container-xxl container-p-y" dir="rtl">
+  <div class="misc-wrapper">
+    <img width="220" class="my-3" src="~/logo_full_b.png" alt="مستر شوفر" />
+    <h2 class="mb-3 mt-4">مشکلی پیش آمد</h2>
+    <p class="mb-4 mx-2 text-muted" style="max-width: 28rem; margin-inline: auto; line-height: 1.7;">
+      درخواست شما با خطا روبه‌رو شد. لطفاً دوباره تلاش کنید یا به صفحه اصلی برگردید.
+    </p>
+    <a href="/" class="btn btn-primary waves-effect mb-4">بازگشت به خانه</a>
+    <div class="mt-4">
+      <img src="~/404road.png" alt="" width="225" class="img-fluid" />
+    </div>
+  </div>
+</div>
+<div class="container-fluid misc-bg-wrapper"></div>

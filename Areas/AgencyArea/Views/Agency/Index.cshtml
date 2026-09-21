@@ -1,669 +1,524 @@
-@using Application.Services;
+@using Application.Models
 @{
-    Layout = "_AgencySideLayout";
+	Layout = "_AgencySideLayout";
+	ViewData["Title"] = "پروفایل آژانس";
 
-
-    var agency = (Agency)ViewBag.agency;
-
-    var agancy_balance = (long)ViewBag.agancy_balance;
-
-    var today_soldTickets = (List<Ticket>)ViewBag.today_soldTickets;
-
-    ViewData["isFront"] = false;
-
-    ViewData["navbarType"] = "layout-navbar-fixed";
+	var agency = ViewBag.agency as Agency;
+	var agancy_balance = ViewBag.agancy_balance != null ? Convert.ToInt64(ViewBag.agancy_balance) : 0L;
+	var isOrganization = agency?.IsOrganization == true;
+	var panelLabel = isOrganization ? "سازمانی" : "فروشنده";
+	var hasFinancial = agency?.HasInvoiceFinancialInfo == true;
+	var pendingTicket = TempData["PendingInvoiceTicketCode"] as string;
+	if (!string.IsNullOrWhiteSpace(pendingTicket))
+		TempData["PendingInvoiceTicketCode"] = pendingTicket;
+	var invoiceBlocked = TempData["InvoiceBlocked"] as bool? == true;
 }
+
 @section VendorStyles {
-    <link rel="stylesheet" href="~/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="~/vendor/libs/swiper/swiper.css" />
-    <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
-    <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
-    <link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
-
-    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
-}
-
-@section VendorScripts {
-
-    <script src="/libs/jquery.js"></script>
-
-    <script src="~/vendor/libs/apex-charts/apexcharts.js"></script>
-    <script src="~/vendor/libs/swiper/swiper.js"></script>
-    <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-    <script src="~/vendor/libs/datatables-bs5/i18n/fa.js"></script>
-
-    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="~/vendor/libs/&#64;form-validation/umd/bundle/popular.min.js"></script>
-    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-bootstrap5/index.min.js"></script>
-    <script src="~/vendor/libs/&#64;form-validation/umd/plugin-auto-focus/index.min.js"></script>
-
-     <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
-
+	<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
 }
 
 @section PageStyles {
-    <link rel="stylesheet" href="~/vendor/css/pages/cards-advance.css" />
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/agency-dashboard.css" asp-append-version="true" />
 }
 
-@section PageScripts {
-    <script src="~/js/dashboards-analytics.js"></script>
-    
+@section VendorScripts {
+	<script src="/libs/jquery.js"></script>
+	<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
 }
 
-<style>
-    .rounded-5 {
-        border-radius: 1.5rem !important;
-    }
+<div class="agency-dashboard agency-profile" dir="rtl">
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+		<div>
+			<h4 class="mb-1">
+				<span class="text-muted fw-light">آژانس /</span>
+				پروفایل @(isOrganization ? "سازمان" : "آژانس")
+			</h4>
+			<small class="text-muted">اطلاعات هویتی، مالی و مدیریت اعتبار</small>
+		</div>
+		<span class="badge bg-label-primary">پنل @panelLabel</span>
+	</div>
 
-    .rounded-6 {
-        border-radius: 2.1rem !important;
-    }
+	<form method="post" asp-area="AgencyArea" asp-controller="Agency" asp-action="UpdateProfile" id="agencyProfileForm">
+		@Html.AntiForgeryToken()
 
-    .topbar {
-    }
+		<div class="card mb-4" id="profile">
+			<div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+				<div class="d-flex align-items-center gap-2">
+					<span class="agency-dashboard__kpi-icon" aria-hidden="true">
+						<iconify-icon icon="fluent-color:building-24" width="26" height="26"></iconify-icon>
+					</span>
+					<div>
+						<h5 class="card-title mb-0">اطلاعات @(isOrganization ? "سازمان" : "آژانس")</h5>
+						<small class="text-muted">در پنل و سیستم مرکزی ذخیره می‌شود</small>
+					</div>
+				</div>
+				<span class="badge bg-label-success d-inline-flex align-items-center gap-1">
+					<iconify-icon icon="fluent-color:checkmark-circle-24" width="14" height="14" aria-hidden="true"></iconify-icon>
+					تایید شده
+				</span>
+			</div>
+			<div class="card-body">
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label class="form-label" for="profileName">نام @(isOrganization ? "سازمان" : "آژانس")</label>
+						<input class="form-control" id="profileName" name="Name" required maxlength="200" value="@(agency?.Name)" />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label" for="profileAdmin">تلفن مدیر</label>
+						<input class="form-control" id="profileAdmin" name="AdminMobile" dir="ltr" required maxlength="20" value="@(agency?.AdminMobile)" />
+					</div>
+					<div class="col-md-6">
+						<label class="form-label" for="profilePhone">شماره تلفن</label>
+						<input class="form-control" id="profilePhone" name="PhoneNumber" dir="ltr" maxlength="20" value="@(agency?.PhoneNumber)" />
+					</div>
+					<div class="col-12">
+						<label class="form-label" for="profileAddress">آدرس</label>
+						<textarea class="form-control" id="profileAddress" name="Address" rows="2" required maxlength="500">@(agency?.Address)</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    /* Match agency black/gray theme (override theme purple) */
-    #swiper-with-pagination-cards.swiper-card-advance-bg {
-        background-color: #18181b !important;
-        box-shadow: 0 0.25rem 1.125rem rgba(24, 24, 27, 0.18) !important;
-    }
-    #swiper-with-pagination-cards .website-analytics-text-bg {
-        background-color: #27272a !important;
-        color: #fff !important;
-    }
-</style>
+		@if (isOrganization)
+		{
+		<div class="card mb-4" id="financial">
+			<div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+				<div class="d-flex align-items-center gap-2">
+					<span class="agency-dashboard__kpi-icon" aria-hidden="true">
+						<iconify-icon icon="fluent-color:document-text-24" width="26" height="26"></iconify-icon>
+					</span>
+					<div>
+						<h5 class="card-title mb-0">اطلاعات مالی / حقوقی</h5>
+						<small class="text-muted">برای صدور فاکتور رسمی به نام سازمان لازم است</small>
+					</div>
+				</div>
+				@if (hasFinancial)
+				{
+					<span class="badge bg-label-success">تکمیل‌شده</span>
+				}
+				else
+				{
+					<span class="badge bg-label-warning">ناقص</span>
+				}
+			</div>
+			<div class="card-body">
+				@if (!hasFinancial)
+				{
+					<div class="alert alert-warning mb-3">
+						برای صدور فاکتور رسمی، کد اقتصادی، شماره ثبت و شناسه ملی را وارد کنید.
+					</div>
+				}
+				<div class="row g-3">
+					<div class="col-md-4">
+						<label class="form-label">کد اقتصادی <span class="text-danger">*</span></label>
+						<input class="form-control" dir="ltr" name="EconomicNo" value="@(agency?.EconomicNo)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شماره ثبت <span class="text-danger">*</span></label>
+						<input class="form-control" dir="ltr" name="RegistrationNo" value="@(agency?.RegistrationNo)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شناسه ملی <span class="text-danger">*</span></label>
+						<input class="form-control" dir="ltr" name="NationalId" value="@(agency?.NationalId)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">نمابر</label>
+						<input class="form-control" dir="ltr" name="Fax" value="@(agency?.Fax)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">کد پستی</label>
+						<input class="form-control" dir="ltr" name="PostalCode" value="@(agency?.PostalCode)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">استان</label>
+						<input class="form-control" name="Province" value="@(agency?.Province)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شهرستان</label>
+						<input class="form-control" name="County" value="@(agency?.County)" autocomplete="off" />
+					</div>
+					<div class="col-md-4">
+						<label class="form-label">شهر</label>
+						<input class="form-control" name="City" value="@(agency?.City)" autocomplete="off" />
+					</div>
+				</div>
+			</div>
+		</div>
+		}
 
-<div class="row">
-    <div class="col-lg-6 mb-4 ">
+		<div class="d-flex justify-content-end mb-4">
+			<button type="submit" class="btn btn-primary" id="agencyProfileSubmitBtn">ذخیره تغییرات</button>
+		</div>
+	</form>
 
-        <div class="swiper-container card swiper-container-horizontal swiper swiper-card-advance-bg mt-1 rounded-5" id="swiper-with-pagination-cards">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="row">
-                        <div class="col-12 topbar">
-                            <h4 class="text-white mb-1 mt-0">تعداد سفرهای فروخته‌شده</h4>
-                            <label>
-                                باهم تاکنون
-                                <strong>
-                                    @ViewBag.totalsold
-                                </strong>
-                                بلیط فروختیم
-                            </label>
-                        </div>
-                        <div class="row m-0">
-                            <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
-                                <h6 class="text-white mt-0 mt-md-3 mb-3">آمار کلی</h6>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <ul class="list-unstyled mb-0">
-                                            <li class="d-flex mb-4 align-items-center">
-                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">@ViewBag.todaysold</p>
-                                                <p class="mb-0">فروش امروز</p>
-                                            </li>
-                                            <li class="d-flex align-items-center mb-2">
-                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">@ViewBag._7dayssold</p>
-                                                <p class="mb-0">این هفته</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-6">
-                                        <ul class="list-unstyled mb-0">
-                                            <li class="d-flex mb-4 align-items-center">
-                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">@ViewBag.thismonthsold</p>
-                                                <p class="mb-0">ماه جاری</p>
-                                            </li>
-                                            <li class="d-flex align-items-center mb-2">
-                                                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">@ViewBag.totalsold</p>
-                                                <p class="mb-0">تمامی سفرها</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
-                                <img src="~/taxi.png"
-                                     width="170"
-                                     class="card-website-analytics-img image" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @*                 <div class="swiper-slide">
-                <div class="row">
-                <div class="col-12">
-                <h5 class="text-white mb-1 mt-2">تجزیه و تحلیل وب سایت</h5>
-                <small>مجموع 28.5% نرخ تبدیل</small>
-                </div>
-                <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
-                <h6 class="text-white mt-0 mt-md-3 mb-3">خرج کردن</h6>
-                <div class="row">
-                <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                <li class="d-flex mb-4 align-items-center">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">۱۲ساعت</p>
-                <p class="mb-0">خرج کردن</p>
-                </li>
-                <li class="d-flex align-items-center mb-2">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">127</p>
-                <p class="mb-0">سفارش</p>
-                </li>
-                </ul>
-                </div>
-                <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                <li class="d-flex mb-4 align-items-center">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">18</p>
-                <p class="mb-0">اندازه سفارش</p>
-                </li>
-                <li class="d-flex align-items-center mb-2">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">2.3K</p>
-                <p class="mb-0">اقلام</p>
-                </li>
-                </ul>
-                </div>
-                </div>
-                </div>
-                <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
-                <img src="~/img/illustrations/card-website-analytics-2.png"
-                alt="تجزیه و تحلیل وب سایت"
-                width="170"
-                class="card-website-analytics-img" />
-                </div>
-                </div>
-                </div>
-                <div class="swiper-slide">
-                <div class="row">
-                <div class="col-12">
-                <h5 class="text-white mb-1 mt-2">تجزیه و تحلیل وب سایت</h5>
-                <small>مجموع 28.5% نرخ تبدیل</small>
-                </div>
-                <div class="col-lg-7 col-md-9 col-12 order-2 order-md-1">
-                <h6 class="text-white mt-0 mt-md-3 mb-3">منابع درآمد</h6>
-                <div class="row">
-                <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                <li class="d-flex mb-4 align-items-center">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">268</p>
-                <p class="mb-0">مستقیم</p>
-                </li>
-                <li class="d-flex align-items-center mb-2">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">62</p>
-                <p class="mb-0">ارجاع</p>
-                </li>
-                </ul>
-                </div>
-                <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                <li class="d-flex mb-4 align-items-center">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">890</p>
-                <p class="mb-0">ارگانیک</p>
-                </li>
-                <li class="d-flex align-items-center mb-2">
-                <p class="mb-0 fw-medium me-2 website-analytics-text-bg">۱٫۲ </p>
-                <p class="mb-0">کمپین</p>
-                </li>
-                </ul>
-                </div>
-                </div>
-                </div>
-                <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-4 my-md-0 text-center">
-                <img src="~/img/illustrations/card-website-analytics-3.png"
-                alt="تجزیه و تحلیل وب سایت"
-                width="170"
-                class="card-website-analytics-img" />
-                </div>
-                </div>
-                </div> *@
-            </div>
-        </div>
-
-
-        <div class="d-flex jsutify-content-between pt-2 mb-1 mt-3" style="justify-content: space-between; align-items: center;">
-
-            <h4 class="mb-0" style="color: black !important;">
-                <img src="/buildings.png" height="50px">
-                اطلاعات آژانس
-            </h4>
-
-        </div>
-        <div class="card p-4 border-1 rounded-5 mt-2">
-
-            <div class="d-flex justify-content-between">
-
-                <h5>
-
-                    <i class="ti ti-building ti-lg"></i>
-                    @agency.Name
-                </h5>
-
-                <small class="ms-3 p-0 ">
-                    آژانس تایید شده
-                    <img src="/ok.png" height="13px" class="m-0 p-0">
-                </small>
-
-            </div>
-            <div class="row px-2 mt-2">
-
-                <div class="col-md-3 col-6">
-                    <label>
-                        <i class="ti ti-phone"></i>
-                        شماره تلفن
-                    </label>
-                    <p class="fw-bold ms-2">
-                        @agency.PhoneNumber
-                    </p>
-                </div>
-                <div class="col-md-3 col-6">
-                    <label>
-                        <i class="ti ti-user"></i>
-                        تلفن مدیر
-                    </label>
-                    <p class="fw-bold ms-2">
-                        @agency.AdminMobile
-                    </p>
-                </div>
-
-                <div class="col-md-3 col-6">
-                    <label>
-                        <i class="ti ti-percentage"></i>
-                        کمیسیون پایه‌
-                    </label>
-                    <p class="fw-bold ms-2">
-                        @agency.Commission
-                        درصد
-                    </p>
-                </div>
-
-                <div class="col-12">
-                    <label>
-                        <i class="ti ti-map-pin"></i>
-                        آدرس
-                    </label>
-                    <p class="fw-bold ms-2">
-                        @agency.Address
-                    </p>
-                </div>
-
-                <div class="col-12 px-0">
-
-                    <div class="card shadow rounded-5 px-3 py-2 d-flex justify-content-between">
-
-
-                        <p class="fs-5 text-black mb-0 fw-bold">
-                            موجودی اعتبار
-                        </p>
-                        <div class="d-flex justify-content-start">
-
-                            <img src="/money.png" class="align-self-center" style="height: 45px; " />
-
-                            <div class="my-0 ms-3">
-                                <div class="d-flex align-items-center justify-content-around">
-
-                                    <p class="fs-6 fw-bold mb-0 d-inlie">
-                                        @agancy_balance.ToString("N0")
-                                    </p>
-                                    <h3 class="m-0 p-0 d-inline ms-1">
-                                        <svg class="toman">
-                                            <use xlink:href="#toman">
-                                                <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                    <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                                </symbol>
-                                            </use>
-                                        </svg>
-                                    </h3>
-                                </div>
-                                <button class="btn btn-primary" data-bs-target="#referAndEarn" data-bs-toggle="modal" type="button">افزایش موجودی</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    <div class="col-lg-6 mb-4">
-        <div class="card h-100 rounded-5">
-            <div class="card-header pb-0 d-flex justify-content-between mb-lg-n4">
-                <div class="card-title mb-0">
-                    <h5 class="mb-0">گزارش عملکرد 7 روز گذشته</h5>
-                    <small class="text-muted">سود 7 روز گذشته</small>
-                </div>
-                <div class="dropdown">
-                    <button class="btn p-0"
-                            type="button"
-                            id="earningReportsId"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                        <i class="ti ti-dots-vertical ti-sm text-muted"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId">
-                        <a class="dropdown-item" href="javascript:void(0);">موارد بیشتر</a> <a class="dropdown-item" href="javascript:void(0);">حذف</a>
-                    </div>
-                </div>
-                <!-- </div> -->
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-md-4 d-flex flex-column align-self-end">
-                        <div class="d-flex gap-2 align-items-center mb-2 pb-1 flex-wrap">
-                            <h1 class="mb-0">
-                                <bdi>
-                                    <svg class="toman" width="1rem" height="1rem">
-                                        <use xlink:href="#toman">
-                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                            </symbol>
-                                        </use>
-                                    </svg>@ViewBag.Last7weekprofit.ToString("N0")
-                                </bdi>
-                            </h1>
-                            <div class="badge rounded bg-label-success"><bdi>سود از فروش</bdi></div>
-                        </div>
-                        <small>
-                            سود خالص هفت روز گذشته با محاسبه‌ی کمیسیون
-                            <strong>
-
-                                @ViewBag.agency.Commission
-                                درصد
-                            </strong>
-                        </small>
-                    </div>
-                    <div class="col-12 col-md-8">
-                        <div id="weeklyEarningReports"></div>
-                    </div>
-                </div>
-                <div class="border rounded p-3 mt-4">
-                    <div class="row gap-4 gap-sm-0">
-                        <div class="col-12 col-sm-4">
-                            <div class="d-flex gap-2 align-items-center">
-                                <div class="badge rounded bg-label-primary p-1">
-                                    <i class="ti ti-currency-dollar ti-sm"></i>
-                                </div>
-                                <h6 class="mb-0">
-                                    کل فروش
-
-                                    <strong>
-                                        @DateTime.Now.ToPersianDate().MonthName
-                                    </strong>
-                                    ماه
-                                </h6>
-                            </div>
-                            <h4 class="my-2 pt-1">
-                                <bdi>
-                                    <svg class="toman" width="1rem" height="1rem">
-                                        <use xlink:href="#toman">
-                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                            </symbol>
-                                        </use>
-                                    </svg>@ViewBag.thismonthtotalprice.ToString("N0")
-                                </bdi>
-                            </h4>
-                            <div class="progress w-75" style="height: 4px">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     style="width: 65%"
-                                     aria-valuenow="65"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <div class="d-flex gap-2 align-items-center">
-                                <div class="badge rounded bg-label-info p-1"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
-                                <h6 class="mb-0">
-                                    سود
-                                    @DateTime.Now.ToPersianDate().MonthName
-                                    ماه
-                                </h6>
-                            </div>
-                            <h4 class="my-2 pt-1">
-                                <bdi>
-                                    <svg class="toman" width="1rem" height="1rem">
-                                        <use xlink:href="#toman">
-                                            <symbol id="toman" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                <path clip-rule="evenodd" d="M3.057 1.742L3.821 1l.78.75-.776.741-.768-.749zm3.23 2.48c0 .622-.16 1.111-.478 1.467-.201.221-.462.39-.783.505a3.251 3.251 0 01-1.083.163h-.555c-.421 0-.801-.074-1.139-.223a2.045 2.045 0 01-.9-.738A2.238 2.238 0 011 4.148c0-.059.001-.117.004-.176.03-.55.204-1.158.525-1.827l1.095.484c-.257.532-.397 1-.419 1.403-.002.04-.004.08-.004.12 0 .252.055.458.166.618a.887.887 0 00.5.354c.085.028.178.048.278.06.079.01.16.014.243.014h.555c.458 0 .769-.081.933-.244.14-.139.21-.383.21-.731V2.02h1.2v2.202zm5.433 3.184l-.72-.7.709-.706.735.707-.724.7zm-2.856.308c.542 0 .973.19 1.293.569.297.346.445.777.445 1.293v.364h.18v-.004h.41c.221 0 .377-.028.467-.084.093-.055.14-.14.14-.258v-.069c.004-.243.017-1.044 0-1.115L13 8.05v1.574a1.4 1.4 0 01-.287.863c-.306.405-.804.607-1.495.607h-.627c-.061.733-.434 1.257-1.117 1.573-.267.122-.58.21-.937.265a5.845 5.845 0 01-.914.067v-1.159c.612 0 1.072-.082 1.38-.247.25-.132.376-.298.376-.499h-.515c-.436 0-.807-.113-1.113-.339-.367-.273-.55-.667-.55-1.18 0-.488.122-.901.367-1.24.296-.415.728-.622 1.296-.622zm.533 2.226v-.364c0-.217-.048-.389-.143-.516a.464.464 0 00-.39-.187.478.478 0 00-.396.187.705.705 0 00-.136.449.65.65 0 00.003.067c.008.125.066.22.177.283.093.054.21.08.352.08h.533zM9.5 6.707l.72.7.724-.7L10.209 6l-.709.707zm-6.694 4.888h.03c.433-.01.745-.106.937-.29.024.012.065.035.12.068l.074.039.081.042c.135.073.261.133.379.18.345.146.67.22.977.22a1.216 1.216 0 00.87-.34c.3-.285.449-.714.449-1.286a2.19 2.19 0 00-.335-1.145c-.299-.457-.732-.685-1.3-.685-.502 0-.916.192-1.242.575-.113.132-.21.284-.294.456-.032.062-.06.125-.084.191a.504.504 0 00-.03.078 1.67 1.67 0 00-.022.06c-.103.309-.171.485-.205.53-.072.09-.214.14-.427.147-.123-.005-.209-.03-.256-.076-.057-.054-.085-.153-.085-.297V7l-1.201-.5v3.562c0 .261.048.496.143.703.071.158.168.296.29.413.123.118.266.211.43.28.198.084.42.13.665.136v.001h.036zm2.752-1.014a.778.778 0 00.044-.353.868.868 0 00-.165-.47c-.1-.134-.217-.201-.35-.201-.18 0-.33.103-.447.31-.042.071-.08.158-.114.262a2.434 2.434 0 00-.04.12l-.015.053-.015.046c.142.118.323.216.544.293.18.062.325.092.433.092.044 0 .086-.05.125-.152z" fill-rule="evenodd"></path>
-                                            </symbol>
-                                        </use>
-                                    </svg>@ViewBag.todaytotalprofit.ToString("N0")
-                                </bdi>
-                            </h4>
-                            <div class="progress w-75" style="height: 4px">
-                                <div class="progress-bar bg-warning"
-                                     role="progressbar"
-                                     style="width: 65%"
-                                     aria-valuenow="65"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Credit / account balance (مدیریت اعتبار) -->
+	<div class="card mb-4" id="balance">
+		<div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+			<div class="d-flex align-items-center gap-2">
+				<span class="agency-dashboard__kpi-icon" aria-hidden="true">
+					<iconify-icon icon="fluent-color:savings-24" width="26" height="26"></iconify-icon>
+				</span>
+				<div>
+					<h5 class="card-title mb-0">مدیریت اعتبار</h5>
+					<small class="text-muted">موجودی حساب و افزایش شارژ</small>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+				<div>
+					<small class="text-muted d-block">موجودی اعتبار</small>
+					<p class="agency-dashboard__wallet-amount mb-0">
+						@agancy_balance.ToString("N0")
+						<small class="fs-6 fw-normal text-muted">تومان</small>
+					</p>
+				</div>
+				<button class="btn btn-primary" data-bs-target="#referAndEarn" data-bs-toggle="modal" type="button">
+					<iconify-icon class="fc-icon me-1" icon="fluent-color:add-circle-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+					افزایش موجودی
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
 
+<div class="modal fade agency-charge-modal" id="referAndEarn" tabindex="-1" aria-labelledby="agencyChargeTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="agency-charge-modal__header">
+				<div class="agency-charge-modal__title-row">
+					<span class="agency-charge-modal__icon" aria-hidden="true">
+						<iconify-icon icon="fluent-color:savings-24" width="26" height="26"></iconify-icon>
+					</span>
+					<div>
+						<h3 class="agency-charge-modal__title" id="agencyChargeTitle">افزایش موجودی</h3>
+						<p class="agency-charge-modal__balance">
+							موجودی فعلی:
+							<strong>@agancy_balance.ToString("N0") تومان</strong>
+						</p>
+					</div>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+			</div>
 
+			<form id="paymentrequestform" autocomplete="off">
+				<div class="agency-charge-modal__body">
+					<label class="agency-charge-modal__label" for="amount">مبلغ شارژ</label>
+					<div class="agency-charge-modal__amount-wrap">
+						<input
+							required
+							class="form-control"
+							id="amount"
+							name="amount"
+							inputmode="numeric"
+							placeholder="2,000,000"
+							type="text"
+							aria-describedby="amountHelp" />
+						<span class="agency-charge-modal__amount-unit">تومان</span>
+					</div>
+					<div class="agency-charge-modal__presets" role="group" aria-label="مبالغ پیشنهادی">
+						<button type="button" class="agency-charge-modal__preset" data-amount="2000000">۲ میلیون</button>
+						<button type="button" class="agency-charge-modal__preset" data-amount="5000000">۵ میلیون</button>
+						<button type="button" class="agency-charge-modal__preset" data-amount="10000000">۱۰ میلیون</button>
+						<button type="button" class="agency-charge-modal__preset" data-amount="20000000">۲۰ میلیون</button>
+						<button type="button" class="agency-charge-modal__preset" data-amount="50000000">۵۰ میلیون</button>
+					</div>
+					<small id="amountHelp" class="text-muted d-block mt-2">حداقل مبلغ شارژ ۱٬۰۰۰ تومان است.</small>
 
-<div class="modal fade" id="referAndEarn" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-simple modal-refer-and-earn">
-        <div class="modal-content p-3 p-md-5">
-            <div class="modal-body">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="text-center mb-4">
-                    <h3 class="mb-2">
-                        <i class="ti ti-copy-plus ti-lg"></i>
-                          افزایش موجودی
-                        <i class="ti ti-cash ti-lg"></i>
-                    </h3>
-                </div>
-                <div class="col-xxl">
-                    <div class="card-body">
-                        <form id="paymentrequestform">
-                            <div class="row mb-4">
-                                <label class="col-sm-2 col-form-label" for="basic-default-name">
-                                  مقدار شارژ
-                                    <span class="text-danger">*</span>
-                                  <span class="text-small ms-1 fw-lighter">تومان</span>
-                                </label>
-                                <div class="col-sm-10">
-                                    <input required class="form-control" id="amount" name="amount" placeholder="10,000,000 تومان " type="text" />
-                                </div>
-                            </div>
+					<label class="agency-charge-modal__label mt-3 mb-2">روش پرداخت</label>
+					<div class="agency-charge-modal__methods" id="paymentMethodBtns" role="radiogroup" aria-label="روش پرداخت">
+						<button type="button" class="agency-charge-modal__method is-active" data-value="اعتباری" aria-pressed="true">
+							<span class="agency-charge-modal__method-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:coin-multiple-24" width="22" height="22"></iconify-icon>
+							</span>
+							<span>
+								<span class="agency-charge-modal__method-title">
+									درگاه پرداخت
+									<span class="agency-charge-modal__badge">فوری</span>
+								</span>
+								<span class="agency-charge-modal__method-desc d-block">پرداخت آنلاین زرین‌پال و شارژ آنی کیف پول</span>
+							</span>
+						</button>
+						<button type="button" class="agency-charge-modal__method" data-value="کارت به کارت" data-requires-support="true" aria-pressed="false">
+							<span class="agency-charge-modal__method-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:phone-24" width="22" height="22"></iconify-icon>
+							</span>
+							<span>
+								<span class="agency-charge-modal__method-title">کارت به کارت</span>
+								<span class="agency-charge-modal__method-desc d-block">فقط از طریق تماس با پشتیبانی</span>
+							</span>
+						</button>
+						<button type="button" class="agency-charge-modal__method" data-value="واریز به حساب" data-requires-support="true" aria-pressed="false">
+							<span class="agency-charge-modal__method-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:building-24" width="22" height="22"></iconify-icon>
+							</span>
+							<span>
+								<span class="agency-charge-modal__method-title">واریز به حساب</span>
+								<span class="agency-charge-modal__method-desc d-block">فقط از طریق تماس با پشتیبانی</span>
+							</span>
+						</button>
+						<button type="button" class="agency-charge-modal__method" data-value="سایر" data-requires-support="true" aria-pressed="false">
+							<span class="agency-charge-modal__method-icon" aria-hidden="true">
+								<iconify-icon icon="fluent-color:document-text-24" width="22" height="22"></iconify-icon>
+							</span>
+							<span>
+								<span class="agency-charge-modal__method-title">سایر روش‌ها</span>
+								<span class="agency-charge-modal__method-desc d-block">فقط از طریق تماس با پشتیبانی</span>
+							</span>
+						</button>
+					</div>
+				</div>
 
-                            <div class="row mb-2">
-                                <label class="col-sm-2 col-form-label">روش پرداخت</label>
-                                <div class="col-sm-10">
-                                    <div class="d-flex flex-wrap gap-2" id="paymentMethodBtns">
-                                        <button type="button" class="btn btn-outline-primary payment-method-btn" data-value="کارت به کارت">کارت به کارت</button>
-                                        <button type="button" class="btn btn-outline-primary payment-method-btn" data-value="واریز به حساب">واریز به حساب</button>
-                                        <button type="button" class="btn btn-success payment-method-btn" data-value="اعتباری">
-                                            <i class="ti ti-credit-card me-1"></i>درگاه پرداخت
-                                        </button>
-                                        <button type="button" class="btn btn-outline-primary payment-method-btn" data-value="سایر">سایر</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				<div class="agency-charge-modal__footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">انصراف</button>
+					<button type="submit" class="btn btn-primary agency-charge-modal__submit" id="chargeSubmitBtn">
+						پرداخت آنلاین
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
+
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        var amountInput = document.getElementById('amount');
+	(function () {
+		function formatAmount(raw) {
+			var digits = String(raw || '').replace(/\D/g, '');
+			if (!digits) return '';
+			return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
 
-            amountInput.addEventListener('input', function (e) {
-                var value = e.target.value;
-                value = value.replace(/,/g, ''); // Remove existing commas
-                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Add commas every 3 digits
-                e.target.value = value;
-            });
-        });
+		function parseAmount(val) {
+			return parseInt(String(val || '').replace(/,/g, ''), 10) || 0;
+		}
 
+		function gatewayButton() {
+			return document.querySelector('#paymentMethodBtns .agency-charge-modal__method[data-value="اعتباری"]');
+		}
 
-    $(document).ready(function () {
-        // Initialize form validation
-        FormValidation.formValidation(
-            document.getElementById('paymentRequestForm'),
-            {
-                fields: {
-                    amount: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The amount is required'
-                            },
-                            numeric: {
-                                message: 'The amount must be a number'
-                            }
-                        }
-                    },
-                    method: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The payment method is required'
-                            }
-                        }
-                    },
-                    message: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The message is required'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap5: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.form-group'
-                    }),
-                    autoFocus: new FormValidation.plugins.AutoFocus(),
-                    submitButton: new FormValidation.plugins.SubmitButton(),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                }
-            }
-        );
+		function selectMethod(btn) {
+			if (!btn) return;
+			document.querySelectorAll('#paymentMethodBtns .agency-charge-modal__method').forEach(function (el) {
+				var on = el === btn;
+				el.classList.toggle('is-active', on);
+				el.setAttribute('aria-pressed', on ? 'true' : 'false');
+			});
+			var submitBtn = document.getElementById('chargeSubmitBtn');
+			if (submitBtn) submitBtn.textContent = 'پرداخت آنلاین';
+		}
 
-    });
+		function showSupportAlert() {
+			if (typeof Swal === 'undefined') {
+				alert('برای انجام این عملیات لطفا با پشتیبانی تماس حاصل فرمایید 021-28422243');
+				return;
+			}
+			Swal.fire({
+				icon: 'info',
+				title: 'تماس با پشتیبانی',
+				html: 'برای انجام این عملیات لطفا با پشتیبانی تماس حاصل فرمایید<br><strong dir="ltr">021-28422243</strong>',
+				confirmButtonText: 'متوجه شدم',
+				buttonsStyling: false,
+				customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+			});
+		}
 
+		function selectPreset(amount) {
+			var input = document.getElementById('amount');
+			if (!input) return;
+			input.value = formatAmount(amount);
+			document.querySelectorAll('.agency-charge-modal__preset').forEach(function (el) {
+				el.classList.toggle('is-active', Number(el.getAttribute('data-amount')) === Number(amount));
+			});
+		}
 
+		document.addEventListener('DOMContentLoaded', function () {
+			var amountInput = document.getElementById('amount');
+			if (amountInput) {
+				amountInput.addEventListener('input', function (e) {
+					e.target.value = formatAmount(e.target.value);
+					var n = parseAmount(e.target.value);
+					document.querySelectorAll('.agency-charge-modal__preset').forEach(function (el) {
+						el.classList.toggle('is-active', Number(el.getAttribute('data-amount')) === n);
+					});
+				});
+			}
 
+			document.querySelectorAll('.agency-charge-modal__preset').forEach(function (el) {
+				el.addEventListener('click', function () {
+					selectPreset(el.getAttribute('data-amount'));
+				});
+			});
 
-    </script>
+			document.querySelectorAll('#paymentMethodBtns .agency-charge-modal__method').forEach(function (el) {
+				el.addEventListener('click', function () {
+					if (el.getAttribute('data-requires-support') === 'true') {
+						selectMethod(gatewayButton());
+						showSupportAlert();
+						return;
+					}
+					selectMethod(el);
+				});
+			});
 
+			selectMethod(gatewayButton());
 
- <script>
-   
-    $(document).ready(function () {
-        // Show Zarinpal payment result alerts from TempData
-        @if (TempData["PaymentError"] != null)
-        {
-            <text>
-        Swal.fire({
-            icon: 'error',
-            title: 'خطا در پرداخت',
-            text: '@Html.Raw(TempData["PaymentError"])',
-            confirmButtonText: 'متوجه شدم',
-            buttonsStyling: false,
-            customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
-        });
-            </text>
-        }
-        @if (TempData["PaymentSuccess"] != null)
-        {
-            <text>
-        Swal.fire({
-            icon: 'success',
-            title: 'پرداخت موفق',
-            text: '@Html.Raw(TempData["PaymentSuccess"])',
-            confirmButtonText: 'متوجه شدم',
-            buttonsStyling: false,
-            customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
-        });
-        // Google Ads conversion — Zarinpal payment success
-        gtag('event', 'conversion', {
-            'send_to': 'AW-17843493402/WcYSCICR7s4cEJq0uLxC',
-            'transaction_id': '@TempData["PaymentRefId"]'
-        });
-            </text>
-        }
+			if (window.location.hash === '#balance') {
+				var balanceEl = document.getElementById('balance');
+				if (balanceEl) balanceEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			} else if (window.location.hash === '#financial' || window.location.hash === '#profile') {
+				var target = document.querySelector(window.location.hash);
+				if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		});
 
-        // Check if there's a query parameter to open the modal automatically
-        const urlParams = new URLSearchParams(window.location.search);
-        const openChargeParam = urlParams.get('openChargeModal');
-        const openChargeHash = window.location.hash === '#charge';
-        if ((openChargeParam && openChargeParam.toLowerCase() === 'true') || openChargeHash) {
-            // Open the charge request modal automatically
-            $('#referAndEarn').modal('show');
+		$(document).ready(function () {
+			@if (TempData["ErrorMessage"] != null)
+			{
+				<text>
+			Swal.fire({
+				icon: 'error',
+				title: 'خطا',
+				text: '@Html.Raw(TempData["ErrorMessage"])',
+				confirmButtonText: 'متوجه شدم',
+				buttonsStyling: false,
+				customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+			});
+				</text>
+			}
+			@if (TempData["SuccessMessage"] != null)
+			{
+				<text>
+			Swal.fire({
+				icon: 'success',
+				title: 'انجام شد',
+				text: '@Html.Raw(TempData["SuccessMessage"])',
+				confirmButtonText: 'متوجه شدم',
+				buttonsStyling: false,
+				customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+			});
+				</text>
+			}
+			@if (TempData["PaymentError"] != null)
+			{
+				<text>
+			Swal.fire({
+				icon: 'error',
+				title: 'خطا در پرداخت',
+				text: '@Html.Raw(TempData["PaymentError"])',
+				confirmButtonText: 'متوجه شدم',
+				buttonsStyling: false,
+				customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+			});
+				</text>
+			}
+			@if (TempData["PaymentSuccess"] != null)
+			{
+				<text>
+			Swal.fire({
+				icon: 'success',
+				title: 'پرداخت موفق',
+				text: '@Html.Raw(TempData["PaymentSuccess"])',
+				confirmButtonText: 'متوجه شدم',
+				buttonsStyling: false,
+				customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+			});
+			gtag('event', 'conversion', {
+				'send_to': 'AW-17843493402/WcYSCICR7s4cEJq0uLxC',
+				'transaction_id': '@TempData["PaymentRefId"]'
+			});
+				</text>
+			}
+			@if (invoiceBlocked)
+			{
+				<text>
+			Swal.fire({
+				icon: 'warning',
+				title: 'اطلاعات مالی تکمیل نشده',
+				html: 'برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.',
+				showCancelButton: true,
+				confirmButtonText: 'تکمیل اطلاعات مالی',
+				cancelButtonText: 'انصراف',
+				reverseButtons: true,
+				allowOutsideClick: false,
+				buttonsStyling: false,
+				customClass: {
+					confirmButton: 'btn btn-primary me-2',
+					cancelButton: 'btn btn-outline-secondary'
+				}
+			}).then(function (result) {
+				if (!result.isConfirmed) return;
+				var el = document.getElementById('financial');
+				if (el) {
+					el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					try { history.replaceState(null, '', '#financial'); } catch (e) { window.location.hash = 'financial'; }
+				} else {
+					window.location.hash = 'financial';
+				}
+			});
+				</text>
+			}
 
-            // Clean up URL without reloading (remove query parameter)
-            if (window.history.replaceState) {
-                const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                window.history.replaceState({path: cleanUrl}, '', cleanUrl);
-            }
-        }
+			$('#agencyProfileForm').on('submit', function () {
+				var btn = document.getElementById('agencyProfileSubmitBtn');
+				if (btn) {
+					btn.disabled = true;
+					btn.textContent = 'در حال ذخیره…';
+				}
+			});
 
-        $('#paymentMethodBtns').on('click', '.payment-method-btn', function () {
-            var method = $(this).data('value');
-            var amountRaw = $('#amount').val().replace(/,/g, '');
-            var amount = parseInt(amountRaw, 10);
+			$('#agencyFinancialForm').on('submit', function () {
+				var btn = document.getElementById('agencyFinancialSubmitBtn');
+				if (btn) {
+					btn.disabled = true;
+					btn.textContent = 'در حال ذخیره…';
+				}
+			});
 
-            if (!amount || amount < 1000) {
-                Swal.fire({ icon: 'warning', title: 'مبلغ نامعتبر', text: 'لطفاً مبلغ شارژ را وارد کنید (حداقل ۱۰۰۰ تومان).', confirmButtonText: 'متوجه شدم', buttonsStyling: false, customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' } });
-                return;
-            }
+			var urlParams = new URLSearchParams(window.location.search);
+			if (urlParams.get('openChargeModal') || window.location.hash === '#charge') {
+				if (window.history.replaceState) {
+					var cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+					window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+				}
+			}
 
-            if (method === 'اعتباری') {
-                // Zarinpal — redirect immediately
-                var form = $('<form method="POST" action="/Payments/ZarinpalCharge"></form>');
-                form.append($('<input type="hidden" name="amountToman">').val(amount));
-                $('body').append(form);
-                form.submit();
-                return;
-            }
+			$('#paymentrequestform').on('submit', function (e) {
+				e.preventDefault();
 
-            // Manual methods — AJAX charge request
-            $.ajax({
-                type: 'POST',
-                url: '/Payments/ChargeRequest',
-                data: { amount: amount, method: method },
-                success: function () {
-                    Swal.fire({
-                        title: 'درخواست شما با موفقیت ثبت شد',
-                        text: 'همکاران ما در اسرع وقت به منظور تایید شارژ، با شما تماس خواهند گرفت.',
-                        confirmButtonText: 'متوجه شدم',
-                        icon: 'success',
-                        customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' },
-                        buttonsStyling: false
-                    });
-                    $('#paymentrequestform')[0].reset();
-                    $('#referAndEarn').modal('hide');
-                },
-                error: function () {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'مشکلی پیش آمده',
-                        confirmButtonText: 'متوجه شدم',
-                        text: 'متاسفانه در ثبت درخواست مشکلی پیش آمد. با شماره ۰۹۹۰۲۰۶۳۰۱۵ تماس حاصل فرمایید.',
-                        customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' },
-                        buttonsStyling: false
-                    });
-                }
-            });
-        });
-    });
- </script>
+				var active = document.querySelector('#paymentMethodBtns .agency-charge-modal__method.is-active');
+				var method = active ? active.getAttribute('data-value') : 'اعتباری';
+				var amount = parseAmount($('#amount').val());
+				var submitBtn = document.getElementById('chargeSubmitBtn');
+
+				if (method !== 'اعتباری') {
+					selectMethod(gatewayButton());
+					showSupportAlert();
+					return;
+				}
+
+				if (!amount || amount < 1000) {
+					Swal.fire({
+						icon: 'warning',
+						title: 'مبلغ نامعتبر',
+						text: 'لطفاً مبلغ شارژ را وارد کنید (حداقل ۱۰۰۰ تومان).',
+						confirmButtonText: 'متوجه شدم',
+						buttonsStyling: false,
+						customClass: { confirmButton: 'btn btn-primary waves-effect waves-light' }
+					});
+					return;
+				}
+
+				if (submitBtn) {
+					submitBtn.disabled = true;
+					submitBtn.textContent = 'در حال انتقال…';
+				}
+				var form = $('<form method="POST" action="/Payments/ZarinpalCharge"></form>');
+				form.append($('<input type="hidden" name="amountToman">').val(amount));
+				$('body').append(form);
+				form.submit();
+			});
+		});
+	})();
+</script>

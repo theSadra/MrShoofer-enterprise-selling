@@ -144,12 +144,13 @@
 							<option value="@((int)Application.Models.AgencyPanelType.Seller)">فروشنده</option>
 							<option value="@((int)Application.Models.AgencyPanelType.Organization)">سازمانی</option>
 						</select>
-						<small class="text-muted">فقط پنل سازمانی به فاکتور رسمی و سرپرست مسافرین دسترسی دارد.</small>
+						<small class="text-muted">سازمانی = کمیسیون صفر و فاکتور به نام سازمان. آژانس = فاکتور به نام سرپرست مسافرین.</small>
 					</div>
-					<div class="mb-3">
+					<div class="mb-3" id="agencyCommissionField">
 						<label class="form-label">کمیسیون دریافتی*</label>
-						<input class="form-control" asp-for="Commission" value="5" type="number" />
+						<input class="form-control" asp-for="Commission" id="agencyCommissionInput" value="5" type="number" />
 						<span asp-validation-for="Commission" class="text-danger"></span>
+						<small class="text-muted d-none" id="agencyCommissionOrgHint">برای حساب سازمانی کمیسیون همیشه ۰ است.</small>
 					</div>
 					<div class="mb-3">
 						<label class="form-label mt-1">آدرس*</label>
@@ -202,3 +203,26 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	(function () {
+		var panelSelect = document.querySelector('select[name="PanelType"]');
+		var commissionInput = document.getElementById('agencyCommissionInput');
+		var commissionHint = document.getElementById('agencyCommissionOrgHint');
+		if (!panelSelect || !commissionInput) return;
+		function syncCommission() {
+			var isOrg = panelSelect.value === '@((int)Application.Models.AgencyPanelType.Organization)';
+			if (isOrg) {
+				commissionInput.value = '0';
+				commissionInput.readOnly = true;
+				if (commissionHint) commissionHint.classList.remove('d-none');
+			} else {
+				commissionInput.readOnly = false;
+				if (commissionHint) commissionHint.classList.add('d-none');
+				if (commissionInput.value === '0') commissionInput.value = '5';
+			}
+		}
+		panelSelect.addEventListener('change', syncCommission);
+		syncCommission();
+	})();
+</script>

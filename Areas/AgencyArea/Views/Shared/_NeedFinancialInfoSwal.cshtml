@@ -1,0 +1,55 @@
+@{
+	var financialUrl = ViewData["FinancialInfoUrl"] as string
+		?? (Url.Action("Index", "Agency", new { area = "AgencyArea" }) + "#financial");
+	var autoShow = ViewData["AutoShowFinancialAlert"] as bool? == true;
+	var bindSelector = ViewData["FinancialAlertBindSelector"] as string;
+}
+<link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script>
+	(function () {
+		var financialUrl = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(financialUrl));
+		var autoShow = @(autoShow ? "true" : "false");
+		var bindSelector = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(bindSelector ?? ""));
+
+		function showNeedFinancialInfoAlert() {
+			if (typeof Swal === 'undefined') {
+				window.location.href = financialUrl;
+				return;
+			}
+			Swal.fire({
+				icon: 'warning',
+				title: 'اطلاعات مالی تکمیل نشده',
+				html: 'برای صدور فاکتور رسمی ابتدا اطلاعات مالی آژانس (کد اقتصادی، شماره ثبت و شناسه ملی) را تکمیل کنید.',
+				showCancelButton: true,
+				confirmButtonText: 'تکمیل اطلاعات مالی',
+				cancelButtonText: 'انصراف',
+				reverseButtons: true,
+				allowOutsideClick: false,
+				buttonsStyling: false,
+				customClass: {
+					confirmButton: 'btn btn-primary me-2',
+					cancelButton: 'btn btn-outline-secondary'
+				}
+			}).then(function (result) {
+				if (result.isConfirmed) window.location.href = financialUrl;
+			});
+		}
+
+		window.showNeedFinancialInfoAlert = showNeedFinancialInfoAlert;
+
+		document.addEventListener('DOMContentLoaded', function () {
+			if (bindSelector) {
+				document.querySelectorAll(bindSelector).forEach(function (el) {
+					el.addEventListener('click', function (e) {
+						e.preventDefault();
+						var href = el.getAttribute('href');
+						if (href) financialUrl = href;
+						showNeedFinancialInfoAlert();
+					});
+				});
+			}
+			if (autoShow) showNeedFinancialInfoAlert();
+		});
+	})();
+</script>

@@ -26,6 +26,10 @@ namespace Application.Models
 
     public string? Email { get; set; }
 
+    /// <summary>Optional internal org title / role (سمت درون سازمانی).</summary>
+    [StringLength(120)]
+    public string? InternalTitle { get; set; }
+
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

@@ -1,83 +1,181 @@
 @model List<Application.Models.AgencyEmployee>
+@using Application.ViewModels.Employees
 @{
-	ViewData["Title"] = "مسافرین پرتردد";
+	ViewData["Title"] = ViewBag.PageTitle as string ?? "مشتریان";
 	Layout = "_AgencySideLayout";
 	var search = ViewBag.Search as string ?? "";
+	var pageTitle = ViewBag.PageTitle as string ?? "مشتریان";
+	var pageSubtitle = ViewBag.PageSubtitle as string ?? "مدیریت دفترچه مشتریان برای رزرو سریع‌تر";
+	var createLabel = ViewBag.CreateLabel as string ?? "افزودن مشتری";
+	var entityLabel = ViewBag.EntityLabel as string ?? "مشتری";
+	var totalCount = ViewBag.TotalCount as int? ?? Model?.Count ?? 0;
+	var withTripsCount = ViewBag.WithTripsCount as int? ?? 0;
+	var monthTripCount = ViewBag.MonthTripCount as int? ?? 0;
+	var readyToBookCount = ViewBag.ReadyToBookCount as int? ?? 0;
+	var isOrganization = ViewBag.IsOrganization as bool? == true;
+	var openCreateModal = ViewBag.OpenCreateModal as bool? == true;
+	var createModel = ViewBag.CreateModel as AgencyEmployeeFormViewModel ?? new AgencyEmployeeFormViewModel();
+
+	string Initials(Application.Models.AgencyEmployee e)
+	{
+		var a = string.IsNullOrWhiteSpace(e.Firstname) ? "" : e.Firstname.Trim()[0].ToString();
+		var b = string.IsNullOrWhiteSpace(e.Lastname) ? "" : e.Lastname.Trim()[0].ToString();
+		return (a + b).ToUpperInvariant();
+	}
 }
 
-<div class="main_container px-lg-6 px-0 pb-5" dir="rtl">
-	<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+@section PageStyles {
+	<link rel="stylesheet" href="~/css/fluent-color-icons.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/agency-users.css" asp-append-version="true" />
+}
+
+<div class="agency-users" dir="rtl">
+	<div class="agency-users__head">
 		<div>
-			<h4 class="mb-1 text-blck">مسافرین پرتردد</h4>
-			<small class="text-muted">دفترچه مسافران برای رزرو سریع‌تر</small>
+			<h1 class="agency-users__title">@pageTitle</h1>
+			<p class="agency-users__subtitle">@pageSubtitle</p>
 		</div>
-		<a class="btn btn-primary" asp-action="Create">
-			<i class="ti ti-plus me-1"></i>
-			افزودن مسافر
-		</a>
+		<button type="button" class="agency-users__cta" data-bs-toggle="modal" data-bs-target="#agencyUserCreateModal">
+			<iconify-icon class="fc-icon" icon="fluent-color:add-circle-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+			<span>@createLabel</span>
+		</button>
 	</div>
 
 	@if (TempData["SuccessMessage"] != null)
 	{
-		<div class="alert alert-success rounded-4">@TempData["SuccessMessage"]</div>
+		<div class="alert alert-success rounded-3 border-0 mb-3">@TempData["SuccessMessage"]</div>
 	}
 
-	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-3 mb-3">
-		<form method="get" class="row g-2 align-items-end">
-			<div class="col-md-8">
-				<label class="form-label mb-1">جستجو</label>
-				<input type="search" name="q" value="@search" class="form-control" placeholder="نام، کد ملی، موبایل یا ایمیل" autocomplete="off" />
+	<div class="agency-users__stats" aria-label="آمار @pageTitle">
+		<div class="agency-users__stat">
+			<div>
+				<span class="agency-users__stat-label">مجموع @(entityLabel)‌ها</span>
+				<p class="agency-users__stat-value" dir="ltr">@totalCount.ToString("N0")</p>
+				<p class="agency-users__stat-hint">@(isOrganization ? "اعضای دفترچه سازمان" : "دفترچه مشتریان آژانس")</p>
 			</div>
-			<div class="col-md-4 d-flex gap-2">
-				<button type="submit" class="btn btn-primary flex-grow-1">فیلتر</button>
-				@if (!string.IsNullOrWhiteSpace(search))
-				{
-					<a class="btn btn-outline-secondary" asp-action="Index">پاک کردن</a>
-				}
+			<span class="agency-users__stat-icon" aria-hidden="true"><iconify-icon icon="fluent-color:people-24" width="22" height="22"></iconify-icon></span>
+		</div>
+		<div class="agency-users__stat">
+			<div>
+				<span class="agency-users__stat-label">دارای سابقه سفر</span>
+				<p class="agency-users__stat-value" dir="ltr">@withTripsCount.ToString("N0")</p>
+				<p class="agency-users__stat-hint">@(isOrganization ? "اعضایی که سفر ثبت شده دارند" : "مشتریانی که سفر ثبت شده دارند")</p>
 			</div>
-		</form>
+			<span class="agency-users__stat-icon agency-users__stat-icon--ok" aria-hidden="true"><iconify-icon icon="fluent-color:location-ripple-24" width="22" height="22"></iconify-icon></span>
+		</div>
+		<div class="agency-users__stat">
+			<div>
+				<span class="agency-users__stat-label">سفرهای این ماه</span>
+				<p class="agency-users__stat-value" dir="ltr">@monthTripCount.ToString("N0")</p>
+				<p class="agency-users__stat-hint">بلیط‌های مرتبط با @(entityLabel)‌ها</p>
+			</div>
+			<span class="agency-users__stat-icon" aria-hidden="true"><iconify-icon icon="fluent-color:clipboard-24" width="22" height="22"></iconify-icon></span>
+		</div>
+		<div class="agency-users__stat">
+			<div>
+				<span class="agency-users__stat-label">آماده رزرو</span>
+				<p class="agency-users__stat-value" dir="ltr">@readyToBookCount.ToString("N0")</p>
+				<p class="agency-users__stat-hint">کد ملی، موبایل و جنسیت کامل</p>
+			</div>
+			<span class="agency-users__stat-icon agency-users__stat-icon--ok" aria-hidden="true"><iconify-icon icon="fluent-color:checkmark-circle-24" width="22" height="22"></iconify-icon></span>
+		</div>
 	</div>
 
-	<div class="bg-white rounded-5 border border-divider shadow-7.5__13__5__gray30 p-0 overflow-hidden">
+	<div class="agency-users__panel">
+		<div class="agency-users__panel-head">
+			<h2 class="agency-users__panel-title">فیلتر جستجو</h2>
+			<form method="get" class="agency-users__filters">
+				<div>
+					<label class="form-label" for="agency-users-q">جستجو</label>
+					<input id="agency-users-q" type="search" name="q" value="@search" class="form-control"
+						   placeholder="@(isOrganization ? "نام، سمت، کد ملی، موبایل یا ایمیل" : "نام، کد ملی، موبایل یا ایمیل")" autocomplete="off" />
+				</div>
+				<div class="agency-users__filter-actions">
+					<button type="submit" class="agency-users__btn agency-users__btn--primary flex-grow-1">اعمال فیلتر</button>
+					@if (!string.IsNullOrWhiteSpace(search))
+					{
+						<a class="agency-users__btn agency-users__btn--ghost" asp-action="Index">پاک کردن</a>
+					}
+				</div>
+			</form>
+		</div>
+
 		<div class="table-responsive">
-			<table class="table table-hover align-middle mb-0">
+			<table class="agency-users__table">
 				<thead>
 					<tr>
-						<th class="ps-3">نام</th>
-						<th>نام خانوادگی</th>
+						<th>@entityLabel</th>
+						@if (isOrganization)
+						{
+							<th>سمت / نقش</th>
+						}
 						<th>جنسیت</th>
 						<th>کد ملی</th>
 						<th>موبایل</th>
 						<th>ایمیل</th>
-						<th class="text-end pe-3">عملیات</th>
+						<th class="text-end">عملیات</th>
 					</tr>
 				</thead>
 				<tbody>
 					@if (Model == null || Model.Count == 0)
 					{
 						<tr>
-							<td colspan="7" class="text-center text-muted py-5">هنوز مسافری ثبت نشده است</td>
+							<td colspan="@(isOrganization ? 7 : 6)">
+								<div class="agency-users__empty">
+									<p class="agency-users__empty-title">هنوز @(entityLabel)ی ثبت نشده</p>
+									<p class="mb-3">با افزودن اولین مورد، رزروهای بعدی سریع‌تر می‌شود.</p>
+									<button type="button" class="agency-users__cta" data-bs-toggle="modal" data-bs-target="#agencyUserCreateModal">
+										<iconify-icon class="fc-icon" icon="fluent-color:add-circle-24" width="18" height="18" aria-hidden="true"></iconify-icon>
+										<span>@createLabel</span>
+									</button>
+								</div>
+							</td>
 						</tr>
 					}
 					else
 					{
 						foreach (var e in Model)
 						{
+							var isFemale = string.Equals(e.Gender, "female", StringComparison.OrdinalIgnoreCase);
 							<tr>
-								<td class="ps-3">@e.Firstname</td>
-								<td>@e.Lastname</td>
-								<td>@(e.Gender == "female" || e.Gender == "Female" ? "خانم" : "آقا")</td>
+								<td>
+									<div class="agency-users__person">
+										<span class="agency-users__avatar" aria-hidden="true">@Initials(e)</span>
+										<span>
+											<span class="agency-users__name">@e.Firstname @e.Lastname</span>
+											<span class="agency-users__meta d-block d-md-none" dir="ltr">@e.PhoneNumber</span>
+										</span>
+									</div>
+								</td>
+								@if (isOrganization)
+								{
+									<td>@(string.IsNullOrWhiteSpace(e.InternalTitle) ? "—" : e.InternalTitle)</td>
+								}
+								<td>
+									<span class="agency-users__badge @(isFemale ? "agency-users__badge--female" : "agency-users__badge--male")">
+										@(isFemale ? "خانم" : "آقا")
+									</span>
+								</td>
 								<td dir="ltr">@e.NaCode</td>
 								<td dir="ltr">@e.PhoneNumber</td>
-								<td>@(e.Email ?? "—")</td>
-								<td class="text-end pe-3">
-									<div class="d-flex flex-wrap gap-1 justify-content-end">
-										<a class="btn btn-sm btn-outline-secondary" asp-action="Trips" asp-route-id="@e.Id">سفرها</a>
-										<a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@e.Id">ویرایش</a>
-										<form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('حذف این مسافر؟');">
+								<td>@(string.IsNullOrWhiteSpace(e.Email) ? "—" : e.Email)</td>
+								<td>
+									<div class="agency-users__actions">
+										<a class="agency-users__action" asp-action="Trips" asp-route-id="@e.Id">
+											<iconify-icon icon="fluent-color:location-ripple-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+											سفرها
+										</a>
+										<a class="agency-users__action" asp-action="Edit" asp-route-id="@e.Id">
+											<iconify-icon icon="fluent-color:edit-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+											ویرایش
+										</a>
+										<form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('حذف این @(entityLabel)؟');">
 											@Html.AntiForgeryToken()
 											<input type="hidden" name="id" value="@e.Id" />
-											<button type="submit" class="btn btn-sm btn-outline-danger">حذف</button>
+											<button type="submit" class="agency-users__action agency-users__action--danger">
+												<iconify-icon icon="fluent-color:dismiss-circle-24" width="16" height="16" aria-hidden="true"></iconify-icon>
+												حذف
+											</button>
 										</form>
 									</div>
 								</td>
@@ -89,3 +187,101 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade agency-users-modal" id="agencyUserCreateModal" tabindex="-1" aria-labelledby="agencyUserCreateModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title" id="agencyUserCreateModalLabel">@createLabel</h2>
+			</div>
+			<form asp-area="AgencyArea" asp-controller="Employees" asp-action="Create" method="post" class="agency-users-modal__form">
+				@Html.AntiForgeryToken()
+				<div class="modal-body">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label class="form-label" for="createFirstname">نام</label>
+							<input id="createFirstname" name="Firstname" value="@createModel.Firstname" class="form-control" autocomplete="off" placeholder="مثلاً نوید" />
+							<span class="text-danger">@Html.ValidationMessage("Firstname")</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label" for="createLastname">نام خانوادگی</label>
+							<input id="createLastname" name="Lastname" value="@createModel.Lastname" class="form-control" autocomplete="off" placeholder="مثلاً محمدی" />
+							<span class="text-danger">@Html.ValidationMessage("Lastname")</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label" for="createGender">جنسیت</label>
+							<select id="createGender" name="Gender" class="form-select">
+								<option value="">انتخاب کنید</option>
+								@if (string.Equals(createModel.Gender, "male", StringComparison.OrdinalIgnoreCase))
+								{
+									<option value="male" selected>آقا</option>
+									<option value="female">خانم</option>
+								}
+								else if (string.Equals(createModel.Gender, "female", StringComparison.OrdinalIgnoreCase))
+								{
+									<option value="male">آقا</option>
+									<option value="female" selected>خانم</option>
+								}
+								else
+								{
+									<option value="male">آقا</option>
+									<option value="female">خانم</option>
+								}
+							</select>
+							<span class="text-danger">@Html.ValidationMessage("Gender")</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label" for="createNaCode">کد ملی</label>
+							<input id="createNaCode" name="NaCode" value="@createModel.NaCode" class="form-control" maxlength="10" autocomplete="off" dir="ltr" placeholder="0012345678" />
+							<span class="text-danger">@Html.ValidationMessage("NaCode")</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label" for="createPhoneNumber">شماره موبایل</label>
+							<input id="createPhoneNumber" name="PhoneNumber" value="@createModel.PhoneNumber" class="form-control" autocomplete="off" dir="ltr" placeholder="09121234567" />
+							<span class="text-danger">@Html.ValidationMessage("PhoneNumber")</span>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label" for="createEmail">ایمیل</label>
+							<input id="createEmail" name="Email" value="@createModel.Email" class="form-control" autocomplete="off" dir="ltr" placeholder="name@example.com" />
+							<span class="text-danger">@Html.ValidationMessage("Email")</span>
+						</div>
+						@if (isOrganization)
+						{
+						<div class="col-12">
+							<label class="form-label" for="createInternalTitle">سمت / نقش درون سازمانی <span class="text-muted fw-normal">(اختیاری)</span></label>
+							<input id="createInternalTitle" name="InternalTitle" value="@createModel.InternalTitle" class="form-control" list="orgRolePresets" maxlength="120" autocomplete="off" placeholder="انتخاب یا ایجاد نقش جدید" />
+							<datalist id="orgRolePresets">
+								<option value="مدیرعامل (CEO)"></option>
+								<option value="مدیر"></option>
+								<option value="کارمند"></option>
+								<option value="کارشناس"></option>
+								<option value="حسابدار"></option>
+								<option value="منشی"></option>
+							</datalist>
+							<small class="text-muted">می‌توانید از نقش‌های پیش‌فرض انتخاب کنید یا نقش جدید بنویسید.</small>
+							<span class="text-danger">@Html.ValidationMessage("InternalTitle")</span>
+						</div>
+						}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="agency-users__btn agency-users__btn--primary">@createLabel</button>
+					<button type="button" class="agency-users__btn agency-users__btn--ghost" data-bs-dismiss="modal">لغو</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section PageScripts {
+	@if (openCreateModal)
+	{
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var el = document.getElementById('agencyUserCreateModal');
+				if (!el || typeof bootstrap === 'undefined') return;
+				bootstrap.Modal.getOrCreateInstance(el).show();
+			});
+		</script>
+	}
+}

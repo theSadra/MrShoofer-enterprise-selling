@@ -389,6 +389,10 @@ namespace Application.Areas.AgencyArea
       if (User?.Identity?.IsAuthenticated != true || agency == null)
         return 0;
 
+      // Organization panels always bill at list price (0% commission).
+      if (agency.IsOrganization)
+        return 0;
+
       try
       {
         var orsInfo = await _mrShooferAPIClient.GetMyAgencyInfoAsync();
