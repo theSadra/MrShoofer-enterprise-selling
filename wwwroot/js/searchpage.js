@@ -165,6 +165,7 @@ function syncCityPickerDropdownMode() {
 function isInsideOpenCityPicker(el) {
   if (!(el instanceof Element)) return false;
   if (el.closest('#origin_input, #destination_input, #origin_picker_q, #dest_picker_q')) return true;
+  if (el.closest('#route-request-overlay, .route-miss-cta')) return true;
   // Only treat the currently open menu as "inside" — closed menus must not swallow dismiss clicks.
   return !!el.closest('.dropdown-menu.origin_location.show, .dropdown-menu.destination_location.show');
 }
@@ -466,6 +467,400 @@ function showPickerStatus(containerSelector, message) {
   }));
 }
 
+function escapeHtml(value) {
+  return String(value || '').replace(/[&<>"']/g, function (ch) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+  });
+}
+
+function typedOriginCity() {
+  return ($('#origin_picker_q').val() || $('#origin_input').val() || '').trim();
+}
+
+function typedDestCity() {
+  return ($('#dest_picker_q').val() || $('#destination_input').val() || '').trim();
+}
+
+function routeMissIconSvg(extraClass) {
+  const cls = extraClass ? ` class="${extraClass}"` : '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 80 80" focusable="false"${cls} aria-hidden="true">
+    <path d="M0 0h80v80H0z" fill="none" />
+    <g fill="none">
+      <path class="route-miss-cta__path" pathLength="1" stroke="#2f80ed" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M60 33.5H45a8.5 8.5 0 0 0-8.5 8.5v0a8.5 8.5 0 0 0 8.5 8.5h6.5A8.5 8.5 0 0 1 60 59v0a8.5 8.5 0 0 1-8.5 8.5H20" />
+      <path class="route-miss-cta__pin route-miss-cta__pin--a" fill="#eb5757" fill-rule="evenodd" d="M20 45.409a8 8 0 0 1 8 8v.3a8.3 8.3 0 0 1-1.588 4.883l-6.396 8.795a.02.02 0 0 1-.032 0l-6.396-8.795A8.3 8.3 0 0 1 12 53.709v-.3a8 8 0 0 1 8-8m1.595 4.73l-.048-.023a3.62 3.62 0 0 0-3.094 0l-.047.022a3.5 3.5 0 0 0-1.917 2.377a3.53 3.53 0 0 0 .7 3.014a3.58 3.58 0 0 0 2.768 1.323h.085a3.58 3.58 0 0 0 2.768-1.323a3.53 3.53 0 0 0 .701-3.014a3.5 3.5 0 0 0-1.916-2.377" clip-rule="evenodd" />
+      <path class="route-miss-cta__pin route-miss-cta__pin--a" fill="#eb5757" d="m26.412 58.592l-1.617-1.177zm-6.396 8.795l-1.618-1.176zm-.032 0l1.618-1.176zm-6.396-8.795l-1.618 1.176zm7.959-8.476l-.856 1.808zm.047.022l.856-1.808zm-3.14-.022l-.856-1.808zm-.049.022l.856 1.808zm-1.916 2.377l1.948.453zm.7 3.014l1.553-1.26zm5.621 0l-1.552-1.26zm.701-3.014l-1.948.453zm6.489.894c0-5.523-4.477-10-10-10v4a6 6 0 0 1 6 6zm0 .3v-.3h-4v.3zm-1.97 6.059A10.3 10.3 0 0 0 30 53.709h-4a6.3 6.3 0 0 1-1.205 3.706zm-6.397 8.795l6.397-8.795l-3.235-2.353l-6.397 8.796zm-3.266 0a2.02 2.02 0 0 0 3.266 0l-3.235-2.352a1.98 1.98 0 0 1 3.204 0zm-6.397-8.795l6.397 8.795l3.235-2.352l-6.397-8.796zM10 53.709a10.3 10.3 0 0 0 1.97 6.059l3.235-2.353A6.3 6.3 0 0 1 14 53.71zm0-.3v.3h4v-.3zm10-10c-5.523 0-10 4.477-10 10h4a6 6 0 0 1 6-6zm.691 8.515l.048.022l1.71-3.616l-.047-.022zm-1.382 0a1.62 1.62 0 0 1 1.382 0l1.71-3.616a5.62 5.62 0 0 0-4.803 0zm-.048.022l.048-.022l-1.71-3.616l-.049.022zm-.824 1.022c.104-.449.407-.825.824-1.022l-1.71-3.616a5.5 5.5 0 0 0-3.01 3.732zm.305 1.3a1.53 1.53 0 0 1-.305-1.3l-3.896-.906a5.53 5.53 0 0 0 1.096 4.727zm1.215.584a1.58 1.58 0 0 1-1.215-.584l-3.105 2.521a5.58 5.58 0 0 0 4.32 2.063zm.085 0h-.085v4h.085zm1.215-.584c-.3.37-.753.584-1.215.584v4a5.58 5.58 0 0 0 4.32-2.062zm.306-1.3a1.53 1.53 0 0 1-.305 1.3l3.105 2.521a5.53 5.53 0 0 0 1.096-4.727zm-.824-1.022c.416.197.72.573.824 1.022l3.896-.906a5.5 5.5 0 0 0-3.01-3.732z" />
+      <path class="route-miss-cta__pin route-miss-cta__pin--b" fill="#eb5757" fill-rule="evenodd" d="M60 11.91c4.418 0 8 3.639 8 8.057a8.13 8.13 0 0 1-1.597 4.84l-6.387 8.582a.02.02 0 0 1-.032 0l-6.387-8.582A8.13 8.13 0 0 1 52 19.967c0-4.418 3.582-8.056 8-8.056m1.633 4.64l-.108-.05a3.63 3.63 0 0 0-3.05 0l-.108.05a3.388 3.388 0 0 0-1.185 5.241l.034.042a3.5 3.5 0 0 0 2.689 1.261h.19c1.04 0 2.025-.462 2.689-1.261l.034-.041a3.388 3.388 0 0 0-1.185-5.241" clip-rule="evenodd" />
+      <path class="route-miss-cta__pin route-miss-cta__pin--b" fill="#eb5757" d="m66.403 24.807l-1.604-1.194zm-6.387 8.582l-1.605-1.194zm-.032 0l1.605-1.194zm-6.387-8.582l1.604-1.194zm7.928-8.306l-.84 1.815zm.108.05l.84-1.816zm-3.158-.05l.84 1.815zm-.108.05l-.84-1.816zm-1.875 2.291l1.946.463zm.69 2.95l1.538-1.279zm.034.04l-1.538 1.279zm5.568 0l1.538 1.279zm.034-.04l-1.538-1.279zm.69-2.95l-1.946.463zM70 19.967C70 14.462 65.541 9.91 60 9.91v4c3.295 0 6 2.724 6 6.056zM68.007 26A10.13 10.13 0 0 0 70 19.967h-4a6.13 6.13 0 0 1-1.201 3.646zm-6.387 8.582L68.007 26l-3.208-2.388l-6.388 8.582zm-3.24 0a2.02 2.02 0 0 0 3.24 0l-3.209-2.388a1.98 1.98 0 0 1 3.178 0zM51.992 26l6.388 8.582l3.209-2.388l-6.388-8.582zM50 19.967c0 2.162.696 4.291 1.992 6.034l3.21-2.388A6.13 6.13 0 0 1 54 19.967zM60 9.91c-5.541 0-10 4.551-10 10.056h4c0-3.332 2.705-6.056 6-6.056zm.686 8.405l.108.05l1.679-3.63l-.109-.05zm-1.372 0a1.64 1.64 0 0 1 1.372 0l1.678-3.63a5.64 5.64 0 0 0-4.728 0zm-.108.05l.108-.05l-1.678-3.63l-.109.05zm-.768.94c.098-.415.381-.761.768-.94l-1.679-3.63a5.39 5.39 0 0 0-2.98 3.644zm.282 1.207a1.39 1.39 0 0 1-.282-1.208l-3.892-.925a5.39 5.39 0 0 0 1.098 4.69zm.035.041l-.035-.04l-3.076 2.556l.034.04zm1.15.54c-.445 0-.866-.198-1.15-.54l-3.077 2.557a5.5 5.5 0 0 0 4.227 1.983zm.19 0h-.19v4h.19zm1.15-.54c-.284.342-.705.54-1.15.54v4a5.5 5.5 0 0 0 4.227-1.983zm.035-.04l-.035.04l3.077 2.557l.034-.041zm.282-1.209c.101.425-.003.872-.282 1.208l3.076 2.557a5.39 5.39 0 0 0 1.098-4.69zm-.768-.939c.387.179.67.525.768.94l3.892-.926a5.39 5.39 0 0 0-2.981-3.645z" />
+    </g>
+  </svg>`;
+}
+
+function bindRouteMissCta($cta, hints) {
+  const originHint = (hints && hints.origin) || '';
+  const destHint = (hints && hints.dest) || '';
+  const focus = (hints && hints.focus) || 'origin';
+  $cta.attr('data-focus', focus);
+  $cta.off('mousedown.routeMiss click.routeMiss');
+  $cta.on('mousedown.routeMiss', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+  $cta.on('click.routeMiss', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    openRouteRequestModal({ origin: originHint, dest: destHint, focus: focus });
+  });
+}
+
+function appendNoRouteCta($container, hints) {
+  const $existing = $container.children('.route-miss-cta');
+  if ($existing.length) {
+    bindRouteMissCta($existing, hints);
+    return;
+  }
+
+  const $picker = $container.closest('.city-picker');
+  const shouldAnimate = !$picker.attr('data-route-miss-animated');
+  if (shouldAnimate) $picker.attr('data-route-miss-animated', '1');
+  const enterClass = shouldAnimate ? ' route-miss-cta--enter' : '';
+  const $cta = $(`
+    <button type="button" class="route-miss-cta${enterClass}">
+      <span class="route-miss-cta__mark" aria-hidden="true">
+        ${routeMissIconSvg()}
+      </span>
+      <span class="route-miss-cta__copy">
+        <strong>مسیر پیدا نشد؟</strong>
+        <span>مبدا و مقصد را بفرستید تا با شما تماس بگیریم</span>
+      </span>
+      <span class="route-miss-cta__action">
+        <i class="ti ti-chevron-left" aria-hidden="true"></i>
+      </span>
+    </button>`);
+  bindRouteMissCta($cta, hints);
+  $container.append($cta);
+}
+
+function clearRouteMissAnimation($container) {
+  $container.closest('.city-picker').removeAttr('data-route-miss-animated');
+}
+
+function ensureRouteRequestModal() {
+  const existing = document.getElementById('route-request-overlay');
+  if (existing && !document.querySelector('[data-route-request-layout="v5"]')) {
+    existing.remove();
+  } else if (existing) {
+    return;
+  }
+
+  const hourOptions = buildRouteRequestHourOptions();
+  const minuteOptions = buildRouteRequestMinuteOptions();
+  const html = `
+    <div id="route-request-overlay" hidden>
+      <div class="route-request-sheet" role="dialog" aria-modal="true" aria-labelledby="route-request-title" data-route-request-layout="v5">
+        <button type="button" class="route-request-close" aria-label="بستن" data-route-request-close>
+          <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
+        <div class="route-request-form-view">
+          <div class="route-request-head">
+            <span class="route-request-head__icon" aria-hidden="true">
+              <img class="route-request-head__img" src="/img/route-request/taxi-confirmed.png" alt="" width="48" height="38" decoding="async" />
+            </span>
+            <div class="route-request-head__copy">
+              <p class="route-request-kicker">مسیر شما پیدا نشد؟</p>
+              <h2 id="route-request-title">درخواست سفر</h2>
+            </div>
+          </div>
+          <p class="route-request-lead">مبدا، مقصد و جزییات سفر دلخواهتان را بنویسید تا برای انجام آن با شما هماهنگ کنیم.</p>
+          <form id="route-request-form" novalidate>
+            <div class="route-request-row route-request-row--od">
+              <div class="route-request-field">
+                <label class="form-label" for="route-request-origin">
+                  <span class="route-request-field__mark route-request-field__mark--origin" aria-hidden="true"></span>
+                  <span class="route-request-field__text">شهر <b>مبدا</b></span>
+                  <span class="route-request-req" aria-hidden="true">*</span>
+                </label>
+                <input id="route-request-origin" name="origin" class="form-control" type="text" autocomplete="off" required placeholder="مبدا دلخواه" />
+              </div>
+              <div class="route-request-field">
+                <label class="form-label" for="route-request-dest">
+                  <span class="route-request-field__mark route-request-field__mark--dest" aria-hidden="true"></span>
+                  <span class="route-request-field__text">شهر <b>مقصد</b></span>
+                  <span class="route-request-req" aria-hidden="true">*</span>
+                </label>
+                <input id="route-request-dest" name="destination" class="form-control" type="text" autocomplete="off" required placeholder="مقصد دلخواه" />
+              </div>
+            </div>
+            <div class="route-request-field">
+              <label class="form-label" for="route-request-date">
+                <span class="route-request-field__text">تاریخ سفر</span>
+                <span class="route-request-req" aria-hidden="true">*</span>
+              </label>
+              <input id="route-request-date" name="tripDate" class="form-control route-request-date" type="text" autocomplete="off" required placeholder="انتخاب تاریخ" readonly />
+            </div>
+            <div class="route-request-field route-request-field--time">
+              <div class="form-label" id="route-request-time-label">
+                <span class="route-request-field__text">ساعت سفر</span>
+                <span class="route-request-req" aria-hidden="true">*</span>
+              </div>
+              <div class="route-request-time" role="group" aria-labelledby="route-request-time-label">
+                <div class="route-request-time__part">
+                  <label class="route-request-time__hint" for="route-request-hour">ساعت</label>
+                  <select id="route-request-hour" name="tripHour" class="form-select" required aria-label="ساعت">
+                    <option value="" disabled selected>—</option>
+                    ${hourOptions}
+                  </select>
+                </div>
+                <span class="route-request-time__sep" aria-hidden="true">:</span>
+                <div class="route-request-time__part">
+                  <label class="route-request-time__hint" for="route-request-minute">دقیقه</label>
+                  <select id="route-request-minute" name="tripMinute" class="form-select" required aria-label="دقیقه">
+                    <option value="" disabled selected>—</option>
+                    ${minuteOptions}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="route-request-field">
+              <label class="form-label" for="route-request-car">
+                <span class="route-request-field__text">خودرو درخواستی</span>
+              </label>
+              <input id="route-request-car" name="carModel" class="form-control" type="text" autocomplete="off" list="route-request-car-list" placeholder="مثلاً پژو پارس (اختیاری)" />
+              <datalist id="route-request-car-list">
+                <option value="پژو"></option>
+                <option value="پژو پارس"></option>
+                <option value="سمند"></option>
+                <option value="دنا"></option>
+                <option value="سورن"></option>
+                <option value="آریو"></option>
+                <option value="VIP / تشریفات"></option>
+              </datalist>
+            </div>
+            <div class="route-request-field">
+              <label class="form-label" for="route-request-phone">
+                <span class="route-request-field__text">شماره تماس</span>
+                <span class="route-request-req" aria-hidden="true">*</span>
+              </label>
+              <input id="route-request-phone" name="phone" class="form-control" type="tel" inputmode="numeric" dir="rtl" autocomplete="tel" required maxlength="13" placeholder="شماره تماس به منظور هماهنگی" />
+            </div>
+            <p class="route-request-error" id="route-request-error" hidden></p>
+            <button type="submit" class="route-request-submit">
+              <span class="route-request-submit__label">ثبت درخواست سفر</span>
+              <svg class="route-request-submit__icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path fill="currentColor" d="M9 15.59L4.71 11.3L3.3 12.71l5 5c.2.2.45.29.71.29s.51-.1.71-.29l11-11l-1.41-1.41L9.02 15.59Z" />
+              </svg>
+            </button>
+          </form>
+        </div>
+        <div class="route-request-done-view" hidden>
+          <div class="route-request-done-mark" aria-hidden="true">
+            <img class="route-request-head__img" src="/img/route-request/taxi-confirmed.png" alt="" width="60" height="60" decoding="async" />
+          </div>
+          <h2>به‌زودی تماس می‌گیریم</h2>
+          <p>درخواست مسیر شما ثبت شد. کارشناس مسترشوفر در اولین فرصت با همین شماره تماس می‌گیرد.</p>
+          <button type="button" class="route-request-submit" data-route-request-close>باشه</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+
+  const overlay = document.getElementById('route-request-overlay');
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeRouteRequestModal();
+  });
+  overlay.querySelectorAll('[data-route-request-close]').forEach(function (btn) {
+    btn.addEventListener('click', closeRouteRequestModal);
+  });
+  document.getElementById('route-request-form').addEventListener('submit', submitRouteRequest);
+  bindRouteRequestPhoneInput(document.getElementById('route-request-phone'));
+  ensureRouteRequestDatepicker();
+}
+
+function buildRouteRequestHourOptions() {
+  const parts = [];
+  for (let h = 0; h < 24; h++) {
+    const value = String(h).padStart(2, '0');
+    parts.push(`<option value="${value}">${toPersianDigits(value)}</option>`);
+  }
+  return parts.join('');
+}
+
+function buildRouteRequestMinuteOptions() {
+  const parts = [];
+  for (let m = 0; m < 60; m += 5) {
+    const value = String(m).padStart(2, '0');
+    parts.push(`<option value="${value}">${toPersianDigits(value)}</option>`);
+  }
+  return parts.join('');
+}
+
+function ensureRouteRequestDatepicker() {
+  const dateInput = document.getElementById('route-request-date');
+  if (!dateInput || dateInput._jalaliDatepicker || !window.JalaliDatepicker) return;
+  dateInput._jalaliDatepicker = new JalaliDatepicker(dateInput, { minDate: 'today' });
+}
+
+function toEnglishDigits(value) {
+  return String(value || '')
+    .replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+    .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+}
+
+function toPersianDigits(value) {
+  return String(value || '').replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
+}
+
+function bindRouteRequestPhoneInput(input) {
+  if (!input || input.dataset.phoneBound === '1') return;
+  input.dataset.phoneBound = '1';
+
+  const formatPhoneDisplay = function () {
+    const english = toEnglishDigits(input.value).replace(/[^\d+]/g, '');
+    let digits = english.replace(/\D/g, '');
+    if (digits.startsWith('0098')) digits = '0' + digits.slice(4);
+    else if (digits.startsWith('98') && digits.length >= 12) digits = '0' + digits.slice(2);
+    if (digits.length > 11) digits = digits.slice(0, 11);
+    input.value = toPersianDigits(digits);
+  };
+
+  input.addEventListener('input', formatPhoneDisplay);
+  input.addEventListener('blur', formatPhoneDisplay);
+  input.addEventListener('paste', function () {
+    window.setTimeout(formatPhoneDisplay, 0);
+  });
+}
+
+function openRouteRequestModal(hints) {
+  ensureRouteRequestModal();
+  ensureRouteRequestDatepicker();
+  closeAllDesktopCityPickers();
+  try { $('#origin_input, #destination_input').dropdown('hide'); } catch { /* ignore */ }
+
+  const overlay = document.getElementById('route-request-overlay');
+  const formView = overlay.querySelector('.route-request-form-view');
+  const doneView = overlay.querySelector('.route-request-done-view');
+  const errorEl = document.getElementById('route-request-error');
+  const form = document.getElementById('route-request-form');
+  form.reset();
+  const hourSelect = document.getElementById('route-request-hour');
+  const minuteSelect = document.getElementById('route-request-minute');
+  if (hourSelect) hourSelect.selectedIndex = 0;
+  if (minuteSelect) minuteSelect.selectedIndex = 0;
+  errorEl.hidden = true;
+  errorEl.textContent = '';
+  formView.hidden = false;
+  doneView.hidden = true;
+
+  document.getElementById('route-request-origin').value = (hints && hints.origin) || typedOriginCity();
+  document.getElementById('route-request-dest').value = (hints && hints.dest) || typedDestCity();
+  document.getElementById('route-request-origin').placeholder = 'مبدا دلخواه';
+  document.getElementById('route-request-dest').placeholder = 'مقصد دلخواه';
+  document.getElementById('route-request-phone').placeholder = 'شماره تماس به منظور هماهنگی';
+  const kicker = overlay.querySelector('.route-request-kicker');
+  const title = document.getElementById('route-request-title');
+  const lead = overlay.querySelector('.route-request-lead');
+  const submitBtn = document.querySelector('#route-request-form .route-request-submit');
+  const submitLabel = submitBtn && submitBtn.querySelector('.route-request-submit__label');
+  if (kicker) kicker.textContent = 'مسیر شما پیدا نشد؟';
+  if (title) title.textContent = 'درخواست سفر';
+  if (lead) lead.textContent = 'مبدا، مقصد و جزییات سفر دلخواهتان را بنویسید تا برای انجام آن با شما هماهنگ کنیم.';
+  if (submitLabel) submitLabel.textContent = 'ثبت درخواست سفر';
+  else if (submitBtn) submitBtn.textContent = 'ثبت درخواست سفر';
+  overlay.hidden = false;
+  document.body.classList.add('route-request-open');
+
+  const focusId = hints && hints.focus === 'dest' ? 'route-request-dest' : 'route-request-origin';
+  window.setTimeout(function () {
+    const originVal = document.getElementById('route-request-origin').value.trim();
+    const destVal = document.getElementById('route-request-dest').value.trim();
+    const target = !originVal
+      ? document.getElementById('route-request-origin')
+      : (!destVal ? document.getElementById('route-request-dest') : document.getElementById(focusId));
+    target.focus();
+  }, 40);
+}
+
+function closeRouteRequestModal() {
+  const overlay = document.getElementById('route-request-overlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  document.body.classList.remove('route-request-open');
+  const active = document.activeElement;
+  if (active && overlay.contains(active)) active.blur();
+}
+
+function isValidIranMobile(raw) {
+  let digits = toEnglishDigits(raw).replace(/[^\d+]/g, '');
+  digits = digits.replace(/\D/g, '');
+  if (digits.startsWith('0098')) digits = '0' + digits.slice(4);
+  else if (digits.startsWith('98') && digits.length >= 12) digits = '0' + digits.slice(2);
+  else if (digits.length === 10 && digits.startsWith('9')) digits = '0' + digits;
+
+  // Iranian mobile: 09 + valid operator prefix + 7 digits
+  if (/^09(0[0-5]|1[0-9]|2[0-3]|3[0-9]|9[0-9])\d{7}$/.test(digits)) return digits;
+  return '';
+}
+
+async function submitRouteRequest(event) {
+  event.preventDefault();
+  const origin = document.getElementById('route-request-origin').value.trim();
+  const dest = document.getElementById('route-request-dest').value.trim();
+  const tripDate = document.getElementById('route-request-date').value.trim();
+  const tripHour = document.getElementById('route-request-hour').value.trim();
+  const tripMinute = document.getElementById('route-request-minute').value.trim();
+  const carModel = document.getElementById('route-request-car').value.trim();
+  const phone = isValidIranMobile(document.getElementById('route-request-phone').value);
+  const errorEl = document.getElementById('route-request-error');
+  const submitBtn = event.currentTarget.querySelector('.route-request-submit');
+  const tripTime = tripHour && tripMinute ? `${tripHour}:${tripMinute}` : '';
+
+  if (!origin || !dest) {
+    errorEl.hidden = false;
+    errorEl.textContent = 'مبدا و مقصد را وارد کنید.';
+    return;
+  }
+  if (!tripDate || !tripHour || !tripMinute) {
+    errorEl.hidden = false;
+    errorEl.textContent = 'تاریخ و ساعت سفر را انتخاب کنید.';
+    return;
+  }
+  if (!phone) {
+    errorEl.hidden = false;
+    errorEl.textContent = 'شماره موبایل معتبر ایرانی وارد کنید (مثلاً ۰۹۱۲۱۲۳۴۵۶۷).';
+    return;
+  }
+
+  errorEl.hidden = true;
+  submitBtn.disabled = true;
+  const submitLabel = submitBtn.querySelector('.route-request-submit__label');
+  const originalLabel = submitLabel ? submitLabel.textContent : submitBtn.textContent;
+  if (submitLabel) submitLabel.textContent = 'در حال ثبت…';
+  else submitBtn.textContent = 'در حال ثبت…';
+
+  const carPart = carModel ? ` | خودرو درخواستی: ${carModel}` : '';
+  try {
+    const res = await fetch('/Message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'درخواست مسیر',
+        number: phone,
+        message: `درخواست مسیر جدید — مبدا: ${origin} | مقصد: ${dest} | تاریخ: ${tripDate} | ساعت: ${tripTime}${carPart}`
+      })
+    });
+    if (!res.ok) throw new Error('request failed');
+    document.querySelector('.route-request-form-view').hidden = true;
+    document.querySelector('.route-request-done-view').hidden = false;
+  } catch {
+    errorEl.hidden = false;
+    errorEl.textContent = 'ثبت نشد. دوباره تلاش کنید یا با ۲۸۴۲۲۲۴۳-۰۲۱ تماس بگیرید.';
+  } finally {
+    submitBtn.disabled = false;
+    if (submitLabel) submitLabel.textContent = originalLabel;
+    else submitBtn.textContent = originalLabel;
+  }
+}
+
 const DIRECTIONS_STATIC_URL = '/json/Directions/Directions.json';
 
 function refreshOriginDestinationUiAfterCatalog() {
@@ -730,15 +1125,23 @@ async function FetchTrips() {
   const isOriginValid = isPickerOriginKey(oKey);
   const isDirectionValid = isDirectionPairValid(oKey, dKey);
   if (!isOriginValid || !isDirectionValid) {
-    const msg = !isOriginValid
-      ? `شهر مبدا نامعتبر است: ${origin}`
-      : `مسیر ${origin} به ${destination} در حال حاضر فعال نیست`;
     const $container = $('.trips-container');
     if ($container.length) {
-      $container.empty().append(`<div class="d-flex col-12 mt-3" style="flex-direction: column; align-items: center; justify-content: start;">
-        <label class="fs-5 fw-bold mt-4 pt-3 text-danger">${msg}</label>
-      </div>`);
-    } else { alert(msg); }
+      $container.empty().append(`
+        <div class="route-miss-page">
+          <div class="route-miss-page__icon" aria-hidden="true"><i class="ti ti-route-off"></i></div>
+          <p class="route-miss-empty">${!isOriginValid
+            ? `شهر مبدا «<b>${escapeHtml(origin)}</b>» در مسیرهای فعال نیست.`
+            : `مسیر «<b>${escapeHtml(origin)}</b> به <b>${escapeHtml(destination)}</b>» هنوز فعال نیست.`}</p>
+        </div>`);
+      appendNoRouteCta($container.find('.route-miss-page'), {
+        origin: origin,
+        dest: destination,
+        focus: isOriginValid ? 'dest' : 'origin'
+      });
+    } else {
+      openRouteRequestModal({ origin: origin, dest: destination, focus: isOriginValid ? 'dest' : 'origin' });
+    }
     trips = [];
     return;
   }
@@ -831,14 +1234,38 @@ function LoadMostUsedOrigins() {
   AddResultLocations_origin(popularOriginPickerKeys());
 }
 
-function AddResultLocations_origin(keys) {
+function AddResultLocations_origin(keys, query) {
   ensureOriginDropdown();
   var terminals_container = $('#origincontainer');
   clearCityPickerKeyboardSelection(document.getElementById('origin_input'));
-  terminals_container.empty();
+  const q = (query || '').trim();
   if (!keys || keys.length === 0) {
-    terminals_container.append($('<div>', { class: 'dropdown-item text-center mt-2 text-muted', role: 'status', text: "نتیجه‌ای پیدا نشد" }));
+    $('#origin_most_lable').hide();
+    if (q.length >= 2) {
+      terminals_container.children().not('.route-miss-cta').remove();
+      if (!terminals_container.children('.route-miss-empty').length) {
+        terminals_container.prepend($('<div>', {
+          class: 'route-miss-empty',
+          role: 'status'
+        }));
+      }
+      terminals_container.children('.route-miss-empty').html(
+        `شهری با نام «<b>${escapeHtml(q)}</b>» در مسیرهای فعال پیدا نشد.`
+      );
+      appendNoRouteCta(terminals_container, {
+        origin: q,
+        dest: typedDestCity(),
+        focus: 'origin'
+      });
+    } else {
+      terminals_container.empty();
+      clearRouteMissAnimation(terminals_container);
+      terminals_container.append($('<div>', { class: 'dropdown-item text-center mt-2 text-muted', role: 'status', text: "نتیجه‌ای پیدا نشد" }));
+    }
   } else {
+    terminals_container.empty();
+    clearRouteMissAnimation(terminals_container);
+    $('#origin_most_lable').show();
     keys.forEach((key, index) => {
       const display = keyToDisplay(key);
       var $aTag = $('<button>', {
@@ -863,15 +1290,42 @@ function AddResultLocations_origin(keys) {
   }
 }
 
-function AddResultLocations_destination(result_locations) {
+function AddResultLocations_destination(result_locations, query) {
   ensureDestinationDropdown();
   var terminals_container = $('#desticontainer');
   clearCityPickerKeyboardSelection(document.getElementById('destination_input'));
-  terminals_container.empty();
+  const q = (query || '').trim();
   if (!result_locations || result_locations.length === 0) {
-    terminals_container.append($('<div>', { class: 'dropdown-item text-center mt-2 text-muted', role: 'status', text: "ابتدا شهر مبدا را انتخاب کنید" }));
+    $('.destination_location .staredlocation_title').hide();
+    if (!destinationUnlocked) {
+      terminals_container.empty();
+      clearRouteMissAnimation(terminals_container);
+      terminals_container.append($('<div>', { class: 'dropdown-item text-center mt-2 text-muted', role: 'status', text: "ابتدا شهر مبدا را انتخاب کنید" }));
+      return;
+    }
+    terminals_container.children().not('.route-miss-cta').remove();
+    if (!terminals_container.children('.route-miss-empty').length) {
+      terminals_container.prepend($('<div>', {
+        class: 'route-miss-empty',
+        role: 'status'
+      }));
+    }
+    const $empty = terminals_container.children('.route-miss-empty');
+    if (q) {
+      $empty.html(`مقصد «<b>${escapeHtml(q)}</b>» برای این مبدا در فهرست نیست.`);
+    } else {
+      $empty.text('برای این مبدا مقصد فعالی در فهرست نیست.');
+    }
+    appendNoRouteCta(terminals_container, {
+      origin: typedOriginCity(),
+      dest: q,
+      focus: 'dest'
+    });
     return;
   }
+  terminals_container.empty();
+  clearRouteMissAnimation(terminals_container);
+  $('.destination_location .staredlocation_title').show();
   result_locations.forEach((location, index) => {
     var $aTag = $('<button>', {
       id: 'destination_city_option_' + index,
@@ -1053,6 +1507,7 @@ $(document).ready(async function () {
   // Build picker chrome immediately so Bootstrap can open menus before the API returns.
   ensureOriginDropdown();
   ensureDestinationDropdown();
+  ensureRouteRequestModal();
   showPickerStatus('#origincontainer', 'در حال بارگذاری شهرها…');
   showPickerStatus('#desticontainer', 'ابتدا شهر مبدا را انتخاب کنید');
   DisableDestination();
@@ -1120,6 +1575,12 @@ $(document).ready(async function () {
   }
   document.addEventListener('pointerdown', dismissCityPickerIfOutside, true);
   document.addEventListener('click', dismissCityPickerIfOutside, true);
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !document.body.classList.contains('route-request-open')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    closeRouteRequestModal();
+  }, true);
 
   document.addEventListener('keydown', function (event) {
     if (!event.target.matches('#origin_input, #destination_input, #origin_picker_q, #dest_picker_q')) return;
@@ -1187,7 +1648,7 @@ $(document).ready(async function () {
     const searchableKeys = pickerOriginKeys();
     const matches = keysMatchingNeedles(searchableKeys, needles);
     const listToShow = raw.length < 2 ? searchableKeys : matches;
-    AddResultLocations_origin(listToShow);
+    AddResultLocations_origin(listToShow, raw);
     const exactKey = searchableKeys.find(function (key) { return key === normalize(raw); });
     if (exactKey && isPickerOriginKey(exactKey)) {
       // Exact text unlocks its destinations, but never rewrites the user's input.
@@ -1217,12 +1678,12 @@ $(document).ready(async function () {
     const raw = $(this).val() || '';
     const needles = queryNeedles(raw);
     if (!normalize(raw)) {
-      AddResultLocations_destination(_destinations);
+      AddResultLocations_destination(_destinations, '');
     } else {
       const destKeys = _destinations.map((city) => normalize(city));
       const matchedKeys = new Set(keysMatchingNeedles(destKeys, needles));
       const filteredCities = _destinations.filter((city) => matchedKeys.has(normalize(city)));
-      AddResultLocations_destination(filteredCities);
+      AddResultLocations_destination(filteredCities, raw);
     }
   });
 

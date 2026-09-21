@@ -2,6 +2,32 @@
     Layout = "_FrontLayout";
 
     ViewData["Title"] = "سواری بین شهری";
+    ViewData["isSideMenu"] = true;
+
+    var tripFocus = (Context.Request.Query["tripFocus"].ToString() ?? "").Trim().ToLowerInvariant();
+    if (tripFocus is not ("intercity" or "airport" or "vip"))
+    {
+        tripFocus = "intercity";
+    }
+
+    var serviceMeta = tripFocus switch
+    {
+        "airport" => (
+            Title: "ترانسفر فرودگاهی",
+            Subtitle: "ترانسفر اختصاصی فرودگاهی با رانندگان تأییدشده",
+            Icon: "ti-plane-departure"
+        ),
+        "vip" => (
+            Title: "بیزینس پلاس",
+            Subtitle: "سرویس ویژه سازمانی با خودرو و راننده منتخب",
+            Icon: "ti-briefcase"
+        ),
+        _ => (
+            Title: "سواری بین شهری",
+            Subtitle: "مستر شوفر — سواری بین‌شهری و ترانسفر فرودگاهی با رانندگان تأییدشده",
+            Icon: "ti-route"
+        )
+    };
 }
 
 @section VendorStyles {
@@ -9,11 +35,101 @@
     <link rel="stylesheet" href="~/css/jalali-datepicker.css" asp-append-version="true" />
     <link href="~/css/IndexPage.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/trip-search.css" rel="stylesheet" asp-append-version="true" />
-    <link rel="preload" href="/img/front-pages/landing-page/hero-travel.webp" as="image" type="image/webp" fetchpriority="high" />
+    <link rel="preload" href="/img/front-pages/landing-page/hero-intercity.jpg" as="image" type="image/jpeg" fetchpriority="high" />
+    <link rel="preload" href="/img/front-pages/landing-page/hero-airport.jpg" as="image" type="image/jpeg" />
     <style>
       .landing-hero .od-pair-col { position: relative; }
-      .landing-hero .od-swap-btn {
-        --od-swap-size: 1.85rem;
+
+      /* OD field chrome — icons INSIDE inputs at RTL END (physical LEFT) */
+      .landing-hero .input-container {
+        position: relative;
+        display: block;
+      }
+
+      .landing-hero #tripForm .input-container > .od-mark {
+        position: absolute !important;
+        top: 50% !important;
+        /* Physical sides — icon at RTL end = physical left.
+           Use explicit left/right (not inset-inline after left/right:auto). */
+        left: 0.85rem !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        display: block;
+        width: 0.95rem;
+        height: 0.95rem;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+        pointer-events: none;
+        z-index: 3;
+        color: #8b8b8b;
+        line-height: 1;
+        font-size: 1rem;
+      }
+
+      /* Origin = bullseye (ring + center dot) */
+      .landing-hero .od-mark--origin {
+        border: 2px solid #8b8b8b;
+        border-radius: 50%;
+        background: transparent;
+      }
+      .landing-hero .od-mark--origin::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0.35rem;
+        height: 0.35rem;
+        border-radius: 50%;
+        background: #8b8b8b;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Destination = hollow square outline (empty inside, like origin) */
+      .landing-hero .od-mark--dest {
+        width: 0.78rem;
+        height: 0.78rem;
+        border: 2px solid #8b8b8b;
+        border-radius: 0.22rem;
+        background: transparent;
+      }
+
+      /* Date = calendar glyph, same slot */
+      .landing-hero #tripForm .input-container > i.od-mark--date {
+        width: auto;
+        height: auto;
+        font-size: 1.05rem;
+        background: transparent;
+        border: 0;
+      }
+
+      /* Room for the icon on the END (physical left) side */
+      .landing-hero #tripForm .input-container input.origin,
+      .landing-hero #tripForm .input-container input.destination,
+      .landing-hero #tripForm .input-container input.searchdate {
+        padding-inline-start: 0.95rem !important;
+        padding-inline-end: 2.35rem !important;
+        text-align: start;
+        direction: rtl;
+      }
+
+      /* Help labels under each field — start-aligned (right in RTL), under the icon */
+      .landing-hero #tripForm .inputcel > .form-text {
+        display: block;
+        width: 100%;
+        margin: 0.4rem 0 0;
+        padding: 0;
+        text-align: start;
+        font-size: 0.8125rem;
+        line-height: 1.3;
+        color: #8b8b8b;
+      }
+
+      /* Swap control — soft gray rounded square with muted arrows (secondary tone) */
+      #landingHero #tripForm .od-swap-btn {
+        --od-swap-size: 2rem;
         position: absolute !important;
         z-index: 4;
         width: var(--od-swap-size) !important;
@@ -24,12 +140,20 @@
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        border: 1px solid #d9dee3;
-        background: #fff;
-        color: #8592a3;
+        border: 1px solid var(--ts-border, #e5e5e5);
+        background: var(--secondary, #f3f3f3);
+        color: var(--ts-ink, var(--brand-ink, #000));
         line-height: 1;
-        box-shadow: 0 0 0 2px #fff, 0 1px 2px rgba(47, 43, 61, 0.06);
+        box-shadow: 0 0 0 3px #fff, 0 2px 6px rgba(0, 0, 0, 0.12);
         cursor: pointer;
+        transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease, box-shadow .15s ease;
+      }
+      #landingHero #tripForm .od-swap-btn:hover,
+      #landingHero #tripForm .od-swap-btn:focus-visible {
+        background: #e5e5e5;
+        border-color: #d4d4d4;
+        color: var(--ts-ink, var(--brand-ink, #000));
+        outline: none;
       }
       @@media (max-width: 767.98px) {
         .landing-hero #tripForm .od-pair { --od-swap-gutter: 0 !important; }
@@ -40,20 +164,33 @@
           max-width: 100% !important;
           flex: 0 0 100% !important;
         }
+        .landing-hero #tripForm .input-container > .od-mark {
+          left: 0.85rem !important;
+          right: auto !important;
+        }
       }
       @@media (min-width: 768px) {
-        .landing-hero #tripForm .od-pair { --od-swap-gutter: 1rem; }
-        .landing-hero #tripForm .od-pair > .inputcel:first-child {
+        /* Tight gutter so the swap control overlaps ~6px into each input edge.
+           gutter (1.25rem = 20px) < button width (2rem = 32px).
+           Uses #landingHero to override the shared trip-search.css default. */
+        #landingHero #tripForm .od-pair { --od-swap-gutter: 1.25rem !important; }
+        #landingHero #tripForm .od-pair > .inputcel:first-child {
           padding-inline-end: calc(var(--od-swap-gutter) / 2) !important;
         }
-        .landing-hero #tripForm .od-pair > .inputcel:last-of-type {
+        #landingHero #tripForm .od-pair > .inputcel:last-of-type {
           padding-inline-start: calc(var(--od-swap-gutter) / 2) !important;
         }
-        .landing-hero .od-swap-btn {
-          left: 50%;
-          top: 0.25rem;
-          transform: translateX(-50%);
-          border-radius: 0.75rem;
+        /* Centered horizontally between the two fields and vertically on the
+           input midline (rendered input height ≈ 2.5rem → half ≈ 1.25rem). */
+        #landingHero #tripForm .od-swap-btn {
+          left: 50% !important;
+          top: 1.25rem !important;
+          bottom: auto !important;
+          transform: translate(-50%, -50%) !important;
+          border-radius: 0.65rem;
+        }
+        #landingHero #tripForm .od-swap-btn:active {
+          transform: translate(-50%, -50%) scale(0.94) !important;
         }
       }
     </style>
@@ -77,18 +214,24 @@
     <!-- Hero: Start -->
     <section id="hero-animation">
         <div id="landingHero" class="landing-hero position-relative">
-            <div class="landing-hero-stage">
+            <div class="landing-hero-stage" data-hero-stage data-hero-art="@(tripFocus == "airport" ? "airport" : "intercity")">
                 <div class="landing-hero-stage-art" aria-hidden="true">
-                    <picture>
-                        <source srcset="/img/front-pages/landing-page/hero-travel.webp" type="image/webp" />
-                        <img src="/img/front-pages/landing-page/hero-travel.jpg"
-                             alt=""
-                             width="1600"
-                             height="800"
-                             class="landing-hero-stage-art-img"
-                             fetchpriority="high"
-                             decoding="async" />
-                    </picture>
+                    <img src="/img/front-pages/landing-page/hero-intercity.jpg"
+                         alt=""
+                         width="1024"
+                         height="512"
+                         class="landing-hero-stage-art-img@(tripFocus == "airport" ? "" : " is-active")"
+                         data-hero-art-layer="intercity"
+                         fetchpriority="@(tripFocus == "airport" ? "low" : "high")"
+                         decoding="async" />
+                    <img src="/img/front-pages/landing-page/hero-airport.jpg"
+                         alt=""
+                         width="1024"
+                         height="512"
+                         class="landing-hero-stage-art-img@(tripFocus == "airport" ? " is-active" : "")"
+                         data-hero-art-layer="airport"
+                         fetchpriority="@(tripFocus == "airport" ? "high" : "low")"
+                         decoding="async" />
                 </div>
                 <div class="container landing-hero-stage-content">
                     <h1 class="visually-hidden">مستر شوفر — راهی مطمئن به همه مقاصد ایران</h1>
@@ -98,22 +241,45 @@
 
             <div class="container landing-hero-search-wrap">
                 <div class="hero-safezone hero-safezone--form">
-                    <div class="hero-search-panel">
-                        <div class="hero-search-head d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-1 fw-semibold h5">
-                                    <i class="ti ti-route me-1 text-primary"></i>
-                                    جستجوی سواری
-                                </p>
-                                <p class="mb-0 text-muted small">
-                                    مستر شوفر — سواری بین‌شهری و ترانسفر فرودگاهی با رانندگان تأییدشده
-                                    <i class="ti ti-circle-check text-success ms-1"></i>
+                    <div class="hero-search-panel" data-hero-service="@tripFocus">
+                        <div class="hero-service-seg" role="tablist" aria-label="نوع سرویس" data-hero-service-tabs>
+                            <button type="button"
+                                    class="hero-seg-btn@(tripFocus == "intercity" ? " active" : "")"
+                                    role="tab"
+                                    id="hero-tab-intercity"
+                                    data-service="intercity"
+                                    aria-selected="@(tripFocus == "intercity" ? "true" : "false")"
+                                    tabindex="@(tripFocus == "intercity" ? "0" : "-1")">
+                                <i class="ti ti-road" aria-hidden="true"></i>
+                                <span class="hero-seg-btn__label">بین شهری</span>
+                            </button>
+                            <button type="button"
+                                    class="hero-seg-btn@(tripFocus == "airport" ? " active" : "")"
+                                    role="tab"
+                                    id="hero-tab-airport"
+                                    data-service="airport"
+                                    aria-selected="@(tripFocus == "airport" ? "true" : "false")"
+                                    tabindex="@(tripFocus == "airport" ? "0" : "-1")">
+                                <span class="hero-seg-badge" aria-hidden="true">جدید</span>
+                                <i class="ti ti-plane-departure" aria-hidden="true"></i>
+                                <span class="hero-seg-btn__label">ترانسفر فرودگاهی</span>
+                            </button>
+                        </div>
+
+                        <div class="hero-search-head">
+                            <div class="hero-search-head__text">
+                                <h2 class="hero-search-title" data-hero-service-title-text>@serviceMeta.Title</h2>
+                                <p class="hero-service-meta">
+                                    <i class="ti @serviceMeta.Icon hero-service-meta__icon" data-hero-service-icon aria-hidden="true"></i>
+                                    <span data-hero-service-subtitle>@serviceMeta.Subtitle</span>
+                                    <i class="ti ti-circle-check hero-service-meta__check" aria-hidden="true"></i>
                                 </p>
                             </div>
-                            <img src="/mrshoofer_cars_banner.webp" width="72" height="72" class="d-none d-md-block" alt="ناوگان سواری رسمی مستر شوفر" decoding="async" />
+                            <img src="/mrshoofer_cars_banner.webp" width="72" height="72" class="hero-search-head__badge d-none d-md-block" alt="ناوگان سواری رسمی مستر شوفر" decoding="async" />
                         </div>
 
                         <form asp-controller="TaxiTrips" asp-action="Index" method="get" class="row g-3 m-0" id="tripForm">
+                            <input type="hidden" name="tripFocus" id="tripFocusInput" value="@tripFocus" />
                             <div class="col-12 col-md-6 od-pair-col">
                                 <div class="row g-2 g-md-0 od-pair">
                                     <div class="col-12 col-md-6 inputcel">
@@ -126,10 +292,10 @@
                                                    class="form-control origin input-field dropdown-toggle hide-arrow"
                                                    id="origin_input" placeholder="مبدا" type="text" role="combobox"
                                                    name="originstring" />
-                                            <i class="ti ti-location mb-2 icon" aria-hidden="true"></i>
-                                            <div class="dropdown-menu origin_location"></div>
+                                            <span class="od-mark od-mark--origin" aria-hidden="true"></span>
+                                            <div class="dropdown-menu dropdown-menu-end origin_location"></div>
                                         </div>
-                                        <div class="form-text d-md-block d-none" id="originHelpDesktop">شهر مبدا سفر</div>
+                                        <div class="form-text d-md-block d-none" id="originHelpDesktop">مبدا سفر</div>
                                     </div>
 
                                     <div class="col-12 col-md-6 inputcel">
@@ -141,10 +307,10 @@
                                                    class="form-control destination input-field dropdown-toggle hide-arrow"
                                                    id="destination_input" placeholder="مقصد" type="text" role="combobox"
                                                    name="destinationstring" />
-                                            <i class="ti ti-map-pin mb-2 icon" aria-hidden="true"></i>
-                                            <div class="dropdown-menu destination_location"></div>
+                                            <span class="od-mark od-mark--dest" aria-hidden="true"></span>
+                                            <div class="dropdown-menu dropdown-menu-end destination_location"></div>
                                         </div>
-                                        <div class="form-text d-none d-md-block" id="destinationHelpDesktop">شهر مقصد سفر</div>
+                                        <div class="form-text d-none d-md-block" id="destinationHelpDesktop">مقصد سفر</div>
                                     </div>
                                 </div>
                                 <button type="button" class="od-swap-btn" id="od-swap-btn" title="جابه‌جایی مبدأ و مقصد" aria-label="جابه‌جایی مبدأ و مقصد">
@@ -156,7 +322,7 @@
                                 <label class="form-text d-block d-md-none" for="starttime" id="dateHelpMobile">انتخاب تاریخ</label>
                                 <div class="input-container">
                                     <input autocomplete="off" aria-describedby="dateHelpDesktop dateHelpMobile" class="form-control bdi starttimeselector searchdate" id="starttime" placeholder="تاریخ سفر" type="text" name="searchdate" />
-                                    <i class="ti ti-calendar-stats mb-2 icon pe-0" aria-hidden="true"></i>
+                                    <i class="ti ti-calendar-stats od-mark od-mark--date" aria-hidden="true"></i>
                                 </div>
                                 <div class="form-text d-none d-md-block" id="dateHelpDesktop">انتخاب تاریخ</div>
                             </div>
