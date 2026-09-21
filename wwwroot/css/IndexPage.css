@@ -378,6 +378,53 @@
   overflow: hidden;
 }
 
+/*
+  Front side-menu landing: cancel the fixed-navbar 78px page pad so the
+  hero art fills the empty band behind/above the floating navbar.
+  Loaded after demo.css via IndexPage.css (asp-append-version).
+*/
+html.layout-navbar-fixed .layout-wrapper.layout-content-navbar.layout-front-with-menu:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 0 !important;
+}
+
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .layout-page::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  height: 0 !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  backdrop-filter: none !important;
+}
+
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .layout-navbar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Floating pill — keep readable controls, but let hero art read through */
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .layout-navbar .navbar.landing-navbar {
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Stage fills under the navbar */
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero-stage {
+  min-height: clamp(22rem, 50vw, 34rem);
+  padding-top: 5.5rem;
+  background-color: var(--hero-sky, #e8eef5);
+}
+
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu #landingHero.landing-hero,
+html.layout-navbar-fixed .layout-wrapper.layout-front-with-menu .landing-hero {
+  /* Don’t paint a white plate under/around the stage art */
+  background: transparent !important;
+  background-image: none !important;
+}
+
 /* Art fills the whole stage (not a floating postcard) */
 .landing-hero-stage-art {
   position: absolute;
@@ -387,31 +434,38 @@
 }
 
 .landing-hero-stage-art-img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Car sits lower-right in the art — crop sky, keep sedan in the band */
-  object-position: 72% 78%;
-  transform: scale(1.28);
-  transform-origin: 72% 78%;
+  /* Keep scene (car / terminal) in the visible band under the navbar */
+  object-position: center 58%;
+  transform: none;
+  filter: none;
+  opacity: 0;
+  z-index: 0;
+  /* Slower, softer crossfade between بین شهری ↔ ترانسفر فرودگاهی */
+  transition: opacity 980ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
 }
 
-/* Soft wash — original overlay (headline gone, keep first look) */
-.landing-hero-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+.landing-hero-stage-art-img.is-active {
+  opacity: 1;
   z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.42) 0%,
-      rgba(255, 255, 255, 0.12) 32%,
-      rgba(248, 247, 250, 0.45) 72%,
-      var(--hero-ground) 100%
-    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-stage-art-img {
+    transition: none;
+  }
+}
+
+/* No color wash over the art — keep original look */
+.landing-hero-stage::before {
+  content: none;
+  display: none;
 }
 
 .landing-hero-stage-content {
@@ -464,7 +518,7 @@
                     search form only = previous compact ~45rem;
                     definition = full shell width
     Tablet  (768–991): full container
-    Mobile  (<768): full screen edge-to-edge
+    Mobile  (<768): postcard inset card (container gutter + radius)
 */
 .landing-hero .hero-safezone {
   --hz-sp-2: 0.5rem;
@@ -490,9 +544,12 @@
 }
 
 .landing-hero .hero-search-panel {
+  position: relative;
   width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: var(--hz-pad);
+  box-sizing: border-box;
   background: var(--hero-ground, #fff);
   border: 1px solid rgba(67, 89, 113, 0.1);
   border-radius: var(--hz-radius);
@@ -503,6 +560,216 @@
 
 .landing-hero .hero-safezone--form {
   width: min(100%, 52rem);
+}
+
+/* ── Service switcher — refined segmented control inside the search card ──
+   Soft neutral track + confident black active pill (ORG ink theme).
+   Concentric radii: track radius ≈ card radius; pill radius = track - padding. */
+.landing-hero .hero-service-seg {
+  --seg-radius: 1rem;
+  --seg-pad: 0.375rem;
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  padding: var(--seg-pad);
+  background: #f4f4f5;
+  border-radius: var(--seg-radius);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  /* visible so the «جدید» corner badge can overhang without clipping */
+  overflow: visible;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Desktop: semi-floating selector that straddles the top edge of the card */
+@media (min-width: 768px) {
+  /* Compact panel: just enough top room for the semi-floating tabs, tight bottom */
+  .landing-hero .hero-search-panel {
+    padding-top: calc(var(--hz-pad) + 0.75rem);
+    padding-bottom: var(--hz-sp-4);
+  }
+  /* Header band: title + subtitle — sit a bit lower under the floating tabs */
+  .landing-hero .hero-search-head {
+    align-items: center;
+    min-height: 3.25rem;
+    margin-top: 0.55rem;
+    margin-bottom: var(--hz-sp-3);
+  }
+  .landing-hero .hero-search-head__text {
+    justify-content: center;
+    gap: 0.2rem;
+    padding-top: 0.2rem;
+  }
+  .landing-hero .hero-service-seg {
+    position: absolute;
+    top: 0;
+    inset-inline-start: var(--hz-pad);
+    inset-inline-end: auto;
+    transform: translateY(-50%);
+    margin-bottom: 0;
+    max-width: calc(100% - var(--hz-pad) * 2);
+    z-index: 5;
+    background: #f3f3f4;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 8px 20px rgba(0, 0, 0, 0.12),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.landing-hero .hero-service-seg::-webkit-scrollbar {
+  display: none;
+}
+
+.landing-hero .hero-seg-btn {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  min-height: 2.25rem;
+  padding: 0.55rem 1.05rem;
+  border: 0;
+  background: transparent;
+  color: var(--hero-muted, #5e5e5e);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  border-radius: calc(var(--seg-radius) - var(--seg-pad));
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 220ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 220ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0, 0, 1),
+    transform 140ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Soft coral «جدید» pill — straddles the outer (inline-end) corner */
+.landing-hero .hero-seg-badge {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.12rem 0.42rem;
+  border-radius: 999px;
+  background: #ff8c8c;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  /* half above the tab edge; slight outward nudge past inline-end */
+  transform: translate(calc(35% * var(--hero-seg-badge-dir, 1)), -50%);
+}
+
+html[dir="rtl"] .landing-hero .hero-seg-badge {
+  --hero-seg-badge-dir: -1;
+}
+
+.landing-hero .hero-seg-btn i {
+  font-size: 1.05rem;
+  line-height: 1;
+  /* optical alignment: sit the glyph on the label's visual center */
+  margin-block-start: -1px;
+}
+
+.landing-hero .hero-seg-btn:hover:not(.active) {
+  color: var(--hero-ink, #000);
+  background-color: rgba(255, 255, 255, 0.65);
+}
+
+.landing-hero .hero-seg-btn:focus-visible {
+  outline: 2px solid var(--hero-ink, #000);
+  outline-offset: 2px;
+}
+
+.landing-hero .hero-seg-btn:active {
+  transform: scale(0.96);
+}
+
+.landing-hero .hero-seg-btn.active {
+  color: #fff;
+  background-color: var(--ts-primary, #000);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.16),
+    0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* Small tablet / mobile: equal-width service segments above title + meta */
+@media (max-width: 767.98px) {
+  .landing-hero .hero-service-seg {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0.95rem;
+    /* Keep the coral badge’s slight tab overhang visible without clipping */
+    overflow: visible;
+  }
+  .landing-hero .hero-seg-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5rem;
+  }
+  .landing-hero .hero-seg-btn__label {
+    display: inline;
+  }
+  /* Corner-mounted «جدید» — keep inside the white card (no side escape) */
+  .landing-hero .hero-seg-badge {
+    inset-inline-end: 0.2rem;
+    top: 0.15rem;
+    transform: translateY(-45%);
+  }
+}
+
+/* Narrow phones: keep full labels visible with compact type; badge stays corner-mounted */
+@media (max-width: 575.98px) {
+  .landing-hero .hero-seg-btn {
+    gap: 0.25rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.35rem;
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .landing-hero .hero-seg-btn i {
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .landing-hero .hero-seg-btn__label {
+    display: inline;
+  }
+  /* Room so the coral «جدید» pill does not cover the airport label */
+  .landing-hero .hero-seg-btn:has(.hero-seg-badge) {
+    padding-inline-end: 0.7rem;
+    padding-block-start: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero .hero-seg-btn {
+    transition: none;
+  }
+  .landing-hero .hero-seg-btn:active {
+    transform: none;
+  }
 }
 
 /* Trust chips — quieter, same ink as rest of site */
@@ -528,10 +795,70 @@
 }
 
 .landing-hero .hero-search-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: var(--hz-sp-4);
   padding: 0;
   border: 0;
   background: transparent;
+}
+
+.landing-hero .hero-search-head__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.landing-hero .hero-search-title {
+  margin: 0;
+  font-family: font-bold, "tahoma", sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--hero-ink, #000);
+}
+
+/* Descriptive meta strip beneath the title (updates with service tabs) */
+.landing-hero .hero-service-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  margin: 0;
+  color: var(--hero-muted, #5e5e5e);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.landing-hero .hero-service-meta__icon {
+  flex: 0 0 auto;
+  font-size: 1.05rem;
+  color: var(--hero-ink, #000);
+}
+
+.landing-hero .hero-service-meta__check {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  color: #28c76f;
+}
+
+.landing-hero .hero-search-head__badge {
+  flex: 0 0 auto;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.75rem;
+}
+
+/* Field labels under each input (desktop) — start-aligned with RTL icons */
+@media (min-width: 768px) {
+  .landing-hero #tripForm .inputcel > .form-text {
+    margin-top: 0.4rem;
+    text-align: start;
+    color: #8b8b8b;
+  }
 }
 
 /* Laptop: wide shell; search form comfortably fits OD + swap + date + CTA */
@@ -557,7 +884,8 @@
     --hz-gap: 1.5rem;
   }
   .landing-hero-stage {
-    min-height: clamp(20rem, 36vw, 28rem);
+    min-height: clamp(24rem, 42vw, 34rem);
+    padding-top: 5.75rem;
     padding-bottom: 7rem;
   }
   .landing-hero-search-wrap {
@@ -584,25 +912,26 @@
   }
 }
 
-/* Mobile: full screen cards */
+/* Mobile: postcard search card (inset + radius) with title/meta like desktop */
 @media (max-width: 767.98px) {
   .landing-hero-stage {
-    min-height: 16.5rem;
-    padding-top: 3.75rem;
+    min-height: 20.5rem;
+    padding-top: 4.75rem;
     padding-bottom: 5.25rem;
   }
   .landing-hero-stage-art-img {
-    object-position: 78% 74%;
-    transform: scale(1.42);
-    transform-origin: 78% 74%;
+    object-position: center 62%;
+    transform: none;
+    filter: none;
   }
   .landing-hero-stage-content,
   .landing-hero-search-wrap,
   .landing-hero-below {
-    padding-inline: 0;
     max-width: 100%;
     width: 100%;
+    box-sizing: border-box;
   }
+  /* Keep Bootstrap container gutter so the card stays postcard-inset */
   .landing-hero-search-wrap {
     margin-top: -2.25rem;
     margin-bottom: 0.75rem;
@@ -613,35 +942,173 @@
   }
   .landing-hero .hero-safezone--form {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .landing-hero .hero-safezone {
     width: 100%;
     max-width: 100%;
     gap: 0;
+    /* Enough inline pad so badge, meta icons, and swap stay clear of the radius */
     --hz-pad: 1.25rem;
     --hz-gap: 0;
-    --hz-radius: 0;
+    --hz-radius: 1rem;
   }
+  /* Compact card — tabs stay in-flow on mobile (hero art would cover
+     absolute/floating tabs when the card overlaps the stage). Desktop
+     floating clearance stays in the min-width:768 block. */
   .landing-hero .hero-search-panel {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding-inline: var(--hz-pad);
-    padding-block: var(--hz-sp-5) var(--hz-sp-5);
+    /* Breathing room around the stack + room for «جدید» pill overhang */
+    padding-block: 1.35rem 1.3rem;
   }
+  .landing-hero .hero-search-panel > * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  /* Service title + meta: same horizontal column as tabs + fields
+     (panel padding-inline: var(--hz-pad) — no extra/negative inset). */
   .landing-hero .hero-search-head {
-    margin-bottom: var(--hz-sp-4);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    width: 100%;
+    margin: 0.35rem 0 1rem;
+    padding-inline: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .landing-hero .hero-search-head__text {
+    gap: 0.35rem;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    margin-top: 0.15rem;
+    /* Match OD field text inset (Index.cshtml padding-inline-start: 0.95rem)
+       so title/meta glyphs share the form’s readable column — not just the box edge. */
+    padding-inline-start: 0.95rem;
+    padding-inline-end: 0;
+    box-sizing: border-box;
+  }
+  .landing-hero .hero-search-title {
+    width: 100%;
+    margin: 0;
+    padding-inline: 0;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+  }
+  /* Keep icon | text | check on one row; text wraps inside the span */
+  .landing-hero .hero-service-meta {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.35rem;
+    width: 100%;
+    margin: 0;
+    padding-inline: 0;
+    max-width: 100%;
+    min-width: 0;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    box-sizing: border-box;
+  }
+  .landing-hero .hero-service-meta [data-hero-service-subtitle] {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .landing-hero .hero-service-meta__icon,
+  .landing-hero .hero-service-meta__check {
+    margin-block-start: 0.1rem;
+    flex: 0 0 auto;
   }
   .landing-hero .hero-definition-media {
     border-radius: 0.75rem;
   }
   .landing-hero .hero-trust-stats {
     padding: var(--hz-sp-5) var(--hz-pad);
-    margin-top: 0;
+    margin-top: 0.5rem;
+  }
+  /* Single rhythm for form stack — kill Bootstrap gutter + flex gap doubling
+     from trip-search.css (was ~16px between fields). */
+  .landing-hero #tripForm.row,
+  .landing-hero #tripForm {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 0.95rem;
+  }
+  .landing-hero #tripForm .od-pair-col,
+  .landing-hero #tripForm > [class*="col-"] {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .landing-hero #tripForm .od-pair {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    width: 100%;
+    max-width: 100%;
+    gap: 0.95rem;
+  }
+  .landing-hero #tripForm .od-pair > .inputcel {
+    margin-top: 0 !important;
+  }
+  .landing-hero #tripForm > [class*="col-"] {
+    margin-top: 0 !important;
+  }
+  /* Swap sits between OD fields; keep clear of the card’s inline edge */
+  .landing-hero #tripForm .od-swap-btn {
+    --od-swap-size: 2.2rem;
+    inset-inline-end: 0.85rem !important;
+  }
+  .landing-hero #tripForm .inputcel > .form-text,
+  .landing-hero #tripForm .inputcel > label.form-text {
+    margin-bottom: 0.45rem;
+    font-size: 0.8125rem;
   }
 }
 
-@media (max-width: 767.98px) {
+/* Narrow phones (~360–430): keep type compact, but don’t crush the stack */
+@media (max-width: 430px) {
+  .landing-hero .hero-safezone {
+    --hz-pad: 1.15rem;
+  }
+  .landing-hero .hero-search-panel {
+    padding-block: 1.2rem 1.15rem;
+  }
+  .landing-hero .hero-search-title {
+    font-size: 1rem;
+  }
+  .landing-hero .hero-service-meta {
+    font-size: 0.78rem;
+    line-height: 1.32;
+  }
   .landing-hero .hero-search-head {
-    display: none !important;
-    margin: 0 !important;
+    margin-bottom: 0.85rem;
+  }
+  .landing-hero .hero-service-seg {
+    margin-bottom: 0.85rem;
+  }
+  .landing-hero #tripForm.row,
+  .landing-hero #tripForm {
+    gap: 0.8rem;
+  }
+  .landing-hero #tripForm .od-pair {
+    gap: 0.8rem;
+  }
+  .landing-hero #tripForm .od-swap-btn {
+    inset-inline-end: 0.75rem !important;
   }
 }
 

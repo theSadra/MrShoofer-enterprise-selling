@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" shape-rendering="geometricPrecision">
+  <!-- bar 1 -->
+  <path d="M6 17 L11 17 L11 25 L6 25 Z" fill="#a78bfa"/>
+  <path d="M6 17 L11 17 L13.5 14.5 L8.5 14.5 Z" fill="#c4b5fd"/>
+  <path d="M11 17 L13.5 14.5 L13.5 22.5 L11 25 Z" fill="#7c3aed"/>
+  <!-- bar 2 -->
+  <path d="M13 11 L18 11 L18 25 L13 25 Z" fill="#a78bfa"/>
+  <path d="M13 11 L18 11 L20.5 8.5 L15.5 8.5 Z" fill="#c4b5fd"/>
+  <path d="M18 11 L20.5 8.5 L20.5 22.5 L18 25 Z" fill="#7c3aed"/>
+  <!-- bar 3 -->
+  <path d="M20 14 L25 14 L25 25 L20 25 Z" fill="#a78bfa"/>
+  <path d="M20 14 L25 14 L27.5 11.5 L22.5 11.5 Z" fill="#c4b5fd"/>
+  <path d="M25 14 L27.5 11.5 L27.5 22.5 L25 25 Z" fill="#7c3aed"/>
+</svg>

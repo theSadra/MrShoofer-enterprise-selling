@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- isometric runway base -->
+  <path d="M8 22 L16 26.5 L24 22 L16 17.5 Z" fill="#94a3b8"/>
+  <path d="M8 22 L16 26.5 L16 28 L8 23.5 Z" fill="#64748b"/>
+  <path d="M24 22 L16 26.5 L16 28 L24 23.5 Z" fill="#475569"/>
+  <path d="M15.2 20.2 L16.8 21.1 L15.2 22 L13.6 21.1 Z" fill="#fbbf24"/>
+  <!-- plane body (isometric) -->
+  <path d="M10 14 L22 8 L24 9.2 L12 15.2 Z" fill="#38bdf8"/>
+  <path d="M12 15.2 L24 9.2 L24 11 L12 17 Z" fill="#0284c7"/>
+  <path d="M10 14 L12 15.2 L12 17 L10 15.8 Z" fill="#0ea5e9"/>
+  <!-- wings -->
+  <path d="M14.5 13.2 L18.5 11 L20.2 13.8 L16.2 16 Z" fill="#7dd3fc"/>
+  <path d="M16.2 16 L20.2 13.8 L20.2 14.8 L16.2 17 Z" fill="#0369a1"/>
+  <!-- tail -->
+  <path d="M10 14 L12.2 11.6 L13.2 12.2 L11.2 14.6 Z" fill="#bae6fd"/>
+  <circle cx="21.2" cy="9.4" r="1.1" fill="#e0f2fe"/>
+</svg>
