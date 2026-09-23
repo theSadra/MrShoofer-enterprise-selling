@@ -68,6 +68,173 @@
 
 #agencyAnalyticsChart {
   min-height: 280px;
+  display: block;
+  box-sizing: border-box;
+}
+
+#agencyAnalyticsChart .apexcharts-canvas {
+  margin: 0 !important;
+}
+
+.agency-analytics__chart-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border: 1px solid var(--bs-border-color, #e4e4e7);
+  border-radius: 0.65rem;
+  background: color-mix(in oklch, var(--bs-body-bg, #fff) 92%, var(--bs-primary, #000) 4%);
+}
+
+.agency-analytics__chart-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--bs-body-color, #18181b);
+  line-height: 1;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.agency-analytics__chart-tool .ti {
+  font-size: 1.05rem;
+}
+
+.agency-analytics__chart-tool:hover {
+  background: color-mix(in oklch, var(--bs-primary, #000) 8%, transparent);
+  color: var(--bs-primary, #000);
+}
+
+.agency-analytics__chart-tool:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--bs-primary, #000) 40%, transparent);
+  outline-offset: 1px;
+}
+
+/* Keep scroll inside the card — flex/grid children need min-width:0 or they grow with the chart */
+.agency-analytics .card,
+.agency-analytics .card-body,
+.agency-analytics .col-xl-8,
+.agency-analytics .col-12 {
+  min-width: 0;
+}
+
+.agency-analytics__chart-frame {
+  position: relative;
+  min-width: 0;
+}
+
+.agency-analytics__chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.85rem 1.15rem;
+  list-style: none;
+  margin: 0 0 0.65rem;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--bs-card-bg, #fff);
+}
+
+.agency-analytics__chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: var(--bs-body-color, #18181b);
+  white-space: nowrap;
+}
+
+.agency-analytics__chart-legend-swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.agency-analytics__chart-legend-swatch--trips {
+  background: #000;
+}
+
+.agency-analytics__chart-legend-swatch--spend {
+  background: #71717a;
+}
+
+.agency-analytics__chart-body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.15rem 0.35rem;
+  min-width: 0;
+  /* Keep rails physically left/right to match Apex plot (page may be RTL) */
+  direction: ltr;
+}
+
+.agency-analytics__yaxis-rail {
+  box-sizing: border-box;
+  min-width: 2rem;
+  max-width: 4.5rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.agency-analytics__yaxis-rail--start {
+  text-align: end;
+}
+
+.agency-analytics__yaxis-rail--end {
+  text-align: start;
+}
+
+.agency-analytics__yaxis-rail-ticks {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.agency-analytics__yaxis-rail-tick {
+  display: block;
+  font-size: 0.6875rem;
+  line-height: 1;
+  color: var(--bs-secondary-color, #71717a);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.agency-analytics__chart-scroll {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+.agency-analytics__chart-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.agency-analytics__chart-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--bs-body-color, #000) 28%, transparent);
+  border-radius: 999px;
+}
+
+.agency-analytics__chart-scroll:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--bs-primary, #000) 35%, transparent);
+  outline-offset: 2px;
 }
 
 @media (max-width: 767.98px) {
@@ -139,6 +306,11 @@
   }
 
   #agencyAnalyticsChart {
-    min-height: 200px;
+    min-height: 220px;
+  }
+
+  .agency-analytics__chart-scroll {
+    margin-inline: -0.25rem;
+    padding-inline: 0.25rem;
   }
 }

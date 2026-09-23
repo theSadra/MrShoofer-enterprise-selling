@@ -203,6 +203,30 @@ namespace Application.Services.MrShooferORS
       return result;
     }
 
+    /// <summary>ORS ticket status / details by ticket code (not trip plan code).</summary>
+    public async Task<OrsTicketInfo?> GetTicketInfoAsync(string ticketCode, CancellationToken cancellationToken = default)
+    {
+      if (string.IsNullOrWhiteSpace(ticketCode))
+        return null;
+
+      var url = $"/Tickets/getTicketInfo?ticketcode={Uri.EscapeDataString(ticketCode.Trim())}";
+      using var response = await _client.GetAsync(url, cancellationToken);
+      if (!response.IsSuccessStatusCode)
+        return null;
+
+      var json = await response.Content.ReadAsStringAsync(cancellationToken);
+      if (string.IsNullOrWhiteSpace(json))
+        return null;
+
+      try
+      {
+        return JsonSerializer.Deserialize<OrsTicketInfo>(json, _jsonOptions);
+      }
+      catch
+      {
+        return null;
+      }
+    }
 
     /// <summary>
     /// Reserves temporarirly the ticket for trip

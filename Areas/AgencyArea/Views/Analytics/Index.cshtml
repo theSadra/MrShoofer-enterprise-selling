@@ -165,14 +165,43 @@
 		<!-- Revenue / trips chart -->
 		<div class="col-xl-8 col-12 mb-4">
 			<div class="card h-100">
-				<div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
 					<div>
 						<h5 class="card-title mb-0">روند سفر و هزینه</h5>
-						<small class="text-muted">نمودار روزانه در بازه انتخابی</small>
+						<small class="text-muted">اسکرول افقی · کشیدن روی نمودار برای زوم ناحیه</small>
+					</div>
+					<div class="agency-analytics__chart-tools" role="toolbar" aria-label="ابزار نمودار">
+						<button type="button" class="agency-analytics__chart-tool" data-chart-action="zoomin" title="بزرگ‌نمایی" aria-label="بزرگ‌نمایی">
+							<i class="ti ti-zoom-in" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="agency-analytics__chart-tool" data-chart-action="zoomout" title="کوچک‌نمایی" aria-label="کوچک‌نمایی">
+							<i class="ti ti-zoom-out" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="agency-analytics__chart-tool" data-chart-action="reset" title="بازنشانی" aria-label="بازنشانی زوم">
+							<i class="ti ti-zoom-reset" aria-hidden="true"></i>
+						</button>
 					</div>
 				</div>
 				<div class="card-body">
-					<div id="agencyAnalyticsChart"></div>
+					<div class="agency-analytics__chart-frame">
+						<ul class="agency-analytics__chart-legend" aria-label="راهنمای نمودار">
+							<li class="agency-analytics__chart-legend-item">
+								<span class="agency-analytics__chart-legend-swatch agency-analytics__chart-legend-swatch--trips" aria-hidden="true"></span>
+								سفر
+							</li>
+							<li class="agency-analytics__chart-legend-item">
+								<span class="agency-analytics__chart-legend-swatch agency-analytics__chart-legend-swatch--spend" aria-hidden="true"></span>
+								هزینه (تومان)
+							</li>
+						</ul>
+						<div class="agency-analytics__chart-body">
+							<aside class="agency-analytics__yaxis-rail agency-analytics__yaxis-rail--start" data-yaxis-rail="0" aria-hidden="true"></aside>
+							<div class="agency-analytics__chart-scroll" tabindex="0" aria-label="نمودار قابل اسکرول و زوم">
+								<div id="agencyAnalyticsChart"></div>
+							</div>
+							<aside class="agency-analytics__yaxis-rail agency-analytics__yaxis-rail--end" data-yaxis-rail="1" aria-hidden="true"></aside>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

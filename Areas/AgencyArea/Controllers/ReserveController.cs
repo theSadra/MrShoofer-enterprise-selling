@@ -25,11 +25,19 @@ namespace Application.Areas.AgencyArea
     private readonly CustomerServiceSmsSender customerSmsSender;
     private readonly IConfiguration configuration;
     private readonly IPaymentService _payment;
+    private readonly IAgencyPassengerDirectory _passengers;
     private Agency agency;
     private int? _commissionPercent;
 
 
-    public ReserveController(MrShooferAPIClient apiclient, UserManager<IdentityUser> usermanager, AppDbContext context, CustomerServiceSmsSender smssender, IConfiguration configuration, IPaymentService payment)
+    public ReserveController(
+      MrShooferAPIClient apiclient,
+      UserManager<IdentityUser> usermanager,
+      AppDbContext context,
+      CustomerServiceSmsSender smssender,
+      IConfiguration configuration,
+      IPaymentService payment,
+      IAgencyPassengerDirectory passengers)
     {
       this.configuration = configuration;
       customerSmsSender = smssender;
@@ -37,6 +45,7 @@ namespace Application.Areas.AgencyArea
       _userManager = usermanager;
       this.apiclient = apiclient;
       _payment = payment;
+      _passengers = passengers;
     }
 
     public IActionResult Index()
@@ -161,9 +170,27 @@ namespace Application.Areas.AgencyArea
         return View(viewmodel);
       }
 
-      // Get trip info — ZarinPal is always available, so do not block on agency credit.
-      var trip = await apiclient.GetTripInfo(viewmodel.TripCode);
-      var agancy_balance = (int)Convert.ToDouble(await apiclient.GetAccountBalance());
+      // Get trip + balance in parallel; auto-save passenger runs alongside without delaying ORS calls.
+      var tripTask = apiclient.GetTripInfo(viewmodel.TripCode);
+      var balanceTask = apiclient.GetAccountBalance();
+      Task<int?>? saveTask = null;
+      if (agency != null && !agency.IsOrganization)
+      {
+        saveTask = _passengers.EnsureSavedForSellerAsync(
+          agency,
+          viewmodel.Firstname,
+          viewmodel.Lastname,
+          viewmodel.Gender,
+          viewmodel.NaCode,
+          viewmodel.NumebrPhone,
+          viewmodel.Email);
+      }
+
+      await Task.WhenAll(tripTask, balanceTask);
+
+      var trip = await tripTask;
+      var balanceStr = await balanceTask;
+      var agancy_balance = string.IsNullOrWhiteSpace(balanceStr) ? 0 : (int)Convert.ToDouble(balanceStr);
       var payable = PayableTicketPrice(trip);
 
       ViewBag.agancy_balance = agancy_balance;
@@ -176,6 +203,28 @@ namespace Application.Areas.AgencyArea
       ViewBag.trip = trip;
       ViewBag.reserveviewmodel = viewmodel;
       ViewBag.isOrganization = agency?.IsOrganization == true;
+
+      if (saveTask != null)
+      {
+        try
+        {
+          var savedId = await saveTask;
+          if (savedId != null)
+            viewmodel.EmployeeId = savedId;
+
+          foreach (var c in viewmodel.Companions ?? Enumerable.Empty<CompanionPassengerViewModel>())
+          {
+            if (string.IsNullOrWhiteSpace(c.PhoneNumber) || agency == null) continue;
+            var cid = await _passengers.EnsureSavedForSellerAsync(
+              agency, c.Firstname, c.Lastname, c.Gender, c.NaCode, c.PhoneNumber);
+            if (cid != null) c.EmployeeId = cid;
+          }
+        }
+        catch
+        {
+          // Never block checkout on passenger-list save.
+        }
+      }
 
       return View("ConfirmInfo");
     }
@@ -266,6 +315,16 @@ namespace Application.Areas.AgencyArea
       }
 
       var employeeId = await ResolveAgencyEmployeeIdAsync(viewModel.EmployeeId, viewModel.Nacode, viewModel.Numberphone);
+      if (agency != null && !agency.IsOrganization)
+      {
+        employeeId = await _passengers.EnsureSavedForSellerAsync(
+          agency,
+          viewModel.Firstname,
+          viewModel.Lastname,
+          viewModel.Gender,
+          viewModel.Nacode,
+          viewModel.Numberphone) ?? employeeId;
+      }
       var companionsJson = NormalizeCompanionsJson(viewModel.CompanionsJson);
       var companionsDescription = BuildCompanionsDescription(companionsJson);
 
@@ -328,6 +387,16 @@ namespace Application.Areas.AgencyArea
       }
 
       var employeeId = await ResolveAgencyEmployeeIdAsync(viewModel.EmployeeId, viewModel.Nacode, viewModel.Numberphone);
+      if (agency != null && !agency.IsOrganization)
+      {
+        employeeId = await _passengers.EnsureSavedForSellerAsync(
+          agency,
+          viewModel.Firstname,
+          viewModel.Lastname,
+          viewModel.Gender,
+          viewModel.Nacode,
+          viewModel.Numberphone) ?? employeeId;
+      }
 
       Ticket newticket = new Ticket()
       {
@@ -377,6 +446,18 @@ namespace Application.Areas.AgencyArea
       var order = 1;
       foreach (var c in companions)
       {
+        int? companionEmployeeId = await ResolveAgencyEmployeeIdAsync(c.EmployeeId, c.NaCode, c.PhoneNumber);
+        if (agency != null && !agency.IsOrganization && !string.IsNullOrWhiteSpace(c.PhoneNumber))
+        {
+          companionEmployeeId = await _passengers.EnsureSavedForSellerAsync(
+            agency,
+            c.Firstname,
+            c.Lastname,
+            c.Gender,
+            c.NaCode,
+            c.PhoneNumber) ?? companionEmployeeId;
+        }
+
         context.TicketCompanions.Add(new TicketCompanion
         {
           TicketId = ticketId,
@@ -386,7 +467,7 @@ namespace Application.Areas.AgencyArea
           Gender = c.Gender.Trim(),
           NaCode = c.NaCode.Trim(),
           PhoneNumber = string.IsNullOrWhiteSpace(c.PhoneNumber) ? null : c.PhoneNumber.Trim(),
-          AgencyEmployeeId = await ResolveAgencyEmployeeIdAsync(c.EmployeeId, c.NaCode, c.PhoneNumber)
+          AgencyEmployeeId = companionEmployeeId
         });
       }
 

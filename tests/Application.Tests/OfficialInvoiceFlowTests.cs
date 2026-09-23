@@ -133,14 +133,14 @@ public class OfficialInvoiceFlowTests : IAsyncLifetime
     var ticket = await SeedTicketAsync(cancelled: false, priceTomans: 40_000);
     var agencyCtrl = CreateAgencyController();
 
+    // Organization panels gate invoices behind financial profile (#financial on Agency index).
     var get = await agencyCtrl.Create(ticket.TicketCode);
-    var getRedirect = Assert.IsType<RedirectToActionResult>(get);
-    Assert.Equal("LegalProfile", getRedirect.ActionName);
-    Assert.Equal("Agency", getRedirect.ControllerName);
+    var getRedirect = Assert.IsType<RedirectResult>(get);
+    Assert.Contains("#financial", getRedirect.Url, StringComparison.Ordinal);
 
     var post = await agencyCtrl.CreateConfirm(ticket.TicketCode);
-    var postRedirect = Assert.IsType<RedirectToActionResult>(post);
-    Assert.Equal("LegalProfile", postRedirect.ActionName);
+    var postRedirect = Assert.IsType<RedirectResult>(post);
+    Assert.Contains("#financial", postRedirect.Url, StringComparison.Ordinal);
     Assert.Equal(0, await NewDb().OfficialInvoices.CountAsync());
   }
 

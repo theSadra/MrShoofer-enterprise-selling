@@ -201,7 +201,8 @@ namespace Application.Services.OfficialInvoices
             var isOrg = agency?.IsOrganization == true;
 
             // Organization: buyer = agency legal profile.
-            // Agency (seller): buyer = head of passengers only (no agency financial IDs).
+            // Agency (seller): buyer = ticket passenger (no agency financial IDs).
+            var passengerName = $"{ticket.Firstname} {ticket.Lastname}".Trim();
             if (isOrg && agency != null)
             {
                 invoice.BuyerName = agency.Name;
@@ -218,8 +219,7 @@ namespace Application.Services.OfficialInvoices
             }
             else
             {
-                invoice.BuyerName = NullIfBlank(ticket.HeadOfPassengers)
-                    ?? $"{ticket.Firstname} {ticket.Lastname}".Trim();
+                invoice.BuyerName = passengerName;
                 invoice.BuyerNationalId = NullIfBlank(ticket.NaCode);
                 invoice.BuyerEconomicNo = null;
                 invoice.BuyerRegistrationNo = null;
@@ -233,17 +233,13 @@ namespace Application.Services.OfficialInvoices
             }
 
             var rials = (long)ticket.TicketFinalPrice * 10;
-            // Seller invoices are issued to the head of passengers; org invoices keep the passenger name in the line text.
-            var namedOnLine = !isOrg && !string.IsNullOrWhiteSpace(ticket.HeadOfPassengers)
-                ? ticket.HeadOfPassengers.Trim()
-                : $"{ticket.Firstname} {ticket.Lastname}".Trim();
             var serviceBit = string.IsNullOrWhiteSpace(ticket.ServiceName) ? "" : $" ({ticket.ServiceName})";
             invoice.Lines = new List<OfficialInvoiceLine>
             {
                 new()
                 {
                     ItemCode = ticket.TicketCode,
-                    Description = $"بابت سفر {ticket.TripOrigin} به {ticket.TripDestination}{serviceBit} با کد بلیط {ticket.TicketCode} به مبلغ {rials.ToString("N0")} ریال. برای مسافر: {namedOnLine}",
+                    Description = $"بابت سفر {ticket.TripOrigin} به {ticket.TripDestination}{serviceBit} با کد بلیط {ticket.TicketCode} به مبلغ {rials.ToString("N0")} ریال. برای مسافر: {passengerName}",
                     Quantity = 1,
                     Unit = "سفر",
                     UnitAmountRials = rials

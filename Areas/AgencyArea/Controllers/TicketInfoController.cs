@@ -16,11 +16,16 @@ namespace Application.Areas.AgencyArea
 
     private readonly AppDbContext context;
     private readonly UserManager<IdentityUser> userManager;
+    private readonly ITicketStatusSyncService _ticketStatusSync;
 
-    public TicketInfoController(AppDbContext context, UserManager<IdentityUser> userManager)
+    public TicketInfoController(
+      AppDbContext context,
+      UserManager<IdentityUser> userManager,
+      ITicketStatusSyncService ticketStatusSync)
     {
       this.context = context;
       this.userManager = userManager;
+      _ticketStatusSync = ticketStatusSync;
     }
 
     public async Task<IActionResult> Index(int page = 1, string? datesFilter = null)
@@ -37,6 +42,15 @@ namespace Application.Areas.AgencyArea
       {
         BindEmpty(page);
         return View();
+      }
+
+      // Refresh cancellation flags from ORS so cancelled tickets leave upcoming / active lists.
+      try
+      {
+        await _ticketStatusSync.SyncRecentAsync(agency.Id, agency.ORSAPI_token, maxTickets: 20);
+      }
+      catch
+      {
       }
 
       var query = context.Tickets

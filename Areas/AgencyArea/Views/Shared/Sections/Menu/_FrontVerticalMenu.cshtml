@@ -8,6 +8,7 @@
 @inject UserManager<IdentityUser> MenuUserManager
 @inject MrShooferAPIClient MenuApi
 @inject DirectionsTravelTimeCalculator MenuTravelTime
+@inject ITicketStatusSyncService MenuTicketStatusSync
 @{
   TempData.Keep();
   var path = (ViewContext.HttpContext.Request.Path.Value ?? "").ToLowerInvariant();
@@ -57,6 +58,17 @@
 
     if (menuAgency != null)
     {
+      // Sync cancellation status from ORS before building the strip.
+      try
+      {
+        MenuTicketStatusSync.SyncRecentAsync(menuAgency.Id, menuAgency.ORSAPI_token, maxTickets: 10)
+          .GetAwaiter().GetResult();
+      }
+      catch
+      {
+        // Menu must stay available even if ORS sync fails.
+      }
+
       // Prefer still-active tickets for the upcoming strip.
       var lookback = DateTime.Today.AddDays(-3);
       var upcomingQuery = MenuDb.Agencies

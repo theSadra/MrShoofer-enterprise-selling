@@ -21,6 +21,7 @@ namespace Application.Areas.AgencyArea.Controllers
     private readonly MrShooferAPIClient _apiClient;
     private readonly ILogger<PaymentsController> _logger;
     private readonly CustomerServiceSmsSender _sms;
+    private readonly IAgencyPassengerDirectory _passengers;
 
     public PaymentsController(
       AppDbContext dbContext,
@@ -28,7 +29,8 @@ namespace Application.Areas.AgencyArea.Controllers
       IPaymentService payment,
       MrShooferAPIClient apiClient,
       ILogger<PaymentsController> logger,
-      CustomerServiceSmsSender sms)
+      CustomerServiceSmsSender sms,
+      IAgencyPassengerDirectory passengers)
     {
       _context = dbContext;
       _userManager = usermanager;
@@ -36,6 +38,7 @@ namespace Application.Areas.AgencyArea.Controllers
       _apiClient = apiClient;
       _logger = logger;
       _sms = sms;
+      _passengers = passengers;
     }
 
     [HttpPost("/Payments/ChargeRequest")]
@@ -306,6 +309,27 @@ namespace Application.Areas.AgencyArea.Controllers
       }
 
       var trip = await _apiClient.GetTripInfo(pending.TripCode);
+      int? employeeId = pending.AgencyEmployeeId
+        ?? await _context.AgencyEmployees
+            .Where(e => e.AgencyId == seller.Id && e.NaCode == pending.Nacode)
+            .Select(e => (int?)e.Id)
+            .FirstOrDefaultAsync()
+        ?? await _context.AgencyEmployees
+            .Where(e => e.AgencyId == seller.Id && e.PhoneNumber == pending.Numberphone)
+            .Select(e => (int?)e.Id)
+            .FirstOrDefaultAsync();
+
+      if (!seller.IsOrganization)
+      {
+        employeeId = await _passengers.EnsureSavedForSellerAsync(
+          seller,
+          pending.Firstname,
+          pending.Lastname,
+          pending.Gender,
+          pending.Nacode,
+          pending.Numberphone) ?? employeeId;
+      }
+
       var ticket = new Ticket
       {
         Firstname = pending.Firstname,
@@ -325,15 +349,7 @@ namespace Application.Areas.AgencyArea.Controllers
         ServiceName = trip.taxiSupervisorName,
         CarName = trip.carModelName,
         Agency = seller,
-        AgencyEmployeeId = pending.AgencyEmployeeId
-          ?? await _context.AgencyEmployees
-              .Where(e => e.AgencyId == seller.Id && e.NaCode == pending.Nacode)
-              .Select(e => (int?)e.Id)
-              .FirstOrDefaultAsync()
-          ?? await _context.AgencyEmployees
-              .Where(e => e.AgencyId == seller.Id && e.PhoneNumber == pending.Numberphone)
-              .Select(e => (int?)e.Id)
-              .FirstOrDefaultAsync()
+        AgencyEmployeeId = employeeId
       };
 
       _context.Attach(seller);
@@ -382,6 +398,20 @@ namespace Application.Areas.AgencyArea.Controllers
         {
           var ok = await _context.AgencyEmployees.AnyAsync(e => e.Id == eid && e.AgencyId == agencyId);
           if (ok) employeeId = eid;
+        }
+        if (employeeId == null && !string.IsNullOrWhiteSpace(c.PhoneNumber))
+        {
+          var sellerAgency = await _context.Agencies.AsNoTracking().FirstOrDefaultAsync(a => a.Id == agencyId);
+          if (sellerAgency != null && !sellerAgency.IsOrganization)
+          {
+            employeeId = await _passengers.EnsureSavedForSellerAsync(
+              sellerAgency,
+              c.Firstname,
+              c.Lastname,
+              c.Gender,
+              c.NaCode,
+              c.PhoneNumber);
+          }
         }
         if (employeeId == null)
         {

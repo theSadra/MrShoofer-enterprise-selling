@@ -592,10 +592,10 @@ html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 /* Date block — stage-aware tint
-   reserved=blue · ongoing=green · cancelled=red · done=purple */
+   reserved=blue · ongoing=red · cancelled=red · done=purple */
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming {
   --trip-reserved: oklch(0.55 0.16 250);
-  --trip-ongoing: oklch(0.55 0.15 145);
+  --trip-ongoing: oklch(0.55 0.19 25);
   --trip-cancelled: oklch(0.55 0.19 25);
   --trip-done: oklch(0.52 0.18 305);
 }
@@ -608,8 +608,8 @@ html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--in-progress {
-  background: color-mix(in oklch, var(--trip-ongoing) 20%, white);
-  color: color-mix(in oklch, var(--trip-ongoing) 80%, black);
+  background: var(--trip-ongoing);
+  color: #fff;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__date--completed {
@@ -706,7 +706,7 @@ html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
   color: var(--fsm-fg);
 }
 
-/* Stage chips — reserved=blue · ongoing=green · cancelled=red · done=purple */
+/* Stage chips — reserved=blue · ongoing=red/white · cancelled=red · done=purple */
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--registered,
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--confirmed,
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--departing {
@@ -715,8 +715,8 @@ html[dir='rtl'] .layout-front-with-menu .front-side-menu.menu-vertical .menu-sub
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--in-progress {
-  background: color-mix(in oklch, var(--trip-ongoing) 18%, white);
-  color: color-mix(in oklch, var(--trip-ongoing) 78%, black);
+  background: var(--trip-ongoing);
+  color: #fff;
 }
 
 .layout-front-with-menu .front-side-menu .front-side-menu-upcoming__status--completed {
@@ -1194,10 +1194,66 @@ html.layout-menu-fixed.layout-navbar-fixed
 }
 
 /* ── Support / FAQ modal ── */
+body.modal-open:has(#agencySupportModal.show) {
+  overflow-x: hidden !important;
+}
+
+.agency-support-modal {
+  overflow-x: hidden !important;
+}
+
+.agency-support-modal .modal-dialog {
+  max-width: min(32rem, calc(100vw - 1rem));
+  margin-inline: auto;
+  width: calc(100% - 1rem);
+}
+
+.agency-support-modal .modal-content,
 .agency-support-modal__content {
   border: 0;
   border-radius: 1rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+.agency-support-modal .modal-body {
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Keep close inside the card — Vuexy .modal-simple parks it off-canvas */
+.agency-support-modal .btn-close,
+.agency-support-modal.modal-simple .btn-close,
+.agency-support-modal .modal-simple .btn-close {
+  position: absolute;
+  top: 0.85rem;
+  inset-inline-end: 0.85rem;
+  inset-inline-start: auto;
+  left: auto;
+  right: auto;
+  z-index: 5;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.agency-support-modal .btn-close:hover {
+  opacity: 1;
+}
+
+[dir=rtl] .agency-support-modal .btn-close,
+[dir=rtl] .agency-support-modal.modal-simple .btn-close,
+[dir=rtl] .agency-support-modal .modal-simple .btn-close {
+  left: 0.85rem;
+  right: auto;
+}
+
+html:not([dir=rtl]) .agency-support-modal .btn-close,
+html:not([dir=rtl]) .agency-support-modal.modal-simple .btn-close,
+html:not([dir=rtl]) .agency-support-modal .modal-simple .btn-close {
+  right: 0.85rem;
+  left: auto;
 }
 
 .agency-support-modal__hero-icon {
@@ -1211,11 +1267,13 @@ html.layout-menu-fixed.layout-navbar-fixed
   border-radius: 0.75rem !important;
   margin-bottom: 0.5rem;
   overflow: hidden;
+  max-width: 100%;
   background: #fff;
 }
 
 .agency-support-modal__faq .accordion-header {
   min-height: 3.5rem;
+  max-width: 100%;
 }
 
 .agency-support-modal__faq .accordion-button {
@@ -1226,6 +1284,10 @@ html.layout-menu-fixed.layout-navbar-fixed
   padding: 0.85rem 1rem;
   box-shadow: none !important;
   align-items: center;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .agency-support-modal__faq .accordion-button:not(.collapsed) {
@@ -1238,6 +1300,8 @@ html.layout-menu-fixed.layout-navbar-fixed
   line-height: 1.7;
   color: var(--bs-secondary-color);
   padding: 0 1rem 1rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .agency-support-modal__cta {
@@ -1262,9 +1326,11 @@ html.layout-menu-fixed.layout-navbar-fixed
 }
 
 @media (max-width: 575.98px) {
+  .agency-support-modal .modal-dialog,
   #agencySupportModal .modal-dialog {
     margin: 0.5rem;
     max-width: calc(100% - 1rem);
+    width: calc(100% - 1rem);
   }
 
   .agency-support-modal__faq .accordion-button {

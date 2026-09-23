@@ -108,12 +108,6 @@ namespace Application.Areas.AgencyArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            if (!agency.IsOrganization && string.IsNullOrWhiteSpace(ticket.HeadOfPassengers))
-            {
-                TempData["Error"] = "برای صدور فاکتور آژانس، بلیط باید سرپرست مسافرین داشته باشد.";
-                return RedirectToAction("Index", "TicketInfo");
-            }
-
             ViewData["Title"] = "صدور فاکتور رسمی";
             ViewData["SerialPreview"] = _invoices.GetSerialSettings().Preview;
             ViewBag.IsOrganization = agency.IsOrganization;
@@ -152,12 +146,6 @@ namespace Application.Areas.AgencyArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            if (!agency.IsOrganization && string.IsNullOrWhiteSpace(ticket.HeadOfPassengers))
-            {
-                TempData["Error"] = "برای صدور فاکتور آژانس، بلیط باید سرپرست مسافرین داشته باشد.";
-                return RedirectToAction("Index", "TicketInfo");
-            }
-
             var invoice = new OfficialInvoice { AgencyId = agency.Id, CreatedBy = User.Identity?.Name };
             await _invoices.PrefillFromTicketAsync(invoice, ticket, agency.Id);
             try
@@ -184,7 +172,7 @@ namespace Application.Areas.AgencyArea.Controllers
             if (invoice == null) return NotFound();
 
             // Organization prints use the live agency legal profile as buyer.
-            // Agency (seller) invoices keep the head-of-passengers buyer captured at issue time.
+            // Agency (seller) invoices keep the passenger buyer captured at issue time.
             if (agency.IsOrganization)
                 ApplyAgencyBuyerProfile(invoice, agency);
 

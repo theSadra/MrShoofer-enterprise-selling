@@ -1,0 +1,30 @@
+---
+description: How to deploy MrShoofer Agency (enterprise-selling) safely (localhost :5005)
+alwaysApply: true
+---
+
+# Deploy (Agency / enterprise-selling)
+
+## Safe command (preferred)
+
+```bash
+./deploy.sh
+```
+
+Keeps peer apps on `http://127.0.0.1:5005/`. Live path: `/root/InterpirceORS/publish` on `89.42.199.39` (`agency.service`).
+
+## Variants
+
+| Command | Purpose |
+|---------|---------|
+| `./deploy.sh --fast` | Short same-port restart |
+| `./deploy.sh --full` | Force full rebuild |
+| `./deploy.sh --dry-run` | Plan only |
+| `./deploy.sh --docker` | Docker path |
+
+## Important
+
+- **Do not** point Agency at ORS port `5000` — ORS is a different app on the same VPS.
+- Stable proxy backends: `15005` / `15006` behind `:5005`
+- Config: `.env.deploy` (gitignored)
+- Help: `./deploy/show-help.sh`

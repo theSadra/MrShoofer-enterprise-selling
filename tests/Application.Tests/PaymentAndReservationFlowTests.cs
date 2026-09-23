@@ -524,7 +524,8 @@ public class PaymentAndReservationFlowTests : IAsyncLifetime
     }).Build();
 
     var reserve = new ReserveController(
-      _api, _userManager, NewDb(), new CustomerServiceSmsSender(config), config, _payments);
+      _api, _userManager, NewDb(), new CustomerServiceSmsSender(config), config, _payments,
+      new AgencyPassengerDirectory(NewDb()));
     reserve.ControllerContext = new ControllerContext
     {
       HttpContext = otherHttp,
@@ -616,7 +617,8 @@ public class PaymentAndReservationFlowTests : IAsyncLifetime
       new CustomerServiceSmsSender(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
       {
         ["smsirapikey"] = "test-key"
-      }).Build()));
+      }).Build()),
+      new AgencyPassengerDirectory(NewDb()));
     BindController(controller, authenticated);
     return controller;
   }
@@ -644,7 +646,8 @@ public class PaymentAndReservationFlowTests : IAsyncLifetime
     }).Build();
 
     var controller = new ReserveController(
-      _api, _userManager, NewDb(), new CustomerServiceSmsSender(config), config, _payments);
+      _api, _userManager, NewDb(), new CustomerServiceSmsSender(config), config, _payments,
+      new AgencyPassengerDirectory(NewDb()));
     BindController(controller, authenticated);
     controller.OnActionExecuting(new ActionExecutingContext(
       controller.ControllerContext,

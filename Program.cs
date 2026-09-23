@@ -35,8 +35,11 @@ builder.Services.AddHttpClient<MrShooferAPIClient>((sp, client) =>
   client.Timeout = TimeSpan.FromSeconds(30);
 });
 
+builder.Services.AddMemoryCache();
 builder.Services.AddTransient<CustomerServiceSmsSender>();
 builder.Services.AddScoped<Application.Services.OfficialInvoices.IOfficialInvoiceService, Application.Services.OfficialInvoices.OfficialInvoiceService>();
+builder.Services.AddScoped<Application.Services.IAgencyPassengerDirectory, Application.Services.AgencyPassengerDirectory>();
+builder.Services.AddScoped<Application.Services.ITicketStatusSyncService, Application.Services.TicketStatusSyncService>();
 
 builder.Services
   .AddControllersWithViews()
