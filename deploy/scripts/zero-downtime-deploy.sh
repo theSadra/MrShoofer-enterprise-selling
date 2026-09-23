@@ -61,24 +61,26 @@ need() { command -v "$1" >/dev/null || { echo "Missing dependency: $1" >&2; exit
 need git
 
 remote() {
+  # Always close stdin so ssh cannot consume the caller's `while read` file list.
   if [[ -n "${DEPLOY_SSH_KEY:-}" ]]; then
-    ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
+    ssh -T -n $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@" </dev/null
   elif [[ -n "${DEPLOY_PASS:-}" ]]; then
     need sshpass
-    SSHPASS="$DEPLOY_PASS" sshpass -e ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
+    SSHPASS="$DEPLOY_PASS" sshpass -e ssh -T -n $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@" </dev/null
   else
-    ssh -T $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@"
+    ssh -T -n $SSH_OPTS "${DEPLOY_USER}@${DEPLOY_HOST}" "$@" </dev/null
   fi
 }
 
 remote_scp() {
   local src="$1" dst="$2"
+  # Same stdin guard — otherwise only the first file in a loop is uploaded.
   if [[ -n "${DEPLOY_SSH_KEY:-}" ]]; then
-    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
+    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst" </dev/null
   elif [[ -n "${DEPLOY_PASS:-}" ]]; then
-    SSHPASS="$DEPLOY_PASS" sshpass -e scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
+    SSHPASS="$DEPLOY_PASS" sshpass -e scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst" </dev/null
   else
-    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst"
+    scp $SSH_OPTS "$src" "${DEPLOY_USER}@${DEPLOY_HOST}:$dst" </dev/null
   fi
 }
 
@@ -138,11 +140,25 @@ done
 
 if [[ "$FORCE_FULL" == "1" ]]; then
   NEED_CODE=1
+  NEED_STATIC=1
 fi
 
 # Docker deploys bake wwwroot into the image — static-only still needs rebuild when USE_DOCKER=1
 if [[ "$USE_DOCKER" == "1" && "$NEED_STATIC" == "1" ]]; then
   NEED_CODE=1
+fi
+
+# Runtime-compiled Razor (.cshtml on disk) — treat view changes as needing file sync + restart
+NEED_VIEWS=0
+for f in "${CHANGED[@]:-}"; do
+  if [[ "$f" == *.cshtml ]]; then
+    NEED_VIEWS=1
+    NEED_CODE=1
+    break
+  fi
+done
+if [[ "$FORCE_FULL" == "1" ]]; then
+  NEED_VIEWS=1
 fi
 
 MODE="systemd"
@@ -152,6 +168,7 @@ MODE="systemd"
 echo
 echo "==> Plan"
 echo "  static(wwwroot): $NEED_STATIC"
+echo "  views(.cshtml):  $NEED_VIEWS"
 echo "  config:          $NEED_CONFIG"
 echo "  rebuild app:     $NEED_CODE"
 echo "  mode:            $MODE"
@@ -347,6 +364,18 @@ if [[ "$NEED_STATIC" == "1" ]]; then
   done < <(git diff --name-only "${FROM_REF}" "${TO_REF}" -- wwwroot || true)
 fi
 
+# --- Razor views (runtime compilation reads .cshtml from disk on the VPS) ---
+if [[ "$NEED_VIEWS" == "1" ]]; then
+  echo
+  echo "==> Syncing changed Razor views (.cshtml)"
+  while IFS= read -r f; do
+    [[ -f "$f" ]] || continue
+    remote "mkdir -p ${DEPLOY_DIR}/$(dirname "$f")"
+    remote_scp "$f" "${DEPLOY_DIR}/$f"
+    echo "  uploaded $f"
+  done < <(git diff --name-only "${FROM_REF}" "${TO_REF}" -- '*.cshtml' || true)
+fi
+
 # --- config (upload whenever changed; recycle happens with code deploy / restart) ---
 if [[ "$NEED_CONFIG" == "1" ]]; then
   echo
@@ -359,6 +388,11 @@ if [[ "$NEED_CONFIG" == "1" ]]; then
       NEED_CODE=1
     fi
   done
+fi
+
+# Views-only still needs a process recycle so runtime compilation reloads
+if [[ "$NEED_CODE" != "1" && "$NEED_VIEWS" == "1" ]]; then
+  NEED_CODE=1
 fi
 
 if [[ "$NEED_CODE" == "1" ]]; then
